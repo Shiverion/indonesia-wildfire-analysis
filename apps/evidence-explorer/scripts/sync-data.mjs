@@ -12,15 +12,24 @@ const receipt = fileURLToPath(
   new URL("../data/evidence-explorer.receipt.json", import.meta.url),
 );
 
+let inputPath = source;
 try {
   await access(source);
 } catch {
-  throw new Error(
-    "Missing aggregate evidence bundle. Run `python scripts/research.py build-explorer` from the repository root first.",
-  );
+  // Vercel builds from the app root and cannot read the repository-level
+  // outputs directory. The checked-in aggregate bundle is the deploy input;
+  // local repository builds continue to refresh it from the canonical output.
+  try {
+    await access(destination);
+    inputPath = destination;
+  } catch {
+    throw new Error(
+      "Missing aggregate evidence bundle. Run `python scripts/research.py build-explorer` from the repository root before deploying.",
+    );
+  }
 }
 
-const text = await readFile(source, "utf8");
+const text = await readFile(inputPath, "utf8");
 const data = JSON.parse(text);
 const prohibited = ["latitude", "longitude", "district", "subdistrict", "village", "reported_time", "source_file", "source_sha256"];
 const serialised = JSON.stringify(data).toLowerCase();
@@ -99,7 +108,7 @@ await mkdir(fileURLToPath(new URL("../data", import.meta.url)), { recursive: tru
 await copyFile(source, destination);
 const sha256 = createHash("sha256").update(text).digest("hex");
 await writeFile(receipt, `${JSON.stringify({
-  source: "../../../outputs/evidence-explorer/evidence-explorer.json",
+  source: inputPath === source ? "../../../outputs/evidence-explorer/evidence-explorer.json" : "checked-in aggregate bundle",
   source_sha256: sha256,
   synchronized_at_utc: new Date().toISOString(),
   primary_association: data.display_status.primary_association,

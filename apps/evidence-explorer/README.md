@@ -22,6 +22,12 @@ Generate the aggregate bundle with `python scripts/research.py build-explorer` a
 
 The app does not call a live data API, expose raw SiPongi locations, or convert the blocked primary analysis into a causal/risk result. It has no Cesium Ion token, default Ion imagery, terrain stream, or external tile feed at runtime.
 
+## Deploy to Vercel
+
+Create a Vercel project from the GitHub repository and set **Root Directory** to `apps/evidence-explorer`. Keep the detected Next.js framework, or use the checked-in `vercel.json` (`npm ci`, `npm run build`, output `out`). The app is a static export with a client-side WebGL globe; it does not need a server runtime or API route. The checked-in browser bundle is aggregate-only and is used when the Vercel build cannot read the repository-level `outputs/` directory. Refresh it locally with `python scripts/research.py build-explorer` followed by `npm run build` before pushing a new evidence snapshot.
+
+The current export is about 19 MB, including Cesium runtime assets, a local Earth texture, and frozen country geometry. Raw FIRMS/VIIRS files, credentials, and source archives are not included. Vercel serves static output through its CDN; the globe still loads and interacts in the browser.
+
 ## Attribution
 
 - Boundaries: geoBoundaries `IDN-ADM1-65028918`, source OpenStreetMap / Wambacher; © OpenStreetMap contributors, ODbL 1.0.

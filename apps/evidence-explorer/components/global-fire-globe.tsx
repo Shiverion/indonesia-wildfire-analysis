@@ -59,6 +59,13 @@ function compact(value: number) {
   return new Intl.NumberFormat("en-US", { notation: "compact", maximumFractionDigits: 1 }).format(value);
 }
 
+function upperDisplayQuantile(values: number[], fraction = 0.95) {
+  if (!values.length) return 1;
+  const ordered = [...values].sort((left, right) => left - right);
+  const index = Math.min(ordered.length - 1, Math.max(0, Math.ceil((ordered.length - 1) * fraction)));
+  return Math.max(1, ordered[index]);
+}
+
 function formatMetricValue(country: PeatFireCountry | LatestGlobalFireCountry | undefined, metric: GlobalMetric) {
   const value = metricValue(country, metric);
   if (value === null || !Number.isFinite(value)) return "Unknown";
@@ -243,7 +250,11 @@ export function GlobalFireGlobe({
             : activeMetric === "fire_latest" && latestGlobalFire
               ? latestGlobalFire.countries
               : comparison.countries;
-          const maximum = Math.max(1, ...activeCountries.map((country) => metricValue(country, activeMetric) ?? 0));
+          const maximum = upperDisplayQuantile(
+            activeCountries
+              .map((country) => metricValue(country, activeMetric))
+              .filter((value): value is number => value !== null && Number.isFinite(value)),
+          );
           for (const [id, entity] of activeRuntime.entities) {
             const country = countries.get(id);
             if (!entity.polygon) continue;
@@ -256,7 +267,7 @@ export function GlobalFireGlobe({
                 repeat: new activeRuntime.Cesium.Cartesian2(7, 7),
               });
             } else {
-              const ratio = Math.log1p(value) / Math.log1p(maximum);
+              const ratio = Math.min(1, Math.log1p(value) / Math.log1p(maximum));
               entity.polygon.material = activeRuntime.Cesium.Color.fromCssColorString(metricColor(activeMetric, ratio));
             }
             const isSelected = selectedRef.current === id;
@@ -337,7 +348,7 @@ export function GlobalFireGlobe({
         </div>
         <span>Drag to orbit · scroll/pinch to zoom · hover to preview · click to pin</span>
       </div>
-      <div className="global-globe-legend"><span><i className={`legend-ramp ${metric === "peat_share" ? "global-peat" : "global-fire"}`} /> {metricLabel(metric)}: lower → higher</span><span><i className="legend-hatch" /> No matched aggregate / unknown</span><span>Scale uses log display for rates; it is not a risk probability.</span></div>
+      <div className="global-globe-legend"><span><i className={`legend-ramp ${metric === "peat_share" ? "global-peat" : "global-fire"}`} /> {metricLabel(metric)}: lower → higher</span><span><i className="legend-hatch" /> No matched aggregate / unknown</span><span>{metric === "peat_share" ? "Area share uses a robust 95th-percentile display cap." : "Counts use a log scale with a robust 95th-percentile display cap; above-cap countries remain visible."} This is not a risk probability.</span></div>
       {activeCountry ? (
         <aside className="global-selection" aria-live="polite">
           <div><span className="eyebrow">Selected country aggregate</span><h3>{activeCountry.country}</h3></div>
