@@ -43,11 +43,18 @@ const initialView = { longitude: 114.4, latitude: 0.8, height: 7_100_000 };
 const kalimantanView = { longitude: 114.4, latitude: 0.8, height: 2_100_000 };
 
 function scaleColor(ratio: number, mode: EvidenceMode) {
-  const start = mode === "sipongi" ? [27, 79, 83] : [86, 55, 36];
-  const end = mode === "sipongi" ? [72, 224, 160] : [255, 156, 67];
+  const start = mode === "sipongi" ? [18, 50, 78] : [65, 40, 46];
+  const end = mode === "sipongi" ? [75, 235, 170] : [255, 145, 54];
   const amount = Math.max(0, Math.min(1, ratio));
   const channel = (index: number) => Math.round(start[index] + (end[index] - start[index]) * amount);
-  return `rgba(${channel(0)}, ${channel(1)}, ${channel(2)}, ${0.74 + amount * 0.17})`;
+  return `rgba(${channel(0)}, ${channel(1)}, ${channel(2)}, ${0.86 + amount * 0.1})`;
+}
+
+function upperDisplayQuantile(values: number[], fraction = 0.95) {
+  if (!values.length) return 1;
+  const ordered = [...values].sort((left, right) => left - right);
+  const index = Math.min(ordered.length - 1, Math.max(0, Math.ceil((ordered.length - 1) * fraction)));
+  return Math.max(1, ordered[index]);
 }
 
 function metricLabel(row: ProvinceAggregate | undefined, mode: EvidenceMode, platform: string) {
@@ -303,7 +310,10 @@ export function InteractiveGlobe({ mode, platform, periodLabel, isPartialSnapsho
         resizeObserver.observe(host);
         setLoadingText("Loading verified aggregate evidence…");
         setRuntimeReady(true);
-        moveCamera(initialView, 0);
+        // Start close enough to read the five province polygons. The global
+        // globe has its own world-scale camera; this local layer should not
+        // render Kalimantan as an undifferentiated island silhouette.
+        moveCamera(kalimantanView, 0);
       } catch {
         if (!cancelled) setFailure("The WebGL globe could not initialize. Use the province table below for the full accessible evidence view.");
       }
@@ -329,7 +339,11 @@ export function InteractiveGlobe({ mode, platform, periodLabel, isPartialSnapsho
       try {
         setLayerReady(false);
         setLoadingText("Loading verified aggregate evidence…");
-        const source = await activeRuntime.Cesium.GeoJsonDataSource.load(activeBoundaryUrl, { clampToGround: false });
+        const source = await activeRuntime.Cesium.GeoJsonDataSource.load(activeBoundaryUrl, {
+          clampToGround: false,
+          stroke: activeRuntime.Cesium.Color.fromCssColorString("#d9fff2"),
+          strokeWidth: 3,
+        });
         if (cancelled || runtimeRef.current !== activeRuntime) return;
         dataSource = source;
         activeRuntime.widget.dataSources.add(source);
@@ -362,7 +376,7 @@ export function InteractiveGlobe({ mode, platform, periodLabel, isPartialSnapsho
         styleLayerRef.current = () => {
           const activeRows = rowsRef.current;
           const values = activeRows.flatMap((row) => row.value === null ? [] : [row.value]);
-          const maximum = Math.max(1, ...values);
+          const maximum = upperDisplayQuantile(values);
           for (const [province, entity] of activeRuntime.entityByProvince) {
             const row = activeRows.find((candidate) => candidate.province === province);
             if (!entity.polygon) continue;
@@ -375,23 +389,25 @@ export function InteractiveGlobe({ mode, platform, periodLabel, isPartialSnapsho
                 repeat: new activeRuntime.Cesium.Cartesian2(8, 8),
               });
             } else {
-              const ratio = Math.log1p(row.value) / Math.log1p(maximum);
+              const logRatio = Math.min(1, Math.log1p(row.value) / Math.log1p(maximum));
+              // The five province values are highly skewed. A contrast curve
+              // keeps neighbouring reporting units visibly distinct while the
+              // label and table retain the exact aggregate count.
+              const ratio = Math.pow(logRatio, 1.8);
               entity.polygon.material = activeRuntime.Cesium.Color.fromCssColorString(scaleColor(ratio, modeRef.current));
             }
             entity.polygon.outline = true;
             entity.polygon.outlineColor = activeRuntime.Cesium.Color.fromCssColorString(
-              isSelected ? "#edfff9" : isHovered ? "#8cf5d1" : "rgba(220, 255, 243, .62)",
+              isSelected ? "#ffffff" : isHovered ? "#9fffea" : "#d9fff2",
             );
-            entity.polygon.outlineWidth = isSelected ? 3 : isHovered ? 2 : 1;
+            entity.polygon.outlineWidth = isSelected ? 4 : isHovered ? 3 : 2;
             entity.polygon.height = isSelected ? 28_000 : isHovered ? 18_000 : 9_000;
             entity.polygon.extrudedHeight = entity.polygon.height;
             if (entity.label) {
               const valueLabel = !row || row.isUnknown || row.value === null
                 ? "unknown coverage"
                 : `${compactNumber(row.value)} ${mapMetricUnit(modeRef.current)}`;
-              entity.label.text = isSelected || isHovered
-                ? `${labelProvince(province, modeRef.current)}\n${valueLabel}`
-                : labelProvince(province, modeRef.current);
+              entity.label.text = `${labelProvince(province, modeRef.current)}\n${valueLabel}`;
               entity.label.scale = isSelected ? 1.13 : isHovered ? 1.07 : 1;
               entity.label.backgroundColor = activeRuntime.Cesium.Color.fromCssColorString(
                 isSelected ? "rgba(8, 57, 66, .92)" : isHovered ? "rgba(13, 82, 84, .88)" : "rgba(2, 14, 21, .76)",
@@ -476,8 +492,8 @@ export function InteractiveGlobe({ mode, platform, periodLabel, isPartialSnapsho
               <h3>{mapMetricName(mode, platform)}</h3>
               <dl className="map-guide-facts">
                 <div><dt>Period</dt><dd>{periodLabel}</dd></div>
-                <div><dt>Boundary units</dt><dd>{mode === "gwis" ? "GWIS legacy four provinces" : "SiPongi current five provinces"}</dd></div>
-                <div><dt>What color means</dt><dd>More saturated / brighter = a higher source-specific aggregate in this exact view. Intensity uses a logarithmic display scale so both smaller and larger values remain visible.</dd></div>
+                <div><dt>Boundary units</dt><dd>{mode === "gwis" ? "Four separate legacy reporting polygons" : "Five separate current province polygons"}</dd></div>
+                <div><dt>What color means</dt><dd>Each outlined polygon is one reporting unit. More saturated / brighter = a higher source-specific aggregate in this exact view. Contrast is enhanced on a logarithmic display scale; the label and table retain exact values.</dd></div>
               </dl>
               <figure className="map-guide-scale">
                 <figcaption className="sr-only">
