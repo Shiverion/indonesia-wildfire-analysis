@@ -138,6 +138,40 @@ export interface PeatFireComparison {
   source_links: { peat?: string; fire?: string; boundaries?: string };
 }
 
+export interface LatestGlobalFireCountry {
+  country_id: string;
+  country: string;
+  positive_detection_count: number;
+  modis_count: number;
+  viirs_noaa20_count: number;
+  viirs_noaa21_count: number;
+  viirs_snpp_count: number;
+  status: "positive_detection_records" | "zero_returned_positive_detection" | string;
+}
+
+export interface LatestGlobalFireSnapshot {
+  schema_version: string;
+  status: "validated_closed_day_aggregate";
+  snapshot_date: string;
+  retrieved_at_utc: string;
+  aggregation_completed_at_utc?: string;
+  date_basis: string;
+  metric: string;
+  source_url: string;
+  raw_record_count: number;
+  matched_point_count: number;
+  unmatched_point_count: number;
+  positive_country_count: number;
+  country_count: number;
+  sensor_record_counts: Record<string, number>;
+  country_geometry: { path?: string; sha256?: string; feature_count?: number };
+  derived_sha256?: string;
+  raw_records_embedded: false;
+  has_observation_denominator: false;
+  interpretation: string;
+  countries: LatestGlobalFireCountry[];
+}
+
 export interface ConditionPhaseAudit {
   schema_version: "condition-phase-audit/v1";
   status: string;
@@ -201,6 +235,7 @@ export interface ExplorerData {
   sipongi_platforms: string[];
   sipongi_current_snapshot: SipongiCurrentSnapshot | null;
   peat_fire_comparison?: PeatFireComparison | null;
+  latest_global_fire?: LatestGlobalFireSnapshot | null;
   condition_phase_audit?: ConditionPhaseAudit | null;
 }
 

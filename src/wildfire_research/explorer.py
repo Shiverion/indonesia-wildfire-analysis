@@ -137,6 +137,57 @@ def _read_peat_fire_analysis(root: Path) -> dict[str, Any] | None:
         raise ValueError(f"Invalid peat/fire analysis artifact: {exc}") from exc
 
 
+def _read_latest_global_fire_snapshot(root: Path) -> dict[str, Any] | None:
+    """Load the newest validated closed-day global FIRMS aggregate."""
+    quality_root = root / "outputs" / "quality" / "firms_global_nrt"
+    candidates: list[tuple[str, Path, dict[str, Any], Path]] = []
+    for metadata_path in quality_root.glob("*.json") if quality_root.exists() else ():
+        metadata = _read_json(metadata_path)
+        if metadata.get("status") != "validated_closed_day_aggregate":
+            continue
+        derived_path = root / metadata.get("derived_path", "")
+        if derived_path.is_file():
+            candidates.append((str(metadata.get("snapshot_date", "")), metadata_path, metadata, derived_path))
+    if not candidates:
+        return None
+    _, metadata_path, metadata, derived_path = max(candidates, key=lambda item: (item[0], item[1].name))
+    countries: list[dict[str, Any]] = []
+    with derived_path.open(encoding="utf-8", newline="") as handle:
+        for row in csv.DictReader(handle):
+            countries.append({
+                "country_id": row.get("country_id", ""),
+                "country": row.get("country", ""),
+                "positive_detection_count": int(row.get("positive_detection_count") or 0),
+                "modis_count": int(row.get("modis_count") or 0),
+                "viirs_noaa20_count": int(row.get("viirs_noaa20_count") or 0),
+                "viirs_noaa21_count": int(row.get("viirs_noaa21_count") or 0),
+                "viirs_snpp_count": int(row.get("viirs_snpp_count") or 0),
+                "status": row.get("status", "unknown"),
+            })
+    return {
+        "schema_version": metadata.get("schema_version"),
+        "status": metadata.get("status"),
+        "snapshot_date": metadata.get("snapshot_date"),
+        "retrieved_at_utc": metadata.get("retrieved_at_utc"),
+        "aggregation_completed_at_utc": metadata.get("aggregation_completed_at_utc"),
+        "date_basis": metadata.get("date_basis"),
+        "metric": metadata.get("metric"),
+        "source_url": metadata.get("source_url"),
+        "raw_record_count": metadata.get("raw_record_count"),
+        "matched_point_count": metadata.get("matched_point_count"),
+        "unmatched_point_count": metadata.get("unmatched_point_count"),
+        "positive_country_count": metadata.get("positive_country_count"),
+        "country_count": metadata.get("country_count"),
+        "sensor_record_counts": metadata.get("sensor_record_counts", {}),
+        "country_geometry": metadata.get("country_geometry", {}),
+        "derived_sha256": metadata.get("derived_sha256"),
+        "raw_records_embedded": False,
+        "has_observation_denominator": False,
+        "interpretation": metadata.get("interpretation"),
+        "countries": countries,
+    }
+
+
 def _read_condition_phase_audit(root: Path) -> dict[str, Any] | None:
     """Expose only the condition audit status, never raw provider payloads."""
     path = root / "outputs" / "quality" / "condition_phase_audit.json"
@@ -238,6 +289,9 @@ def _validate_browser_bundle(bundle: dict[str, Any]) -> None:
     peat_fire = bundle.get("peat_fire_comparison")
     if peat_fire is not None:
         _validate_peat_fire_comparison(peat_fire)
+    latest_global_fire = bundle.get("latest_global_fire")
+    if latest_global_fire is not None:
+        _validate_latest_global_fire(latest_global_fire)
     condition_audit = bundle.get("condition_phase_audit")
     if condition_audit is not None:
         if condition_audit.get("schema_version") != "condition-phase-audit/v1":
@@ -267,6 +321,30 @@ def _validate_peat_fire_comparison(value: dict[str, Any]) -> None:
     thresholds = value.get("threshold_sensitivity")
     if not isinstance(thresholds, list) or [row.get("threshold_percent") for row in thresholds] != [25, 50, 75]:
         raise ValueError("Peat/fire comparison must include ordered 25/50/75 percent sensitivities")
+
+
+def _validate_latest_global_fire(value: dict[str, Any]) -> None:
+    """Validate the aggregate-only latest global snapshot."""
+    if value.get("status") != "validated_closed_day_aggregate":
+        raise ValueError("Latest global fire layer must be a validated closed-day aggregate")
+    if value.get("raw_records_embedded") is not False or value.get("has_observation_denominator") is not False:
+        raise ValueError("Latest global fire layer must remain aggregate-only without an observation denominator")
+    countries = value.get("countries")
+    if not isinstance(countries, list) or len(countries) < 200:
+        raise ValueError("Latest global fire layer must cover the frozen global country geometry")
+    forbidden = {"latitude", "longitude", "acq_time", "reported_time", "source_file", "source_sha256"}
+    serialized = json.dumps(value, sort_keys=True).casefold()
+    leaked = sorted(field for field in forbidden if f'"{field}"' in serialized)
+    if leaked:
+        raise ValueError(f"Latest global fire layer contains prohibited detection-level fields: {', '.join(leaked)}")
+    total = 0
+    for row in countries:
+        for field in ("positive_detection_count", "modis_count", "viirs_noaa20_count", "viirs_noaa21_count", "viirs_snpp_count"):
+            if not isinstance(row.get(field), int) or row[field] < 0:
+                raise ValueError(f"Latest global fire row has invalid {field}")
+        total += row["positive_detection_count"]
+    if total != value.get("matched_point_count"):
+        raise ValueError("Latest global country counts do not conserve matched points")
 
 
 def _validate_current_sipongi_snapshot(snapshot: dict[str, Any]) -> None:
@@ -378,6 +456,7 @@ def build_explorer_bundle(
     sipongi_snapshot_records: list[SipongiRecord] | None = None,
     sipongi_snapshot_metadata: dict[str, Any] | None = None,
     peat_fire_comparison: dict[str, Any] | None = None,
+    latest_global_fire: dict[str, Any] | None = None,
     condition_phase_audit: dict[str, Any] | None = None,
     generated_at: datetime | None = None,
 ) -> dict[str, Any]:
@@ -514,7 +593,7 @@ def build_explorer_bundle(
     bundle = {
         "schema_version": "evidence-explorer/v2",
         "generated_at_utc": generated_at.astimezone(timezone.utc).isoformat(),
-        "title": "Kalimantan Fire Evidence Explorer",
+        "title": "Global + Kalimantan Fire Evidence Explorer",
         "display_status": {
             "label": "Descriptive evidence only",
             "primary_association": "NI - Not identifiable",
@@ -590,6 +669,7 @@ def build_explorer_bundle(
         "sipongi_platforms": list(SIPONGI_DISPLAY_PLATFORMS),
         "sipongi_current_snapshot": current_snapshot,
         "peat_fire_comparison": peat_fire_comparison,
+        "latest_global_fire": latest_global_fire,
         "condition_phase_audit": condition_phase_audit,
     }
     _validate_browser_bundle(bundle)
@@ -634,6 +714,7 @@ def build_explorer_from_workspace(root: Path) -> dict[str, Any]:
     excluded_years = tuple(int(year) for year in sipongi_metadata.get("query_scope", {}).get("excluded_years", [2024]))
     snapshot_source = _latest_validated_sipongi_snapshot(root)
     peat_fire_comparison = _read_peat_fire_analysis(root)
+    latest_global_fire = _read_latest_global_fire_snapshot(root)
     condition_phase_audit = _read_condition_phase_audit(root)
     protocol_report = validate_protocol(root)
     ledger_state = verify_phase_ledger(root / "outputs" / "ledger" / "phase_ledger.jsonl")
@@ -693,6 +774,7 @@ def build_explorer_from_workspace(root: Path) -> dict[str, Any]:
         sipongi_snapshot_records=snapshot_records,
         sipongi_snapshot_metadata=snapshot_metadata,
         peat_fire_comparison=peat_fire_comparison,
+        latest_global_fire=latest_global_fire,
         condition_phase_audit=condition_phase_audit,
     )
 

@@ -1,0 +1,53 @@
+{
+  "schema_version": "firms-global-nrt-country/v1",
+  "status": "validated_closed_day_aggregate",
+  "snapshot_date": "2026-08-22",
+  "retrieved_at_utc": "2026-08-23T14:35:02.968817+00:00",
+  "aggregation_completed_at_utc": "2026-08-23T14:36:56.567754+00:00",
+  "date_basis": "NASA FIRMS NRT portal acquisition date; closed UTC day",
+  "metric": "positive FIRMS active-fire detection records",
+  "source_url": "https://nrt3.modaps.eosdis.nasa.gov/archive/FIRMS/",
+  "sensor_files": [
+    {
+      "sensor": "MODIS",
+      "bytes": 1713900,
+      "sha256": "6cdb1ed8acc1083a1068c8b5dc387f3c8da2fb8a1cb8cf50b3a670e835f358fd"
+    },
+    {
+      "sensor": "VIIRS_NOAA20",
+      "bytes": 10412110,
+      "sha256": "ab65aa5fd0cab4ab94a2a6738b7e5ba13d27cc1b5d024f25280d6fdf28fc5cc3"
+    },
+    {
+      "sensor": "VIIRS_NOAA21",
+      "bytes": 10189300,
+      "sha256": "8db149e3848c9064f30b903b8af1316d26fb36c27129d19680ca854b80c2ccdf"
+    },
+    {
+      "sensor": "VIIRS_SNPP",
+      "bytes": 10633476,
+      "sha256": "3b8df94272cbce9b14452903408da274b95ba8d6c42fb896df7a96ac4502b036"
+    }
+  ],
+  "country_geometry": {
+    "path": "apps/evidence-explorer/public/geo/global-countries.geojson",
+    "sha256": "daf41000ae2924746ac6be56014ae7a07412ba1873d7d054dbc3f267846520cf",
+    "feature_count": 242
+  },
+  "raw_record_count": 394627,
+  "matched_point_count": 392696,
+  "unmatched_point_count": 1931,
+  "positive_country_count": 155,
+  "country_count": 242,
+  "sensor_record_counts": {
+    "MODIS": 21903,
+    "VIIRS_NOAA20": 123264,
+    "VIIRS_NOAA21": 120552,
+    "VIIRS_SNPP": 128908
+  },
+  "derived_path": "data/derived/firms_global/2026-08-22_country.csv",
+  "derived_sha256": "ea2f67a05446b44a0d0f255403f4c7f8e6a48e58af883861a4b022be5948656d",
+  "raw_records_embedded": false,
+  "has_observation_denominator": false,
+  "interpretation": "Counts are positive satellite detection records, not unique fires, burned area, fire rates, or no-fire evidence."
+}

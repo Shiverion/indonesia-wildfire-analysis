@@ -1,10 +1,10 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
-import type { PeatFireComparison, PeatFireCountry } from "../lib/types";
+import type { LatestGlobalFireCountry, LatestGlobalFireSnapshot, PeatFireComparison, PeatFireCountry } from "../lib/types";
 
 type CesiumRuntime = typeof import("cesium");
-type GlobalMetric = "peat_share" | "fire_rate";
+type GlobalMetric = "peat_share" | "fire_latest" | "fire_2024";
 
 interface GlobalFeatureCollection {
   type: "FeatureCollection";
@@ -23,17 +23,23 @@ interface GlobalRuntime {
 
 const worldView = { longitude: 22, latitude: 8, height: 15_500_000 };
 
-function metricValue(country: PeatFireCountry | undefined, metric: GlobalMetric) {
+function metricValue(country: PeatFireCountry | LatestGlobalFireCountry | undefined, metric: GlobalMetric) {
   if (!country) return null;
-  return metric === "peat_share" ? country.peat_share_percent : country.total_detection_rate_per_1000_km2;
+  if (metric === "peat_share") return "peat_share_percent" in country ? country.peat_share_percent : null;
+  if (metric === "fire_latest") return "positive_detection_count" in country ? country.positive_detection_count : null;
+  return "total_detection_rate_per_1000_km2" in country ? country.total_detection_rate_per_1000_km2 : null;
 }
 
 function metricLabel(metric: GlobalMetric) {
-  return metric === "peat_share" ? "Peatland share" : "MODIS detection rate";
+  if (metric === "peat_share") return "Peatland share";
+  if (metric === "fire_latest") return "Latest NRT detections";
+  return "2024 MODIS detection rate";
 }
 
-function metricUnit(metric: GlobalMetric) {
-  return metric === "peat_share" ? "% of country area" : "detections / 1,000 km²";
+function displayMetricUnit(metric: GlobalMetric) {
+  if (metric === "peat_share") return "% of country area";
+  if (metric === "fire_latest") return "positive detection records";
+  return "detections per 1,000 km2";
 }
 
 function metricColor(metric: GlobalMetric, ratio: number) {
@@ -53,14 +59,29 @@ function compact(value: number) {
   return new Intl.NumberFormat("en-US", { notation: "compact", maximumFractionDigits: 1 }).format(value);
 }
 
-export function GlobalFireGlobe({ comparison }: { comparison: PeatFireComparison }) {
+function formatMetricValue(country: PeatFireCountry | LatestGlobalFireCountry | undefined, metric: GlobalMetric) {
+  const value = metricValue(country, metric);
+  if (value === null || !Number.isFinite(value)) return "Unknown";
+  if (metric === "peat_share") return `${value.toFixed(2)}%`;
+  if (metric === "fire_latest") return compact(value);
+  return value.toFixed(2);
+}
+
+export function GlobalFireGlobe({
+  comparison,
+  latestGlobalFire = null,
+}: {
+  comparison: PeatFireComparison;
+  latestGlobalFire?: LatestGlobalFireSnapshot | null;
+}) {
   const hostRef = useRef<HTMLDivElement>(null);
   const runtimeRef = useRef<GlobalRuntime | null>(null);
   const styleLayerRef = useRef<() => void>(() => undefined);
-  const metricRef = useRef<GlobalMetric>("fire_rate");
+  const initialMetric: GlobalMetric = latestGlobalFire ? "fire_latest" : "fire_2024";
+  const metricRef = useRef<GlobalMetric>(initialMetric);
   const hoveredRef = useRef<string | null>(null);
   const selectedRef = useRef<string | null>(null);
-  const [metric, setMetric] = useState<GlobalMetric>("fire_rate");
+  const [metric, setMetric] = useState<GlobalMetric>(initialMetric);
   const [hovered, setHovered] = useState<string | null>(null);
   const [selected, setSelected] = useState<string | null>(null);
   const [runtimeReady, setRuntimeReady] = useState(false);
@@ -68,12 +89,21 @@ export function GlobalFireGlobe({ comparison }: { comparison: PeatFireComparison
   const [failure, setFailure] = useState<string | null>(null);
   const [tooltip, setTooltip] = useState({ left: 12, top: 48 });
 
-  const countries = useMemo(() => new Map(comparison.countries.map((country) => [country.country_id, country])), [comparison.countries]);
+  const peatCountries = useMemo(() => new Map(comparison.countries.map((country) => [country.country_id, country])), [comparison.countries]);
+  const latestCountries = useMemo(() => new Map((latestGlobalFire?.countries ?? []).map((country) => [country.country_id, country])), [latestGlobalFire?.countries]);
+  const metricCountries = metric === "peat_share"
+    ? comparison.countries
+    : metric === "fire_latest" && latestGlobalFire
+      ? latestGlobalFire.countries
+      : comparison.countries;
+  const countries = useMemo(() => new Map(metricCountries.map((country) => [country.country_id, country])), [metricCountries]);
   const activeCountry = selected ? countries.get(selected) : undefined;
+  const activePeatCountry = selected ? peatCountries.get(selected) : undefined;
+  const activeLatestCountry = selected ? latestCountries.get(selected) : undefined;
   const hoveredCountry = hovered ? countries.get(hovered) : undefined;
   const values = useMemo(
-    () => comparison.countries.map((country) => metricValue(country, metric)).filter((value): value is number => value !== null && Number.isFinite(value)),
-    [comparison.countries, metric],
+    () => metricCountries.map((country) => metricValue(country, metric)).filter((value): value is number => value !== null && Number.isFinite(value)),
+    [metricCountries, metric],
   );
   const maxValue = Math.max(1, ...values);
 
@@ -208,7 +238,12 @@ export function GlobalFireGlobe({ comparison }: { comparison: PeatFireComparison
         });
         styleLayerRef.current = () => {
           const activeMetric = metricRef.current;
-          const maximum = Math.max(1, ...comparison.countries.map((country) => metricValue(country, activeMetric) ?? 0));
+          const activeCountries = activeMetric === "peat_share"
+            ? comparison.countries
+            : activeMetric === "fire_latest" && latestGlobalFire
+              ? latestGlobalFire.countries
+              : comparison.countries;
+          const maximum = Math.max(1, ...activeCountries.map((country) => metricValue(country, activeMetric) ?? 0));
           for (const [id, entity] of activeRuntime.entities) {
             const country = countries.get(id);
             if (!entity.polygon) continue;
@@ -244,7 +279,7 @@ export function GlobalFireGlobe({ comparison }: { comparison: PeatFireComparison
       styleLayerRef.current = () => undefined;
       if (dataSource && !activeRuntime.widget.isDestroyed()) activeRuntime.widget.dataSources.remove(dataSource, true);
     };
-  }, [comparison.countries, countries, runtimeReady]);
+  }, [comparison.countries, countries, latestGlobalFire, metricCountries, runtimeReady]);
 
   const moveCamera = (factor: number) => {
     const runtime = runtimeRef.current;
@@ -267,22 +302,23 @@ export function GlobalFireGlobe({ comparison }: { comparison: PeatFireComparison
     <section className="global-globe-card" aria-labelledby="global-globe-heading">
       <header className="section-heading">
         <div>
-          <span className="eyebrow">Global context · 196 matched countries</span>
+          <span className="eyebrow">Global context · {latestGlobalFire?.country_count ?? comparison.matched_country_count} country geometries</span>
           <h2 id="global-globe-heading">Global peatland / fire comparison globe</h2>
-          <p>This is a separate country-level layer. It shows the mapped peat baseline and 2024 NASA FIRMS MODIS detection aggregates for matched countries; a colored country does not mean the whole country burned.</p>
+          <p>This is a separate country-level layer. {latestGlobalFire ? `The default is the latest closed UTC day (${latestGlobalFire.snapshot_date}) from NASA FIRMS NRT MODIS + VIIRS positive detection records.` : "It shows the mapped peat baseline and completed 2024 NASA FIRMS MODIS detection aggregates."} A colored country does not mean the whole country burned.</p>
         </div>
         <span className="layer-key">Exploratory · not causal</span>
       </header>
       <div className="global-globe-toolbar">
         <div className="segmented-control" role="group" aria-label="Global map metric">
-          <button type="button" className={metric === "fire_rate" ? "is-selected" : ""} onClick={() => setMetric("fire_rate")}>Fire detection rate</button>
+          {latestGlobalFire && <button type="button" className={metric === "fire_latest" ? "is-selected" : ""} onClick={() => setMetric("fire_latest")}>Latest NRT · {latestGlobalFire.snapshot_date}</button>}
+          <button type="button" className={metric === "fire_2024" ? "is-selected" : ""} onClick={() => setMetric("fire_2024")}>Completed 2024</button>
           <button type="button" className={metric === "peat_share" ? "is-selected" : ""} onClick={() => setMetric("peat_share")}>Peatland share</button>
         </div>
         <label className="global-country-picker">
           <span className="field-label">Jump to a matched country</span>
           <select value={selected ?? ""} onChange={(event) => selectFromPicker(event.target.value)}>
             <option value="">No country selected</option>
-            {[...comparison.countries].sort((a, b) => a.country.localeCompare(b.country)).map((country) => <option key={country.country_id} value={country.country_id}>{country.country}</option>)}
+            {[...metricCountries].sort((a, b) => a.country.localeCompare(b.country)).map((country) => <option key={country.country_id} value={country.country_id}>{country.country}</option>)}
           </select>
         </label>
       </div>
@@ -290,7 +326,7 @@ export function GlobalFireGlobe({ comparison }: { comparison: PeatFireComparison
         <div className="global-globe-badges" aria-hidden="true"><span>WGS84 · local Natural Earth boundaries</span><span>Country aggregates only · no hotspot points</span></div>
         {!layerReady && !failure && <div className="globe-loading" role="status"><span className="loading-orb" />Loading global country geometry…</div>}
         {failure && <div className="globe-fallback" role="status"><strong>Global globe unavailable</strong><span>{failure}</span></div>}
-        {hoveredCountry && !failure && <div className="real-globe-tooltip global-globe-tooltip" style={tooltip} aria-hidden="true"><strong>{hoveredCountry.country}</strong><span>{metricLabel(metric)}: {metric === "peat_share" ? `${hoveredCountry.peat_share_percent.toFixed(2)}%` : hoveredCountry.total_detection_rate_per_1000_km2.toFixed(2)}</span><small>Click for details · {metricUnit(metric)}</small></div>}
+        {hoveredCountry && !failure && <div className="real-globe-tooltip global-globe-tooltip" style={tooltip} aria-hidden="true"><strong>{hoveredCountry.country}</strong><span>{metricLabel(metric)}: {formatMetricValue(hoveredCountry, metric)}</span><small>Click for details · {displayMetricUnit(metric)}</small></div>}
       </div>
       <div className="real-globe-controls">
         <div className="globe-control-group" aria-label="Global globe camera controls">
@@ -305,8 +341,12 @@ export function GlobalFireGlobe({ comparison }: { comparison: PeatFireComparison
       {activeCountry ? (
         <aside className="global-selection" aria-live="polite">
           <div><span className="eyebrow">Selected country aggregate</span><h3>{activeCountry.country}</h3></div>
-          <dl><div><dt>Peatland share</dt><dd>{activeCountry.peat_share_percent.toFixed(2)}% ({compact(activeCountry.peat_area_km2)} km²)</dd></div><div><dt>2024 MODIS detections</dt><dd>{compact(activeCountry.peat_detection_count + activeCountry.nonpeat_detection_count)} total · {activeCountry.total_detection_rate_per_1000_km2.toFixed(2)} / 1,000 km²</dd></div><div><dt>Peat / non-peat rates</dt><dd>{activeCountry.peat_detection_rate_per_1000_km2 === null ? "Unknown" : activeCountry.peat_detection_rate_per_1000_km2.toFixed(2)} / {activeCountry.nonpeat_detection_rate_per_1000_km2 === null ? "Unknown" : activeCountry.nonpeat_detection_rate_per_1000_km2.toFixed(2)} per 1,000 km²</dd></div></dl>
-          <p>These are satellite detection aggregates, not unique fires, burned-area polygons, or an observation-adjusted rate. The 2000–2020 peat baseline and 2024 detections are different time frames.</p>
+          <dl>
+            <div><dt>Peatland share</dt><dd>{activePeatCountry ? `${activePeatCountry.peat_share_percent.toFixed(2)}% (${compact(activePeatCountry.peat_area_km2)} km²)` : "Unknown"}</dd></div>
+            <div><dt>Latest closed-day snapshot</dt><dd>{activeLatestCountry && latestGlobalFire ? `${compact(activeLatestCountry.positive_detection_count)} positive detection records · ${latestGlobalFire.snapshot_date}` : "Unknown"}</dd></div>
+            <div><dt>Completed 2024 comparison</dt><dd>{activePeatCountry ? `${compact(activePeatCountry.peat_detection_count + activePeatCountry.nonpeat_detection_count)} records · ${activePeatCountry.total_detection_rate_per_1000_km2.toFixed(2)} / 1,000 km²` : "Unknown"}</dd></div>
+          </dl>
+          <p>Latest values are positive satellite detection records from a closed-day NRT snapshot, not unique fires, burned-area polygons, or an observation-adjusted rate. The peat baseline covers 2000–2020; it is not a 2026 peatland map.</p>
         </aside>
       ) : <p className="global-selection-empty">Select a country on the globe or from the picker to see its peat share, detection counts, rates, and the comparison caveats.</p>}
       <p className="global-globe-footnote"><strong>Boundary source:</strong> Natural Earth Admin-0 countries, public domain. <strong>Data meaning:</strong> polygons are display units for matched country aggregates; they do not say that all land inside the polygon burned.</p>

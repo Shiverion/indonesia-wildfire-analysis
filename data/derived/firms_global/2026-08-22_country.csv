@@ -1,0 +1,243 @@
+country_id,country,positive_detection_count,modis_count,viirs_noaa20_count,viirs_noaa21_count,viirs_snpp_count,status
+ZWE,Zimbabwe,3840,228,913,1146,1553,positive_detection_records
+ZMB,Zambia,25367,627,7755,8539,8446,positive_detection_records
+YEM,Yemen,15,0,5,4,6,positive_detection_records
+VNM,Vietnam,239,17,97,69,56,positive_detection_records
+VEN,Venezuela,488,46,151,138,153,positive_detection_records
+VAT,Vatican City,0,0,0,0,0,zero_returned_positive_detection
+VUT,Vanuatu,0,0,0,0,0,zero_returned_positive_detection
+UZB,Uzbekistan,116,5,41,26,44,positive_detection_records
+URY,Uruguay,19,1,5,7,6,positive_detection_records
+FSM,Federated States of Micronesia,0,0,0,0,0,zero_returned_positive_detection
+MHL,Marshall Islands,0,0,0,0,0,zero_returned_positive_detection
+MNP,Northern Mariana Islands,0,0,0,0,0,zero_returned_positive_detection
+VIR,United States Virgin Islands,0,0,0,0,0,zero_returned_positive_detection
+GUM,Guam,0,0,0,0,0,zero_returned_positive_detection
+ASM,American Samoa,0,0,0,0,0,zero_returned_positive_detection
+PRI,Puerto Rico,0,0,0,0,0,zero_returned_positive_detection
+USA,United States of America,5324,309,1781,1476,1758,positive_detection_records
+SGS,South Georgia and the South Sandwich Islands,0,0,0,0,0,zero_returned_positive_detection
+IOT,British Indian Ocean Territory,0,0,0,0,0,zero_returned_positive_detection
+SHN,Saint Helena,0,0,0,0,0,zero_returned_positive_detection
+PCN,Pitcairn Islands,0,0,0,0,0,zero_returned_positive_detection
+AIA,Anguilla,0,0,0,0,0,zero_returned_positive_detection
+FLK,Falkland Islands,0,0,0,0,0,zero_returned_positive_detection
+CYM,Cayman Islands,0,0,0,0,0,zero_returned_positive_detection
+BMU,Bermuda,0,0,0,0,0,zero_returned_positive_detection
+VGB,British Virgin Islands,0,0,0,0,0,zero_returned_positive_detection
+TCA,Turks and Caicos Islands,0,0,0,0,0,zero_returned_positive_detection
+MSR,Montserrat,0,0,0,0,0,zero_returned_positive_detection
+JEY,Jersey,0,0,0,0,0,zero_returned_positive_detection
+GGY,Guernsey,0,0,0,0,0,zero_returned_positive_detection
+IMN,Isle of Man,0,0,0,0,0,zero_returned_positive_detection
+GBR,United Kingdom,81,0,16,15,50,positive_detection_records
+ARE,United Arab Emirates,125,15,32,63,15,positive_detection_records
+UKR,Ukraine,6922,470,2662,1487,2303,positive_detection_records
+UGA,Uganda,396,47,169,58,122,positive_detection_records
+TKM,Turkmenistan,472,1,166,121,184,positive_detection_records
+TUR,Turkey,500,13,250,96,141,positive_detection_records
+TUN,Tunisia,25,0,7,7,11,positive_detection_records
+TTO,Trinidad and Tobago,0,0,0,0,0,zero_returned_positive_detection
+TON,Tonga,0,0,0,0,0,zero_returned_positive_detection
+TGO,Togo,0,0,0,0,0,zero_returned_positive_detection
+TLS,East Timor,92,0,24,49,19,positive_detection_records
+THA,Thailand,27,2,12,8,5,positive_detection_records
+TZA,Tanzania,7479,719,2931,1860,1969,positive_detection_records
+TJK,Tajikistan,6,0,2,2,2,positive_detection_records
+TWN,Taiwan,2,0,0,1,1,positive_detection_records
+SYR,Syria,273,8,113,42,110,positive_detection_records
+CHE,Switzerland,9,0,3,3,3,positive_detection_records
+SWE,Sweden,19,0,6,4,9,positive_detection_records
+SWZ,Eswatini,435,6,148,165,116,positive_detection_records
+SUR,Suriname,24,0,6,8,10,positive_detection_records
+SDS,South Sudan,83,6,38,18,21,positive_detection_records
+SDN,Sudan,33,4,4,23,2,positive_detection_records
+LKA,Sri Lanka,192,51,45,35,61,positive_detection_records
+ESP,Spain,105,9,23,37,36,positive_detection_records
+KOR,South Korea,31,0,17,6,8,positive_detection_records
+ZAF,South Africa,8476,348,2807,2631,2690,positive_detection_records
+SOM,Somalia,13,0,6,5,2,positive_detection_records
+SOL,Somaliland,3,0,0,1,2,positive_detection_records
+SLB,Solomon Islands,0,0,0,0,0,zero_returned_positive_detection
+SVK,Slovakia,10,2,4,2,2,positive_detection_records
+SVN,Slovenia,0,0,0,0,0,zero_returned_positive_detection
+SGP,Singapore,0,0,0,0,0,zero_returned_positive_detection
+SLE,Sierra Leone,0,0,0,0,0,zero_returned_positive_detection
+SYC,Seychelles,0,0,0,0,0,zero_returned_positive_detection
+SRB,Serbia,338,36,127,117,58,positive_detection_records
+SEN,Senegal,9,0,3,3,3,positive_detection_records
+SAU,Saudi Arabia,264,7,76,81,100,positive_detection_records
+STP,São Tomé and Príncipe,0,0,0,0,0,zero_returned_positive_detection
+SMR,San Marino,0,0,0,0,0,zero_returned_positive_detection
+WSM,Samoa,0,0,0,0,0,zero_returned_positive_detection
+VCT,Saint Vincent and the Grenadines,0,0,0,0,0,zero_returned_positive_detection
+LCA,Saint Lucia,0,0,0,0,0,zero_returned_positive_detection
+KNA,Saint Kitts and Nevis,0,0,0,0,0,zero_returned_positive_detection
+RWA,Rwanda,32,2,17,9,4,positive_detection_records
+RUS,Russia,97123,5407,30973,30337,30406,positive_detection_records
+ROU,Romania,235,21,91,69,54,positive_detection_records
+QAT,Qatar,12,0,3,2,7,positive_detection_records
+PRT,Portugal,79,16,11,17,35,positive_detection_records
+POL,Poland,11,0,10,1,0,positive_detection_records
+PHL,Philippines,18,0,9,4,5,positive_detection_records
+PER,Peru,464,13,100,200,151,positive_detection_records
+PRY,Paraguay,1433,173,417,378,465,positive_detection_records
+PNG,Papua New Guinea,6579,58,1878,2040,2603,positive_detection_records
+PAN,Panama,1,0,1,0,0,positive_detection_records
+PLW,Palau,0,0,0,0,0,zero_returned_positive_detection
+PAK,Pakistan,40,4,8,14,14,positive_detection_records
+OMN,Oman,231,9,68,94,60,positive_detection_records
+NOR,Norway,14,0,6,4,4,positive_detection_records
+PRK,North Korea,2,0,1,1,0,positive_detection_records
+NGA,Nigeria,24,1,10,6,7,positive_detection_records
+NER,Niger,0,0,0,0,0,zero_returned_positive_detection
+NIC,Nicaragua,30,1,7,5,17,positive_detection_records
+NZL,New Zealand,16,0,4,7,5,positive_detection_records
+NIU,Niue,0,0,0,0,0,zero_returned_positive_detection
+COK,Cook Islands,0,0,0,0,0,zero_returned_positive_detection
+NLD,Netherlands,10,4,3,3,0,positive_detection_records
+ABW,Aruba,0,0,0,0,0,zero_returned_positive_detection
+CUW,Curaçao,1,0,1,0,0,positive_detection_records
+NPL,Nepal,0,0,0,0,0,zero_returned_positive_detection
+NRU,Nauru,0,0,0,0,0,zero_returned_positive_detection
+NAM,Namibia,1146,37,403,273,433,positive_detection_records
+MOZ,Mozambique,42280,3739,14560,11350,12631,positive_detection_records
+MAR,Morocco,23,0,7,7,9,positive_detection_records
+ESH,Western Sahara,0,0,0,0,0,zero_returned_positive_detection
+MNE,Montenegro,63,7,30,14,12,positive_detection_records
+MNG,Mongolia,36,2,11,8,15,positive_detection_records
+MDA,Moldova,32,0,17,8,7,positive_detection_records
+MCO,Monaco,0,0,0,0,0,zero_returned_positive_detection
+MEX,Mexico,907,29,346,260,272,positive_detection_records
+MUS,Mauritius,0,0,0,0,0,zero_returned_positive_detection
+MRT,Mauritania,3,0,1,2,0,positive_detection_records
+MLT,Malta,0,0,0,0,0,zero_returned_positive_detection
+MLI,Mali,1,0,1,0,0,positive_detection_records
+MDV,Maldives,0,0,0,0,0,zero_returned_positive_detection
+MYS,Malaysia,268,9,100,78,81,positive_detection_records
+MWI,Malawi,1055,116,420,259,260,positive_detection_records
+MDG,Madagascar,6020,63,1970,1862,2125,positive_detection_records
+MKD,North Macedonia,350,43,102,129,76,positive_detection_records
+LUX,Luxembourg,0,0,0,0,0,zero_returned_positive_detection
+LTU,Lithuania,1,0,0,1,0,positive_detection_records
+LIE,Liechtenstein,0,0,0,0,0,zero_returned_positive_detection
+LBY,Libya,703,25,261,146,271,positive_detection_records
+LBR,Liberia,0,0,0,0,0,zero_returned_positive_detection
+LSO,Lesotho,200,4,55,55,86,positive_detection_records
+LBN,Lebanon,9,0,2,1,6,positive_detection_records
+LVA,Latvia,0,0,0,0,0,zero_returned_positive_detection
+LAO,Laos,0,0,0,0,0,zero_returned_positive_detection
+KGZ,Kyrgyzstan,1,0,0,1,0,positive_detection_records
+KWT,Kuwait,8,2,0,1,5,positive_detection_records
+KOS,Kosovo,100,7,36,29,28,positive_detection_records
+KIR,Kiribati,0,0,0,0,0,zero_returned_positive_detection
+KEN,Kenya,195,18,68,59,50,positive_detection_records
+KAZ,Kazakhstan,484,23,163,143,155,positive_detection_records
+JOR,Jordan,9,0,5,1,3,positive_detection_records
+JPN,Japan,185,2,70,51,62,positive_detection_records
+JAM,Jamaica,45,0,24,11,10,positive_detection_records
+ITA,Italy,435,24,150,135,126,positive_detection_records
+ISR,Israel,7,0,5,0,2,positive_detection_records
+PSX,Palestine,4,0,0,1,3,positive_detection_records
+IRL,Ireland,23,1,13,5,4,positive_detection_records
+IRQ,Iraq,1465,178,417,270,600,positive_detection_records
+IRN,Iran,1119,86,268,375,390,positive_detection_records
+IDN,Indonesia,22240,1914,7118,6476,6732,positive_detection_records
+IND,India,362,20,76,102,164,positive_detection_records
+ISL,Iceland,0,0,0,0,0,zero_returned_positive_detection
+HUN,Hungary,13,0,4,5,4,positive_detection_records
+HND,Honduras,23,2,5,5,11,positive_detection_records
+HTI,Haiti,45,2,16,8,19,positive_detection_records
+GUY,Guyana,42,0,8,12,22,positive_detection_records
+GNB,Guinea-Bissau,0,0,0,0,0,zero_returned_positive_detection
+GIN,Guinea,4,0,0,0,4,positive_detection_records
+GTM,Guatemala,55,0,29,15,11,positive_detection_records
+GRD,Grenada,0,0,0,0,0,zero_returned_positive_detection
+GRC,Greece,18,0,8,5,5,positive_detection_records
+GHA,Ghana,1,0,0,1,0,positive_detection_records
+DEU,Germany,48,6,7,25,10,positive_detection_records
+GEO,Georgia,67,13,13,17,24,positive_detection_records
+GMB,The Gambia,0,0,0,0,0,zero_returned_positive_detection
+GAB,Gabon,299,32,140,58,69,positive_detection_records
+FRA,France,212,12,53,33,114,positive_detection_records
+SPM,Saint Pierre and Miquelon,0,0,0,0,0,zero_returned_positive_detection
+WLF,Wallis and Futuna,0,0,0,0,0,zero_returned_positive_detection
+MAF,Saint Martin,0,0,0,0,0,zero_returned_positive_detection
+BLM,Saint Barthélemy,0,0,0,0,0,zero_returned_positive_detection
+PYF,French Polynesia,0,0,0,0,0,zero_returned_positive_detection
+NCL,New Caledonia,22,1,6,5,10,positive_detection_records
+ATF,French Southern and Antarctic Lands,0,0,0,0,0,zero_returned_positive_detection
+ALA,Åland,0,0,0,0,0,zero_returned_positive_detection
+FIN,Finland,14,0,5,5,4,positive_detection_records
+FJI,Fiji,6,0,2,3,1,positive_detection_records
+ETH,Ethiopia,769,57,260,219,233,positive_detection_records
+EST,Estonia,0,0,0,0,0,zero_returned_positive_detection
+ERI,Eritrea,6,0,4,0,2,positive_detection_records
+GNQ,Equatorial Guinea,1,0,1,0,0,positive_detection_records
+SLV,El Salvador,19,0,5,5,9,positive_detection_records
+EGY,Egypt,253,5,124,81,43,positive_detection_records
+ECU,Ecuador,135,5,30,43,57,positive_detection_records
+DOM,Dominican Republic,310,16,111,78,105,positive_detection_records
+DMA,Dominica,0,0,0,0,0,zero_returned_positive_detection
+DJI,Djibouti,3,0,2,0,1,positive_detection_records
+GRL,Greenland,0,0,0,0,0,zero_returned_positive_detection
+FRO,Faroe Islands,0,0,0,0,0,zero_returned_positive_detection
+DNK,Denmark,19,2,4,7,6,positive_detection_records
+CZE,Czech Republic,4,1,2,0,1,positive_detection_records
+CYN,Turkish Republic of Northern Cyprus,0,0,0,0,0,zero_returned_positive_detection
+CYP,Cyprus,3,0,3,0,0,positive_detection_records
+CUB,Cuba,597,39,207,217,134,positive_detection_records
+HRV,Croatia,10,1,1,5,3,positive_detection_records
+CIV,Ivory Coast,26,1,2,10,13,positive_detection_records
+CRI,Costa Rica,7,1,3,1,2,positive_detection_records
+COD,Democratic Republic of the Congo,53300,1187,13131,20645,18337,positive_detection_records
+COG,Republic of the Congo,2724,304,877,599,944,positive_detection_records
+COM,Comoros,2,0,0,1,1,positive_detection_records
+COL,Colombia,192,25,59,59,49,positive_detection_records
+CHN,People's Republic of China,2324,139,682,702,801,positive_detection_records
+MAC,Macau,0,0,0,0,0,zero_returned_positive_detection
+HKG,Hong Kong,0,0,0,0,0,zero_returned_positive_detection
+CHL,Chile,142,3,50,48,41,positive_detection_records
+TCD,Chad,13,0,6,3,4,positive_detection_records
+CAF,Central African Republic,43,0,5,15,23,positive_detection_records
+CPV,Cape Verde,0,0,0,0,0,zero_returned_positive_detection
+CAN,Canada,10035,460,3245,3198,3132,positive_detection_records
+CMR,Cameroon,27,0,5,6,16,positive_detection_records
+KHM,Cambodia,28,9,8,3,8,positive_detection_records
+MMR,Myanmar,5,0,1,3,1,positive_detection_records
+BDI,Burundi,124,17,40,25,42,positive_detection_records
+BFA,Burkina Faso,0,0,0,0,0,zero_returned_positive_detection
+BGR,Bulgaria,48,2,16,10,20,positive_detection_records
+BRN,Brunei,3,0,1,1,1,positive_detection_records
+BRA,Brazil,23077,1801,6750,6902,7624,positive_detection_records
+BWA,Botswana,1660,17,541,415,687,positive_detection_records
+BIH,Bosnia and Herzegovina,386,28,151,100,107,positive_detection_records
+BOL,Bolivia,2010,277,634,597,502,positive_detection_records
+BTN,Bhutan,0,0,0,0,0,zero_returned_positive_detection
+BEN,Benin,1,0,0,1,0,positive_detection_records
+BLZ,Belize,15,1,4,5,5,positive_detection_records
+BEL,Belgium,40,2,12,14,12,positive_detection_records
+BLR,Belarus,65,7,24,11,23,positive_detection_records
+BRB,Barbados,0,0,0,0,0,zero_returned_positive_detection
+BGD,Bangladesh,0,0,0,0,0,zero_returned_positive_detection
+BHR,Bahrain,3,0,0,2,1,positive_detection_records
+BHS,The Bahamas,40,2,20,5,13,positive_detection_records
+AZE,Azerbaijan,125,18,45,37,25,positive_detection_records
+AUT,Austria,37,2,21,4,10,positive_detection_records
+AUS,Australia,4588,339,1341,1465,1443,positive_detection_records
+IOA,Australian Indian Ocean Territories,0,0,0,0,0,zero_returned_positive_detection
+HMD,Heard Island and McDonald Islands,0,0,0,0,0,zero_returned_positive_detection
+NFK,Norfolk Island,0,0,0,0,0,zero_returned_positive_detection
+ATC,Ashmore and Cartier Islands,0,0,0,0,0,zero_returned_positive_detection
+ARM,Armenia,37,2,17,7,11,positive_detection_records
+ARG,Argentina,1084,93,362,354,275,positive_detection_records
+ATG,Antigua and Barbuda,0,0,0,0,0,zero_returned_positive_detection
+AGO,Angola,38603,1804,12435,9944,14420,positive_detection_records
+AND,Andorra,0,0,0,0,0,zero_returned_positive_detection
+DZA,Algeria,740,15,269,226,230,positive_detection_records
+ALB,Albania,138,3,58,44,33,positive_detection_records
+AFG,Afghanistan,11,2,2,4,3,positive_detection_records
+KAS,Siachen Glacier,0,0,0,0,0,zero_returned_positive_detection
+ATA,Antarctica,9,0,4,4,1,positive_detection_records
+SXM,Sint Maarten,0,0,0,0,0,zero_returned_positive_detection
+TUV,Tuvalu,0,0,0,0,0,zero_returned_positive_detection

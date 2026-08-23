@@ -146,7 +146,7 @@ export function EvidenceExplorer({ data }: EvidenceExplorerProps) {
     <main className="app-shell">
       <header className="app-header">
         <div className="brand-block">
-          <span className="eyebrow">Kalimantan wildfire research · evidence explorer</span>
+          <span className="eyebrow">Global + Kalimantan wildfire research · evidence explorer</span>
           <h1>{data.title}</h1>
         </div>
         <div className="header-status" aria-label="Research status">
@@ -176,11 +176,11 @@ export function EvidenceExplorer({ data }: EvidenceExplorerProps) {
         <div>
           <p className="eyebrow">Interactive aggregate context — not a fire-risk map</p>
           <h2 id="purpose-heading">Explore what the currently acquired evidence can support.</h2>
-          <p className="hero-copy">The first globe is intentionally a Kalimantan province layer because SiPongi and GWIS only report that geography. A separate WGS84 globe below plots the global country comparison, so other countries are visible without mixing incompatible reporting units.</p>
+          <p className="hero-copy">The default globe is a WGS84 country layer covering the frozen global boundary set, colored only by aggregate satellite detection records or peatland share. The Kalimantan province layer remains separate because SiPongi and GWIS use incompatible local reporting units.</p>
           <div className="coverage-callout" aria-label="Geographic coverage">
             <div><strong>Local layer</strong><span>5 current / 4 legacy Kalimantan units</span></div>
             <div><strong>Global layer</strong><span>{data.peat_fire_comparison?.matched_country_count ?? 0} matched countries</span></div>
-            <button type="button" onClick={jumpToGlobalComparison}>Jump to global globe ↓</button>
+            <button type="button" onClick={jumpToGlobalComparison}>Focus global globe ↓</button>
           </div>
         </div>
         <div className="guardrail-card">
@@ -190,6 +190,8 @@ export function EvidenceExplorer({ data }: EvidenceExplorerProps) {
           <button type="button" className="text-button" onClick={() => setLimitationsOpen(true)}>Read evidence boundaries</button>
         </div>
       </section>
+
+      {data.peat_fire_comparison && <PeatFireComparisonPanel comparison={data.peat_fire_comparison} latestGlobalFire={data.latest_global_fire} />}
 
       <section className="navigator-card" aria-label="Explorer controls">
         <div className="control-cluster">
@@ -329,7 +331,6 @@ export function EvidenceExplorer({ data }: EvidenceExplorerProps) {
         </section>
       )}
 
-      {data.peat_fire_comparison && <PeatFireComparisonPanel comparison={data.peat_fire_comparison} />}
       <ConditionalPeatHypothesisPanel audit={data.condition_phase_audit ?? null} />
 
       <section className="table-card" aria-labelledby="province-table-heading">
@@ -411,7 +412,7 @@ export function EvidenceExplorer({ data }: EvidenceExplorerProps) {
   );
 }
 
-function PeatFireComparisonPanel({ comparison }: { comparison: PeatFireComparison }) {
+function PeatFireComparisonPanel({ comparison, latestGlobalFire }: { comparison: PeatFireComparison; latestGlobalFire?: ExplorerData["latest_global_fire"] }) {
   const model = comparison.primary_fixed_effect_model;
   const ci = model.ci95 ?? [null, null];
   const p = model.p_two_sided;
@@ -434,7 +435,7 @@ function PeatFireComparisonPanel({ comparison }: { comparison: PeatFireCompariso
           <span className="eyebrow">Global comparison · completed 2024 fire year</span>
           <h2 id="peat-fire-heading">Does peatland show more fire detections?</h2>
           <p>
-            This separates the two layers: peatland is a mapped baseline exposure area; each circle is a country-level aggregate of NASA MODIS active-fire detections. A coloured country area is not a claim that the whole country burned, and the points are not a complete inventory of fires.
+            The chart remains the completed-2024 scientific comparison. The globe below defaults to the latest validated closed-day FIRMS NRT snapshot when available. Peatland is a mapped baseline exposure area; each circle is a country-level aggregate of NASA MODIS active-fire detections. A coloured country area is not a claim that the whole country burned, and the points are not a complete inventory of fires.
           </p>
         </div>
         <span className="layer-key">Exploratory · not causal</span>
@@ -464,7 +465,7 @@ function PeatFireComparisonPanel({ comparison }: { comparison: PeatFireCompariso
           <div className="peat-stat"><span>Interpretation</span><strong>{p !== null && p !== undefined && p < 0.05 ? "Evidence of association" : "Not statistically significant"}</strong><small>CI includes 1, so this test does not establish higher detection in peatland.</small></div>
         </div>
       </div>
-      <GlobalFireGlobe comparison={comparison} />
+      <GlobalFireGlobe comparison={comparison} latestGlobalFire={latestGlobalFire} />
       <div className="peat-threshold-table-wrap">
         <h3>Threshold sensitivity</h3>
         <p className="table-explainer">The conclusion is unchanged when “peatland” is defined as a cell with at least 25%, 50%, or 75% peat extent.</p>

@@ -1,7 +1,7 @@
 {
   "schema_version": "evidence-explorer/v2",
-  "generated_at_utc": "2026-08-23T04:24:08.511642+00:00",
-  "title": "Kalimantan Fire Evidence Explorer",
+  "generated_at_utc": "2026-08-23T14:44:10.482317+00:00",
+  "title": "Global + Kalimantan Fire Evidence Explorer",
   "display_status": {
     "label": "Descriptive evidence only",
     "primary_association": "NI - Not identifiable",
@@ -118,8 +118,8 @@
   "ledger": {
     "valid": true,
     "reason": "valid",
-    "entry_count": 36,
-    "latest_entry_sha256": "0c0fb4422692171b5486648c237c76cd559745e567fed3b13c1cc6bda8bdff68"
+    "entry_count": 38,
+    "latest_entry_sha256": "43bfc21e0629aa8207d6d5b3a73ea0ef908f2f2f3f581664607a2344d31814e8"
   },
   "quality": {
     "sipongi": {
@@ -27913,6 +27913,2458 @@
       "fire": "https://firms.modaps.eosdis.nasa.gov/data/country/yearly_summary_files.txt",
       "boundaries": "https://www.naturalearthdata.com/downloads/50m-cultural-vectors/"
     }
+  },
+  "latest_global_fire": {
+    "schema_version": "firms-global-nrt-country/v1",
+    "status": "validated_closed_day_aggregate",
+    "snapshot_date": "2026-08-22",
+    "retrieved_at_utc": "2026-08-23T14:35:02.968817+00:00",
+    "aggregation_completed_at_utc": "2026-08-23T14:36:56.567754+00:00",
+    "date_basis": "NASA FIRMS NRT portal acquisition date; closed UTC day",
+    "metric": "positive FIRMS active-fire detection records",
+    "source_url": "https://nrt3.modaps.eosdis.nasa.gov/archive/FIRMS/",
+    "raw_record_count": 394627,
+    "matched_point_count": 392696,
+    "unmatched_point_count": 1931,
+    "positive_country_count": 155,
+    "country_count": 242,
+    "sensor_record_counts": {
+      "MODIS": 21903,
+      "VIIRS_NOAA20": 123264,
+      "VIIRS_NOAA21": 120552,
+      "VIIRS_SNPP": 128908
+    },
+    "country_geometry": {
+      "path": "apps/evidence-explorer/public/geo/global-countries.geojson",
+      "sha256": "daf41000ae2924746ac6be56014ae7a07412ba1873d7d054dbc3f267846520cf",
+      "feature_count": 242
+    },
+    "derived_sha256": "ea2f67a05446b44a0d0f255403f4c7f8e6a48e58af883861a4b022be5948656d",
+    "raw_records_embedded": false,
+    "has_observation_denominator": false,
+    "interpretation": "Counts are positive satellite detection records, not unique fires, burned area, fire rates, or no-fire evidence.",
+    "countries": [
+      {
+        "country_id": "ZWE",
+        "country": "Zimbabwe",
+        "positive_detection_count": 3840,
+        "modis_count": 228,
+        "viirs_noaa20_count": 913,
+        "viirs_noaa21_count": 1146,
+        "viirs_snpp_count": 1553,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "ZMB",
+        "country": "Zambia",
+        "positive_detection_count": 25367,
+        "modis_count": 627,
+        "viirs_noaa20_count": 7755,
+        "viirs_noaa21_count": 8539,
+        "viirs_snpp_count": 8446,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "YEM",
+        "country": "Yemen",
+        "positive_detection_count": 15,
+        "modis_count": 0,
+        "viirs_noaa20_count": 5,
+        "viirs_noaa21_count": 4,
+        "viirs_snpp_count": 6,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "VNM",
+        "country": "Vietnam",
+        "positive_detection_count": 239,
+        "modis_count": 17,
+        "viirs_noaa20_count": 97,
+        "viirs_noaa21_count": 69,
+        "viirs_snpp_count": 56,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "VEN",
+        "country": "Venezuela",
+        "positive_detection_count": 488,
+        "modis_count": 46,
+        "viirs_noaa20_count": 151,
+        "viirs_noaa21_count": 138,
+        "viirs_snpp_count": 153,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "VAT",
+        "country": "Vatican City",
+        "positive_detection_count": 0,
+        "modis_count": 0,
+        "viirs_noaa20_count": 0,
+        "viirs_noaa21_count": 0,
+        "viirs_snpp_count": 0,
+        "status": "zero_returned_positive_detection"
+      },
+      {
+        "country_id": "VUT",
+        "country": "Vanuatu",
+        "positive_detection_count": 0,
+        "modis_count": 0,
+        "viirs_noaa20_count": 0,
+        "viirs_noaa21_count": 0,
+        "viirs_snpp_count": 0,
+        "status": "zero_returned_positive_detection"
+      },
+      {
+        "country_id": "UZB",
+        "country": "Uzbekistan",
+        "positive_detection_count": 116,
+        "modis_count": 5,
+        "viirs_noaa20_count": 41,
+        "viirs_noaa21_count": 26,
+        "viirs_snpp_count": 44,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "URY",
+        "country": "Uruguay",
+        "positive_detection_count": 19,
+        "modis_count": 1,
+        "viirs_noaa20_count": 5,
+        "viirs_noaa21_count": 7,
+        "viirs_snpp_count": 6,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "FSM",
+        "country": "Federated States of Micronesia",
+        "positive_detection_count": 0,
+        "modis_count": 0,
+        "viirs_noaa20_count": 0,
+        "viirs_noaa21_count": 0,
+        "viirs_snpp_count": 0,
+        "status": "zero_returned_positive_detection"
+      },
+      {
+        "country_id": "MHL",
+        "country": "Marshall Islands",
+        "positive_detection_count": 0,
+        "modis_count": 0,
+        "viirs_noaa20_count": 0,
+        "viirs_noaa21_count": 0,
+        "viirs_snpp_count": 0,
+        "status": "zero_returned_positive_detection"
+      },
+      {
+        "country_id": "MNP",
+        "country": "Northern Mariana Islands",
+        "positive_detection_count": 0,
+        "modis_count": 0,
+        "viirs_noaa20_count": 0,
+        "viirs_noaa21_count": 0,
+        "viirs_snpp_count": 0,
+        "status": "zero_returned_positive_detection"
+      },
+      {
+        "country_id": "VIR",
+        "country": "United States Virgin Islands",
+        "positive_detection_count": 0,
+        "modis_count": 0,
+        "viirs_noaa20_count": 0,
+        "viirs_noaa21_count": 0,
+        "viirs_snpp_count": 0,
+        "status": "zero_returned_positive_detection"
+      },
+      {
+        "country_id": "GUM",
+        "country": "Guam",
+        "positive_detection_count": 0,
+        "modis_count": 0,
+        "viirs_noaa20_count": 0,
+        "viirs_noaa21_count": 0,
+        "viirs_snpp_count": 0,
+        "status": "zero_returned_positive_detection"
+      },
+      {
+        "country_id": "ASM",
+        "country": "American Samoa",
+        "positive_detection_count": 0,
+        "modis_count": 0,
+        "viirs_noaa20_count": 0,
+        "viirs_noaa21_count": 0,
+        "viirs_snpp_count": 0,
+        "status": "zero_returned_positive_detection"
+      },
+      {
+        "country_id": "PRI",
+        "country": "Puerto Rico",
+        "positive_detection_count": 0,
+        "modis_count": 0,
+        "viirs_noaa20_count": 0,
+        "viirs_noaa21_count": 0,
+        "viirs_snpp_count": 0,
+        "status": "zero_returned_positive_detection"
+      },
+      {
+        "country_id": "USA",
+        "country": "United States of America",
+        "positive_detection_count": 5324,
+        "modis_count": 309,
+        "viirs_noaa20_count": 1781,
+        "viirs_noaa21_count": 1476,
+        "viirs_snpp_count": 1758,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "SGS",
+        "country": "South Georgia and the South Sandwich Islands",
+        "positive_detection_count": 0,
+        "modis_count": 0,
+        "viirs_noaa20_count": 0,
+        "viirs_noaa21_count": 0,
+        "viirs_snpp_count": 0,
+        "status": "zero_returned_positive_detection"
+      },
+      {
+        "country_id": "IOT",
+        "country": "British Indian Ocean Territory",
+        "positive_detection_count": 0,
+        "modis_count": 0,
+        "viirs_noaa20_count": 0,
+        "viirs_noaa21_count": 0,
+        "viirs_snpp_count": 0,
+        "status": "zero_returned_positive_detection"
+      },
+      {
+        "country_id": "SHN",
+        "country": "Saint Helena",
+        "positive_detection_count": 0,
+        "modis_count": 0,
+        "viirs_noaa20_count": 0,
+        "viirs_noaa21_count": 0,
+        "viirs_snpp_count": 0,
+        "status": "zero_returned_positive_detection"
+      },
+      {
+        "country_id": "PCN",
+        "country": "Pitcairn Islands",
+        "positive_detection_count": 0,
+        "modis_count": 0,
+        "viirs_noaa20_count": 0,
+        "viirs_noaa21_count": 0,
+        "viirs_snpp_count": 0,
+        "status": "zero_returned_positive_detection"
+      },
+      {
+        "country_id": "AIA",
+        "country": "Anguilla",
+        "positive_detection_count": 0,
+        "modis_count": 0,
+        "viirs_noaa20_count": 0,
+        "viirs_noaa21_count": 0,
+        "viirs_snpp_count": 0,
+        "status": "zero_returned_positive_detection"
+      },
+      {
+        "country_id": "FLK",
+        "country": "Falkland Islands",
+        "positive_detection_count": 0,
+        "modis_count": 0,
+        "viirs_noaa20_count": 0,
+        "viirs_noaa21_count": 0,
+        "viirs_snpp_count": 0,
+        "status": "zero_returned_positive_detection"
+      },
+      {
+        "country_id": "CYM",
+        "country": "Cayman Islands",
+        "positive_detection_count": 0,
+        "modis_count": 0,
+        "viirs_noaa20_count": 0,
+        "viirs_noaa21_count": 0,
+        "viirs_snpp_count": 0,
+        "status": "zero_returned_positive_detection"
+      },
+      {
+        "country_id": "BMU",
+        "country": "Bermuda",
+        "positive_detection_count": 0,
+        "modis_count": 0,
+        "viirs_noaa20_count": 0,
+        "viirs_noaa21_count": 0,
+        "viirs_snpp_count": 0,
+        "status": "zero_returned_positive_detection"
+      },
+      {
+        "country_id": "VGB",
+        "country": "British Virgin Islands",
+        "positive_detection_count": 0,
+        "modis_count": 0,
+        "viirs_noaa20_count": 0,
+        "viirs_noaa21_count": 0,
+        "viirs_snpp_count": 0,
+        "status": "zero_returned_positive_detection"
+      },
+      {
+        "country_id": "TCA",
+        "country": "Turks and Caicos Islands",
+        "positive_detection_count": 0,
+        "modis_count": 0,
+        "viirs_noaa20_count": 0,
+        "viirs_noaa21_count": 0,
+        "viirs_snpp_count": 0,
+        "status": "zero_returned_positive_detection"
+      },
+      {
+        "country_id": "MSR",
+        "country": "Montserrat",
+        "positive_detection_count": 0,
+        "modis_count": 0,
+        "viirs_noaa20_count": 0,
+        "viirs_noaa21_count": 0,
+        "viirs_snpp_count": 0,
+        "status": "zero_returned_positive_detection"
+      },
+      {
+        "country_id": "JEY",
+        "country": "Jersey",
+        "positive_detection_count": 0,
+        "modis_count": 0,
+        "viirs_noaa20_count": 0,
+        "viirs_noaa21_count": 0,
+        "viirs_snpp_count": 0,
+        "status": "zero_returned_positive_detection"
+      },
+      {
+        "country_id": "GGY",
+        "country": "Guernsey",
+        "positive_detection_count": 0,
+        "modis_count": 0,
+        "viirs_noaa20_count": 0,
+        "viirs_noaa21_count": 0,
+        "viirs_snpp_count": 0,
+        "status": "zero_returned_positive_detection"
+      },
+      {
+        "country_id": "IMN",
+        "country": "Isle of Man",
+        "positive_detection_count": 0,
+        "modis_count": 0,
+        "viirs_noaa20_count": 0,
+        "viirs_noaa21_count": 0,
+        "viirs_snpp_count": 0,
+        "status": "zero_returned_positive_detection"
+      },
+      {
+        "country_id": "GBR",
+        "country": "United Kingdom",
+        "positive_detection_count": 81,
+        "modis_count": 0,
+        "viirs_noaa20_count": 16,
+        "viirs_noaa21_count": 15,
+        "viirs_snpp_count": 50,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "ARE",
+        "country": "United Arab Emirates",
+        "positive_detection_count": 125,
+        "modis_count": 15,
+        "viirs_noaa20_count": 32,
+        "viirs_noaa21_count": 63,
+        "viirs_snpp_count": 15,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "UKR",
+        "country": "Ukraine",
+        "positive_detection_count": 6922,
+        "modis_count": 470,
+        "viirs_noaa20_count": 2662,
+        "viirs_noaa21_count": 1487,
+        "viirs_snpp_count": 2303,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "UGA",
+        "country": "Uganda",
+        "positive_detection_count": 396,
+        "modis_count": 47,
+        "viirs_noaa20_count": 169,
+        "viirs_noaa21_count": 58,
+        "viirs_snpp_count": 122,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "TKM",
+        "country": "Turkmenistan",
+        "positive_detection_count": 472,
+        "modis_count": 1,
+        "viirs_noaa20_count": 166,
+        "viirs_noaa21_count": 121,
+        "viirs_snpp_count": 184,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "TUR",
+        "country": "Turkey",
+        "positive_detection_count": 500,
+        "modis_count": 13,
+        "viirs_noaa20_count": 250,
+        "viirs_noaa21_count": 96,
+        "viirs_snpp_count": 141,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "TUN",
+        "country": "Tunisia",
+        "positive_detection_count": 25,
+        "modis_count": 0,
+        "viirs_noaa20_count": 7,
+        "viirs_noaa21_count": 7,
+        "viirs_snpp_count": 11,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "TTO",
+        "country": "Trinidad and Tobago",
+        "positive_detection_count": 0,
+        "modis_count": 0,
+        "viirs_noaa20_count": 0,
+        "viirs_noaa21_count": 0,
+        "viirs_snpp_count": 0,
+        "status": "zero_returned_positive_detection"
+      },
+      {
+        "country_id": "TON",
+        "country": "Tonga",
+        "positive_detection_count": 0,
+        "modis_count": 0,
+        "viirs_noaa20_count": 0,
+        "viirs_noaa21_count": 0,
+        "viirs_snpp_count": 0,
+        "status": "zero_returned_positive_detection"
+      },
+      {
+        "country_id": "TGO",
+        "country": "Togo",
+        "positive_detection_count": 0,
+        "modis_count": 0,
+        "viirs_noaa20_count": 0,
+        "viirs_noaa21_count": 0,
+        "viirs_snpp_count": 0,
+        "status": "zero_returned_positive_detection"
+      },
+      {
+        "country_id": "TLS",
+        "country": "East Timor",
+        "positive_detection_count": 92,
+        "modis_count": 0,
+        "viirs_noaa20_count": 24,
+        "viirs_noaa21_count": 49,
+        "viirs_snpp_count": 19,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "THA",
+        "country": "Thailand",
+        "positive_detection_count": 27,
+        "modis_count": 2,
+        "viirs_noaa20_count": 12,
+        "viirs_noaa21_count": 8,
+        "viirs_snpp_count": 5,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "TZA",
+        "country": "Tanzania",
+        "positive_detection_count": 7479,
+        "modis_count": 719,
+        "viirs_noaa20_count": 2931,
+        "viirs_noaa21_count": 1860,
+        "viirs_snpp_count": 1969,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "TJK",
+        "country": "Tajikistan",
+        "positive_detection_count": 6,
+        "modis_count": 0,
+        "viirs_noaa20_count": 2,
+        "viirs_noaa21_count": 2,
+        "viirs_snpp_count": 2,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "TWN",
+        "country": "Taiwan",
+        "positive_detection_count": 2,
+        "modis_count": 0,
+        "viirs_noaa20_count": 0,
+        "viirs_noaa21_count": 1,
+        "viirs_snpp_count": 1,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "SYR",
+        "country": "Syria",
+        "positive_detection_count": 273,
+        "modis_count": 8,
+        "viirs_noaa20_count": 113,
+        "viirs_noaa21_count": 42,
+        "viirs_snpp_count": 110,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "CHE",
+        "country": "Switzerland",
+        "positive_detection_count": 9,
+        "modis_count": 0,
+        "viirs_noaa20_count": 3,
+        "viirs_noaa21_count": 3,
+        "viirs_snpp_count": 3,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "SWE",
+        "country": "Sweden",
+        "positive_detection_count": 19,
+        "modis_count": 0,
+        "viirs_noaa20_count": 6,
+        "viirs_noaa21_count": 4,
+        "viirs_snpp_count": 9,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "SWZ",
+        "country": "Eswatini",
+        "positive_detection_count": 435,
+        "modis_count": 6,
+        "viirs_noaa20_count": 148,
+        "viirs_noaa21_count": 165,
+        "viirs_snpp_count": 116,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "SUR",
+        "country": "Suriname",
+        "positive_detection_count": 24,
+        "modis_count": 0,
+        "viirs_noaa20_count": 6,
+        "viirs_noaa21_count": 8,
+        "viirs_snpp_count": 10,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "SDS",
+        "country": "South Sudan",
+        "positive_detection_count": 83,
+        "modis_count": 6,
+        "viirs_noaa20_count": 38,
+        "viirs_noaa21_count": 18,
+        "viirs_snpp_count": 21,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "SDN",
+        "country": "Sudan",
+        "positive_detection_count": 33,
+        "modis_count": 4,
+        "viirs_noaa20_count": 4,
+        "viirs_noaa21_count": 23,
+        "viirs_snpp_count": 2,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "LKA",
+        "country": "Sri Lanka",
+        "positive_detection_count": 192,
+        "modis_count": 51,
+        "viirs_noaa20_count": 45,
+        "viirs_noaa21_count": 35,
+        "viirs_snpp_count": 61,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "ESP",
+        "country": "Spain",
+        "positive_detection_count": 105,
+        "modis_count": 9,
+        "viirs_noaa20_count": 23,
+        "viirs_noaa21_count": 37,
+        "viirs_snpp_count": 36,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "KOR",
+        "country": "South Korea",
+        "positive_detection_count": 31,
+        "modis_count": 0,
+        "viirs_noaa20_count": 17,
+        "viirs_noaa21_count": 6,
+        "viirs_snpp_count": 8,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "ZAF",
+        "country": "South Africa",
+        "positive_detection_count": 8476,
+        "modis_count": 348,
+        "viirs_noaa20_count": 2807,
+        "viirs_noaa21_count": 2631,
+        "viirs_snpp_count": 2690,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "SOM",
+        "country": "Somalia",
+        "positive_detection_count": 13,
+        "modis_count": 0,
+        "viirs_noaa20_count": 6,
+        "viirs_noaa21_count": 5,
+        "viirs_snpp_count": 2,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "SOL",
+        "country": "Somaliland",
+        "positive_detection_count": 3,
+        "modis_count": 0,
+        "viirs_noaa20_count": 0,
+        "viirs_noaa21_count": 1,
+        "viirs_snpp_count": 2,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "SLB",
+        "country": "Solomon Islands",
+        "positive_detection_count": 0,
+        "modis_count": 0,
+        "viirs_noaa20_count": 0,
+        "viirs_noaa21_count": 0,
+        "viirs_snpp_count": 0,
+        "status": "zero_returned_positive_detection"
+      },
+      {
+        "country_id": "SVK",
+        "country": "Slovakia",
+        "positive_detection_count": 10,
+        "modis_count": 2,
+        "viirs_noaa20_count": 4,
+        "viirs_noaa21_count": 2,
+        "viirs_snpp_count": 2,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "SVN",
+        "country": "Slovenia",
+        "positive_detection_count": 0,
+        "modis_count": 0,
+        "viirs_noaa20_count": 0,
+        "viirs_noaa21_count": 0,
+        "viirs_snpp_count": 0,
+        "status": "zero_returned_positive_detection"
+      },
+      {
+        "country_id": "SGP",
+        "country": "Singapore",
+        "positive_detection_count": 0,
+        "modis_count": 0,
+        "viirs_noaa20_count": 0,
+        "viirs_noaa21_count": 0,
+        "viirs_snpp_count": 0,
+        "status": "zero_returned_positive_detection"
+      },
+      {
+        "country_id": "SLE",
+        "country": "Sierra Leone",
+        "positive_detection_count": 0,
+        "modis_count": 0,
+        "viirs_noaa20_count": 0,
+        "viirs_noaa21_count": 0,
+        "viirs_snpp_count": 0,
+        "status": "zero_returned_positive_detection"
+      },
+      {
+        "country_id": "SYC",
+        "country": "Seychelles",
+        "positive_detection_count": 0,
+        "modis_count": 0,
+        "viirs_noaa20_count": 0,
+        "viirs_noaa21_count": 0,
+        "viirs_snpp_count": 0,
+        "status": "zero_returned_positive_detection"
+      },
+      {
+        "country_id": "SRB",
+        "country": "Serbia",
+        "positive_detection_count": 338,
+        "modis_count": 36,
+        "viirs_noaa20_count": 127,
+        "viirs_noaa21_count": 117,
+        "viirs_snpp_count": 58,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "SEN",
+        "country": "Senegal",
+        "positive_detection_count": 9,
+        "modis_count": 0,
+        "viirs_noaa20_count": 3,
+        "viirs_noaa21_count": 3,
+        "viirs_snpp_count": 3,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "SAU",
+        "country": "Saudi Arabia",
+        "positive_detection_count": 264,
+        "modis_count": 7,
+        "viirs_noaa20_count": 76,
+        "viirs_noaa21_count": 81,
+        "viirs_snpp_count": 100,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "STP",
+        "country": "São Tomé and Príncipe",
+        "positive_detection_count": 0,
+        "modis_count": 0,
+        "viirs_noaa20_count": 0,
+        "viirs_noaa21_count": 0,
+        "viirs_snpp_count": 0,
+        "status": "zero_returned_positive_detection"
+      },
+      {
+        "country_id": "SMR",
+        "country": "San Marino",
+        "positive_detection_count": 0,
+        "modis_count": 0,
+        "viirs_noaa20_count": 0,
+        "viirs_noaa21_count": 0,
+        "viirs_snpp_count": 0,
+        "status": "zero_returned_positive_detection"
+      },
+      {
+        "country_id": "WSM",
+        "country": "Samoa",
+        "positive_detection_count": 0,
+        "modis_count": 0,
+        "viirs_noaa20_count": 0,
+        "viirs_noaa21_count": 0,
+        "viirs_snpp_count": 0,
+        "status": "zero_returned_positive_detection"
+      },
+      {
+        "country_id": "VCT",
+        "country": "Saint Vincent and the Grenadines",
+        "positive_detection_count": 0,
+        "modis_count": 0,
+        "viirs_noaa20_count": 0,
+        "viirs_noaa21_count": 0,
+        "viirs_snpp_count": 0,
+        "status": "zero_returned_positive_detection"
+      },
+      {
+        "country_id": "LCA",
+        "country": "Saint Lucia",
+        "positive_detection_count": 0,
+        "modis_count": 0,
+        "viirs_noaa20_count": 0,
+        "viirs_noaa21_count": 0,
+        "viirs_snpp_count": 0,
+        "status": "zero_returned_positive_detection"
+      },
+      {
+        "country_id": "KNA",
+        "country": "Saint Kitts and Nevis",
+        "positive_detection_count": 0,
+        "modis_count": 0,
+        "viirs_noaa20_count": 0,
+        "viirs_noaa21_count": 0,
+        "viirs_snpp_count": 0,
+        "status": "zero_returned_positive_detection"
+      },
+      {
+        "country_id": "RWA",
+        "country": "Rwanda",
+        "positive_detection_count": 32,
+        "modis_count": 2,
+        "viirs_noaa20_count": 17,
+        "viirs_noaa21_count": 9,
+        "viirs_snpp_count": 4,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "RUS",
+        "country": "Russia",
+        "positive_detection_count": 97123,
+        "modis_count": 5407,
+        "viirs_noaa20_count": 30973,
+        "viirs_noaa21_count": 30337,
+        "viirs_snpp_count": 30406,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "ROU",
+        "country": "Romania",
+        "positive_detection_count": 235,
+        "modis_count": 21,
+        "viirs_noaa20_count": 91,
+        "viirs_noaa21_count": 69,
+        "viirs_snpp_count": 54,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "QAT",
+        "country": "Qatar",
+        "positive_detection_count": 12,
+        "modis_count": 0,
+        "viirs_noaa20_count": 3,
+        "viirs_noaa21_count": 2,
+        "viirs_snpp_count": 7,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "PRT",
+        "country": "Portugal",
+        "positive_detection_count": 79,
+        "modis_count": 16,
+        "viirs_noaa20_count": 11,
+        "viirs_noaa21_count": 17,
+        "viirs_snpp_count": 35,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "POL",
+        "country": "Poland",
+        "positive_detection_count": 11,
+        "modis_count": 0,
+        "viirs_noaa20_count": 10,
+        "viirs_noaa21_count": 1,
+        "viirs_snpp_count": 0,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "PHL",
+        "country": "Philippines",
+        "positive_detection_count": 18,
+        "modis_count": 0,
+        "viirs_noaa20_count": 9,
+        "viirs_noaa21_count": 4,
+        "viirs_snpp_count": 5,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "PER",
+        "country": "Peru",
+        "positive_detection_count": 464,
+        "modis_count": 13,
+        "viirs_noaa20_count": 100,
+        "viirs_noaa21_count": 200,
+        "viirs_snpp_count": 151,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "PRY",
+        "country": "Paraguay",
+        "positive_detection_count": 1433,
+        "modis_count": 173,
+        "viirs_noaa20_count": 417,
+        "viirs_noaa21_count": 378,
+        "viirs_snpp_count": 465,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "PNG",
+        "country": "Papua New Guinea",
+        "positive_detection_count": 6579,
+        "modis_count": 58,
+        "viirs_noaa20_count": 1878,
+        "viirs_noaa21_count": 2040,
+        "viirs_snpp_count": 2603,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "PAN",
+        "country": "Panama",
+        "positive_detection_count": 1,
+        "modis_count": 0,
+        "viirs_noaa20_count": 1,
+        "viirs_noaa21_count": 0,
+        "viirs_snpp_count": 0,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "PLW",
+        "country": "Palau",
+        "positive_detection_count": 0,
+        "modis_count": 0,
+        "viirs_noaa20_count": 0,
+        "viirs_noaa21_count": 0,
+        "viirs_snpp_count": 0,
+        "status": "zero_returned_positive_detection"
+      },
+      {
+        "country_id": "PAK",
+        "country": "Pakistan",
+        "positive_detection_count": 40,
+        "modis_count": 4,
+        "viirs_noaa20_count": 8,
+        "viirs_noaa21_count": 14,
+        "viirs_snpp_count": 14,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "OMN",
+        "country": "Oman",
+        "positive_detection_count": 231,
+        "modis_count": 9,
+        "viirs_noaa20_count": 68,
+        "viirs_noaa21_count": 94,
+        "viirs_snpp_count": 60,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "NOR",
+        "country": "Norway",
+        "positive_detection_count": 14,
+        "modis_count": 0,
+        "viirs_noaa20_count": 6,
+        "viirs_noaa21_count": 4,
+        "viirs_snpp_count": 4,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "PRK",
+        "country": "North Korea",
+        "positive_detection_count": 2,
+        "modis_count": 0,
+        "viirs_noaa20_count": 1,
+        "viirs_noaa21_count": 1,
+        "viirs_snpp_count": 0,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "NGA",
+        "country": "Nigeria",
+        "positive_detection_count": 24,
+        "modis_count": 1,
+        "viirs_noaa20_count": 10,
+        "viirs_noaa21_count": 6,
+        "viirs_snpp_count": 7,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "NER",
+        "country": "Niger",
+        "positive_detection_count": 0,
+        "modis_count": 0,
+        "viirs_noaa20_count": 0,
+        "viirs_noaa21_count": 0,
+        "viirs_snpp_count": 0,
+        "status": "zero_returned_positive_detection"
+      },
+      {
+        "country_id": "NIC",
+        "country": "Nicaragua",
+        "positive_detection_count": 30,
+        "modis_count": 1,
+        "viirs_noaa20_count": 7,
+        "viirs_noaa21_count": 5,
+        "viirs_snpp_count": 17,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "NZL",
+        "country": "New Zealand",
+        "positive_detection_count": 16,
+        "modis_count": 0,
+        "viirs_noaa20_count": 4,
+        "viirs_noaa21_count": 7,
+        "viirs_snpp_count": 5,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "NIU",
+        "country": "Niue",
+        "positive_detection_count": 0,
+        "modis_count": 0,
+        "viirs_noaa20_count": 0,
+        "viirs_noaa21_count": 0,
+        "viirs_snpp_count": 0,
+        "status": "zero_returned_positive_detection"
+      },
+      {
+        "country_id": "COK",
+        "country": "Cook Islands",
+        "positive_detection_count": 0,
+        "modis_count": 0,
+        "viirs_noaa20_count": 0,
+        "viirs_noaa21_count": 0,
+        "viirs_snpp_count": 0,
+        "status": "zero_returned_positive_detection"
+      },
+      {
+        "country_id": "NLD",
+        "country": "Netherlands",
+        "positive_detection_count": 10,
+        "modis_count": 4,
+        "viirs_noaa20_count": 3,
+        "viirs_noaa21_count": 3,
+        "viirs_snpp_count": 0,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "ABW",
+        "country": "Aruba",
+        "positive_detection_count": 0,
+        "modis_count": 0,
+        "viirs_noaa20_count": 0,
+        "viirs_noaa21_count": 0,
+        "viirs_snpp_count": 0,
+        "status": "zero_returned_positive_detection"
+      },
+      {
+        "country_id": "CUW",
+        "country": "Curaçao",
+        "positive_detection_count": 1,
+        "modis_count": 0,
+        "viirs_noaa20_count": 1,
+        "viirs_noaa21_count": 0,
+        "viirs_snpp_count": 0,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "NPL",
+        "country": "Nepal",
+        "positive_detection_count": 0,
+        "modis_count": 0,
+        "viirs_noaa20_count": 0,
+        "viirs_noaa21_count": 0,
+        "viirs_snpp_count": 0,
+        "status": "zero_returned_positive_detection"
+      },
+      {
+        "country_id": "NRU",
+        "country": "Nauru",
+        "positive_detection_count": 0,
+        "modis_count": 0,
+        "viirs_noaa20_count": 0,
+        "viirs_noaa21_count": 0,
+        "viirs_snpp_count": 0,
+        "status": "zero_returned_positive_detection"
+      },
+      {
+        "country_id": "NAM",
+        "country": "Namibia",
+        "positive_detection_count": 1146,
+        "modis_count": 37,
+        "viirs_noaa20_count": 403,
+        "viirs_noaa21_count": 273,
+        "viirs_snpp_count": 433,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "MOZ",
+        "country": "Mozambique",
+        "positive_detection_count": 42280,
+        "modis_count": 3739,
+        "viirs_noaa20_count": 14560,
+        "viirs_noaa21_count": 11350,
+        "viirs_snpp_count": 12631,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "MAR",
+        "country": "Morocco",
+        "positive_detection_count": 23,
+        "modis_count": 0,
+        "viirs_noaa20_count": 7,
+        "viirs_noaa21_count": 7,
+        "viirs_snpp_count": 9,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "ESH",
+        "country": "Western Sahara",
+        "positive_detection_count": 0,
+        "modis_count": 0,
+        "viirs_noaa20_count": 0,
+        "viirs_noaa21_count": 0,
+        "viirs_snpp_count": 0,
+        "status": "zero_returned_positive_detection"
+      },
+      {
+        "country_id": "MNE",
+        "country": "Montenegro",
+        "positive_detection_count": 63,
+        "modis_count": 7,
+        "viirs_noaa20_count": 30,
+        "viirs_noaa21_count": 14,
+        "viirs_snpp_count": 12,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "MNG",
+        "country": "Mongolia",
+        "positive_detection_count": 36,
+        "modis_count": 2,
+        "viirs_noaa20_count": 11,
+        "viirs_noaa21_count": 8,
+        "viirs_snpp_count": 15,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "MDA",
+        "country": "Moldova",
+        "positive_detection_count": 32,
+        "modis_count": 0,
+        "viirs_noaa20_count": 17,
+        "viirs_noaa21_count": 8,
+        "viirs_snpp_count": 7,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "MCO",
+        "country": "Monaco",
+        "positive_detection_count": 0,
+        "modis_count": 0,
+        "viirs_noaa20_count": 0,
+        "viirs_noaa21_count": 0,
+        "viirs_snpp_count": 0,
+        "status": "zero_returned_positive_detection"
+      },
+      {
+        "country_id": "MEX",
+        "country": "Mexico",
+        "positive_detection_count": 907,
+        "modis_count": 29,
+        "viirs_noaa20_count": 346,
+        "viirs_noaa21_count": 260,
+        "viirs_snpp_count": 272,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "MUS",
+        "country": "Mauritius",
+        "positive_detection_count": 0,
+        "modis_count": 0,
+        "viirs_noaa20_count": 0,
+        "viirs_noaa21_count": 0,
+        "viirs_snpp_count": 0,
+        "status": "zero_returned_positive_detection"
+      },
+      {
+        "country_id": "MRT",
+        "country": "Mauritania",
+        "positive_detection_count": 3,
+        "modis_count": 0,
+        "viirs_noaa20_count": 1,
+        "viirs_noaa21_count": 2,
+        "viirs_snpp_count": 0,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "MLT",
+        "country": "Malta",
+        "positive_detection_count": 0,
+        "modis_count": 0,
+        "viirs_noaa20_count": 0,
+        "viirs_noaa21_count": 0,
+        "viirs_snpp_count": 0,
+        "status": "zero_returned_positive_detection"
+      },
+      {
+        "country_id": "MLI",
+        "country": "Mali",
+        "positive_detection_count": 1,
+        "modis_count": 0,
+        "viirs_noaa20_count": 1,
+        "viirs_noaa21_count": 0,
+        "viirs_snpp_count": 0,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "MDV",
+        "country": "Maldives",
+        "positive_detection_count": 0,
+        "modis_count": 0,
+        "viirs_noaa20_count": 0,
+        "viirs_noaa21_count": 0,
+        "viirs_snpp_count": 0,
+        "status": "zero_returned_positive_detection"
+      },
+      {
+        "country_id": "MYS",
+        "country": "Malaysia",
+        "positive_detection_count": 268,
+        "modis_count": 9,
+        "viirs_noaa20_count": 100,
+        "viirs_noaa21_count": 78,
+        "viirs_snpp_count": 81,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "MWI",
+        "country": "Malawi",
+        "positive_detection_count": 1055,
+        "modis_count": 116,
+        "viirs_noaa20_count": 420,
+        "viirs_noaa21_count": 259,
+        "viirs_snpp_count": 260,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "MDG",
+        "country": "Madagascar",
+        "positive_detection_count": 6020,
+        "modis_count": 63,
+        "viirs_noaa20_count": 1970,
+        "viirs_noaa21_count": 1862,
+        "viirs_snpp_count": 2125,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "MKD",
+        "country": "North Macedonia",
+        "positive_detection_count": 350,
+        "modis_count": 43,
+        "viirs_noaa20_count": 102,
+        "viirs_noaa21_count": 129,
+        "viirs_snpp_count": 76,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "LUX",
+        "country": "Luxembourg",
+        "positive_detection_count": 0,
+        "modis_count": 0,
+        "viirs_noaa20_count": 0,
+        "viirs_noaa21_count": 0,
+        "viirs_snpp_count": 0,
+        "status": "zero_returned_positive_detection"
+      },
+      {
+        "country_id": "LTU",
+        "country": "Lithuania",
+        "positive_detection_count": 1,
+        "modis_count": 0,
+        "viirs_noaa20_count": 0,
+        "viirs_noaa21_count": 1,
+        "viirs_snpp_count": 0,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "LIE",
+        "country": "Liechtenstein",
+        "positive_detection_count": 0,
+        "modis_count": 0,
+        "viirs_noaa20_count": 0,
+        "viirs_noaa21_count": 0,
+        "viirs_snpp_count": 0,
+        "status": "zero_returned_positive_detection"
+      },
+      {
+        "country_id": "LBY",
+        "country": "Libya",
+        "positive_detection_count": 703,
+        "modis_count": 25,
+        "viirs_noaa20_count": 261,
+        "viirs_noaa21_count": 146,
+        "viirs_snpp_count": 271,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "LBR",
+        "country": "Liberia",
+        "positive_detection_count": 0,
+        "modis_count": 0,
+        "viirs_noaa20_count": 0,
+        "viirs_noaa21_count": 0,
+        "viirs_snpp_count": 0,
+        "status": "zero_returned_positive_detection"
+      },
+      {
+        "country_id": "LSO",
+        "country": "Lesotho",
+        "positive_detection_count": 200,
+        "modis_count": 4,
+        "viirs_noaa20_count": 55,
+        "viirs_noaa21_count": 55,
+        "viirs_snpp_count": 86,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "LBN",
+        "country": "Lebanon",
+        "positive_detection_count": 9,
+        "modis_count": 0,
+        "viirs_noaa20_count": 2,
+        "viirs_noaa21_count": 1,
+        "viirs_snpp_count": 6,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "LVA",
+        "country": "Latvia",
+        "positive_detection_count": 0,
+        "modis_count": 0,
+        "viirs_noaa20_count": 0,
+        "viirs_noaa21_count": 0,
+        "viirs_snpp_count": 0,
+        "status": "zero_returned_positive_detection"
+      },
+      {
+        "country_id": "LAO",
+        "country": "Laos",
+        "positive_detection_count": 0,
+        "modis_count": 0,
+        "viirs_noaa20_count": 0,
+        "viirs_noaa21_count": 0,
+        "viirs_snpp_count": 0,
+        "status": "zero_returned_positive_detection"
+      },
+      {
+        "country_id": "KGZ",
+        "country": "Kyrgyzstan",
+        "positive_detection_count": 1,
+        "modis_count": 0,
+        "viirs_noaa20_count": 0,
+        "viirs_noaa21_count": 1,
+        "viirs_snpp_count": 0,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "KWT",
+        "country": "Kuwait",
+        "positive_detection_count": 8,
+        "modis_count": 2,
+        "viirs_noaa20_count": 0,
+        "viirs_noaa21_count": 1,
+        "viirs_snpp_count": 5,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "KOS",
+        "country": "Kosovo",
+        "positive_detection_count": 100,
+        "modis_count": 7,
+        "viirs_noaa20_count": 36,
+        "viirs_noaa21_count": 29,
+        "viirs_snpp_count": 28,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "KIR",
+        "country": "Kiribati",
+        "positive_detection_count": 0,
+        "modis_count": 0,
+        "viirs_noaa20_count": 0,
+        "viirs_noaa21_count": 0,
+        "viirs_snpp_count": 0,
+        "status": "zero_returned_positive_detection"
+      },
+      {
+        "country_id": "KEN",
+        "country": "Kenya",
+        "positive_detection_count": 195,
+        "modis_count": 18,
+        "viirs_noaa20_count": 68,
+        "viirs_noaa21_count": 59,
+        "viirs_snpp_count": 50,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "KAZ",
+        "country": "Kazakhstan",
+        "positive_detection_count": 484,
+        "modis_count": 23,
+        "viirs_noaa20_count": 163,
+        "viirs_noaa21_count": 143,
+        "viirs_snpp_count": 155,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "JOR",
+        "country": "Jordan",
+        "positive_detection_count": 9,
+        "modis_count": 0,
+        "viirs_noaa20_count": 5,
+        "viirs_noaa21_count": 1,
+        "viirs_snpp_count": 3,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "JPN",
+        "country": "Japan",
+        "positive_detection_count": 185,
+        "modis_count": 2,
+        "viirs_noaa20_count": 70,
+        "viirs_noaa21_count": 51,
+        "viirs_snpp_count": 62,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "JAM",
+        "country": "Jamaica",
+        "positive_detection_count": 45,
+        "modis_count": 0,
+        "viirs_noaa20_count": 24,
+        "viirs_noaa21_count": 11,
+        "viirs_snpp_count": 10,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "ITA",
+        "country": "Italy",
+        "positive_detection_count": 435,
+        "modis_count": 24,
+        "viirs_noaa20_count": 150,
+        "viirs_noaa21_count": 135,
+        "viirs_snpp_count": 126,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "ISR",
+        "country": "Israel",
+        "positive_detection_count": 7,
+        "modis_count": 0,
+        "viirs_noaa20_count": 5,
+        "viirs_noaa21_count": 0,
+        "viirs_snpp_count": 2,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "PSX",
+        "country": "Palestine",
+        "positive_detection_count": 4,
+        "modis_count": 0,
+        "viirs_noaa20_count": 0,
+        "viirs_noaa21_count": 1,
+        "viirs_snpp_count": 3,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "IRL",
+        "country": "Ireland",
+        "positive_detection_count": 23,
+        "modis_count": 1,
+        "viirs_noaa20_count": 13,
+        "viirs_noaa21_count": 5,
+        "viirs_snpp_count": 4,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "IRQ",
+        "country": "Iraq",
+        "positive_detection_count": 1465,
+        "modis_count": 178,
+        "viirs_noaa20_count": 417,
+        "viirs_noaa21_count": 270,
+        "viirs_snpp_count": 600,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "IRN",
+        "country": "Iran",
+        "positive_detection_count": 1119,
+        "modis_count": 86,
+        "viirs_noaa20_count": 268,
+        "viirs_noaa21_count": 375,
+        "viirs_snpp_count": 390,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "IDN",
+        "country": "Indonesia",
+        "positive_detection_count": 22240,
+        "modis_count": 1914,
+        "viirs_noaa20_count": 7118,
+        "viirs_noaa21_count": 6476,
+        "viirs_snpp_count": 6732,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "IND",
+        "country": "India",
+        "positive_detection_count": 362,
+        "modis_count": 20,
+        "viirs_noaa20_count": 76,
+        "viirs_noaa21_count": 102,
+        "viirs_snpp_count": 164,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "ISL",
+        "country": "Iceland",
+        "positive_detection_count": 0,
+        "modis_count": 0,
+        "viirs_noaa20_count": 0,
+        "viirs_noaa21_count": 0,
+        "viirs_snpp_count": 0,
+        "status": "zero_returned_positive_detection"
+      },
+      {
+        "country_id": "HUN",
+        "country": "Hungary",
+        "positive_detection_count": 13,
+        "modis_count": 0,
+        "viirs_noaa20_count": 4,
+        "viirs_noaa21_count": 5,
+        "viirs_snpp_count": 4,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "HND",
+        "country": "Honduras",
+        "positive_detection_count": 23,
+        "modis_count": 2,
+        "viirs_noaa20_count": 5,
+        "viirs_noaa21_count": 5,
+        "viirs_snpp_count": 11,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "HTI",
+        "country": "Haiti",
+        "positive_detection_count": 45,
+        "modis_count": 2,
+        "viirs_noaa20_count": 16,
+        "viirs_noaa21_count": 8,
+        "viirs_snpp_count": 19,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "GUY",
+        "country": "Guyana",
+        "positive_detection_count": 42,
+        "modis_count": 0,
+        "viirs_noaa20_count": 8,
+        "viirs_noaa21_count": 12,
+        "viirs_snpp_count": 22,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "GNB",
+        "country": "Guinea-Bissau",
+        "positive_detection_count": 0,
+        "modis_count": 0,
+        "viirs_noaa20_count": 0,
+        "viirs_noaa21_count": 0,
+        "viirs_snpp_count": 0,
+        "status": "zero_returned_positive_detection"
+      },
+      {
+        "country_id": "GIN",
+        "country": "Guinea",
+        "positive_detection_count": 4,
+        "modis_count": 0,
+        "viirs_noaa20_count": 0,
+        "viirs_noaa21_count": 0,
+        "viirs_snpp_count": 4,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "GTM",
+        "country": "Guatemala",
+        "positive_detection_count": 55,
+        "modis_count": 0,
+        "viirs_noaa20_count": 29,
+        "viirs_noaa21_count": 15,
+        "viirs_snpp_count": 11,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "GRD",
+        "country": "Grenada",
+        "positive_detection_count": 0,
+        "modis_count": 0,
+        "viirs_noaa20_count": 0,
+        "viirs_noaa21_count": 0,
+        "viirs_snpp_count": 0,
+        "status": "zero_returned_positive_detection"
+      },
+      {
+        "country_id": "GRC",
+        "country": "Greece",
+        "positive_detection_count": 18,
+        "modis_count": 0,
+        "viirs_noaa20_count": 8,
+        "viirs_noaa21_count": 5,
+        "viirs_snpp_count": 5,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "GHA",
+        "country": "Ghana",
+        "positive_detection_count": 1,
+        "modis_count": 0,
+        "viirs_noaa20_count": 0,
+        "viirs_noaa21_count": 1,
+        "viirs_snpp_count": 0,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "DEU",
+        "country": "Germany",
+        "positive_detection_count": 48,
+        "modis_count": 6,
+        "viirs_noaa20_count": 7,
+        "viirs_noaa21_count": 25,
+        "viirs_snpp_count": 10,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "GEO",
+        "country": "Georgia",
+        "positive_detection_count": 67,
+        "modis_count": 13,
+        "viirs_noaa20_count": 13,
+        "viirs_noaa21_count": 17,
+        "viirs_snpp_count": 24,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "GMB",
+        "country": "The Gambia",
+        "positive_detection_count": 0,
+        "modis_count": 0,
+        "viirs_noaa20_count": 0,
+        "viirs_noaa21_count": 0,
+        "viirs_snpp_count": 0,
+        "status": "zero_returned_positive_detection"
+      },
+      {
+        "country_id": "GAB",
+        "country": "Gabon",
+        "positive_detection_count": 299,
+        "modis_count": 32,
+        "viirs_noaa20_count": 140,
+        "viirs_noaa21_count": 58,
+        "viirs_snpp_count": 69,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "FRA",
+        "country": "France",
+        "positive_detection_count": 212,
+        "modis_count": 12,
+        "viirs_noaa20_count": 53,
+        "viirs_noaa21_count": 33,
+        "viirs_snpp_count": 114,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "SPM",
+        "country": "Saint Pierre and Miquelon",
+        "positive_detection_count": 0,
+        "modis_count": 0,
+        "viirs_noaa20_count": 0,
+        "viirs_noaa21_count": 0,
+        "viirs_snpp_count": 0,
+        "status": "zero_returned_positive_detection"
+      },
+      {
+        "country_id": "WLF",
+        "country": "Wallis and Futuna",
+        "positive_detection_count": 0,
+        "modis_count": 0,
+        "viirs_noaa20_count": 0,
+        "viirs_noaa21_count": 0,
+        "viirs_snpp_count": 0,
+        "status": "zero_returned_positive_detection"
+      },
+      {
+        "country_id": "MAF",
+        "country": "Saint Martin",
+        "positive_detection_count": 0,
+        "modis_count": 0,
+        "viirs_noaa20_count": 0,
+        "viirs_noaa21_count": 0,
+        "viirs_snpp_count": 0,
+        "status": "zero_returned_positive_detection"
+      },
+      {
+        "country_id": "BLM",
+        "country": "Saint Barthélemy",
+        "positive_detection_count": 0,
+        "modis_count": 0,
+        "viirs_noaa20_count": 0,
+        "viirs_noaa21_count": 0,
+        "viirs_snpp_count": 0,
+        "status": "zero_returned_positive_detection"
+      },
+      {
+        "country_id": "PYF",
+        "country": "French Polynesia",
+        "positive_detection_count": 0,
+        "modis_count": 0,
+        "viirs_noaa20_count": 0,
+        "viirs_noaa21_count": 0,
+        "viirs_snpp_count": 0,
+        "status": "zero_returned_positive_detection"
+      },
+      {
+        "country_id": "NCL",
+        "country": "New Caledonia",
+        "positive_detection_count": 22,
+        "modis_count": 1,
+        "viirs_noaa20_count": 6,
+        "viirs_noaa21_count": 5,
+        "viirs_snpp_count": 10,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "ATF",
+        "country": "French Southern and Antarctic Lands",
+        "positive_detection_count": 0,
+        "modis_count": 0,
+        "viirs_noaa20_count": 0,
+        "viirs_noaa21_count": 0,
+        "viirs_snpp_count": 0,
+        "status": "zero_returned_positive_detection"
+      },
+      {
+        "country_id": "ALA",
+        "country": "Åland",
+        "positive_detection_count": 0,
+        "modis_count": 0,
+        "viirs_noaa20_count": 0,
+        "viirs_noaa21_count": 0,
+        "viirs_snpp_count": 0,
+        "status": "zero_returned_positive_detection"
+      },
+      {
+        "country_id": "FIN",
+        "country": "Finland",
+        "positive_detection_count": 14,
+        "modis_count": 0,
+        "viirs_noaa20_count": 5,
+        "viirs_noaa21_count": 5,
+        "viirs_snpp_count": 4,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "FJI",
+        "country": "Fiji",
+        "positive_detection_count": 6,
+        "modis_count": 0,
+        "viirs_noaa20_count": 2,
+        "viirs_noaa21_count": 3,
+        "viirs_snpp_count": 1,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "ETH",
+        "country": "Ethiopia",
+        "positive_detection_count": 769,
+        "modis_count": 57,
+        "viirs_noaa20_count": 260,
+        "viirs_noaa21_count": 219,
+        "viirs_snpp_count": 233,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "EST",
+        "country": "Estonia",
+        "positive_detection_count": 0,
+        "modis_count": 0,
+        "viirs_noaa20_count": 0,
+        "viirs_noaa21_count": 0,
+        "viirs_snpp_count": 0,
+        "status": "zero_returned_positive_detection"
+      },
+      {
+        "country_id": "ERI",
+        "country": "Eritrea",
+        "positive_detection_count": 6,
+        "modis_count": 0,
+        "viirs_noaa20_count": 4,
+        "viirs_noaa21_count": 0,
+        "viirs_snpp_count": 2,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "GNQ",
+        "country": "Equatorial Guinea",
+        "positive_detection_count": 1,
+        "modis_count": 0,
+        "viirs_noaa20_count": 1,
+        "viirs_noaa21_count": 0,
+        "viirs_snpp_count": 0,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "SLV",
+        "country": "El Salvador",
+        "positive_detection_count": 19,
+        "modis_count": 0,
+        "viirs_noaa20_count": 5,
+        "viirs_noaa21_count": 5,
+        "viirs_snpp_count": 9,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "EGY",
+        "country": "Egypt",
+        "positive_detection_count": 253,
+        "modis_count": 5,
+        "viirs_noaa20_count": 124,
+        "viirs_noaa21_count": 81,
+        "viirs_snpp_count": 43,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "ECU",
+        "country": "Ecuador",
+        "positive_detection_count": 135,
+        "modis_count": 5,
+        "viirs_noaa20_count": 30,
+        "viirs_noaa21_count": 43,
+        "viirs_snpp_count": 57,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "DOM",
+        "country": "Dominican Republic",
+        "positive_detection_count": 310,
+        "modis_count": 16,
+        "viirs_noaa20_count": 111,
+        "viirs_noaa21_count": 78,
+        "viirs_snpp_count": 105,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "DMA",
+        "country": "Dominica",
+        "positive_detection_count": 0,
+        "modis_count": 0,
+        "viirs_noaa20_count": 0,
+        "viirs_noaa21_count": 0,
+        "viirs_snpp_count": 0,
+        "status": "zero_returned_positive_detection"
+      },
+      {
+        "country_id": "DJI",
+        "country": "Djibouti",
+        "positive_detection_count": 3,
+        "modis_count": 0,
+        "viirs_noaa20_count": 2,
+        "viirs_noaa21_count": 0,
+        "viirs_snpp_count": 1,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "GRL",
+        "country": "Greenland",
+        "positive_detection_count": 0,
+        "modis_count": 0,
+        "viirs_noaa20_count": 0,
+        "viirs_noaa21_count": 0,
+        "viirs_snpp_count": 0,
+        "status": "zero_returned_positive_detection"
+      },
+      {
+        "country_id": "FRO",
+        "country": "Faroe Islands",
+        "positive_detection_count": 0,
+        "modis_count": 0,
+        "viirs_noaa20_count": 0,
+        "viirs_noaa21_count": 0,
+        "viirs_snpp_count": 0,
+        "status": "zero_returned_positive_detection"
+      },
+      {
+        "country_id": "DNK",
+        "country": "Denmark",
+        "positive_detection_count": 19,
+        "modis_count": 2,
+        "viirs_noaa20_count": 4,
+        "viirs_noaa21_count": 7,
+        "viirs_snpp_count": 6,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "CZE",
+        "country": "Czech Republic",
+        "positive_detection_count": 4,
+        "modis_count": 1,
+        "viirs_noaa20_count": 2,
+        "viirs_noaa21_count": 0,
+        "viirs_snpp_count": 1,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "CYN",
+        "country": "Turkish Republic of Northern Cyprus",
+        "positive_detection_count": 0,
+        "modis_count": 0,
+        "viirs_noaa20_count": 0,
+        "viirs_noaa21_count": 0,
+        "viirs_snpp_count": 0,
+        "status": "zero_returned_positive_detection"
+      },
+      {
+        "country_id": "CYP",
+        "country": "Cyprus",
+        "positive_detection_count": 3,
+        "modis_count": 0,
+        "viirs_noaa20_count": 3,
+        "viirs_noaa21_count": 0,
+        "viirs_snpp_count": 0,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "CUB",
+        "country": "Cuba",
+        "positive_detection_count": 597,
+        "modis_count": 39,
+        "viirs_noaa20_count": 207,
+        "viirs_noaa21_count": 217,
+        "viirs_snpp_count": 134,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "HRV",
+        "country": "Croatia",
+        "positive_detection_count": 10,
+        "modis_count": 1,
+        "viirs_noaa20_count": 1,
+        "viirs_noaa21_count": 5,
+        "viirs_snpp_count": 3,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "CIV",
+        "country": "Ivory Coast",
+        "positive_detection_count": 26,
+        "modis_count": 1,
+        "viirs_noaa20_count": 2,
+        "viirs_noaa21_count": 10,
+        "viirs_snpp_count": 13,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "CRI",
+        "country": "Costa Rica",
+        "positive_detection_count": 7,
+        "modis_count": 1,
+        "viirs_noaa20_count": 3,
+        "viirs_noaa21_count": 1,
+        "viirs_snpp_count": 2,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "COD",
+        "country": "Democratic Republic of the Congo",
+        "positive_detection_count": 53300,
+        "modis_count": 1187,
+        "viirs_noaa20_count": 13131,
+        "viirs_noaa21_count": 20645,
+        "viirs_snpp_count": 18337,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "COG",
+        "country": "Republic of the Congo",
+        "positive_detection_count": 2724,
+        "modis_count": 304,
+        "viirs_noaa20_count": 877,
+        "viirs_noaa21_count": 599,
+        "viirs_snpp_count": 944,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "COM",
+        "country": "Comoros",
+        "positive_detection_count": 2,
+        "modis_count": 0,
+        "viirs_noaa20_count": 0,
+        "viirs_noaa21_count": 1,
+        "viirs_snpp_count": 1,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "COL",
+        "country": "Colombia",
+        "positive_detection_count": 192,
+        "modis_count": 25,
+        "viirs_noaa20_count": 59,
+        "viirs_noaa21_count": 59,
+        "viirs_snpp_count": 49,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "CHN",
+        "country": "People's Republic of China",
+        "positive_detection_count": 2324,
+        "modis_count": 139,
+        "viirs_noaa20_count": 682,
+        "viirs_noaa21_count": 702,
+        "viirs_snpp_count": 801,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "MAC",
+        "country": "Macau",
+        "positive_detection_count": 0,
+        "modis_count": 0,
+        "viirs_noaa20_count": 0,
+        "viirs_noaa21_count": 0,
+        "viirs_snpp_count": 0,
+        "status": "zero_returned_positive_detection"
+      },
+      {
+        "country_id": "HKG",
+        "country": "Hong Kong",
+        "positive_detection_count": 0,
+        "modis_count": 0,
+        "viirs_noaa20_count": 0,
+        "viirs_noaa21_count": 0,
+        "viirs_snpp_count": 0,
+        "status": "zero_returned_positive_detection"
+      },
+      {
+        "country_id": "CHL",
+        "country": "Chile",
+        "positive_detection_count": 142,
+        "modis_count": 3,
+        "viirs_noaa20_count": 50,
+        "viirs_noaa21_count": 48,
+        "viirs_snpp_count": 41,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "TCD",
+        "country": "Chad",
+        "positive_detection_count": 13,
+        "modis_count": 0,
+        "viirs_noaa20_count": 6,
+        "viirs_noaa21_count": 3,
+        "viirs_snpp_count": 4,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "CAF",
+        "country": "Central African Republic",
+        "positive_detection_count": 43,
+        "modis_count": 0,
+        "viirs_noaa20_count": 5,
+        "viirs_noaa21_count": 15,
+        "viirs_snpp_count": 23,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "CPV",
+        "country": "Cape Verde",
+        "positive_detection_count": 0,
+        "modis_count": 0,
+        "viirs_noaa20_count": 0,
+        "viirs_noaa21_count": 0,
+        "viirs_snpp_count": 0,
+        "status": "zero_returned_positive_detection"
+      },
+      {
+        "country_id": "CAN",
+        "country": "Canada",
+        "positive_detection_count": 10035,
+        "modis_count": 460,
+        "viirs_noaa20_count": 3245,
+        "viirs_noaa21_count": 3198,
+        "viirs_snpp_count": 3132,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "CMR",
+        "country": "Cameroon",
+        "positive_detection_count": 27,
+        "modis_count": 0,
+        "viirs_noaa20_count": 5,
+        "viirs_noaa21_count": 6,
+        "viirs_snpp_count": 16,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "KHM",
+        "country": "Cambodia",
+        "positive_detection_count": 28,
+        "modis_count": 9,
+        "viirs_noaa20_count": 8,
+        "viirs_noaa21_count": 3,
+        "viirs_snpp_count": 8,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "MMR",
+        "country": "Myanmar",
+        "positive_detection_count": 5,
+        "modis_count": 0,
+        "viirs_noaa20_count": 1,
+        "viirs_noaa21_count": 3,
+        "viirs_snpp_count": 1,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "BDI",
+        "country": "Burundi",
+        "positive_detection_count": 124,
+        "modis_count": 17,
+        "viirs_noaa20_count": 40,
+        "viirs_noaa21_count": 25,
+        "viirs_snpp_count": 42,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "BFA",
+        "country": "Burkina Faso",
+        "positive_detection_count": 0,
+        "modis_count": 0,
+        "viirs_noaa20_count": 0,
+        "viirs_noaa21_count": 0,
+        "viirs_snpp_count": 0,
+        "status": "zero_returned_positive_detection"
+      },
+      {
+        "country_id": "BGR",
+        "country": "Bulgaria",
+        "positive_detection_count": 48,
+        "modis_count": 2,
+        "viirs_noaa20_count": 16,
+        "viirs_noaa21_count": 10,
+        "viirs_snpp_count": 20,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "BRN",
+        "country": "Brunei",
+        "positive_detection_count": 3,
+        "modis_count": 0,
+        "viirs_noaa20_count": 1,
+        "viirs_noaa21_count": 1,
+        "viirs_snpp_count": 1,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "BRA",
+        "country": "Brazil",
+        "positive_detection_count": 23077,
+        "modis_count": 1801,
+        "viirs_noaa20_count": 6750,
+        "viirs_noaa21_count": 6902,
+        "viirs_snpp_count": 7624,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "BWA",
+        "country": "Botswana",
+        "positive_detection_count": 1660,
+        "modis_count": 17,
+        "viirs_noaa20_count": 541,
+        "viirs_noaa21_count": 415,
+        "viirs_snpp_count": 687,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "BIH",
+        "country": "Bosnia and Herzegovina",
+        "positive_detection_count": 386,
+        "modis_count": 28,
+        "viirs_noaa20_count": 151,
+        "viirs_noaa21_count": 100,
+        "viirs_snpp_count": 107,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "BOL",
+        "country": "Bolivia",
+        "positive_detection_count": 2010,
+        "modis_count": 277,
+        "viirs_noaa20_count": 634,
+        "viirs_noaa21_count": 597,
+        "viirs_snpp_count": 502,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "BTN",
+        "country": "Bhutan",
+        "positive_detection_count": 0,
+        "modis_count": 0,
+        "viirs_noaa20_count": 0,
+        "viirs_noaa21_count": 0,
+        "viirs_snpp_count": 0,
+        "status": "zero_returned_positive_detection"
+      },
+      {
+        "country_id": "BEN",
+        "country": "Benin",
+        "positive_detection_count": 1,
+        "modis_count": 0,
+        "viirs_noaa20_count": 0,
+        "viirs_noaa21_count": 1,
+        "viirs_snpp_count": 0,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "BLZ",
+        "country": "Belize",
+        "positive_detection_count": 15,
+        "modis_count": 1,
+        "viirs_noaa20_count": 4,
+        "viirs_noaa21_count": 5,
+        "viirs_snpp_count": 5,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "BEL",
+        "country": "Belgium",
+        "positive_detection_count": 40,
+        "modis_count": 2,
+        "viirs_noaa20_count": 12,
+        "viirs_noaa21_count": 14,
+        "viirs_snpp_count": 12,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "BLR",
+        "country": "Belarus",
+        "positive_detection_count": 65,
+        "modis_count": 7,
+        "viirs_noaa20_count": 24,
+        "viirs_noaa21_count": 11,
+        "viirs_snpp_count": 23,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "BRB",
+        "country": "Barbados",
+        "positive_detection_count": 0,
+        "modis_count": 0,
+        "viirs_noaa20_count": 0,
+        "viirs_noaa21_count": 0,
+        "viirs_snpp_count": 0,
+        "status": "zero_returned_positive_detection"
+      },
+      {
+        "country_id": "BGD",
+        "country": "Bangladesh",
+        "positive_detection_count": 0,
+        "modis_count": 0,
+        "viirs_noaa20_count": 0,
+        "viirs_noaa21_count": 0,
+        "viirs_snpp_count": 0,
+        "status": "zero_returned_positive_detection"
+      },
+      {
+        "country_id": "BHR",
+        "country": "Bahrain",
+        "positive_detection_count": 3,
+        "modis_count": 0,
+        "viirs_noaa20_count": 0,
+        "viirs_noaa21_count": 2,
+        "viirs_snpp_count": 1,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "BHS",
+        "country": "The Bahamas",
+        "positive_detection_count": 40,
+        "modis_count": 2,
+        "viirs_noaa20_count": 20,
+        "viirs_noaa21_count": 5,
+        "viirs_snpp_count": 13,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "AZE",
+        "country": "Azerbaijan",
+        "positive_detection_count": 125,
+        "modis_count": 18,
+        "viirs_noaa20_count": 45,
+        "viirs_noaa21_count": 37,
+        "viirs_snpp_count": 25,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "AUT",
+        "country": "Austria",
+        "positive_detection_count": 37,
+        "modis_count": 2,
+        "viirs_noaa20_count": 21,
+        "viirs_noaa21_count": 4,
+        "viirs_snpp_count": 10,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "AUS",
+        "country": "Australia",
+        "positive_detection_count": 4588,
+        "modis_count": 339,
+        "viirs_noaa20_count": 1341,
+        "viirs_noaa21_count": 1465,
+        "viirs_snpp_count": 1443,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "IOA",
+        "country": "Australian Indian Ocean Territories",
+        "positive_detection_count": 0,
+        "modis_count": 0,
+        "viirs_noaa20_count": 0,
+        "viirs_noaa21_count": 0,
+        "viirs_snpp_count": 0,
+        "status": "zero_returned_positive_detection"
+      },
+      {
+        "country_id": "HMD",
+        "country": "Heard Island and McDonald Islands",
+        "positive_detection_count": 0,
+        "modis_count": 0,
+        "viirs_noaa20_count": 0,
+        "viirs_noaa21_count": 0,
+        "viirs_snpp_count": 0,
+        "status": "zero_returned_positive_detection"
+      },
+      {
+        "country_id": "NFK",
+        "country": "Norfolk Island",
+        "positive_detection_count": 0,
+        "modis_count": 0,
+        "viirs_noaa20_count": 0,
+        "viirs_noaa21_count": 0,
+        "viirs_snpp_count": 0,
+        "status": "zero_returned_positive_detection"
+      },
+      {
+        "country_id": "ATC",
+        "country": "Ashmore and Cartier Islands",
+        "positive_detection_count": 0,
+        "modis_count": 0,
+        "viirs_noaa20_count": 0,
+        "viirs_noaa21_count": 0,
+        "viirs_snpp_count": 0,
+        "status": "zero_returned_positive_detection"
+      },
+      {
+        "country_id": "ARM",
+        "country": "Armenia",
+        "positive_detection_count": 37,
+        "modis_count": 2,
+        "viirs_noaa20_count": 17,
+        "viirs_noaa21_count": 7,
+        "viirs_snpp_count": 11,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "ARG",
+        "country": "Argentina",
+        "positive_detection_count": 1084,
+        "modis_count": 93,
+        "viirs_noaa20_count": 362,
+        "viirs_noaa21_count": 354,
+        "viirs_snpp_count": 275,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "ATG",
+        "country": "Antigua and Barbuda",
+        "positive_detection_count": 0,
+        "modis_count": 0,
+        "viirs_noaa20_count": 0,
+        "viirs_noaa21_count": 0,
+        "viirs_snpp_count": 0,
+        "status": "zero_returned_positive_detection"
+      },
+      {
+        "country_id": "AGO",
+        "country": "Angola",
+        "positive_detection_count": 38603,
+        "modis_count": 1804,
+        "viirs_noaa20_count": 12435,
+        "viirs_noaa21_count": 9944,
+        "viirs_snpp_count": 14420,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "AND",
+        "country": "Andorra",
+        "positive_detection_count": 0,
+        "modis_count": 0,
+        "viirs_noaa20_count": 0,
+        "viirs_noaa21_count": 0,
+        "viirs_snpp_count": 0,
+        "status": "zero_returned_positive_detection"
+      },
+      {
+        "country_id": "DZA",
+        "country": "Algeria",
+        "positive_detection_count": 740,
+        "modis_count": 15,
+        "viirs_noaa20_count": 269,
+        "viirs_noaa21_count": 226,
+        "viirs_snpp_count": 230,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "ALB",
+        "country": "Albania",
+        "positive_detection_count": 138,
+        "modis_count": 3,
+        "viirs_noaa20_count": 58,
+        "viirs_noaa21_count": 44,
+        "viirs_snpp_count": 33,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "AFG",
+        "country": "Afghanistan",
+        "positive_detection_count": 11,
+        "modis_count": 2,
+        "viirs_noaa20_count": 2,
+        "viirs_noaa21_count": 4,
+        "viirs_snpp_count": 3,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "KAS",
+        "country": "Siachen Glacier",
+        "positive_detection_count": 0,
+        "modis_count": 0,
+        "viirs_noaa20_count": 0,
+        "viirs_noaa21_count": 0,
+        "viirs_snpp_count": 0,
+        "status": "zero_returned_positive_detection"
+      },
+      {
+        "country_id": "ATA",
+        "country": "Antarctica",
+        "positive_detection_count": 9,
+        "modis_count": 0,
+        "viirs_noaa20_count": 4,
+        "viirs_noaa21_count": 4,
+        "viirs_snpp_count": 1,
+        "status": "positive_detection_records"
+      },
+      {
+        "country_id": "SXM",
+        "country": "Sint Maarten",
+        "positive_detection_count": 0,
+        "modis_count": 0,
+        "viirs_noaa20_count": 0,
+        "viirs_noaa21_count": 0,
+        "viirs_snpp_count": 0,
+        "status": "zero_returned_positive_detection"
+      },
+      {
+        "country_id": "TUV",
+        "country": "Tuvalu",
+        "positive_detection_count": 0,
+        "modis_count": 0,
+        "viirs_noaa20_count": 0,
+        "viirs_noaa21_count": 0,
+        "viirs_snpp_count": 0,
+        "status": "zero_returned_positive_detection"
+      }
+    ]
   },
   "condition_phase_audit": {
     "schema_version": "condition-phase-audit/v1",

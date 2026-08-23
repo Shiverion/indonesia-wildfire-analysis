@@ -184,3 +184,12 @@ The machine-verifiable phase ledger is `outputs/ledger/phase_ledger.jsonl`. Its 
 | ERA5 manifest handling | **Fixed** | `scripts/download_era5_land.py` now merges the existing manifest by `(year, month)` instead of overwriting prior years when a resumed request completes. |
 | ERA5 2016-2025 acquisition | **In progress** | A hidden, sequential, resumable process is running with the registered CDS credentials. Existing 2015 files are reused; progress is recorded in `outputs/quality/era5_study_window.stdout.log` and `.stderr.log`. |
 | Gate policy | **Unchanged** | Download completion alone will not unlock Phase 1. Each month still needs timestamp/variable/bounds validation, and VIIRS needs a processed negative opportunity frame. Ledger sequence 38 records the acquisition start and verifies hash-valid. |
+
+## Execution update -- latest global FIRMS default and all-country globe (23 August 2026)
+
+| Phase | Status | Evidence / decision |
+|---|---|---|
+| Global latest snapshot | **Complete, closed-day aggregate** | Downloaded the official NASA FIRMS NRT global MODIS + NOAA-20 + NOAA-21 + Suomi-NPP files for the latest closed UTC day, 22 August 2026. The 23 August portal day was not used because it was still intraday. |
+| Country aggregation | **Complete, aggregate-only** | 394,627 positive satellite detection records were parsed; 392,696 matched the frozen 242-feature Natural Earth country geometry and 1,931 remained unmatched. The derived country table contains no coordinates or raw records and has no observation denominator. |
+| Dashboard default | **Complete** | The global WGS84 globe is now shown before the Kalimantan local layer and defaults to the 22 August 2026 NRT metric. Completed 2024 MODIS and peatland-share views remain explicit comparison modes. All 242 country geometries are available; color is a country aggregate, not burned area. |
+| Validation | **Complete, still scientifically gated** | `python -m pytest -q` passes 35 tests; `npm run check` and `npm run build` pass. Phase 1 remains `phase_1_ready=false`; the latest snapshot is descriptive monitoring evidence, not a fire rate, risk surface, or causal result. |
