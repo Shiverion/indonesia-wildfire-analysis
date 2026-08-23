@@ -1,4 +1,4 @@
-"""Aggregate a downloaded NASA FIRMS NRT global day to country units.
+"""Aggregate a downloaded NASA FIRMS NRT global day to country and Indonesia ADM1 units.
 
 This deliberately produces a country-level snapshot for the browser. It does
 not publish latitude/longitude, acquisition times, or individual detections.
@@ -26,6 +26,7 @@ RAW_ROOT = ROOT / "data" / "raw" / "firms" / "nrt_global"
 DERIVED_ROOT = ROOT / "data" / "derived" / "firms_global"
 QUALITY_ROOT = ROOT / "outputs" / "quality" / "firms_global_nrt"
 GEOMETRY = ROOT / "apps" / "evidence-explorer" / "public" / "geo" / "global-countries.geojson"
+INDONESIA_GEOMETRY = ROOT / "apps" / "evidence-explorer" / "public" / "geo" / "indonesia-adm1.geojson"
 
 
 def sha256(path: Path) -> str:
@@ -45,7 +46,19 @@ def aggregate(snapshot_date: str) -> dict[str, Any]:
 
     frames: list[pd.DataFrame] = []
     sensor_files: list[dict[str, Any]] = []
-    for item in metadata.get("sensors", []):
+    sensor_specs = metadata.get("sensors")
+    if not sensor_specs:
+        filename_prefixes = {
+            "MODIS": "MODIS_C6_1_Global_MCD14DL_NRT_",
+            "VIIRS_NOAA20": "J1_VIIRS_C2_Global_VJ114IMGTDL_NRT_",
+            "VIIRS_NOAA21": "J2_VIIRS_C2_Global_VJ214IMGTDL_NRT_",
+            "VIIRS_SNPP": "SUOMI_VIIRS_C2_Global_VNP14IMGTDL_NRT_",
+        }
+        sensor_specs = [
+            {"sensor": sensor, "path": str(next(raw_dir.glob(f"{prefix}*.txt")).relative_to(ROOT))}
+            for sensor, prefix in filename_prefixes.items()
+        ]
+    for item in sensor_specs:
         path = ROOT / item["path"]
         frame = pd.read_csv(path, usecols=lambda column: column in {"latitude", "longitude", "confidence"})
         frame["sensor"] = item["sensor"]
@@ -85,12 +98,40 @@ def aggregate(snapshot_date: str) -> dict[str, Any]:
             "status": "zero_returned_positive_detection" if int(by_country.get((country_id, country_name), 0)) == 0 else "positive_detection_records",
         })
 
+    indonesia = gpd.read_file(INDONESIA_GEOMETRY)[["province_id", "province", "geometry"]]
+    province_joined = gpd.sjoin(points, indonesia, how="left", predicate="within")
+    province_joined["province_id"] = province_joined["province_id"].fillna("")
+    province_joined["province"] = province_joined["province"].fillna("")
+    by_province = province_joined.groupby(["province_id", "province"], dropna=False).size().to_dict()
+    by_province_sensor = province_joined.groupby(["province_id", "sensor"], dropna=False).size().to_dict()
+    matched_indonesia_point_count = int((province_joined["province_id"] != "").sum())
+    province_rows: list[dict[str, Any]] = []
+    for row in indonesia[["province_id", "province"]].drop_duplicates().itertuples(index=False):
+        province_id = str(row.province_id)
+        province_name = str(row.province)
+        count = int(by_province.get((province_id, province_name), 0))
+        province_rows.append({
+            "province_id": province_id,
+            "province": province_name,
+            "positive_detection_count": count,
+            "modis_count": int(by_province_sensor.get((province_id, "MODIS"), 0)),
+            "viirs_noaa20_count": int(by_province_sensor.get((province_id, "VIIRS_NOAA20"), 0)),
+            "viirs_noaa21_count": int(by_province_sensor.get((province_id, "VIIRS_NOAA21"), 0)),
+            "viirs_snpp_count": int(by_province_sensor.get((province_id, "VIIRS_SNPP"), 0)),
+            "status": "zero_returned_positive_detection" if count == 0 else "positive_detection_records",
+        })
+
     DERIVED_ROOT.mkdir(parents=True, exist_ok=True)
     derived_path = DERIVED_ROOT / f"{snapshot_date}_country.csv"
     with derived_path.open("w", encoding="utf-8", newline="") as handle:
         writer = csv.DictWriter(handle, fieldnames=list(country_rows[0]))
         writer.writeheader()
         writer.writerows(country_rows)
+    province_derived_path = DERIVED_ROOT / f"{snapshot_date}_indonesia_province.csv"
+    with province_derived_path.open("w", encoding="utf-8", newline="") as handle:
+        writer = csv.DictWriter(handle, fieldnames=list(province_rows[0]))
+        writer.writeheader()
+        writer.writerows(province_rows)
 
     status = {
         "schema_version": "firms-global-nrt-country/v1",
@@ -107,6 +148,12 @@ def aggregate(snapshot_date: str) -> dict[str, Any]:
             "sha256": sha256(GEOMETRY),
             "feature_count": len(countries),
         },
+        "indonesia_province_geometry": {
+            "path": INDONESIA_GEOMETRY.relative_to(ROOT).as_posix(),
+            "sha256": sha256(INDONESIA_GEOMETRY),
+            "feature_count": len(indonesia),
+            "boundary_year_represented": 2017,
+        },
         "raw_record_count": int(len(detections)),
         "matched_point_count": matched_point_count,
         "unmatched_point_count": int(len(detections) - matched_point_count),
@@ -115,6 +162,11 @@ def aggregate(snapshot_date: str) -> dict[str, Any]:
         "sensor_record_counts": {sensor: int((detections["sensor"] == sensor).sum()) for sensor in sorted(detections["sensor"].unique())},
         "derived_path": derived_path.relative_to(ROOT).as_posix(),
         "derived_sha256": sha256(derived_path),
+        "indonesia_province_derived_path": province_derived_path.relative_to(ROOT).as_posix(),
+        "indonesia_province_derived_sha256": sha256(province_derived_path),
+        "indonesia_province_count": len(province_rows),
+        "indonesia_province_positive_count": int(sum(row["positive_detection_count"] > 0 for row in province_rows)),
+        "indonesia_matched_point_count": matched_indonesia_point_count,
         "raw_records_embedded": False,
         "has_observation_denominator": False,
         "interpretation": "Counts are positive satellite detection records, not unique fires, burned area, fire rates, or no-fire evidence.",

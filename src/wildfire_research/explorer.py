@@ -164,6 +164,22 @@ def _read_latest_global_fire_snapshot(root: Path) -> dict[str, Any] | None:
                 "viirs_snpp_count": int(row.get("viirs_snpp_count") or 0),
                 "status": row.get("status", "unknown"),
             })
+    indonesia_provinces: list[dict[str, Any]] = []
+    province_path_value = metadata.get("indonesia_province_derived_path")
+    province_path = root / province_path_value if province_path_value else None
+    if province_path and province_path.is_file():
+        with province_path.open(encoding="utf-8", newline="") as handle:
+            for row in csv.DictReader(handle):
+                indonesia_provinces.append({
+                    "province_id": row.get("province_id", ""),
+                    "province": row.get("province", ""),
+                    "positive_detection_count": int(row.get("positive_detection_count") or 0),
+                    "modis_count": int(row.get("modis_count") or 0),
+                    "viirs_noaa20_count": int(row.get("viirs_noaa20_count") or 0),
+                    "viirs_noaa21_count": int(row.get("viirs_noaa21_count") or 0),
+                    "viirs_snpp_count": int(row.get("viirs_snpp_count") or 0),
+                    "status": row.get("status", "unknown"),
+                })
     return {
         "schema_version": metadata.get("schema_version"),
         "status": metadata.get("status"),
@@ -178,13 +194,16 @@ def _read_latest_global_fire_snapshot(root: Path) -> dict[str, Any] | None:
         "unmatched_point_count": metadata.get("unmatched_point_count"),
         "positive_country_count": metadata.get("positive_country_count"),
         "country_count": metadata.get("country_count"),
+        "indonesia_matched_point_count": metadata.get("indonesia_matched_point_count"),
         "sensor_record_counts": metadata.get("sensor_record_counts", {}),
         "country_geometry": metadata.get("country_geometry", {}),
+        "indonesia_province_geometry": metadata.get("indonesia_province_geometry", {}),
         "derived_sha256": metadata.get("derived_sha256"),
         "raw_records_embedded": False,
         "has_observation_denominator": False,
         "interpretation": metadata.get("interpretation"),
         "countries": countries,
+        "indonesia_provinces": indonesia_provinces,
     }
 
 
@@ -345,6 +364,19 @@ def _validate_latest_global_fire(value: dict[str, Any]) -> None:
         total += row["positive_detection_count"]
     if total != value.get("matched_point_count"):
         raise ValueError("Latest global country counts do not conserve matched points")
+    provinces = value.get("indonesia_provinces")
+    if not isinstance(provinces, list) or len(provinces) != 34:
+        raise ValueError("Latest global fire layer must include the frozen 34-unit Indonesia ADM1 view")
+    province_total = 0
+    for row in provinces:
+        if not isinstance(row.get("province_id"), str) or not row.get("province_id"):
+            raise ValueError("Indonesia province row has no stable province id")
+        for field in ("positive_detection_count", "modis_count", "viirs_noaa20_count", "viirs_noaa21_count", "viirs_snpp_count"):
+            if not isinstance(row.get(field), int) or row[field] < 0:
+                raise ValueError(f"Indonesia province row has invalid {field}")
+        province_total += row["positive_detection_count"]
+    if province_total != value.get("indonesia_matched_point_count"):
+        raise ValueError("Indonesia province counts do not conserve matched points")
 
 
 def _validate_current_sipongi_snapshot(snapshot: dict[str, Any]) -> None:

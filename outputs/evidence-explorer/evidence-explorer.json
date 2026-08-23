@@ -1,6 +1,6 @@
 {
   "schema_version": "evidence-explorer/v2",
-  "generated_at_utc": "2026-08-23T14:44:10.482317+00:00",
+  "generated_at_utc": "2026-08-23T15:42:07.494919+00:00",
   "title": "Global + Kalimantan Fire Evidence Explorer",
   "display_status": {
     "label": "Descriptive evidence only",
@@ -27919,7 +27919,7 @@
     "status": "validated_closed_day_aggregate",
     "snapshot_date": "2026-08-22",
     "retrieved_at_utc": "2026-08-23T14:35:02.968817+00:00",
-    "aggregation_completed_at_utc": "2026-08-23T14:36:56.567754+00:00",
+    "aggregation_completed_at_utc": "2026-08-23T15:37:13.366879+00:00",
     "date_basis": "NASA FIRMS NRT portal acquisition date; closed UTC day",
     "metric": "positive FIRMS active-fire detection records",
     "source_url": "https://nrt3.modaps.eosdis.nasa.gov/archive/FIRMS/",
@@ -27928,6 +27928,7 @@
     "unmatched_point_count": 1931,
     "positive_country_count": 155,
     "country_count": 242,
+    "indonesia_matched_point_count": 22788,
     "sensor_record_counts": {
       "MODIS": 21903,
       "VIIRS_NOAA20": 123264,
@@ -27938,6 +27939,12 @@
       "path": "apps/evidence-explorer/public/geo/global-countries.geojson",
       "sha256": "daf41000ae2924746ac6be56014ae7a07412ba1873d7d054dbc3f267846520cf",
       "feature_count": 242
+    },
+    "indonesia_province_geometry": {
+      "path": "apps/evidence-explorer/public/geo/indonesia-adm1.geojson",
+      "sha256": "fe8ff86c0fa88b1aac6608db451cf746d355830cfcb024bde11265b69c220cf4",
+      "feature_count": 34,
+      "boundary_year_represented": 2017
     },
     "derived_sha256": "ea2f67a05446b44a0d0f255403f4c7f8e6a48e58af883861a4b022be5948656d",
     "raw_records_embedded": false,
@@ -30363,6 +30370,348 @@
         "viirs_noaa21_count": 0,
         "viirs_snpp_count": 0,
         "status": "zero_returned_positive_detection"
+      }
+    ],
+    "indonesia_provinces": [
+      {
+        "province_id": "ID-BA",
+        "province": "Bali",
+        "positive_detection_count": 0,
+        "modis_count": 0,
+        "viirs_noaa20_count": 0,
+        "viirs_noaa21_count": 0,
+        "viirs_snpp_count": 0,
+        "status": "zero_returned_positive_detection"
+      },
+      {
+        "province_id": "ID-NB",
+        "province": "West Nusa Tenggara",
+        "positive_detection_count": 305,
+        "modis_count": 0,
+        "viirs_noaa20_count": 100,
+        "viirs_noaa21_count": 85,
+        "viirs_snpp_count": 120,
+        "status": "positive_detection_records"
+      },
+      {
+        "province_id": "ID-BT",
+        "province": "Banten",
+        "positive_detection_count": 37,
+        "modis_count": 1,
+        "viirs_noaa20_count": 16,
+        "viirs_noaa21_count": 13,
+        "viirs_snpp_count": 7,
+        "status": "positive_detection_records"
+      },
+      {
+        "province_id": "ID-JT",
+        "province": "Central Java",
+        "positive_detection_count": 63,
+        "modis_count": 8,
+        "viirs_noaa20_count": 33,
+        "viirs_noaa21_count": 12,
+        "viirs_snpp_count": 10,
+        "status": "positive_detection_records"
+      },
+      {
+        "province_id": "ID-JB",
+        "province": "West Java",
+        "positive_detection_count": 92,
+        "modis_count": 10,
+        "viirs_noaa20_count": 46,
+        "viirs_noaa21_count": 20,
+        "viirs_snpp_count": 16,
+        "status": "positive_detection_records"
+      },
+      {
+        "province_id": "ID-KT",
+        "province": "Central Kalimantan",
+        "positive_detection_count": 2114,
+        "modis_count": 143,
+        "viirs_noaa20_count": 657,
+        "viirs_noaa21_count": 824,
+        "viirs_snpp_count": 490,
+        "status": "positive_detection_records"
+      },
+      {
+        "province_id": "ID-KS",
+        "province": "South Kalimantan",
+        "positive_detection_count": 848,
+        "modis_count": 9,
+        "viirs_noaa20_count": 334,
+        "viirs_noaa21_count": 227,
+        "viirs_snpp_count": 278,
+        "status": "positive_detection_records"
+      },
+      {
+        "province_id": "ID-KB",
+        "province": "West Kalimantan",
+        "positive_detection_count": 3683,
+        "modis_count": 513,
+        "viirs_noaa20_count": 1121,
+        "viirs_noaa21_count": 1094,
+        "viirs_snpp_count": 955,
+        "status": "positive_detection_records"
+      },
+      {
+        "province_id": "ID-ST",
+        "province": "Central Sulawesi",
+        "positive_detection_count": 184,
+        "modis_count": 1,
+        "viirs_noaa20_count": 43,
+        "viirs_noaa21_count": 80,
+        "viirs_snpp_count": 60,
+        "status": "positive_detection_records"
+      },
+      {
+        "province_id": "ID-GO",
+        "province": "Gorontalo",
+        "positive_detection_count": 34,
+        "modis_count": 1,
+        "viirs_noaa20_count": 6,
+        "viirs_noaa21_count": 19,
+        "viirs_snpp_count": 8,
+        "status": "positive_detection_records"
+      },
+      {
+        "province_id": "ID-SA",
+        "province": "North Sulawesi",
+        "positive_detection_count": 58,
+        "modis_count": 5,
+        "viirs_noaa20_count": 8,
+        "viirs_noaa21_count": 34,
+        "viirs_snpp_count": 11,
+        "status": "positive_detection_records"
+      },
+      {
+        "province_id": "ID-SN",
+        "province": "South Sulawesi",
+        "positive_detection_count": 160,
+        "modis_count": 1,
+        "viirs_noaa20_count": 57,
+        "viirs_noaa21_count": 51,
+        "viirs_snpp_count": 51,
+        "status": "positive_detection_records"
+      },
+      {
+        "province_id": "ID-SG",
+        "province": "Southeast Sulawesi",
+        "positive_detection_count": 165,
+        "modis_count": 0,
+        "viirs_noaa20_count": 46,
+        "viirs_noaa21_count": 65,
+        "viirs_snpp_count": 54,
+        "status": "positive_detection_records"
+      },
+      {
+        "province_id": "ID-SR",
+        "province": "West Sulawesi",
+        "positive_detection_count": 87,
+        "modis_count": 0,
+        "viirs_noaa20_count": 28,
+        "viirs_noaa21_count": 23,
+        "viirs_snpp_count": 36,
+        "status": "positive_detection_records"
+      },
+      {
+        "province_id": "ID-AC",
+        "province": "Aceh",
+        "positive_detection_count": 122,
+        "modis_count": 3,
+        "viirs_noaa20_count": 31,
+        "viirs_noaa21_count": 51,
+        "viirs_snpp_count": 37,
+        "status": "positive_detection_records"
+      },
+      {
+        "province_id": "ID-BE",
+        "province": "Bengkulu",
+        "positive_detection_count": 32,
+        "modis_count": 0,
+        "viirs_noaa20_count": 9,
+        "viirs_noaa21_count": 15,
+        "viirs_snpp_count": 8,
+        "status": "positive_detection_records"
+      },
+      {
+        "province_id": "ID-JA",
+        "province": "Jambi",
+        "positive_detection_count": 524,
+        "modis_count": 60,
+        "viirs_noaa20_count": 121,
+        "viirs_noaa21_count": 169,
+        "viirs_snpp_count": 174,
+        "status": "positive_detection_records"
+      },
+      {
+        "province_id": "ID-LA",
+        "province": "Lampung",
+        "positive_detection_count": 311,
+        "modis_count": 53,
+        "viirs_noaa20_count": 90,
+        "viirs_noaa21_count": 89,
+        "viirs_snpp_count": 79,
+        "status": "positive_detection_records"
+      },
+      {
+        "province_id": "ID-RI",
+        "province": "Riau",
+        "positive_detection_count": 630,
+        "modis_count": 66,
+        "viirs_noaa20_count": 186,
+        "viirs_noaa21_count": 179,
+        "viirs_snpp_count": 199,
+        "status": "positive_detection_records"
+      },
+      {
+        "province_id": "ID-SB",
+        "province": "West Sumatra",
+        "positive_detection_count": 32,
+        "modis_count": 1,
+        "viirs_noaa20_count": 6,
+        "viirs_noaa21_count": 15,
+        "viirs_snpp_count": 10,
+        "status": "positive_detection_records"
+      },
+      {
+        "province_id": "ID-SS",
+        "province": "South Sumatra",
+        "positive_detection_count": 2466,
+        "modis_count": 377,
+        "viirs_noaa20_count": 637,
+        "viirs_noaa21_count": 724,
+        "viirs_snpp_count": 728,
+        "status": "positive_detection_records"
+      },
+      {
+        "province_id": "ID-SU",
+        "province": "North Sumatra",
+        "positive_detection_count": 106,
+        "modis_count": 8,
+        "viirs_noaa20_count": 27,
+        "viirs_noaa21_count": 51,
+        "viirs_snpp_count": 20,
+        "status": "positive_detection_records"
+      },
+      {
+        "province_id": "ID-NT",
+        "province": "East Nusa Tenggara",
+        "positive_detection_count": 751,
+        "modis_count": 10,
+        "viirs_noaa20_count": 168,
+        "viirs_noaa21_count": 298,
+        "viirs_snpp_count": 275,
+        "status": "positive_detection_records"
+      },
+      {
+        "province_id": "ID-MA",
+        "province": "Maluku",
+        "positive_detection_count": 1195,
+        "modis_count": 161,
+        "viirs_noaa20_count": 357,
+        "viirs_noaa21_count": 315,
+        "viirs_snpp_count": 362,
+        "status": "positive_detection_records"
+      },
+      {
+        "province_id": "ID-MU",
+        "province": "North Maluku",
+        "positive_detection_count": 266,
+        "modis_count": 35,
+        "viirs_noaa20_count": 87,
+        "viirs_noaa21_count": 77,
+        "viirs_snpp_count": 67,
+        "status": "positive_detection_records"
+      },
+      {
+        "province_id": "ID-JI",
+        "province": "East Java",
+        "positive_detection_count": 258,
+        "modis_count": 12,
+        "viirs_noaa20_count": 114,
+        "viirs_noaa21_count": 53,
+        "viirs_snpp_count": 79,
+        "status": "positive_detection_records"
+      },
+      {
+        "province_id": "ID-BB",
+        "province": "Bangka-Belitung Islands",
+        "positive_detection_count": 416,
+        "modis_count": 77,
+        "viirs_noaa20_count": 133,
+        "viirs_noaa21_count": 120,
+        "viirs_snpp_count": 86,
+        "status": "positive_detection_records"
+      },
+      {
+        "province_id": "ID-KR",
+        "province": "Riau Islands",
+        "positive_detection_count": 80,
+        "modis_count": 8,
+        "viirs_noaa20_count": 29,
+        "viirs_noaa21_count": 22,
+        "viirs_snpp_count": 21,
+        "status": "positive_detection_records"
+      },
+      {
+        "province_id": "ID-PA",
+        "province": "Papua",
+        "positive_detection_count": 5810,
+        "modis_count": 268,
+        "viirs_noaa20_count": 2237,
+        "viirs_noaa21_count": 1357,
+        "viirs_snpp_count": 1948,
+        "status": "positive_detection_records"
+      },
+      {
+        "province_id": "ID-PB",
+        "province": "West Papua",
+        "positive_detection_count": 844,
+        "modis_count": 106,
+        "viirs_noaa20_count": 277,
+        "viirs_noaa21_count": 207,
+        "viirs_snpp_count": 254,
+        "status": "positive_detection_records"
+      },
+      {
+        "province_id": "ID-KI",
+        "province": "East Kalimantan",
+        "positive_detection_count": 928,
+        "modis_count": 8,
+        "viirs_noaa20_count": 272,
+        "viirs_noaa21_count": 258,
+        "viirs_snpp_count": 390,
+        "status": "positive_detection_records"
+      },
+      {
+        "province_id": "ID-KU",
+        "province": "North Kalimantan",
+        "positive_detection_count": 177,
+        "modis_count": 0,
+        "viirs_noaa20_count": 45,
+        "viirs_noaa21_count": 60,
+        "viirs_snpp_count": 72,
+        "status": "positive_detection_records"
+      },
+      {
+        "province_id": "ID-YO",
+        "province": "Special Region of Yogyakarta",
+        "positive_detection_count": 9,
+        "modis_count": 0,
+        "viirs_noaa20_count": 1,
+        "viirs_noaa21_count": 7,
+        "viirs_snpp_count": 1,
+        "status": "positive_detection_records"
+      },
+      {
+        "province_id": "ID-JK",
+        "province": "Jakarta Special Capital Region",
+        "positive_detection_count": 1,
+        "modis_count": 0,
+        "viirs_noaa20_count": 1,
+        "viirs_noaa21_count": 0,
+        "viirs_snpp_count": 0,
+        "status": "positive_detection_records"
       }
     ]
   },

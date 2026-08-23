@@ -105,6 +105,16 @@ const legacyFeatures = currentFeatures
   .filter((feature) => feature.properties.province !== "Kalimantan Utara" && feature.properties.province !== "Kalimantan Timur")
   .map((feature) => ({ ...feature, properties: { ...feature.properties, boundary_set: "gwis_legacy_4", display_id: `gwis-${feature.properties.source_shape_iso.toLowerCase()}` } }));
 
+const indonesiaFeatures = source.features.map((feature) => makeFeature(
+  feature,
+  feature.properties.shapeName,
+  "indonesia_adm1",
+  {
+    province_id: feature.properties.shapeISO,
+    display_id: `indonesia-${String(feature.properties.shapeISO).toLowerCase()}`,
+  },
+));
+
 const east = featureByIso.get("ID-KI");
 const north = featureByIso.get("ID-KU");
 const legacyUnionCoordinates = polygonClipping.union(toMultiPolygon(east.geometry), toMultiPolygon(north.geometry));
@@ -130,11 +140,13 @@ legacyFeatures.push(legacyUnion);
 
 const currentCollection = { type: "FeatureCollection", name: "kalimantan-current-five", features: currentFeatures };
 const legacyCollection = { type: "FeatureCollection", name: "kalimantan-legacy-four", features: legacyFeatures };
+const indonesiaCollection = { type: "FeatureCollection", name: "indonesia-adm1", features: indonesiaFeatures };
 const textureBytes = await fetchChecked(textureUrl, "NASA Blue Marble texture");
 if (textureBytes.length < 100_000) throw new Error("NASA Blue Marble texture is unexpectedly small.");
 
 const currentText = `${JSON.stringify(currentCollection)}\n`;
 const legacyText = `${JSON.stringify(legacyCollection)}\n`;
+const indonesiaText = `${JSON.stringify(indonesiaCollection)}\n`;
 const manifest = {
   schema_version: "globe-assets/v1",
   generated_at_utc: new Date().toISOString(),
@@ -156,6 +168,7 @@ const manifest = {
     bytes: textureBytes.length,
   },
   derived: {
+    indonesia_adm1: { path: "/geo/indonesia-adm1.geojson", sha256: sha256(indonesiaText), feature_count: indonesiaFeatures.length },
     current_five: { path: "/geo/kalimantan-current-five.geojson", sha256: sha256(currentText), feature_count: currentFeatures.length },
     legacy_four: {
       path: "/geo/kalimantan-legacy-four.geojson",
@@ -171,6 +184,7 @@ await mkdir(geometryRoot, { recursive: true });
 await mkdir(textureRoot, { recursive: true });
 await writeFile(`${geometryRoot}kalimantan-current-five.geojson`, currentText);
 await writeFile(`${geometryRoot}kalimantan-legacy-four.geojson`, legacyText);
+await writeFile(`${geometryRoot}indonesia-adm1.geojson`, indonesiaText);
 await writeFile(`${geometryRoot}manifest.json`, `${JSON.stringify(manifest, null, 2)}\n`);
 await writeFile(`${textureRoot}earth-blue-marble.jpg`, textureBytes);
 

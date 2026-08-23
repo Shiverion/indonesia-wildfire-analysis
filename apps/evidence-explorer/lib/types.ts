@@ -149,6 +149,17 @@ export interface LatestGlobalFireCountry {
   status: "positive_detection_records" | "zero_returned_positive_detection" | string;
 }
 
+export interface LatestIndonesiaProvince {
+  province_id: string;
+  province: string;
+  positive_detection_count: number;
+  modis_count: number;
+  viirs_noaa20_count: number;
+  viirs_noaa21_count: number;
+  viirs_snpp_count: number;
+  status: "positive_detection_records" | "zero_returned_positive_detection" | string;
+}
+
 export interface LatestGlobalFireSnapshot {
   schema_version: string;
   status: "validated_closed_day_aggregate";
@@ -165,11 +176,14 @@ export interface LatestGlobalFireSnapshot {
   country_count: number;
   sensor_record_counts: Record<string, number>;
   country_geometry: { path?: string; sha256?: string; feature_count?: number };
+  indonesia_province_geometry?: { path?: string; sha256?: string; feature_count?: number; boundary_year_represented?: number };
+  indonesia_matched_point_count?: number;
   derived_sha256?: string;
   raw_records_embedded: false;
   has_observation_denominator: false;
   interpretation: string;
   countries: LatestGlobalFireCountry[];
+  indonesia_provinces: LatestIndonesiaProvince[];
 }
 
 export interface ConditionPhaseAudit {

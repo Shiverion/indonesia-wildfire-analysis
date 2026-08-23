@@ -3,7 +3,7 @@
   "status": "validated_closed_day_aggregate",
   "snapshot_date": "2026-08-22",
   "retrieved_at_utc": "2026-08-23T14:35:02.968817+00:00",
-  "aggregation_completed_at_utc": "2026-08-23T14:36:56.567754+00:00",
+  "aggregation_completed_at_utc": "2026-08-23T15:37:13.366879+00:00",
   "date_basis": "NASA FIRMS NRT portal acquisition date; closed UTC day",
   "metric": "positive FIRMS active-fire detection records",
   "source_url": "https://nrt3.modaps.eosdis.nasa.gov/archive/FIRMS/",
@@ -34,6 +34,12 @@
     "sha256": "daf41000ae2924746ac6be56014ae7a07412ba1873d7d054dbc3f267846520cf",
     "feature_count": 242
   },
+  "indonesia_province_geometry": {
+    "path": "apps/evidence-explorer/public/geo/indonesia-adm1.geojson",
+    "sha256": "fe8ff86c0fa88b1aac6608db451cf746d355830cfcb024bde11265b69c220cf4",
+    "feature_count": 34,
+    "boundary_year_represented": 2017
+  },
   "raw_record_count": 394627,
   "matched_point_count": 392696,
   "unmatched_point_count": 1931,
@@ -47,6 +53,11 @@
   },
   "derived_path": "data/derived/firms_global/2026-08-22_country.csv",
   "derived_sha256": "ea2f67a05446b44a0d0f255403f4c7f8e6a48e58af883861a4b022be5948656d",
+  "indonesia_province_derived_path": "data/derived/firms_global/2026-08-22_indonesia_province.csv",
+  "indonesia_province_derived_sha256": "50d91ada5db50807a9644651e896985029167340d99bf6b878cf196c3d34668f",
+  "indonesia_province_count": 34,
+  "indonesia_province_positive_count": 33,
+  "indonesia_matched_point_count": 22788,
   "raw_records_embedded": false,
   "has_observation_denominator": false,
   "interpretation": "Counts are positive satellite detection records, not unique fires, burned area, fire rates, or no-fire evidence."

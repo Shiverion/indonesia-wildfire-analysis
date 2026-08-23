@@ -193,3 +193,12 @@ The machine-verifiable phase ledger is `outputs/ledger/phase_ledger.jsonl`. Its 
 | Country aggregation | **Complete, aggregate-only** | 394,627 positive satellite detection records were parsed; 392,696 matched the frozen 242-feature Natural Earth country geometry and 1,931 remained unmatched. The derived country table contains no coordinates or raw records and has no observation denominator. |
 | Dashboard default | **Complete** | The global WGS84 globe is now shown before the Kalimantan local layer and defaults to the 22 August 2026 NRT metric. Completed 2024 MODIS and peatland-share views remain explicit comparison modes. All 242 country geometries are available; color is a country aggregate, not burned area. |
 | Validation | **Complete, still scientifically gated** | `python -m pytest -q` passes 35 tests; `npm run check` and `npm run build` pass. Phase 1 remains `phase_1_ready=false`; the latest snapshot is descriptive monitoring evidence, not a fire rate, risk surface, or causal result. |
+
+## Execution update -- Indonesia province view (23 August 2026)
+
+| Phase | Status | Evidence / decision |
+|---|---|---|
+| Global country view | **Kept** | The world-country mode remains a country aggregate view; Indonesia is intentionally one country polygon there. It must not be read as a province map. |
+| Indonesia ADM1 view | **Complete, descriptive** | Added a separate switch using 34 frozen geoBoundaries Indonesia ADM1 display units (reference year 2017). The layer loads `/geo/indonesia-adm1.geojson` and does not merge it into the country geometry. |
+| Latest provincial counts | **Complete, aggregate-only** | The 22 August 2026 FIRMS NRT snapshot contains 22,788 matched positive detection records inside the 34 Indonesia ADM1 units. The browser exposes province aggregates only; no coordinates, raw detections, or observation denominator are included. |
+| Interpretation | **Guarded** | The province mode is a display of source-boundary units and positive detection records, not a current legal boundary map, fire-rate surface, burned-area map, or causal result. |

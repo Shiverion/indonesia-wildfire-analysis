@@ -1,0 +1,35 @@
+province_id,province,positive_detection_count,modis_count,viirs_noaa20_count,viirs_noaa21_count,viirs_snpp_count,status
+ID-BA,Bali,0,0,0,0,0,zero_returned_positive_detection
+ID-NB,West Nusa Tenggara,305,0,100,85,120,positive_detection_records
+ID-BT,Banten,37,1,16,13,7,positive_detection_records
+ID-JT,Central Java,63,8,33,12,10,positive_detection_records
+ID-JB,West Java,92,10,46,20,16,positive_detection_records
+ID-KT,Central Kalimantan,2114,143,657,824,490,positive_detection_records
+ID-KS,South Kalimantan,848,9,334,227,278,positive_detection_records
+ID-KB,West Kalimantan,3683,513,1121,1094,955,positive_detection_records
+ID-ST,Central Sulawesi,184,1,43,80,60,positive_detection_records
+ID-GO,Gorontalo,34,1,6,19,8,positive_detection_records
+ID-SA,North Sulawesi,58,5,8,34,11,positive_detection_records
+ID-SN,South Sulawesi,160,1,57,51,51,positive_detection_records
+ID-SG,Southeast Sulawesi,165,0,46,65,54,positive_detection_records
+ID-SR,West Sulawesi,87,0,28,23,36,positive_detection_records
+ID-AC,Aceh,122,3,31,51,37,positive_detection_records
+ID-BE,Bengkulu,32,0,9,15,8,positive_detection_records
+ID-JA,Jambi,524,60,121,169,174,positive_detection_records
+ID-LA,Lampung,311,53,90,89,79,positive_detection_records
+ID-RI,Riau,630,66,186,179,199,positive_detection_records
+ID-SB,West Sumatra,32,1,6,15,10,positive_detection_records
+ID-SS,South Sumatra,2466,377,637,724,728,positive_detection_records
+ID-SU,North Sumatra,106,8,27,51,20,positive_detection_records
+ID-NT,East Nusa Tenggara,751,10,168,298,275,positive_detection_records
+ID-MA,Maluku,1195,161,357,315,362,positive_detection_records
+ID-MU,North Maluku,266,35,87,77,67,positive_detection_records
+ID-JI,East Java,258,12,114,53,79,positive_detection_records
+ID-BB,Bangka-Belitung Islands,416,77,133,120,86,positive_detection_records
+ID-KR,Riau Islands,80,8,29,22,21,positive_detection_records
+ID-PA,Papua,5810,268,2237,1357,1948,positive_detection_records
+ID-PB,West Papua,844,106,277,207,254,positive_detection_records
+ID-KI,East Kalimantan,928,8,272,258,390,positive_detection_records
+ID-KU,North Kalimantan,177,0,45,60,72,positive_detection_records
+ID-YO,Special Region of Yogyakarta,9,0,1,7,1,positive_detection_records
+ID-JK,Jakarta Special Capital Region,1,0,1,0,0,positive_detection_records

@@ -64,6 +64,25 @@ if (peatFire) {
     throw new Error("Peat/fire comparison must include ordered 25/50/75% sensitivities.");
   }
 }
+const latestGlobalFire = data?.latest_global_fire;
+if (latestGlobalFire) {
+  if (latestGlobalFire.status !== "validated_closed_day_aggregate" || latestGlobalFire.raw_records_embedded !== false || latestGlobalFire.has_observation_denominator !== false) {
+    throw new Error("Latest global FIRMS data must remain a validated aggregate-only closed-day snapshot.");
+  }
+  if (!Array.isArray(latestGlobalFire.countries) || latestGlobalFire.countries.length < 200 || !Array.isArray(latestGlobalFire.indonesia_provinces) || latestGlobalFire.indonesia_provinces.length !== 34) {
+    throw new Error("Latest global FIRMS data must contain country geometry coverage and 34 Indonesia ADM1 units.");
+  }
+  if (latestGlobalFire.indonesia_province_geometry?.feature_count !== 34) {
+    throw new Error("Indonesia ADM1 geometry must contain the frozen 34-unit source boundary set.");
+  }
+  const provinceTotal = latestGlobalFire.indonesia_provinces.reduce((total, row) => total + Number(row?.positive_detection_count ?? -1), 0);
+  if (provinceTotal !== latestGlobalFire.indonesia_matched_point_count || latestGlobalFire.indonesia_provinces.some((row) => !Number.isInteger(row?.positive_detection_count) || row.positive_detection_count < 0)) {
+    throw new Error("Indonesia ADM1 aggregates do not conserve matched FIRMS points.");
+  }
+  if (JSON.stringify(latestGlobalFire).match(/"(latitude|longitude|acq_time|reported_time|source_file|source_sha256|firm_file)"/i)) {
+    throw new Error("Latest global FIRMS browser data must not contain detection-level or local-file fields.");
+  }
+}
 const conditionAudit = data?.condition_phase_audit;
 if (conditionAudit) {
   if (conditionAudit.schema_version !== "condition-phase-audit/v1" || conditionAudit.condition_phase_ready !== false) {

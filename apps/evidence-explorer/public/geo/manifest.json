@@ -1,6 +1,6 @@
 {
   "schema_version": "globe-assets/v1",
-  "generated_at_utc": "2026-08-20T19:21:02.301Z",
+  "generated_at_utc": "2026-08-23T15:35:21.642Z",
   "geography": {
     "source": "geoBoundaries gbOpen IDN ADM1",
     "source_metadata_url": "https://www.geoboundaries.org/api/current/gbOpen/IDN/ADM1/",
@@ -19,6 +19,11 @@
     "bytes": 266599
   },
   "derived": {
+    "indonesia_adm1": {
+      "path": "/geo/indonesia-adm1.geojson",
+      "sha256": "fe8ff86c0fa88b1aac6608db451cf746d355830cfcb024bde11265b69c220cf4",
+      "feature_count": 34
+    },
     "current_five": {
       "path": "/geo/kalimantan-current-five.geojson",
       "sha256": "6181017314d35376be3d1de2cc33141086974a437deb3d3b03d6a490bfc41aef",
