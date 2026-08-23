@@ -175,23 +175,37 @@ export function EvidenceExplorer({ data }: EvidenceExplorerProps) {
       <section className="hero-grid" aria-labelledby="purpose-heading">
         <div>
           <p className="eyebrow">Interactive aggregate context — not a fire-risk map</p>
-          <h2 id="purpose-heading">Explore what the currently acquired evidence can support.</h2>
-          <p className="hero-copy">The default globe is a WGS84 country layer covering the frozen global boundary set, colored only by aggregate satellite detection records or peatland share. The Kalimantan province layer remains separate because SiPongi and GWIS use incompatible local reporting units.</p>
+          <h2 id="purpose-heading">A guided view of what the evidence can—and cannot—say.</h2>
+          <p className="hero-copy">Start with Indonesia&apos;s province map and the latest closed-day satellite snapshot. Then read the completed-2024 statistical comparison, explore the Kalimantan reporting layers, and open the methods and provenance sections when you want the technical detail.</p>
           <div className="coverage-callout" aria-label="Geographic coverage">
-            <div><strong>Local layer</strong><span>5 current / 4 legacy Kalimantan units</span></div>
-            <div><strong>Global layer</strong><span>{data.peat_fire_comparison?.matched_country_count ?? 0} matched countries</span></div>
-            <button type="button" onClick={jumpToGlobalComparison}>Focus global globe ↓</button>
+            <div><strong>Start with</strong><span>{data.latest_global_fire?.indonesia_provinces.length ?? 0} Indonesia ADM1 source units</span></div>
+            <div><strong>Then compare</strong><span>{data.peat_fire_comparison?.matched_country_count ?? 0} matched country aggregates</span></div>
+            <button type="button" onClick={jumpToGlobalComparison}>Go to Indonesia map ↓</button>
           </div>
         </div>
         <div className="guardrail-card">
-          <span className="guardrail-label">Primary association</span>
-          <strong>{data.display_status.primary_association}</strong>
-          <p>Phase 1 is still blocked by {data.display_status.blocked_assets.length} required asset groups. The controls below change descriptive context only.</p>
+          <span className="guardrail-label">Current research answer</span>
+          <strong>Not identifiable yet</strong>
+          <p>The data can describe where satellite records were returned, but Phase 1 is still blocked by {data.display_status.blocked_assets.length} required asset groups. It cannot yet estimate a causal wildfire effect or risk.</p>
           <button type="button" className="text-button" onClick={() => setLimitationsOpen(true)}>Read evidence boundaries</button>
         </div>
       </section>
 
+      <nav className="section-nav" aria-label="Dashboard reading order">
+        <span className="section-nav-label">Read in order</span>
+        <a href="#global-comparison">1 · Indonesia map</a>
+        <a href="#analysis-results">2 · Statistical result</a>
+        <a href="#local-layer">3 · Kalimantan detail</a>
+        <a href="#provenance-heading">4 · Methods and sources</a>
+      </nav>
+
       {data.peat_fire_comparison && <PeatFireComparisonPanel comparison={data.peat_fire_comparison} latestGlobalFire={data.latest_global_fire} />}
+
+      <section className="reading-section-intro" aria-labelledby="local-analysis-heading">
+        <span className="eyebrow">Detailed local analysis</span>
+        <h2 id="local-analysis-heading">Now inspect the Kalimantan reporting layers</h2>
+        <p>The controls below change the source, period, and satellite platform. They do not turn aggregate records into a fire-risk estimate. SiPongi has five current units; GWIS has four legacy units and must be read separately.</p>
+      </section>
 
       <section className="navigator-card" aria-label="Explorer controls">
         <div className="control-cluster">
@@ -269,7 +283,7 @@ export function EvidenceExplorer({ data }: EvidenceExplorerProps) {
         </article>
       </section>
 
-      <div className="map-scope-heading">
+      <div id="local-layer" className="map-scope-heading">
         <div><span className="eyebrow">Local reporting layer</span><h2>Kalimantan province evidence</h2><p>These polygons represent reporting units and their aggregates—not areas that are all burned.</p></div>
         <button type="button" className="text-button" onClick={jumpToGlobalComparison}>Compare other countries ↓</button>
       </div>
@@ -330,6 +344,12 @@ export function EvidenceExplorer({ data }: EvidenceExplorerProps) {
           <MonthlyContextChart data={data} mode={mode} platform={platform} selectedYear={year} />
         </section>
       )}
+
+      <section className="reading-section-intro compact-reading-intro" aria-labelledby="technical-evidence-heading">
+        <span className="eyebrow">Supporting evidence</span>
+        <h2 id="technical-evidence-heading">Trend context, hypothesis checks, and lookup tables</h2>
+        <p>These sections preserve the detailed time series, sensitivity checks, missingness rules, and source ledger used to audit the plain-language view above.</p>
+      </section>
 
       <ConditionalPeatHypothesisPanel audit={data.condition_phase_audit ?? null} />
 
@@ -432,15 +452,16 @@ function PeatFireComparisonPanel({ comparison, latestGlobalFire }: { comparison:
     <section id="global-comparison" className="peat-fire-card" aria-labelledby="peat-fire-heading">
       <div className="section-heading">
         <div>
-          <span className="eyebrow">Global comparison · completed 2024 fire year</span>
-          <h2 id="peat-fire-heading">Does peatland show more fire detections?</h2>
+          <span className="eyebrow">Start here · Indonesia first, statistics second</span>
+          <h2 id="peat-fire-heading">Where are detections reported, and what can we infer?</h2>
           <p>
-            The chart remains the completed-2024 scientific comparison. The globe below defaults to the latest validated closed-day FIRMS NRT snapshot when available. Peatland is a mapped baseline exposure area; each circle is a country-level aggregate of NASA MODIS active-fire detections. A coloured country area is not a claim that the whole country burned, and the points are not a complete inventory of fires.
+            Read the province map first for the latest spatial context. The chart below is the completed-2024 scientific comparison. Peatland is a mapped baseline exposure area; each circle is a country-level aggregate of NASA MODIS active-fire detections. A coloured polygon or point is not a claim that the whole area burned, and these records are not a complete inventory of fires.
           </p>
         </div>
         <span className="layer-key">Exploratory · not causal</span>
       </div>
-      <div className="peat-fire-grid">
+      <GlobalFireGlobe comparison={comparison} latestGlobalFire={latestGlobalFire} />
+      <div id="analysis-results" className="peat-fire-grid">
         <div className="peat-fire-plot-wrap">
           <svg className="peat-fire-plot" viewBox={`0 0 ${width} ${height}`} role="img" aria-label="Country peatland share versus log-scaled MODIS active-fire detections per 1000 square kilometres">
             {[0, 0.5, 1].map((fraction) => {
@@ -465,7 +486,6 @@ function PeatFireComparisonPanel({ comparison, latestGlobalFire }: { comparison:
           <div className="peat-stat"><span>Interpretation</span><strong>{p !== null && p !== undefined && p < 0.05 ? "Evidence of association" : "Not statistically significant"}</strong><small>CI includes 1, so this test does not establish higher detection in peatland.</small></div>
         </div>
       </div>
-      <GlobalFireGlobe comparison={comparison} latestGlobalFire={latestGlobalFire} />
       <div className="peat-threshold-table-wrap">
         <h3>Threshold sensitivity</h3>
         <p className="table-explainer">The conclusion is unchanged when “peatland” is defined as a cell with at least 25%, 50%, or 75% peat extent.</p>

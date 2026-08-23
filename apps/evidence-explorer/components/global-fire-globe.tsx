@@ -91,7 +91,8 @@ export function GlobalFireGlobe({
   const runtimeRef = useRef<GlobalRuntime | null>(null);
   const styleLayerRef = useRef<() => void>(() => undefined);
   const initialMetric: GlobalMetric = latestGlobalFire ? "fire_latest" : "fire_2024";
-  const [geography, setGeography] = useState<GlobalGeography>("countries");
+  const defaultGeography: GlobalGeography = latestGlobalFire?.indonesia_provinces.length ? "indonesia_provinces" : "countries";
+  const [geography, setGeography] = useState<GlobalGeography>(defaultGeography);
   const metricRef = useRef<GlobalMetric>(initialMetric);
   const geographyRef = useRef<GlobalGeography>("countries");
   const hoveredRef = useRef<string | null>(null);
@@ -355,15 +356,15 @@ export function GlobalFireGlobe({
       <header className="section-heading">
         <div>
           <span className="eyebrow">{geography === "countries" ? `Global context · ${latestGlobalFire?.country_count ?? comparison.matched_country_count} country geometries` : `Indonesia context · ${latestGlobalFire?.indonesia_provinces.length ?? 0} province geometries`}</span>
-          <h2 id="global-globe-heading">Global peatland / fire comparison globe</h2>
+          <h2 id="global-globe-heading">{geography === "countries" ? "World country context" : "Indonesia province context"}</h2>
           <p>{geography === "countries" ? (latestGlobalFire ? `The default is the latest closed UTC day (${latestGlobalFire.snapshot_date}) from NASA FIRMS NRT MODIS + VIIRS positive detection records.` : "It shows the mapped peat baseline and completed 2024 NASA FIRMS MODIS detection aggregates.") : `Indonesia is split into ${latestGlobalFire?.indonesia_provinces.length ?? 0} frozen ADM1 display units. Province colors show only the latest FIRMS positive detection-record aggregate; the 2017 boundary source is not a current legal boundary.`} A colored polygon does not mean the whole polygon burned.</p>
         </div>
         <span className="layer-key">Exploratory · not causal</span>
       </header>
       <div className="global-globe-toolbar">
         <div className="segmented-control" role="group" aria-label="Global map geography">
-          <button type="button" className={geography === "countries" ? "is-selected" : ""} onClick={() => selectGeography("countries")}>World countries</button>
           <button type="button" className={geography === "indonesia_provinces" ? "is-selected" : ""} onClick={() => selectGeography("indonesia_provinces")} disabled={!latestGlobalFire?.indonesia_provinces.length}>Indonesia provinces</button>
+          <button type="button" className={geography === "countries" ? "is-selected" : ""} onClick={() => selectGeography("countries")}>World countries</button>
         </div>
         <div className="segmented-control" role="group" aria-label="Global map metric">
           {latestGlobalFire && <button type="button" className={metric === "fire_latest" ? "is-selected" : ""} onClick={() => setMetric("fire_latest")}>Latest NRT · {latestGlobalFire.snapshot_date}</button>}
