@@ -406,8 +406,12 @@ function PeatFireComparisonPanel({ comparison }: { comparison: PeatFireCompariso
   const width = 720;
   const height = 265;
   const pad = { left: 56, right: 22, top: 18, bottom: 43 };
-  const x = (share: number) => pad.left + Math.min(1, share / maxShare) * (width - pad.left - pad.right);
-  const y = (rate: number) => height - pad.bottom - (Math.log10(1 + Math.max(0, rate)) / maxRate) * (height - pad.top - pad.bottom);
+  // Serialize plotted coordinates to a fixed precision. Without this, the
+  // server and browser can stringify the same floating-point calculation with
+  // different trailing digits, which causes a React hydration mismatch on the
+  // SVG circles (the visual difference is zero, but the DOM attributes differ).
+  const x = (share: number) => (pad.left + Math.min(1, share / maxShare) * (width - pad.left - pad.right)).toFixed(6);
+  const y = (rate: number) => (height - pad.bottom - (Math.log10(1 + Math.max(0, rate)) / maxRate) * (height - pad.top - pad.bottom)).toFixed(6);
   return (
     <section className="peat-fire-card" aria-labelledby="peat-fire-heading">
       <div className="section-heading">
