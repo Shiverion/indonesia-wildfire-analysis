@@ -122,6 +122,12 @@ export function EvidenceExplorer({ data }: EvidenceExplorerProps) {
   const observedRows = sum(provinceRows.map((row) => row.observed));
   const expectedRows = sum(provinceRows.map((row) => row.expected));
 
+  const jumpToGlobalComparison = () => {
+    const target = document.getElementById("global-comparison");
+    if (!target) return;
+    target.scrollIntoView({ behavior: window.matchMedia?.("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "start" });
+  };
+
   const chooseMode = (nextMode: EvidenceMode) => {
     const nextYears = sourceAvailableYears(data, nextMode);
     setMode(nextMode);
@@ -170,7 +176,12 @@ export function EvidenceExplorer({ data }: EvidenceExplorerProps) {
         <div>
           <p className="eyebrow">Interactive aggregate context — not a fire-risk map</p>
           <h2 id="purpose-heading">Explore what the currently acquired evidence can support.</h2>
-          <p className="hero-copy">The globe displays province-level, source-bound aggregates only. It deliberately does not infer individual ignitions, exposure effects, accessibility, transformation, or causal risk.</p>
+          <p className="hero-copy">The first globe is intentionally a Kalimantan province layer because SiPongi and GWIS only report that geography. A separate WGS84 globe below plots the global country comparison, so other countries are visible without mixing incompatible reporting units.</p>
+          <div className="coverage-callout" aria-label="Geographic coverage">
+            <div><strong>Local layer</strong><span>5 current / 4 legacy Kalimantan units</span></div>
+            <div><strong>Global layer</strong><span>{data.peat_fire_comparison?.matched_country_count ?? 0} matched countries</span></div>
+            <button type="button" onClick={jumpToGlobalComparison}>Jump to global globe ↓</button>
+          </div>
         </div>
         <div className="guardrail-card">
           <span className="guardrail-label">Primary association</span>
@@ -256,7 +267,11 @@ export function EvidenceExplorer({ data }: EvidenceExplorerProps) {
         </article>
       </section>
 
-      <section className="globe-layout" aria-label="Evidence globe and selected-region summary">
+      <div className="map-scope-heading">
+        <div><span className="eyebrow">Local reporting layer</span><h2>Kalimantan province evidence</h2><p>These polygons represent reporting units and their aggregates—not areas that are all burned.</p></div>
+        <button type="button" className="text-button" onClick={jumpToGlobalComparison}>Compare other countries ↓</button>
+      </div>
+      <section className="globe-layout" aria-label="Kalimantan evidence globe and selected-region summary">
         <InteractiveGlobe
           mode={mode}
           platform={platform}
@@ -413,7 +428,7 @@ function PeatFireComparisonPanel({ comparison }: { comparison: PeatFireCompariso
   const x = (share: number) => (pad.left + Math.min(1, share / maxShare) * (width - pad.left - pad.right)).toFixed(6);
   const y = (rate: number) => (height - pad.bottom - (Math.log10(1 + Math.max(0, rate)) / maxRate) * (height - pad.top - pad.bottom)).toFixed(6);
   return (
-    <section className="peat-fire-card" aria-labelledby="peat-fire-heading">
+    <section id="global-comparison" className="peat-fire-card" aria-labelledby="peat-fire-heading">
       <div className="section-heading">
         <div>
           <span className="eyebrow">Global comparison · completed 2024 fire year</span>
