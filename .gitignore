@@ -1,0 +1,26 @@
+.env
+.env.*
+!.env.example
+
+# Local credential files created by Earthdata/CDS clients
+.netrc
+.urs_cookies
+.dodsrc
+.cdsapirc
+
+# Downloaded source data are kept locally and are not committed to GitHub.
+# The repository tracks manifests, QA reports, derived summaries, and code.
+data/raw/
+
+# Large local aggregates/snapshots are reproducible from the acquisition scripts.
+data/derived/sipongi/*.csv
+data/derived/sipongi/snapshots/
+
+# Local logs and generated analysis previews.
+outputs/quality/*.log
+apps/evidence-explorer/*.log
+
+# Python caches and test/build metadata.
+__pycache__/
+*.py[cod]
+.pytest_cache/

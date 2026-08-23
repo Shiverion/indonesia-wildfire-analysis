@@ -1,0 +1,2322 @@
+{
+  "schema_version": "viirs-swath-screening/v1",
+  "created_at_utc": "2026-08-22T05:05:34.598279+00:00",
+  "source": {
+    "pair_index": "outputs/quality/viirs_pair_index.json",
+    "pair_index_sha256": "b424e419506f95562bcf01c8d8bb582f574b19e046da98a01b64e2bef7c66693",
+    "bbox": [
+      109.0,
+      -5.0,
+      120.0,
+      8.0
+    ]
+  },
+  "summary": {
+    "paired_rows_available": 60,
+    "paired_rows_requested": 60,
+    "swaths_screened": 60,
+    "swaths_failed": 0,
+    "negative_frame_ready": false,
+    "denominator_ready": false
+  },
+  "interpretation": {
+    "status": "screening_only_no_forest_cohort_or_observation_denominator",
+    "class_rule": "Classes 5 and 7-9 are retained as the prespecified processed/active-fire screening group; no class is converted into a negative observation here.",
+    "required_next_step": "Intersect quality-screened geolocation with the frozen 2014 baseline-forest footprint and analysis grid, then apply registered cloud/water/coverage rules."
+  },
+  "failures": [],
+  "rows": [
+    {
+      "pair_key": "2015001.0548",
+      "acquisition_utc": "2015-01-01T05:48:00Z",
+      "vnp14_path": "data/raw/viirs/VNP14IMG/VNP14IMG.A2015001.0548.002.2024151022549.nc",
+      "vnp03_path": "data/raw/viirs/VNP03IMG/VNP03IMG.A2015001.0548.002.2021033131743.nc",
+      "array_shape": [
+        6496,
+        6400
+      ],
+      "pixel_count": 41574400,
+      "fire_mask_class_counts": {
+        "0": 190,
+        "1": 5352704,
+        "2": 738780,
+        "3": 14122177,
+        "4": 18486657,
+        "5": 2873760,
+        "6": 5,
+        "7": 44,
+        "8": 71,
+        "9": 12
+      },
+      "quality_flag_counts": {
+        "0": 41574400
+      },
+      "land_water_mask_counts": {
+        "0": 7825052,
+        "1": 9525903,
+        "2": 205258,
+        "3": 49848,
+        "6": 1794929,
+        "7": 22173410
+      },
+      "finite_geolocation_pixels": 41574400,
+      "bbox_geolocation_pixels": 3034530,
+      "out_of_range_geolocation_pixels": 0,
+      "prespecified_processed_or_fire_class_count": 2873887,
+      "prespecified_processed_or_fire_in_bbox_count": 497527,
+      "opportunity_status": "screened_not_denominator_ready"
+    },
+    {
+      "pair_key": "2015001.0554",
+      "acquisition_utc": "2015-01-01T05:54:00Z",
+      "vnp14_path": "data/raw/viirs/VNP14IMG/VNP14IMG.A2015001.0554.002.2024151022552.nc",
+      "vnp03_path": "data/raw/viirs/VNP03IMG/VNP03IMG.A2015001.0554.002.2021033130758.nc",
+      "array_shape": [
+        6464,
+        6400
+      ],
+      "pixel_count": 41369600,
+      "fire_mask_class_counts": {
+        "1": 5326336,
+        "3": 9341879,
+        "4": 20943733,
+        "5": 5755878,
+        "6": 2,
+        "7": 130,
+        "8": 1575,
+        "9": 67
+      },
+      "quality_flag_counts": {
+        "0": 41369600
+      },
+      "land_water_mask_counts": {
+        "0": 11660487,
+        "1": 12363955,
+        "2": 406464,
+        "3": 122424,
+        "6": 1629663,
+        "7": 15186607
+      },
+      "finite_geolocation_pixels": 41369600,
+      "bbox_geolocation_pixels": 7761563,
+      "out_of_range_geolocation_pixels": 0,
+      "prespecified_processed_or_fire_class_count": 5757650,
+      "prespecified_processed_or_fire_in_bbox_count": 1163237,
+      "opportunity_status": "screened_not_denominator_ready"
+    },
+    {
+      "pair_key": "2015001.1648",
+      "acquisition_utc": "2015-01-01T16:48:00Z",
+      "vnp14_path": "data/raw/viirs/VNP14IMG/VNP14IMG.A2015001.1648.002.2024151022555.nc",
+      "vnp03_path": "data/raw/viirs/VNP03IMG/VNP03IMG.A2015001.1648.002.2021033132345.nc",
+      "array_shape": [
+        6464,
+        6400
+      ],
+      "pixel_count": 41369600,
+      "fire_mask_class_counts": {
+        "0": 45811,
+        "1": 5326336,
+        "3": 28611101,
+        "4": 5858146,
+        "5": 1528189,
+        "6": 11,
+        "8": 6
+      },
+      "quality_flag_counts": {
+        "0": 41369600
+      },
+      "land_water_mask_counts": {
+        "0": 1562719,
+        "1": 2032848,
+        "2": 128194,
+        "3": 16759,
+        "6": 916709,
+        "7": 36712371
+      },
+      "finite_geolocation_pixels": 41369600,
+      "bbox_geolocation_pixels": 1143020,
+      "out_of_range_geolocation_pixels": 0,
+      "prespecified_processed_or_fire_class_count": 1528195,
+      "prespecified_processed_or_fire_in_bbox_count": 144455,
+      "opportunity_status": "screened_not_denominator_ready"
+    },
+    {
+      "pair_key": "2015001.1654",
+      "acquisition_utc": "2015-01-01T16:54:00Z",
+      "vnp14_path": "data/raw/viirs/VNP14IMG/VNP14IMG.A2015001.1654.002.2024151022557.nc",
+      "vnp03_path": "data/raw/viirs/VNP03IMG/VNP03IMG.A2015001.1654.002.2021033133216.nc",
+      "array_shape": [
+        6464,
+        6400
+      ],
+      "pixel_count": 41369600,
+      "fire_mask_class_counts": {
+        "0": 1360609,
+        "1": 5326336,
+        "3": 6620661,
+        "4": 24588171,
+        "5": 3473776,
+        "6": 34,
+        "8": 13
+      },
+      "quality_flag_counts": {
+        "0": 41369600
+      },
+      "land_water_mask_counts": {
+        "0": 10278543,
+        "1": 14129564,
+        "2": 321403,
+        "3": 62316,
+        "6": 2328942,
+        "7": 14248832
+      },
+      "finite_geolocation_pixels": 41369600,
+      "bbox_geolocation_pixels": 2062121,
+      "out_of_range_geolocation_pixels": 0,
+      "prespecified_processed_or_fire_class_count": 3473789,
+      "prespecified_processed_or_fire_in_bbox_count": 195931,
+      "opportunity_status": "screened_not_denominator_ready"
+    },
+    {
+      "pair_key": "2015001.1830",
+      "acquisition_utc": "2015-01-01T18:30:00Z",
+      "vnp14_path": "data/raw/viirs/VNP14IMG/VNP14IMG.A2015001.1830.002.2024151022601.nc",
+      "vnp03_path": "data/raw/viirs/VNP03IMG/VNP03IMG.A2015001.1830.002.2021033131611.nc",
+      "array_shape": [
+        6496,
+        6400
+      ],
+      "pixel_count": 41574400,
+      "fire_mask_class_counts": {
+        "0": 630805,
+        "1": 5352704,
+        "3": 12707083,
+        "4": 13609300,
+        "5": 9273753,
+        "6": 5,
+        "8": 749,
+        "9": 1
+      },
+      "quality_flag_counts": {
+        "0": 41574400
+      },
+      "land_water_mask_counts": {
+        "0": 12728215,
+        "1": 14455368,
+        "2": 415504,
+        "3": 148996,
+        "6": 1445502,
+        "7": 12380815
+      },
+      "finite_geolocation_pixels": 41574400,
+      "bbox_geolocation_pixels": 7339621,
+      "out_of_range_geolocation_pixels": 0,
+      "prespecified_processed_or_fire_class_count": 9274503,
+      "prespecified_processed_or_fire_in_bbox_count": 618252,
+      "opportunity_status": "screened_not_denominator_ready"
+    },
+    {
+      "pair_key": "2015001.1836",
+      "acquisition_utc": "2015-01-01T18:36:00Z",
+      "vnp14_path": "data/raw/viirs/VNP14IMG/VNP14IMG.A2015001.1836.002.2024151022600.nc",
+      "vnp03_path": "data/raw/viirs/VNP03IMG/VNP03IMG.A2015001.1836.002.2021033132153.nc",
+      "array_shape": [
+        6464,
+        6400
+      ],
+      "pixel_count": 41369600,
+      "fire_mask_class_counts": {
+        "0": 606691,
+        "1": 5326336,
+        "3": 24620213,
+        "4": 10423308,
+        "5": 393051,
+        "8": 1
+      },
+      "quality_flag_counts": {
+        "0": 41369600
+      },
+      "land_water_mask_counts": {
+        "0": 3153604,
+        "1": 2152248,
+        "2": 64604,
+        "3": 15032,
+        "6": 301047,
+        "7": 35683065
+      },
+      "finite_geolocation_pixels": 41369600,
+      "bbox_geolocation_pixels": 1048536,
+      "out_of_range_geolocation_pixels": 0,
+      "prespecified_processed_or_fire_class_count": 393052,
+      "prespecified_processed_or_fire_in_bbox_count": 21732,
+      "opportunity_status": "screened_not_denominator_ready"
+    },
+    {
+      "pair_key": "2015002.0530",
+      "acquisition_utc": "2015-01-02T05:30:00Z",
+      "vnp14_path": "data/raw/viirs/VNP14IMG/VNP14IMG.A2015002.0530.002.2024151022918.nc",
+      "vnp03_path": "data/raw/viirs/VNP03IMG/VNP03IMG.A2015002.0530.002.2021033134604.nc",
+      "array_shape": [
+        6464,
+        6400
+      ],
+      "pixel_count": 41369600,
+      "fire_mask_class_counts": {
+        "0": 3,
+        "1": 5326336,
+        "2": 466258,
+        "3": 7694194,
+        "4": 26159432,
+        "5": 1723375,
+        "6": 1,
+        "8": 1
+      },
+      "quality_flag_counts": {
+        "0": 41369600
+      },
+      "land_water_mask_counts": {
+        "0": 9546482,
+        "1": 9500074,
+        "2": 293418,
+        "3": 48389,
+        "6": 2381589,
+        "7": 19599648
+      },
+      "finite_geolocation_pixels": 41369600,
+      "bbox_geolocation_pixels": 5625369,
+      "out_of_range_geolocation_pixels": 0,
+      "prespecified_processed_or_fire_class_count": 1723376,
+      "prespecified_processed_or_fire_in_bbox_count": 359375,
+      "opportunity_status": "screened_not_denominator_ready"
+    },
+    {
+      "pair_key": "2015002.0536",
+      "acquisition_utc": "2015-01-02T05:36:00Z",
+      "vnp14_path": "data/raw/viirs/VNP14IMG/VNP14IMG.A2015002.0536.002.2024151022915.nc",
+      "vnp03_path": "data/raw/viirs/VNP03IMG/VNP03IMG.A2015002.0536.002.2021033132845.nc",
+      "array_shape": [
+        6464,
+        6400
+      ],
+      "pixel_count": 41369600,
+      "fire_mask_class_counts": {
+        "0": 16,
+        "1": 5326336,
+        "3": 11694481,
+        "4": 20183165,
+        "5": 4164676,
+        "6": 4,
+        "7": 17,
+        "8": 814,
+        "9": 91
+      },
+      "quality_flag_counts": {
+        "0": 41369600
+      },
+      "land_water_mask_counts": {
+        "0": 8965090,
+        "1": 9172210,
+        "2": 338637,
+        "3": 99937,
+        "6": 1761424,
+        "7": 21032302
+      },
+      "finite_geolocation_pixels": 41369600,
+      "bbox_geolocation_pixels": 5179942,
+      "out_of_range_geolocation_pixels": 0,
+      "prespecified_processed_or_fire_class_count": 4165598,
+      "prespecified_processed_or_fire_in_bbox_count": 87666,
+      "opportunity_status": "screened_not_denominator_ready"
+    },
+    {
+      "pair_key": "2015002.0712",
+      "acquisition_utc": "2015-01-02T07:12:00Z",
+      "vnp14_path": "data/raw/viirs/VNP14IMG/VNP14IMG.A2015002.0712.002.2024151022948.nc",
+      "vnp03_path": "data/raw/viirs/VNP03IMG/VNP03IMG.A2015002.0712.002.2021033141531.nc",
+      "array_shape": [
+        6496,
+        6400
+      ],
+      "pixel_count": 41574400,
+      "fire_mask_class_counts": {
+        "0": 19,
+        "1": 5352704,
+        "2": 445053,
+        "3": 22708934,
+        "4": 12846066,
+        "5": 221623,
+        "8": 1
+      },
+      "quality_flag_counts": {
+        "0": 41574400
+      },
+      "land_water_mask_counts": {
+        "0": 3410872,
+        "1": 3594648,
+        "2": 110404,
+        "3": 26199,
+        "6": 262792,
+        "7": 34169485
+      },
+      "finite_geolocation_pixels": 41574400,
+      "bbox_geolocation_pixels": 4322,
+      "out_of_range_geolocation_pixels": 0,
+      "prespecified_processed_or_fire_class_count": 221624,
+      "prespecified_processed_or_fire_in_bbox_count": 0,
+      "opportunity_status": "screened_not_denominator_ready"
+    },
+    {
+      "pair_key": "2015002.1630",
+      "acquisition_utc": "2015-01-02T16:30:00Z",
+      "vnp14_path": "data/raw/viirs/VNP14IMG/VNP14IMG.A2015002.1630.002.2024151023226.nc",
+      "vnp03_path": "data/raw/viirs/VNP03IMG/VNP03IMG.A2015002.1630.002.2021033133350.nc",
+      "array_shape": [
+        6464,
+        6400
+      ],
+      "pixel_count": 41369600,
+      "fire_mask_class_counts": {
+        "0": 392083,
+        "1": 5326336,
+        "3": 22264153,
+        "4": 12412501,
+        "5": 974524,
+        "6": 3
+      },
+      "quality_flag_counts": {
+        "0": 41369600
+      },
+      "land_water_mask_counts": {
+        "0": 1384619,
+        "1": 3127193,
+        "2": 151751,
+        "3": 22293,
+        "6": 1000051,
+        "7": 35683693
+      },
+      "finite_geolocation_pixels": 41369600,
+      "bbox_geolocation_pixels": 399,
+      "out_of_range_geolocation_pixels": 0,
+      "prespecified_processed_or_fire_class_count": 974524,
+      "prespecified_processed_or_fire_in_bbox_count": 0,
+      "opportunity_status": "screened_not_denominator_ready"
+    },
+    {
+      "pair_key": "2015182.0554",
+      "acquisition_utc": "2015-07-01T05:54:00Z",
+      "vnp14_path": "data/raw/viirs/VNP14IMG/VNP14IMG.A2015182.0554.002.2024064161121.nc",
+      "vnp03_path": "data/raw/viirs/VNP03IMG/VNP03IMG.A2015182.0554.002.2021040075533.nc",
+      "array_shape": [
+        6464,
+        6400
+      ],
+      "pixel_count": 41369600,
+      "fire_mask_class_counts": {
+        "0": 254,
+        "1": 5326336,
+        "2": 2,
+        "3": 22554351,
+        "4": 6665632,
+        "5": 6822523,
+        "6": 9,
+        "7": 26,
+        "8": 450,
+        "9": 17
+      },
+      "quality_flag_counts": {
+        "0": 41369600
+      },
+      "land_water_mask_counts": {
+        "0": 11243790,
+        "1": 10192745,
+        "2": 344177,
+        "3": 64438,
+        "6": 1591350,
+        "7": 17933100
+      },
+      "finite_geolocation_pixels": 41369600,
+      "bbox_geolocation_pixels": 10762466,
+      "out_of_range_geolocation_pixels": 0,
+      "prespecified_processed_or_fire_class_count": 6823016,
+      "prespecified_processed_or_fire_in_bbox_count": 3963621,
+      "opportunity_status": "screened_not_denominator_ready"
+    },
+    {
+      "pair_key": "2015182.1654",
+      "acquisition_utc": "2015-07-01T16:54:00Z",
+      "vnp14_path": "data/raw/viirs/VNP14IMG/VNP14IMG.A2015182.1654.002.2024064161205.nc",
+      "vnp03_path": "data/raw/viirs/VNP03IMG/VNP03IMG.A2015182.1654.002.2021040082508.nc",
+      "array_shape": [
+        6496,
+        6400
+      ],
+      "pixel_count": 41574400,
+      "fire_mask_class_counts": {
+        "0": 401160,
+        "1": 5352704,
+        "3": 20039865,
+        "4": 11859905,
+        "5": 3920731,
+        "6": 2,
+        "8": 33
+      },
+      "quality_flag_counts": {
+        "0": 41574400
+      },
+      "land_water_mask_counts": {
+        "0": 6846112,
+        "1": 6330539,
+        "2": 305721,
+        "3": 38032,
+        "6": 2376912,
+        "7": 25677084
+      },
+      "finite_geolocation_pixels": 41574400,
+      "bbox_geolocation_pixels": 4830941,
+      "out_of_range_geolocation_pixels": 0,
+      "prespecified_processed_or_fire_class_count": 3920764,
+      "prespecified_processed_or_fire_in_bbox_count": 911291,
+      "opportunity_status": "screened_not_denominator_ready"
+    },
+    {
+      "pair_key": "2015182.1830",
+      "acquisition_utc": "2015-07-01T18:30:00Z",
+      "vnp14_path": "data/raw/viirs/VNP14IMG/VNP14IMG.A2015182.1830.002.2024064161205.nc",
+      "vnp03_path": "data/raw/viirs/VNP03IMG/VNP03IMG.A2015182.1830.002.2021040083035.nc",
+      "array_shape": [
+        6464,
+        6400
+      ],
+      "pixel_count": 41369600,
+      "fire_mask_class_counts": {
+        "0": 406644,
+        "1": 5326336,
+        "3": 10323845,
+        "4": 9581227,
+        "5": 15731356,
+        "6": 8,
+        "8": 184
+      },
+      "quality_flag_counts": {
+        "0": 41369600
+      },
+      "land_water_mask_counts": {
+        "0": 6133201,
+        "1": 24052856,
+        "2": 508950,
+        "3": 241650,
+        "6": 1050414,
+        "7": 9382529
+      },
+      "finite_geolocation_pixels": 41369600,
+      "bbox_geolocation_pixels": 73428,
+      "out_of_range_geolocation_pixels": 0,
+      "prespecified_processed_or_fire_class_count": 15731540,
+      "prespecified_processed_or_fire_in_bbox_count": 0,
+      "opportunity_status": "screened_not_denominator_ready"
+    },
+    {
+      "pair_key": "2015182.1836",
+      "acquisition_utc": "2015-07-01T18:36:00Z",
+      "vnp14_path": "data/raw/viirs/VNP14IMG/VNP14IMG.A2015182.1836.002.2024064161109.nc",
+      "vnp03_path": "data/raw/viirs/VNP03IMG/VNP03IMG.A2015182.1836.002.2021040082032.nc",
+      "array_shape": [
+        6464,
+        6400
+      ],
+      "pixel_count": 41369600,
+      "fire_mask_class_counts": {
+        "0": 50026,
+        "1": 5326336,
+        "3": 26460387,
+        "4": 3263462,
+        "5": 6268999,
+        "6": 9,
+        "8": 380,
+        "9": 1
+      },
+      "quality_flag_counts": {
+        "0": 41369600
+      },
+      "land_water_mask_counts": {
+        "0": 11301791,
+        "1": 8178913,
+        "2": 237032,
+        "3": 56319,
+        "6": 843846,
+        "7": 20751699
+      },
+      "finite_geolocation_pixels": 41369600,
+      "bbox_geolocation_pixels": 6907176,
+      "out_of_range_geolocation_pixels": 0,
+      "prespecified_processed_or_fire_class_count": 6269380,
+      "prespecified_processed_or_fire_in_bbox_count": 1757946,
+      "opportunity_status": "screened_not_denominator_ready"
+    },
+    {
+      "pair_key": "2015183.0536",
+      "acquisition_utc": "2015-07-02T05:36:00Z",
+      "vnp14_path": "data/raw/viirs/VNP14IMG/VNP14IMG.A2015183.0536.002.2024064171807.nc",
+      "vnp03_path": "data/raw/viirs/VNP03IMG/VNP03IMG.A2015183.0536.002.2021040082525.nc",
+      "array_shape": [
+        6496,
+        6400
+      ],
+      "pixel_count": 41574400,
+      "fire_mask_class_counts": {
+        "0": 12,
+        "1": 5352704,
+        "2": 15,
+        "3": 18169069,
+        "4": 12688023,
+        "5": 5364164,
+        "6": 9,
+        "7": 19,
+        "8": 371,
+        "9": 14
+      },
+      "quality_flag_counts": {
+        "0": 41574400
+      },
+      "land_water_mask_counts": {
+        "0": 12368270,
+        "1": 8521812,
+        "2": 359626,
+        "3": 50962,
+        "6": 2221344,
+        "7": 18052386
+      },
+      "finite_geolocation_pixels": 41574400,
+      "bbox_geolocation_pixels": 10799621,
+      "out_of_range_geolocation_pixels": 0,
+      "prespecified_processed_or_fire_class_count": 5364568,
+      "prespecified_processed_or_fire_in_bbox_count": 3475242,
+      "opportunity_status": "screened_not_denominator_ready"
+    },
+    {
+      "pair_key": "2015183.1636",
+      "acquisition_utc": "2015-07-02T16:36:00Z",
+      "vnp14_path": "data/raw/viirs/VNP14IMG/VNP14IMG.A2015183.1636.002.2024064171839.nc",
+      "vnp03_path": "data/raw/viirs/VNP03IMG/VNP03IMG.A2015183.1636.002.2021040084850.nc",
+      "array_shape": [
+        6464,
+        6400
+      ],
+      "pixel_count": 41369600,
+      "fire_mask_class_counts": {
+        "0": 31960,
+        "1": 5326336,
+        "3": 22543845,
+        "4": 7853426,
+        "5": 5613909,
+        "6": 9,
+        "8": 115
+      },
+      "quality_flag_counts": {
+        "0": 41369600
+      },
+      "land_water_mask_counts": {
+        "0": 8342229,
+        "1": 7286825,
+        "2": 322168,
+        "3": 56193,
+        "6": 1939801,
+        "7": 23422384
+      },
+      "finite_geolocation_pixels": 41369600,
+      "bbox_geolocation_pixels": 630742,
+      "out_of_range_geolocation_pixels": 0,
+      "prespecified_processed_or_fire_class_count": 5614024,
+      "prespecified_processed_or_fire_in_bbox_count": 116879,
+      "opportunity_status": "screened_not_denominator_ready"
+    },
+    {
+      "pair_key": "2015183.1812",
+      "acquisition_utc": "2015-07-02T18:12:00Z",
+      "vnp14_path": "data/raw/viirs/VNP14IMG/VNP14IMG.A2015183.1812.002.2024064171818.nc",
+      "vnp03_path": "data/raw/viirs/VNP03IMG/VNP03IMG.A2015183.1812.002.2021040084752.nc",
+      "array_shape": [
+        6464,
+        6400
+      ],
+      "pixel_count": 41369600,
+      "fire_mask_class_counts": {
+        "0": 550733,
+        "1": 5326336,
+        "3": 13531308,
+        "4": 12838348,
+        "5": 9122697,
+        "6": 36,
+        "8": 142
+      },
+      "quality_flag_counts": {
+        "0": 41369600
+      },
+      "land_water_mask_counts": {
+        "0": 8399800,
+        "1": 16595123,
+        "2": 407312,
+        "3": 150542,
+        "6": 1744799,
+        "7": 14072024
+      },
+      "finite_geolocation_pixels": 41369600,
+      "bbox_geolocation_pixels": 2367364,
+      "out_of_range_geolocation_pixels": 0,
+      "prespecified_processed_or_fire_class_count": 9122839,
+      "prespecified_processed_or_fire_in_bbox_count": 44027,
+      "opportunity_status": "screened_not_denominator_ready"
+    },
+    {
+      "pair_key": "2015183.1818",
+      "acquisition_utc": "2015-07-02T18:18:00Z",
+      "vnp14_path": "data/raw/viirs/VNP14IMG/VNP14IMG.A2015183.1818.002.2024064171838.nc",
+      "vnp03_path": "data/raw/viirs/VNP03IMG/VNP03IMG.A2015183.1818.002.2021040084537.nc",
+      "array_shape": [
+        6496,
+        6400
+      ],
+      "pixel_count": 41574400,
+      "fire_mask_class_counts": {
+        "0": 53199,
+        "1": 5352704,
+        "3": 27163442,
+        "4": 3180677,
+        "5": 5823997,
+        "6": 7,
+        "8": 372,
+        "9": 2
+      },
+      "quality_flag_counts": {
+        "0": 41574400
+      },
+      "land_water_mask_counts": {
+        "0": 10277900,
+        "1": 8669533,
+        "2": 258158,
+        "3": 57348,
+        "6": 871894,
+        "7": 21439567
+      },
+      "finite_geolocation_pixels": 41574400,
+      "bbox_geolocation_pixels": 7922514,
+      "out_of_range_geolocation_pixels": 0,
+      "prespecified_processed_or_fire_class_count": 5824371,
+      "prespecified_processed_or_fire_in_bbox_count": 2146050,
+      "opportunity_status": "screened_not_denominator_ready"
+    },
+    {
+      "pair_key": "2015184.0518",
+      "acquisition_utc": "2015-07-03T05:18:00Z",
+      "vnp14_path": "data/raw/viirs/VNP14IMG/VNP14IMG.A2015184.0518.002.2024064183014.nc",
+      "vnp03_path": "data/raw/viirs/VNP03IMG/VNP03IMG.A2015184.0518.002.2021040084330.nc",
+      "array_shape": [
+        6464,
+        6400
+      ],
+      "pixel_count": 41369600,
+      "fire_mask_class_counts": {
+        "0": 19,
+        "1": 5326336,
+        "2": 26921,
+        "3": 14022273,
+        "4": 17760156,
+        "5": 4233674,
+        "7": 3,
+        "8": 206,
+        "9": 12
+      },
+      "quality_flag_counts": {
+        "0": 41369600
+      },
+      "land_water_mask_counts": {
+        "0": 7311552,
+        "1": 8134886,
+        "2": 323144,
+        "3": 59564,
+        "6": 2011673,
+        "7": 23528781
+      },
+      "finite_geolocation_pixels": 41369600,
+      "bbox_geolocation_pixels": 9946442,
+      "out_of_range_geolocation_pixels": 0,
+      "prespecified_processed_or_fire_class_count": 4233895,
+      "prespecified_processed_or_fire_in_bbox_count": 2614798,
+      "opportunity_status": "screened_not_denominator_ready"
+    },
+    {
+      "pair_key": "2015184.0654",
+      "acquisition_utc": "2015-07-03T06:54:00Z",
+      "vnp14_path": "data/raw/viirs/VNP14IMG/VNP14IMG.A2015184.0654.002.2024064183029.nc",
+      "vnp03_path": "data/raw/viirs/VNP03IMG/VNP03IMG.A2015184.0654.002.2021040085042.nc",
+      "array_shape": [
+        6464,
+        6400
+      ],
+      "pixel_count": 41369600,
+      "fire_mask_class_counts": {
+        "0": 527,
+        "1": 5326336,
+        "3": 31043054,
+        "4": 3966775,
+        "5": 1032828,
+        "6": 1,
+        "7": 1,
+        "8": 73,
+        "9": 5
+      },
+      "quality_flag_counts": {
+        "0": 41369600
+      },
+      "land_water_mask_counts": {
+        "0": 2131386,
+        "1": 1509820,
+        "2": 40750,
+        "3": 7758,
+        "6": 205142,
+        "7": 37474744
+      },
+      "finite_geolocation_pixels": 41369600,
+      "bbox_geolocation_pixels": 523710,
+      "out_of_range_geolocation_pixels": 0,
+      "prespecified_processed_or_fire_class_count": 1032907,
+      "prespecified_processed_or_fire_in_bbox_count": 36120,
+      "opportunity_status": "screened_not_denominator_ready"
+    },
+    {
+      "pair_key": "2015184.0700",
+      "acquisition_utc": "2015-07-03T07:00:00Z",
+      "vnp14_path": "data/raw/viirs/VNP14IMG/VNP14IMG.A2015184.0700.002.2024064183029.nc",
+      "vnp03_path": "data/raw/viirs/VNP03IMG/VNP03IMG.A2015184.0700.002.2021040084700.nc",
+      "array_shape": [
+        6496,
+        6400
+      ],
+      "pixel_count": 41574400,
+      "fire_mask_class_counts": {
+        "0": 36,
+        "1": 5352704,
+        "2": 99159,
+        "3": 19582822,
+        "4": 12206731,
+        "5": 4332220,
+        "6": 9,
+        "7": 28,
+        "8": 654,
+        "9": 37
+      },
+      "quality_flag_counts": {
+        "0": 41574400
+      },
+      "land_water_mask_counts": {
+        "0": 9365306,
+        "1": 8718689,
+        "2": 292424,
+        "3": 111977,
+        "6": 882018,
+        "7": 22203986
+      },
+      "finite_geolocation_pixels": 41574400,
+      "bbox_geolocation_pixels": 673323,
+      "out_of_range_geolocation_pixels": 0,
+      "prespecified_processed_or_fire_class_count": 4332939,
+      "prespecified_processed_or_fire_in_bbox_count": 191909,
+      "opportunity_status": "screened_not_denominator_ready"
+    },
+    {
+      "pair_key": "2015184.1754",
+      "acquisition_utc": "2015-07-03T17:54:00Z",
+      "vnp14_path": "data/raw/viirs/VNP14IMG/VNP14IMG.A2015184.1754.002.2024064183255.nc",
+      "vnp03_path": "data/raw/viirs/VNP03IMG/VNP03IMG.A2015184.1754.002.2021040090725.nc",
+      "array_shape": [
+        6496,
+        6400
+      ],
+      "pixel_count": 41574400,
+      "fire_mask_class_counts": {
+        "0": 956328,
+        "1": 5352704,
+        "3": 14671849,
+        "4": 15630732,
+        "5": 4962637,
+        "6": 8,
+        "8": 139,
+        "9": 3
+      },
+      "quality_flag_counts": {
+        "0": 41574400
+      },
+      "land_water_mask_counts": {
+        "0": 9594622,
+        "1": 10346823,
+        "2": 363241,
+        "3": 118209,
+        "6": 1760848,
+        "7": 19390657
+      },
+      "finite_geolocation_pixels": 41574400,
+      "bbox_geolocation_pixels": 4957148,
+      "out_of_range_geolocation_pixels": 0,
+      "prespecified_processed_or_fire_class_count": 4962779,
+      "prespecified_processed_or_fire_in_bbox_count": 976737,
+      "opportunity_status": "screened_not_denominator_ready"
+    },
+    {
+      "pair_key": "2015184.1800",
+      "acquisition_utc": "2015-07-03T18:00:00Z",
+      "vnp14_path": "data/raw/viirs/VNP14IMG/VNP14IMG.A2015184.1800.002.2024064183036.nc",
+      "vnp03_path": "data/raw/viirs/VNP03IMG/VNP03IMG.A2015184.1800.002.2021040090626.nc",
+      "array_shape": [
+        6464,
+        6400
+      ],
+      "pixel_count": 41369600,
+      "fire_mask_class_counts": {
+        "0": 128771,
+        "1": 5326336,
+        "3": 27935471,
+        "4": 1568985,
+        "5": 6409569,
+        "6": 5,
+        "8": 457,
+        "9": 6
+      },
+      "quality_flag_counts": {
+        "0": 41369600
+      },
+      "land_water_mask_counts": {
+        "0": 7881529,
+        "1": 7823486,
+        "2": 248288,
+        "3": 53744,
+        "6": 1374721,
+        "7": 23987832
+      },
+      "finite_geolocation_pixels": 41369600,
+      "bbox_geolocation_pixels": 5808011,
+      "out_of_range_geolocation_pixels": 0,
+      "prespecified_processed_or_fire_class_count": 6410032,
+      "prespecified_processed_or_fire_in_bbox_count": 3182633,
+      "opportunity_status": "screened_not_denominator_ready"
+    },
+    {
+      "pair_key": "2015185.0454",
+      "acquisition_utc": "2015-07-04T04:54:00Z",
+      "vnp14_path": "data/raw/viirs/VNP14IMG/VNP14IMG.A2015185.0454.002.2024064193111.nc",
+      "vnp03_path": "data/raw/viirs/VNP03IMG/VNP03IMG.A2015185.0454.002.2021040090702.nc",
+      "array_shape": [
+        6464,
+        6400
+      ],
+      "pixel_count": 41369600,
+      "fire_mask_class_counts": {
+        "0": 183,
+        "1": 5326336,
+        "3": 18648176,
+        "4": 2498994,
+        "5": 14894091,
+        "6": 1,
+        "7": 432,
+        "8": 1341,
+        "9": 46
+      },
+      "quality_flag_counts": {
+        "0": 41369600
+      },
+      "land_water_mask_counts": {
+        "0": 10809951,
+        "1": 17918788,
+        "2": 310551,
+        "3": 88254,
+        "6": 1930542,
+        "7": 10311514
+      },
+      "finite_geolocation_pixels": 41369600,
+      "bbox_geolocation_pixels": 733843,
+      "out_of_range_geolocation_pixels": 0,
+      "prespecified_processed_or_fire_class_count": 14895910,
+      "prespecified_processed_or_fire_in_bbox_count": 114565,
+      "opportunity_status": "screened_not_denominator_ready"
+    },
+    {
+      "pair_key": "2015185.0500",
+      "acquisition_utc": "2015-07-04T05:00:00Z",
+      "vnp14_path": "data/raw/viirs/VNP14IMG/VNP14IMG.A2015185.0500.002.2024064193132.nc",
+      "vnp03_path": "data/raw/viirs/VNP03IMG/VNP03IMG.A2015185.0500.002.2021040090829.nc",
+      "array_shape": [
+        6464,
+        6400
+      ],
+      "pixel_count": 41369600,
+      "fire_mask_class_counts": {
+        "0": 2,
+        "1": 5326336,
+        "2": 148531,
+        "3": 16739371,
+        "4": 17401065,
+        "5": 1754165,
+        "7": 9,
+        "8": 116,
+        "9": 5
+      },
+      "quality_flag_counts": {
+        "0": 41369600
+      },
+      "land_water_mask_counts": {
+        "0": 3018052,
+        "1": 5060668,
+        "2": 217564,
+        "3": 32446,
+        "6": 1555666,
+        "7": 31485204
+      },
+      "finite_geolocation_pixels": 41369600,
+      "bbox_geolocation_pixels": 5463500,
+      "out_of_range_geolocation_pixels": 0,
+      "prespecified_processed_or_fire_class_count": 1754295,
+      "prespecified_processed_or_fire_in_bbox_count": 837958,
+      "opportunity_status": "screened_not_denominator_ready"
+    },
+    {
+      "pair_key": "2015185.0636",
+      "acquisition_utc": "2015-07-04T06:36:00Z",
+      "vnp14_path": "data/raw/viirs/VNP14IMG/VNP14IMG.A2015185.0636.002.2024064193123.nc",
+      "vnp03_path": "data/raw/viirs/VNP03IMG/VNP03IMG.A2015185.0636.002.2021040091050.nc",
+      "array_shape": [
+        6496,
+        6400
+      ],
+      "pixel_count": 41574400,
+      "fire_mask_class_counts": {
+        "0": 32,
+        "1": 5352704,
+        "3": 27920716,
+        "4": 5504034,
+        "5": 2796294,
+        "6": 5,
+        "7": 23,
+        "8": 577,
+        "9": 15
+      },
+      "quality_flag_counts": {
+        "0": 41574400
+      },
+      "land_water_mask_counts": {
+        "0": 4460135,
+        "1": 4695896,
+        "2": 126038,
+        "3": 28400,
+        "6": 553619,
+        "7": 31710312
+      },
+      "finite_geolocation_pixels": 41574400,
+      "bbox_geolocation_pixels": 3223758,
+      "out_of_range_geolocation_pixels": 0,
+      "prespecified_processed_or_fire_class_count": 2796909,
+      "prespecified_processed_or_fire_in_bbox_count": 720831,
+      "opportunity_status": "screened_not_denominator_ready"
+    },
+    {
+      "pair_key": "2015185.0642",
+      "acquisition_utc": "2015-07-04T06:42:00Z",
+      "vnp14_path": "data/raw/viirs/VNP14IMG/VNP14IMG.A2015185.0642.002.2024064193103.nc",
+      "vnp03_path": "data/raw/viirs/VNP03IMG/VNP03IMG.A2015185.0642.002.2021040090701.nc",
+      "array_shape": [
+        6464,
+        6400
+      ],
+      "pixel_count": 41369600,
+      "fire_mask_class_counts": {
+        "0": 29,
+        "1": 5326336,
+        "2": 394588,
+        "3": 14744015,
+        "4": 15389398,
+        "5": 5514821,
+        "6": 3,
+        "7": 3,
+        "8": 391,
+        "9": 16
+      },
+      "quality_flag_counts": {
+        "0": 41369600
+      },
+      "land_water_mask_counts": {
+        "0": 11046033,
+        "1": 12191546,
+        "2": 363949,
+        "3": 136346,
+        "6": 1127368,
+        "7": 16504358
+      },
+      "finite_geolocation_pixels": 41369600,
+      "bbox_geolocation_pixels": 2438126,
+      "out_of_range_geolocation_pixels": 0,
+      "prespecified_processed_or_fire_class_count": 5515231,
+      "prespecified_processed_or_fire_in_bbox_count": 95111,
+      "opportunity_status": "screened_not_denominator_ready"
+    },
+    {
+      "pair_key": "2015185.1736",
+      "acquisition_utc": "2015-07-04T17:36:00Z",
+      "vnp14_path": "data/raw/viirs/VNP14IMG/VNP14IMG.A2015185.1736.002.2024064193155.nc",
+      "vnp03_path": "data/raw/viirs/VNP03IMG/VNP03IMG.A2015185.1736.002.2021040092535.nc",
+      "array_shape": [
+        6464,
+        6400
+      ],
+      "pixel_count": 41369600,
+      "fire_mask_class_counts": {
+        "0": 1215495,
+        "1": 5326336,
+        "3": 14001656,
+        "4": 18334838,
+        "5": 2491204,
+        "6": 23,
+        "8": 47,
+        "9": 1
+      },
+      "quality_flag_counts": {
+        "0": 41369600
+      },
+      "land_water_mask_counts": {
+        "0": 8193450,
+        "1": 6929749,
+        "2": 287418,
+        "3": 55023,
+        "6": 1954201,
+        "7": 23949759
+      },
+      "finite_geolocation_pixels": 41369600,
+      "bbox_geolocation_pixels": 7504737,
+      "out_of_range_geolocation_pixels": 0,
+      "prespecified_processed_or_fire_class_count": 2491252,
+      "prespecified_processed_or_fire_in_bbox_count": 1012918,
+      "opportunity_status": "screened_not_denominator_ready"
+    },
+    {
+      "pair_key": "2015185.1742",
+      "acquisition_utc": "2015-07-04T17:42:00Z",
+      "vnp14_path": "data/raw/viirs/VNP14IMG/VNP14IMG.A2015185.1742.002.2024064193138.nc",
+      "vnp03_path": "data/raw/viirs/VNP03IMG/VNP03IMG.A2015185.1742.002.2021040092533.nc",
+      "array_shape": [
+        6464,
+        6400
+      ],
+      "pixel_count": 41369600,
+      "fire_mask_class_counts": {
+        "1": 5326336,
+        "3": 27992599,
+        "4": 1969142,
+        "5": 6081382,
+        "6": 8,
+        "8": 133
+      },
+      "quality_flag_counts": {
+        "0": 41369600
+      },
+      "land_water_mask_counts": {
+        "0": 7643468,
+        "1": 8013882,
+        "2": 194310,
+        "3": 48137,
+        "6": 1551759,
+        "7": 23918044
+      },
+      "finite_geolocation_pixels": 41369600,
+      "bbox_geolocation_pixels": 3273929,
+      "out_of_range_geolocation_pixels": 0,
+      "prespecified_processed_or_fire_class_count": 6081515,
+      "prespecified_processed_or_fire_in_bbox_count": 1043390,
+      "opportunity_status": "screened_not_denominator_ready"
+    },
+    {
+      "pair_key": "2015186.0436",
+      "acquisition_utc": "2015-07-05T04:36:00Z",
+      "vnp14_path": "data/raw/viirs/VNP14IMG/VNP14IMG.A2015186.0436.002.2024064204846.nc",
+      "vnp03_path": "data/raw/viirs/VNP03IMG/VNP03IMG.A2015186.0436.002.2021040092612.nc",
+      "array_shape": [
+        6464,
+        6400
+      ],
+      "pixel_count": 41369600,
+      "fire_mask_class_counts": {
+        "0": 144,
+        "1": 5326336,
+        "3": 22160895,
+        "4": 3026243,
+        "5": 10854591,
+        "6": 3,
+        "7": 200,
+        "8": 1119,
+        "9": 69
+      },
+      "quality_flag_counts": {
+        "0": 41369600
+      },
+      "land_water_mask_counts": {
+        "0": 10505386,
+        "1": 13829214,
+        "2": 354482,
+        "3": 67682,
+        "6": 1806731,
+        "7": 14806105
+      },
+      "finite_geolocation_pixels": 41369600,
+      "bbox_geolocation_pixels": 359881,
+      "out_of_range_geolocation_pixels": 0,
+      "prespecified_processed_or_fire_class_count": 10855979,
+      "prespecified_processed_or_fire_in_bbox_count": 110198,
+      "opportunity_status": "screened_not_denominator_ready"
+    },
+    {
+      "pair_key": "2015186.0442",
+      "acquisition_utc": "2015-07-05T04:42:00Z",
+      "vnp14_path": "data/raw/viirs/VNP14IMG/VNP14IMG.A2015186.0442.002.2024064204842.nc",
+      "vnp03_path": "data/raw/viirs/VNP03IMG/VNP03IMG.A2015186.0442.002.2021040092608.nc",
+      "array_shape": [
+        6496,
+        6400
+      ],
+      "pixel_count": 41574400,
+      "fire_mask_class_counts": {
+        "0": 7,
+        "1": 5352704,
+        "2": 167466,
+        "3": 22077110,
+        "4": 13418182,
+        "5": 558899,
+        "8": 30,
+        "9": 2
+      },
+      "quality_flag_counts": {
+        "0": 41574400
+      },
+      "land_water_mask_counts": {
+        "0": 1830604,
+        "1": 1971760,
+        "2": 125433,
+        "3": 16206,
+        "6": 1110643,
+        "7": 36519754
+      },
+      "finite_geolocation_pixels": 41574400,
+      "bbox_geolocation_pixels": 1279800,
+      "out_of_range_geolocation_pixels": 0,
+      "prespecified_processed_or_fire_class_count": 558931,
+      "prespecified_processed_or_fire_in_bbox_count": 71472,
+      "opportunity_status": "screened_not_denominator_ready"
+    },
+    {
+      "pair_key": "2015186.0618",
+      "acquisition_utc": "2015-07-05T06:18:00Z",
+      "vnp14_path": "data/raw/viirs/VNP14IMG/VNP14IMG.A2015186.0618.002.2024064204841.nc",
+      "vnp03_path": "data/raw/viirs/VNP03IMG/VNP03IMG.A2015186.0618.002.2021040092941.nc",
+      "array_shape": [
+        6464,
+        6400
+      ],
+      "pixel_count": 41369600,
+      "fire_mask_class_counts": {
+        "0": 22,
+        "1": 5326336,
+        "2": 3,
+        "3": 24888194,
+        "4": 5837796,
+        "5": 5316071,
+        "6": 10,
+        "7": 32,
+        "8": 1124,
+        "9": 12
+      },
+      "quality_flag_counts": {
+        "0": 41369600
+      },
+      "land_water_mask_counts": {
+        "0": 8162722,
+        "1": 7880840,
+        "2": 234314,
+        "3": 45403,
+        "6": 1079541,
+        "7": 23966780
+      },
+      "finite_geolocation_pixels": 41369600,
+      "bbox_geolocation_pixels": 7583868,
+      "out_of_range_geolocation_pixels": 0,
+      "prespecified_processed_or_fire_class_count": 5317239,
+      "prespecified_processed_or_fire_in_bbox_count": 2235712,
+      "opportunity_status": "screened_not_denominator_ready"
+    },
+    {
+      "pair_key": "2015186.0624",
+      "acquisition_utc": "2015-07-05T06:24:00Z",
+      "vnp14_path": "data/raw/viirs/VNP14IMG/VNP14IMG.A2015186.0624.002.2024064204842.nc",
+      "vnp03_path": "data/raw/viirs/VNP03IMG/VNP03IMG.A2015186.0624.002.2021040132015.nc",
+      "array_shape": [
+        6464,
+        6400
+      ],
+      "pixel_count": 41369600,
+      "fire_mask_class_counts": {
+        "0": 287,
+        "1": 5326336,
+        "2": 1401872,
+        "3": 6749620,
+        "4": 23833911,
+        "5": 4057143,
+        "6": 22,
+        "7": 8,
+        "8": 397,
+        "9": 4
+      },
+      "quality_flag_counts": {
+        "0": 41369600
+      },
+      "land_water_mask_counts": {
+        "0": 10276286,
+        "1": 16131782,
+        "2": 433829,
+        "3": 198073,
+        "6": 1421586,
+        "7": 12908044
+      },
+      "finite_geolocation_pixels": 41369600,
+      "bbox_geolocation_pixels": 2045100,
+      "out_of_range_geolocation_pixels": 0,
+      "prespecified_processed_or_fire_class_count": 4057552,
+      "prespecified_processed_or_fire_in_bbox_count": 44,
+      "opportunity_status": "screened_not_denominator_ready"
+    },
+    {
+      "pair_key": "2015186.1718",
+      "acquisition_utc": "2015-07-05T17:18:00Z",
+      "vnp14_path": "data/raw/viirs/VNP14IMG/VNP14IMG.A2015186.1718.002.2024064204848.nc",
+      "vnp03_path": "data/raw/viirs/VNP03IMG/VNP03IMG.A2015186.1718.002.2021040132037.nc",
+      "array_shape": [
+        6464,
+        6400
+      ],
+      "pixel_count": 41369600,
+      "fire_mask_class_counts": {
+        "0": 435060,
+        "1": 5326336,
+        "3": 17787180,
+        "4": 13107424,
+        "5": 4713427,
+        "6": 46,
+        "8": 124,
+        "9": 3
+      },
+      "quality_flag_counts": {
+        "0": 41369600
+      },
+      "land_water_mask_counts": {
+        "0": 5170652,
+        "1": 7579597,
+        "2": 306792,
+        "3": 53395,
+        "6": 1814870,
+        "7": 26444294
+      },
+      "finite_geolocation_pixels": 41369600,
+      "bbox_geolocation_pixels": 9203187,
+      "out_of_range_geolocation_pixels": 0,
+      "prespecified_processed_or_fire_class_count": 4713554,
+      "prespecified_processed_or_fire_in_bbox_count": 2594920,
+      "opportunity_status": "screened_not_denominator_ready"
+    },
+    {
+      "pair_key": "2015186.1724",
+      "acquisition_utc": "2015-07-05T17:24:00Z",
+      "vnp14_path": "data/raw/viirs/VNP14IMG/VNP14IMG.A2015186.1724.002.2024064204844.nc",
+      "vnp03_path": "data/raw/viirs/VNP03IMG/VNP03IMG.A2015186.1724.002.2021040132038.nc",
+      "array_shape": [
+        6496,
+        6400
+      ],
+      "pixel_count": 41574400,
+      "fire_mask_class_counts": {
+        "1": 5352704,
+        "3": 25317767,
+        "4": 47724,
+        "5": 10856066,
+        "6": 8,
+        "8": 129,
+        "9": 2
+      },
+      "quality_flag_counts": {
+        "0": 41574400
+      },
+      "land_water_mask_counts": {
+        "0": 6932759,
+        "1": 12601629,
+        "2": 151649,
+        "3": 72548,
+        "6": 1714039,
+        "7": 20101776
+      },
+      "finite_geolocation_pixels": 41574400,
+      "bbox_geolocation_pixels": 783448,
+      "out_of_range_geolocation_pixels": 0,
+      "prespecified_processed_or_fire_class_count": 10856197,
+      "prespecified_processed_or_fire_in_bbox_count": 6177,
+      "opportunity_status": "screened_not_denominator_ready"
+    },
+    {
+      "pair_key": "2015186.1900",
+      "acquisition_utc": "2015-07-05T19:00:00Z",
+      "vnp14_path": "data/raw/viirs/VNP14IMG/VNP14IMG.A2015186.1900.002.2024064204858.nc",
+      "vnp03_path": "data/raw/viirs/VNP03IMG/VNP03IMG.A2015186.1900.002.2021040132122.nc",
+      "array_shape": [
+        6464,
+        6400
+      ],
+      "pixel_count": 41369600,
+      "fire_mask_class_counts": {
+        "0": 298539,
+        "1": 5326336,
+        "3": 14495203,
+        "4": 17702391,
+        "5": 3546671,
+        "6": 8,
+        "8": 449,
+        "9": 3
+      },
+      "quality_flag_counts": {
+        "0": 41369600
+      },
+      "land_water_mask_counts": {
+        "0": 10352951,
+        "1": 6202255,
+        "2": 228401,
+        "3": 68491,
+        "6": 1028223,
+        "7": 23489279
+      },
+      "finite_geolocation_pixels": 41369600,
+      "bbox_geolocation_pixels": 1123718,
+      "out_of_range_geolocation_pixels": 0,
+      "prespecified_processed_or_fire_class_count": 3547123,
+      "prespecified_processed_or_fire_in_bbox_count": 78409,
+      "opportunity_status": "screened_not_denominator_ready"
+    },
+    {
+      "pair_key": "2015187.0600",
+      "acquisition_utc": "2015-07-06T06:00:00Z",
+      "vnp14_path": "data/raw/viirs/VNP14IMG/VNP14IMG.A2015187.0600.002.2024064215121.nc",
+      "vnp03_path": "data/raw/viirs/VNP03IMG/VNP03IMG.A2015187.0600.002.2021040133507.nc",
+      "array_shape": [
+        6464,
+        6400
+      ],
+      "pixel_count": 41369600,
+      "fire_mask_class_counts": {
+        "0": 147,
+        "1": 5326336,
+        "2": 12,
+        "3": 22074365,
+        "4": 6879632,
+        "5": 7087722,
+        "6": 14,
+        "7": 69,
+        "8": 1243,
+        "9": 60
+      },
+      "quality_flag_counts": {
+        "0": 41369600
+      },
+      "land_water_mask_counts": {
+        "0": 11082292,
+        "1": 9993050,
+        "2": 318737,
+        "3": 64366,
+        "6": 1538054,
+        "7": 18373101
+      },
+      "finite_geolocation_pixels": 41369600,
+      "bbox_geolocation_pixels": 10691732,
+      "out_of_range_geolocation_pixels": 0,
+      "prespecified_processed_or_fire_class_count": 7089094,
+      "prespecified_processed_or_fire_in_bbox_count": 3620442,
+      "opportunity_status": "screened_not_denominator_ready"
+    },
+    {
+      "pair_key": "2015187.0606",
+      "acquisition_utc": "2015-07-06T06:06:00Z",
+      "vnp14_path": "data/raw/viirs/VNP14IMG/VNP14IMG.A2015187.0606.002.2024064215211.nc",
+      "vnp03_path": "data/raw/viirs/VNP03IMG/VNP03IMG.A2015187.0606.002.2021040133431.nc",
+      "array_shape": [
+        6496,
+        6400
+      ],
+      "pixel_count": 41574400,
+      "fire_mask_class_counts": {
+        "0": 889,
+        "1": 5352704,
+        "2": 1803072,
+        "3": 3873368,
+        "4": 26366981,
+        "5": 4177292,
+        "6": 1,
+        "7": 22,
+        "8": 71
+      },
+      "quality_flag_counts": {
+        "0": 41574400
+      },
+      "land_water_mask_counts": {
+        "0": 8019321,
+        "1": 21919012,
+        "2": 512266,
+        "3": 241929,
+        "6": 1368818,
+        "7": 9513054
+      },
+      "finite_geolocation_pixels": 41574400,
+      "bbox_geolocation_pixels": 113720,
+      "out_of_range_geolocation_pixels": 0,
+      "prespecified_processed_or_fire_class_count": 4177385,
+      "prespecified_processed_or_fire_in_bbox_count": 0,
+      "opportunity_status": "screened_not_denominator_ready"
+    },
+    {
+      "pair_key": "2015187.1700",
+      "acquisition_utc": "2015-07-06T17:00:00Z",
+      "vnp14_path": "data/raw/viirs/VNP14IMG/VNP14IMG.A2015187.1700.002.2024064214653.nc",
+      "vnp03_path": "data/raw/viirs/VNP03IMG/VNP03IMG.A2015187.1700.002.2021040133653.nc",
+      "array_shape": [
+        6496,
+        6400
+      ],
+      "pixel_count": 41574400,
+      "fire_mask_class_counts": {
+        "0": 111205,
+        "1": 5352704,
+        "3": 26485699,
+        "4": 4387204,
+        "5": 5237500,
+        "6": 1,
+        "8": 86,
+        "9": 1
+      },
+      "quality_flag_counts": {
+        "0": 41574400
+      },
+      "land_water_mask_counts": {
+        "0": 6627113,
+        "1": 6755311,
+        "2": 312528,
+        "3": 38694,
+        "6": 2328092,
+        "7": 25512662
+      },
+      "finite_geolocation_pixels": 41574400,
+      "bbox_geolocation_pixels": 6298777,
+      "out_of_range_geolocation_pixels": 0,
+      "prespecified_processed_or_fire_class_count": 5237587,
+      "prespecified_processed_or_fire_in_bbox_count": 1937678,
+      "opportunity_status": "screened_not_denominator_ready"
+    },
+    {
+      "pair_key": "2015187.1842",
+      "acquisition_utc": "2015-07-06T18:42:00Z",
+      "vnp14_path": "data/raw/viirs/VNP14IMG/VNP14IMG.A2015187.1842.002.2024064214702.nc",
+      "vnp03_path": "data/raw/viirs/VNP03IMG/VNP03IMG.A2015187.1842.002.2021040133655.nc",
+      "array_shape": [
+        6464,
+        6400
+      ],
+      "pixel_count": 41369600,
+      "fire_mask_class_counts": {
+        "0": 238789,
+        "1": 5326336,
+        "3": 18744180,
+        "4": 12853037,
+        "5": 4206562,
+        "6": 6,
+        "8": 679,
+        "9": 11
+      },
+      "quality_flag_counts": {
+        "0": 41369600
+      },
+      "land_water_mask_counts": {
+        "0": 11332828,
+        "1": 7134378,
+        "2": 223775,
+        "3": 50898,
+        "6": 945733,
+        "7": 21681988
+      },
+      "finite_geolocation_pixels": 41369600,
+      "bbox_geolocation_pixels": 5566396,
+      "out_of_range_geolocation_pixels": 0,
+      "prespecified_processed_or_fire_class_count": 4207252,
+      "prespecified_processed_or_fire_in_bbox_count": 1247631,
+      "opportunity_status": "screened_not_denominator_ready"
+    },
+    {
+      "pair_key": "2015188.0542",
+      "acquisition_utc": "2015-07-07T05:42:00Z",
+      "vnp14_path": "data/raw/viirs/VNP14IMG/VNP14IMG.A2015188.0542.002.2024064232838.nc",
+      "vnp03_path": "data/raw/viirs/VNP03IMG/VNP03IMG.A2015188.0542.002.2021040141044.nc",
+      "array_shape": [
+        6464,
+        6400
+      ],
+      "pixel_count": 41369600,
+      "fire_mask_class_counts": {
+        "0": 6,
+        "1": 5326336,
+        "2": 1881,
+        "3": 21003791,
+        "4": 8823769,
+        "5": 6213035,
+        "6": 7,
+        "7": 47,
+        "8": 725,
+        "9": 3
+      },
+      "quality_flag_counts": {
+        "0": 41369600
+      },
+      "land_water_mask_counts": {
+        "0": 12450413,
+        "1": 9349913,
+        "2": 357773,
+        "3": 56846,
+        "6": 2043595,
+        "7": 17111060
+      },
+      "finite_geolocation_pixels": 41369600,
+      "bbox_geolocation_pixels": 10780257,
+      "out_of_range_geolocation_pixels": 0,
+      "prespecified_processed_or_fire_class_count": 6213810,
+      "prespecified_processed_or_fire_in_bbox_count": 3896243,
+      "opportunity_status": "screened_not_denominator_ready"
+    },
+    {
+      "pair_key": "2015188.1642",
+      "acquisition_utc": "2015-07-07T16:42:00Z",
+      "vnp14_path": "data/raw/viirs/VNP14IMG/VNP14IMG.A2015188.1642.002.2024064232913.nc",
+      "vnp03_path": "data/raw/viirs/VNP03IMG/VNP03IMG.A2015188.1642.002.2021040141350.nc",
+      "array_shape": [
+        6496,
+        6400
+      ],
+      "pixel_count": 41574400,
+      "fire_mask_class_counts": {
+        "0": 3013,
+        "1": 5352704,
+        "3": 29224714,
+        "4": 1464884,
+        "5": 5528967,
+        "8": 117,
+        "9": 1
+      },
+      "quality_flag_counts": {
+        "0": 41574400
+      },
+      "land_water_mask_counts": {
+        "0": 7791749,
+        "1": 6550954,
+        "2": 313954,
+        "3": 52573,
+        "6": 2135600,
+        "7": 24729570
+      },
+      "finite_geolocation_pixels": 41574400,
+      "bbox_geolocation_pixels": 1745566,
+      "out_of_range_geolocation_pixels": 0,
+      "prespecified_processed_or_fire_class_count": 5529085,
+      "prespecified_processed_or_fire_in_bbox_count": 259468,
+      "opportunity_status": "screened_not_denominator_ready"
+    },
+    {
+      "pair_key": "2015188.1818",
+      "acquisition_utc": "2015-07-07T18:18:00Z",
+      "vnp14_path": "data/raw/viirs/VNP14IMG/VNP14IMG.A2015188.1818.002.2024064233248.nc",
+      "vnp03_path": "data/raw/viirs/VNP03IMG/VNP03IMG.A2015188.1818.002.2021040141427.nc",
+      "array_shape": [
+        6464,
+        6400
+      ],
+      "pixel_count": 41369600,
+      "fire_mask_class_counts": {
+        "0": 345941,
+        "1": 5326336,
+        "3": 8229971,
+        "4": 17792811,
+        "5": 9674405,
+        "6": 11,
+        "8": 124,
+        "9": 1
+      },
+      "quality_flag_counts": {
+        "0": 41369600
+      },
+      "land_water_mask_counts": {
+        "0": 7805256,
+        "1": 18838286,
+        "2": 422565,
+        "3": 155886,
+        "6": 1596326,
+        "7": 12551281
+      },
+      "finite_geolocation_pixels": 41369600,
+      "bbox_geolocation_pixels": 1661601,
+      "out_of_range_geolocation_pixels": 0,
+      "prespecified_processed_or_fire_class_count": 9674530,
+      "prespecified_processed_or_fire_in_bbox_count": 135249,
+      "opportunity_status": "screened_not_denominator_ready"
+    },
+    {
+      "pair_key": "2015188.1824",
+      "acquisition_utc": "2015-07-07T18:24:00Z",
+      "vnp14_path": "data/raw/viirs/VNP14IMG/VNP14IMG.A2015188.1824.002.2024064233100.nc",
+      "vnp03_path": "data/raw/viirs/VNP03IMG/VNP03IMG.A2015188.1824.002.2021040141425.nc",
+      "array_shape": [
+        6464,
+        6400
+      ],
+      "pixel_count": 41369600,
+      "fire_mask_class_counts": {
+        "0": 181450,
+        "1": 5326336,
+        "3": 21144658,
+        "4": 8837584,
+        "5": 5879055,
+        "6": 26,
+        "8": 490,
+        "9": 1
+      },
+      "quality_flag_counts": {
+        "0": 41369600
+      },
+      "land_water_mask_counts": {
+        "0": 10605639,
+        "1": 8644824,
+        "2": 255587,
+        "3": 56973,
+        "6": 823328,
+        "7": 20983249
+      },
+      "finite_geolocation_pixels": 41369600,
+      "bbox_geolocation_pixels": 7900124,
+      "out_of_range_geolocation_pixels": 0,
+      "prespecified_processed_or_fire_class_count": 5879546,
+      "prespecified_processed_or_fire_in_bbox_count": 3324394,
+      "opportunity_status": "screened_not_denominator_ready"
+    },
+    {
+      "pair_key": "2015189.0524",
+      "acquisition_utc": "2015-07-08T05:24:00Z",
+      "vnp14_path": "data/raw/viirs/VNP14IMG/VNP14IMG.A2015189.0524.002.2024065010150.nc",
+      "vnp03_path": "data/raw/viirs/VNP03IMG/VNP03IMG.A2015189.0524.002.2021040143546.nc",
+      "array_shape": [
+        6496,
+        6400
+      ],
+      "pixel_count": 41574400,
+      "fire_mask_class_counts": {
+        "0": 20,
+        "1": 5352704,
+        "2": 6309,
+        "3": 17728760,
+        "4": 13422145,
+        "5": 5063982,
+        "6": 2,
+        "7": 20,
+        "8": 438,
+        "9": 20
+      },
+      "quality_flag_counts": {
+        "0": 41574400
+      },
+      "land_water_mask_counts": {
+        "0": 9261004,
+        "1": 8532689,
+        "2": 348506,
+        "3": 67176,
+        "6": 2166931,
+        "7": 21198094
+      },
+      "finite_geolocation_pixels": 41574400,
+      "bbox_geolocation_pixels": 10522634,
+      "out_of_range_geolocation_pixels": 0,
+      "prespecified_processed_or_fire_class_count": 5064460,
+      "prespecified_processed_or_fire_in_bbox_count": 3318435,
+      "opportunity_status": "screened_not_denominator_ready"
+    },
+    {
+      "pair_key": "2015189.0700",
+      "acquisition_utc": "2015-07-08T07:00:00Z",
+      "vnp14_path": "data/raw/viirs/VNP14IMG/VNP14IMG.A2015189.0700.002.2024065010110.nc",
+      "vnp03_path": "data/raw/viirs/VNP03IMG/VNP03IMG.A2015189.0700.002.2021040143106.nc",
+      "array_shape": [
+        6464,
+        6400
+      ],
+      "pixel_count": 41369600,
+      "fire_mask_class_counts": {
+        "0": 62,
+        "1": 5326336,
+        "3": 29631182,
+        "4": 5894130,
+        "5": 517871,
+        "8": 17,
+        "9": 2
+      },
+      "quality_flag_counts": {
+        "0": 41369600
+      },
+      "land_water_mask_counts": {
+        "0": 1315500,
+        "1": 1048810,
+        "2": 25030,
+        "3": 4221,
+        "6": 155002,
+        "7": 38821037
+      },
+      "finite_geolocation_pixels": 41369600,
+      "bbox_geolocation_pixels": 175452,
+      "out_of_range_geolocation_pixels": 0,
+      "prespecified_processed_or_fire_class_count": 517890,
+      "prespecified_processed_or_fire_in_bbox_count": 580,
+      "opportunity_status": "screened_not_denominator_ready"
+    },
+    {
+      "pair_key": "2015189.0706",
+      "acquisition_utc": "2015-07-08T07:06:00Z",
+      "vnp14_path": "data/raw/viirs/VNP14IMG/VNP14IMG.A2015189.0706.002.2024065010216.nc",
+      "vnp03_path": "data/raw/viirs/VNP03IMG/VNP03IMG.A2015189.0706.002.2021040142735.nc",
+      "array_shape": [
+        6464,
+        6400
+      ],
+      "pixel_count": 41369600,
+      "fire_mask_class_counts": {
+        "0": 11,
+        "1": 5326336,
+        "2": 34501,
+        "3": 17293948,
+        "4": 17244020,
+        "5": 1470591,
+        "7": 1,
+        "8": 192
+      },
+      "quality_flag_counts": {
+        "0": 41369600
+      },
+      "land_water_mask_counts": {
+        "0": 8452627,
+        "1": 7598399,
+        "2": 277116,
+        "3": 91299,
+        "6": 791098,
+        "7": 24159061
+      },
+      "finite_geolocation_pixels": 41369600,
+      "bbox_geolocation_pixels": 129759,
+      "out_of_range_geolocation_pixels": 0,
+      "prespecified_processed_or_fire_class_count": 1470784,
+      "prespecified_processed_or_fire_in_bbox_count": 15956,
+      "opportunity_status": "screened_not_denominator_ready"
+    },
+    {
+      "pair_key": "2015189.1800",
+      "acquisition_utc": "2015-07-08T18:00:00Z",
+      "vnp14_path": "data/raw/viirs/VNP14IMG/VNP14IMG.A2015189.1800.002.2024065010136.nc",
+      "vnp03_path": "data/raw/viirs/VNP03IMG/VNP03IMG.A2015189.1800.002.2021040143107.nc",
+      "array_shape": [
+        6464,
+        6400
+      ],
+      "pixel_count": 41369600,
+      "fire_mask_class_counts": {
+        "0": 645670,
+        "1": 5326336,
+        "3": 7006454,
+        "4": 23209360,
+        "5": 5181727,
+        "6": 6,
+        "8": 47
+      },
+      "quality_flag_counts": {
+        "0": 41369600
+      },
+      "land_water_mask_counts": {
+        "0": 9485405,
+        "1": 12079095,
+        "2": 378708,
+        "3": 131872,
+        "6": 1671480,
+        "7": 17623040
+      },
+      "finite_geolocation_pixels": 41369600,
+      "bbox_geolocation_pixels": 4194011,
+      "out_of_range_geolocation_pixels": 0,
+      "prespecified_processed_or_fire_class_count": 5181774,
+      "prespecified_processed_or_fire_in_bbox_count": 58371,
+      "opportunity_status": "screened_not_denominator_ready"
+    },
+    {
+      "pair_key": "2015189.1806",
+      "acquisition_utc": "2015-07-08T18:06:00Z",
+      "vnp14_path": "data/raw/viirs/VNP14IMG/VNP14IMG.A2015189.1806.002.2024065010110.nc",
+      "vnp03_path": "data/raw/viirs/VNP03IMG/VNP03IMG.A2015189.1806.002.2021040143245.nc",
+      "array_shape": [
+        6496,
+        6400
+      ],
+      "pixel_count": 41574400,
+      "fire_mask_class_counts": {
+        "0": 45980,
+        "1": 5352704,
+        "3": 26099737,
+        "4": 4973013,
+        "5": 5102676,
+        "6": 24,
+        "8": 263,
+        "9": 3
+      },
+      "quality_flag_counts": {
+        "0": 41574400
+      },
+      "land_water_mask_counts": {
+        "0": 8091664,
+        "1": 8274541,
+        "2": 248534,
+        "3": 54209,
+        "6": 1198720,
+        "7": 23706732
+      },
+      "finite_geolocation_pixels": 41574400,
+      "bbox_geolocation_pixels": 6613600,
+      "out_of_range_geolocation_pixels": 0,
+      "prespecified_processed_or_fire_class_count": 5102942,
+      "prespecified_processed_or_fire_in_bbox_count": 2479947,
+      "opportunity_status": "screened_not_denominator_ready"
+    },
+    {
+      "pair_key": "2015190.0500",
+      "acquisition_utc": "2015-07-09T05:00:00Z",
+      "vnp14_path": "data/raw/viirs/VNP14IMG/VNP14IMG.A2015190.0500.002.2024065020340.nc",
+      "vnp03_path": "data/raw/viirs/VNP03IMG/VNP03IMG.A2015190.0500.002.2021040145854.nc",
+      "array_shape": [
+        6496,
+        6400
+      ],
+      "pixel_count": 41574400,
+      "fire_mask_class_counts": {
+        "0": 774,
+        "1": 5352704,
+        "3": 17541901,
+        "4": 5172965,
+        "5": 13503906,
+        "6": 4,
+        "7": 252,
+        "8": 1811,
+        "9": 83
+      },
+      "quality_flag_counts": {
+        "0": 41574400
+      },
+      "land_water_mask_counts": {
+        "0": 10598265,
+        "1": 18130995,
+        "2": 262487,
+        "3": 79182,
+        "6": 2002054,
+        "7": 10501417
+      },
+      "finite_geolocation_pixels": 41574400,
+      "bbox_geolocation_pixels": 467218,
+      "out_of_range_geolocation_pixels": 0,
+      "prespecified_processed_or_fire_class_count": 13506052,
+      "prespecified_processed_or_fire_in_bbox_count": 26538,
+      "opportunity_status": "screened_not_denominator_ready"
+    },
+    {
+      "pair_key": "2015190.0506",
+      "acquisition_utc": "2015-07-09T05:06:00Z",
+      "vnp14_path": "data/raw/viirs/VNP14IMG/VNP14IMG.A2015190.0506.002.2024065020311.nc",
+      "vnp03_path": "data/raw/viirs/VNP03IMG/VNP03IMG.A2015190.0506.002.2021040145851.nc",
+      "array_shape": [
+        6464,
+        6400
+      ],
+      "pixel_count": 41369600,
+      "fire_mask_class_counts": {
+        "0": 8,
+        "1": 5326336,
+        "2": 36093,
+        "3": 12690433,
+        "4": 21773166,
+        "5": 1543493,
+        "7": 2,
+        "8": 69
+      },
+      "quality_flag_counts": {
+        "0": 41369600
+      },
+      "land_water_mask_counts": {
+        "0": 3818739,
+        "1": 6367472,
+        "2": 254641,
+        "3": 47222,
+        "6": 1709173,
+        "7": 29172353
+      },
+      "finite_geolocation_pixels": 41369600,
+      "bbox_geolocation_pixels": 7154314,
+      "out_of_range_geolocation_pixels": 0,
+      "prespecified_processed_or_fire_class_count": 1543564,
+      "prespecified_processed_or_fire_in_bbox_count": 532923,
+      "opportunity_status": "screened_not_denominator_ready"
+    },
+    {
+      "pair_key": "2015190.0642",
+      "acquisition_utc": "2015-07-09T06:42:00Z",
+      "vnp14_path": "data/raw/viirs/VNP14IMG/VNP14IMG.A2015190.0642.002.2024065020342.nc",
+      "vnp03_path": "data/raw/viirs/VNP03IMG/VNP03IMG.A2015190.0642.002.2021040150305.nc",
+      "array_shape": [
+        6464,
+        6400
+      ],
+      "pixel_count": 41369600,
+      "fire_mask_class_counts": {
+        "0": 333,
+        "1": 5326336,
+        "3": 26838946,
+        "4": 8091120,
+        "5": 1112688,
+        "6": 12,
+        "7": 3,
+        "8": 161,
+        "9": 1
+      },
+      "quality_flag_counts": {
+        "0": 41369600
+      },
+      "land_water_mask_counts": {
+        "0": 3874989,
+        "1": 3349295,
+        "2": 93233,
+        "3": 19671,
+        "6": 365501,
+        "7": 33666911
+      },
+      "finite_geolocation_pixels": 41369600,
+      "bbox_geolocation_pixels": 2212227,
+      "out_of_range_geolocation_pixels": 0,
+      "prespecified_processed_or_fire_class_count": 1112853,
+      "prespecified_processed_or_fire_in_bbox_count": 134206,
+      "opportunity_status": "screened_not_denominator_ready"
+    },
+    {
+      "pair_key": "2015190.0648",
+      "acquisition_utc": "2015-07-09T06:48:00Z",
+      "vnp14_path": "data/raw/viirs/VNP14IMG/VNP14IMG.A2015190.0648.002.2024065020259.nc",
+      "vnp03_path": "data/raw/viirs/VNP03IMG/VNP03IMG.A2015190.0648.002.2021040150231.nc",
+      "array_shape": [
+        6496,
+        6400
+      ],
+      "pixel_count": 41574400,
+      "fire_mask_class_counts": {
+        "0": 303,
+        "1": 5352704,
+        "2": 373257,
+        "3": 15988986,
+        "4": 16169082,
+        "5": 3689329,
+        "6": 2,
+        "7": 18,
+        "8": 704,
+        "9": 15
+      },
+      "quality_flag_counts": {
+        "0": 41574400
+      },
+      "land_water_mask_counts": {
+        "0": 10826684,
+        "1": 11354558,
+        "2": 354398,
+        "3": 130033,
+        "6": 1059089,
+        "7": 17849638
+      },
+      "finite_geolocation_pixels": 41574400,
+      "bbox_geolocation_pixels": 1882844,
+      "out_of_range_geolocation_pixels": 0,
+      "prespecified_processed_or_fire_class_count": 3690066,
+      "prespecified_processed_or_fire_in_bbox_count": 66913,
+      "opportunity_status": "screened_not_denominator_ready"
+    },
+    {
+      "pair_key": "2015190.1742",
+      "acquisition_utc": "2015-07-09T17:42:00Z",
+      "vnp14_path": "data/raw/viirs/VNP14IMG/VNP14IMG.A2015190.1742.002.2024065020318.nc",
+      "vnp03_path": "data/raw/viirs/VNP03IMG/VNP03IMG.A2015190.1742.002.2021040150041.nc",
+      "array_shape": [
+        6496,
+        6400
+      ],
+      "pixel_count": 41574400,
+      "fire_mask_class_counts": {
+        "0": 1060372,
+        "1": 5352704,
+        "3": 7987067,
+        "4": 25369540,
+        "5": 1804712,
+        "8": 5
+      },
+      "quality_flag_counts": {
+        "0": 41574400
+      },
+      "land_water_mask_counts": {
+        "0": 9098346,
+        "1": 7949979,
+        "2": 312779,
+        "3": 72701,
+        "6": 1874717,
+        "7": 22265878
+      },
+      "finite_geolocation_pixels": 41574400,
+      "bbox_geolocation_pixels": 6837952,
+      "out_of_range_geolocation_pixels": 0,
+      "prespecified_processed_or_fire_class_count": 1804717,
+      "prespecified_processed_or_fire_in_bbox_count": 187568,
+      "opportunity_status": "screened_not_denominator_ready"
+    },
+    {
+      "pair_key": "2015190.1748",
+      "acquisition_utc": "2015-07-09T17:48:00Z",
+      "vnp14_path": "data/raw/viirs/VNP14IMG/VNP14IMG.A2015190.1748.002.2024065020354.nc",
+      "vnp03_path": "data/raw/viirs/VNP03IMG/VNP03IMG.A2015190.1748.002.2021040150044.nc",
+      "array_shape": [
+        6464,
+        6400
+      ],
+      "pixel_count": 41369600,
+      "fire_mask_class_counts": {
+        "0": 7613,
+        "1": 5326336,
+        "3": 26782224,
+        "4": 4761563,
+        "5": 4491724,
+        "6": 43,
+        "8": 94,
+        "9": 3
+      },
+      "quality_flag_counts": {
+        "0": 41369600
+      },
+      "land_water_mask_counts": {
+        "0": 7583480,
+        "1": 7527839,
+        "2": 215772,
+        "3": 50464,
+        "6": 1516792,
+        "7": 24475253
+      },
+      "finite_geolocation_pixels": 41369600,
+      "bbox_geolocation_pixels": 3941586,
+      "out_of_range_geolocation_pixels": 0,
+      "prespecified_processed_or_fire_class_count": 4491821,
+      "prespecified_processed_or_fire_in_bbox_count": 890299,
+      "opportunity_status": "screened_not_denominator_ready"
+    },
+    {
+      "pair_key": "2015191.0442",
+      "acquisition_utc": "2015-07-10T04:42:00Z",
+      "vnp14_path": "data/raw/viirs/VNP14IMG/VNP14IMG.A2015191.0442.002.2024065031004.nc",
+      "vnp03_path": "data/raw/viirs/VNP03IMG/VNP03IMG.A2015191.0442.002.2021040162248.nc",
+      "array_shape": [
+        6464,
+        6400
+      ],
+      "pixel_count": 41369600,
+      "fire_mask_class_counts": {
+        "0": 28,
+        "1": 5326336,
+        "3": 19121437,
+        "4": 6461714,
+        "5": 10457476,
+        "7": 385,
+        "8": 2154,
+        "9": 70
+      },
+      "quality_flag_counts": {
+        "0": 41369600
+      },
+      "land_water_mask_counts": {
+        "0": 10613747,
+        "1": 15258425,
+        "2": 357503,
+        "3": 76804,
+        "6": 2011725,
+        "7": 13051396
+      },
+      "finite_geolocation_pixels": 41369600,
+      "bbox_geolocation_pixels": 672495,
+      "out_of_range_geolocation_pixels": 0,
+      "prespecified_processed_or_fire_class_count": 10460085,
+      "prespecified_processed_or_fire_in_bbox_count": 19591,
+      "opportunity_status": "screened_not_denominator_ready"
+    },
+    {
+      "pair_key": "2015191.0448",
+      "acquisition_utc": "2015-07-10T04:48:00Z",
+      "vnp14_path": "data/raw/viirs/VNP14IMG/VNP14IMG.A2015191.0448.002.2024065031008.nc",
+      "vnp03_path": "data/raw/viirs/VNP03IMG/VNP03IMG.A2015191.0448.002.2021040161727.nc",
+      "array_shape": [
+        6464,
+        6400
+      ],
+      "pixel_count": 41369600,
+      "fire_mask_class_counts": {
+        "1": 5326336,
+        "2": 114787,
+        "3": 15095155,
+        "4": 20402782,
+        "5": 430530,
+        "8": 10
+      },
+      "quality_flag_counts": {
+        "0": 41369600
+      },
+      "land_water_mask_counts": {
+        "0": 2004062,
+        "1": 2717907,
+        "2": 144221,
+        "3": 19957,
+        "6": 1180405,
+        "7": 35303048
+      },
+      "finite_geolocation_pixels": 41369600,
+      "bbox_geolocation_pixels": 2388177,
+      "out_of_range_geolocation_pixels": 0,
+      "prespecified_processed_or_fire_class_count": 430540,
+      "prespecified_processed_or_fire_in_bbox_count": 53755,
+      "opportunity_status": "screened_not_denominator_ready"
+    },
+    {
+      "pair_key": "2015191.0624",
+      "acquisition_utc": "2015-07-10T06:24:00Z",
+      "vnp14_path": "data/raw/viirs/VNP14IMG/VNP14IMG.A2015191.0624.002.2024065030915.nc",
+      "vnp03_path": "data/raw/viirs/VNP03IMG/VNP03IMG.A2015191.0624.002.2021040160521.nc",
+      "array_shape": [
+        6496,
+        6400
+      ],
+      "pixel_count": 41574400,
+      "fire_mask_class_counts": {
+        "0": 13,
+        "1": 5352704,
+        "2": 66,
+        "3": 20315758,
+        "4": 13599467,
+        "5": 2305744,
+        "6": 5,
+        "7": 10,
+        "8": 623,
+        "9": 10
+      },
+      "quality_flag_counts": {
+        "0": 41574400
+      },
+      "land_water_mask_counts": {
+        "0": 6978757,
+        "1": 7125338,
+        "2": 207538,
+        "3": 38553,
+        "6": 774815,
+        "7": 26449399
+      },
+      "finite_geolocation_pixels": 41574400,
+      "bbox_geolocation_pixels": 6252568,
+      "out_of_range_geolocation_pixels": 0,
+      "prespecified_processed_or_fire_class_count": 2306387,
+      "prespecified_processed_or_fire_in_bbox_count": 714028,
+      "opportunity_status": "screened_not_denominator_ready"
+    },
+    {
+      "pair_key": "2015191.0630",
+      "acquisition_utc": "2015-07-10T06:30:00Z",
+      "vnp14_path": "data/raw/viirs/VNP14IMG/VNP14IMG.A2015191.0630.002.2024065030904.nc",
+      "vnp03_path": "data/raw/viirs/VNP03IMG/VNP03IMG.A2015191.0630.002.2021040160549.nc",
+      "array_shape": [
+        6464,
+        6400
+      ],
+      "pixel_count": 41369600,
+      "fire_mask_class_counts": {
+        "0": 57,
+        "1": 5326336,
+        "2": 1245114,
+        "3": 9441862,
+        "4": 19444035,
+        "5": 5911969,
+        "7": 30,
+        "8": 197
+      },
+      "quality_flag_counts": {
+        "0": 41369600
+      },
+      "land_water_mask_counts": {
+        "0": 10552394,
+        "1": 14943597,
+        "2": 402978,
+        "3": 168740,
+        "6": 1341034,
+        "7": 13960857
+      },
+      "finite_geolocation_pixels": 41369600,
+      "bbox_geolocation_pixels": 2254739,
+      "out_of_range_geolocation_pixels": 0,
+      "prespecified_processed_or_fire_class_count": 5912196,
+      "prespecified_processed_or_fire_in_bbox_count": 70070,
+      "opportunity_status": "screened_not_denominator_ready"
+    },
+    {
+      "pair_key": "2015191.1724",
+      "acquisition_utc": "2015-07-10T17:24:00Z",
+      "vnp14_path": "data/raw/viirs/VNP14IMG/VNP14IMG.A2015191.1724.002.2024065030954.nc",
+      "vnp03_path": "data/raw/viirs/VNP03IMG/VNP03IMG.A2015191.1724.002.2021040161112.nc",
+      "array_shape": [
+        6464,
+        6400
+      ],
+      "pixel_count": 41369600,
+      "fire_mask_class_counts": {
+        "0": 83104,
+        "1": 5326336,
+        "3": 11832016,
+        "4": 22491463,
+        "5": 1636624,
+        "6": 6,
+        "8": 51
+      },
+      "quality_flag_counts": {
+        "0": 41369600
+      },
+      "land_water_mask_counts": {
+        "0": 5947665,
+        "1": 7229570,
+        "2": 287988,
+        "3": 51793,
+        "6": 1892358,
+        "7": 25960226
+      },
+      "finite_geolocation_pixels": 41369600,
+      "bbox_geolocation_pixels": 9104256,
+      "out_of_range_geolocation_pixels": 0,
+      "prespecified_processed_or_fire_class_count": 1636675,
+      "prespecified_processed_or_fire_in_bbox_count": 309296,
+      "opportunity_status": "screened_not_denominator_ready"
+    }
+  ]
+}

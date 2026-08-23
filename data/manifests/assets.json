@@ -1,0 +1,109 @@
+{
+  "schema_version": "1.0",
+  "generated_for": "indonesia-wildfire-accessibility-v1",
+  "assets": [
+    {
+      "id": "noaa_cpc_roni_v6",
+      "purpose": "ENSO retrospective panel and exploratory effect modification",
+      "source_url": "https://www.cpc.ncep.noaa.gov/data/indices/RONI.ascii.txt",
+      "access_class": "open_anonymous",
+      "licence_or_terms": "NOAA CPC public climate index; cite NOAA CPC and freeze retrieved bytes",
+      "expected_local_path": "data/raw/enso/RONI.ascii.txt",
+      "provenance_path": "outputs/quality/roni_fetch.json",
+      "status": "ready",
+      "required_for": ["phase_0", "phase_2_secondary"]
+    },
+    {
+      "id": "gwis_globfire_aggregate_burned_area_2002_2024",
+      "purpose": "aggregate Kalimantan burned-area and fire-count context only",
+      "source_url": "https://effis-gwis-cms.s3.eu-west-1.amazonaws.com/apps/country.profile/GLOBFIRE_burned_area_full_dataset_2002_2024.zip",
+      "access_class": "open_anonymous",
+      "licence_or_terms": "GWIS Country Profile download; record source, retrieval time, raw hash, and historic GADM boundary caveat",
+      "expected_local_path": "data/raw/gwis/GLOBFIRE_burned_area_full_dataset_2002_2024.zip",
+      "provenance_path": "outputs/quality/gwis_fetch.json",
+      "status": "ready",
+      "required_for": ["phase_1_descriptive", "phase_3_context"]
+    },
+    {
+      "id": "sipongi_portal_hotspots_context_2015_2023",
+      "purpose": "validated sensor-stratified Kalimantan portal-record context for July-November 2015-2023 only; not a primary outcome",
+      "source_url": "https://opsroom.sipongidata.my.id/api/sebaran/download",
+      "access_class": "public_anonymous_portal_terms_unresolved",
+      "licence_or_terms": "Preserve SiPongi/Kementerian Kehutanan attribution. Public record-level redistribution rights were not established; do not release raw records until they are checked.",
+      "expected_local_path": "data/raw/sipongi/",
+      "provenance_path": "outputs/quality/sipongi_fetch.json",
+      "status": "ready",
+      "required_for": ["phase_1_descriptive", "phase_2_context"]
+    },
+    {
+      "id": "viirs_snpp_active_fire_and_geolocation",
+      "purpose": "central matched-overpass outcome and observation opportunity",
+      "source_url": "https://www.earthdata.nasa.gov/",
+      "access_class": "open_free_account",
+      "licence_or_terms": "NASA Earthdata Login; retain product version, DOI, access date, and swath checksums",
+      "expected_local_path": "data/raw/viirs/",
+      "status": "blocked_missing_account_and_files",
+      "required_for": ["phase_1", "phase_2", "phase_3"]
+    },
+    {
+      "id": "era5_land",
+      "purpose": "wind, VPD, rainfall, and root-zone soil water",
+      "source_url": "https://cds.climate.copernicus.eu/datasets/reanalysis-era5-land?tab=documentation",
+      "access_class": "open_free_account_cc_by",
+      "licence_or_terms": "CDS registration, licence acceptance, API credentials, Copernicus attribution",
+      "expected_local_path": "data/raw/era5_land/",
+      "status": "blocked_missing_account_and_request",
+      "required_for": ["phase_1", "phase_2"]
+    },
+    {
+      "id": "chirps_v3",
+      "purpose": "antecedent rainfall, drought, and long-term precipitation",
+      "source_url": "https://data.chc.ucsb.edu/products/CHIRPS/v3.0/daily/final/rnl/cogs/{YYYY}/chirps-v3.0.rnl.{YYYY.MM.DD}.cog",
+      "access_class": "open_anonymous_cc_by",
+      "licence_or_terms": "CHIRPS v3 public-domain dedication and CC BY 4.0; freeze product/retrieval date",
+      "expected_local_path": "data/raw/chirps/",
+      "status": "not_started",
+      "required_for": ["phase_1", "phase_2"]
+    },
+    {
+      "id": "mapbiomas_indonesia_collection_4_1",
+      "purpose": "2014 baseline forest and lagged transformation exposure",
+      "source_url": "https://landy.mapbiomas.id/en/termsofuse",
+      "access_class": "open_public_interest_cc_by_sa",
+      "licence_or_terms": "Record terms and FAQ, collection/version, exported asset ID, access date, class crosswalk, and share-alike obligations",
+      "expected_local_path": "data/raw/mapbiomas_indonesia/",
+      "status": "blocked_missing_frozen_export_and_crosswalk",
+      "required_for": ["phase_1", "phase_2", "phase_3"]
+    },
+    {
+      "id": "mod13q1_061",
+      "purpose": "primary lagged prefire EVI",
+      "source_url": "https://doi.org/10.5067/MODIS/MOD13Q1.061",
+      "access_class": "open_free_account",
+      "licence_or_terms": "LP DAAC/Earthdata workflow; no downstream MODIS use restriction; freeze QA mask and composite timing",
+      "expected_local_path": "data/raw/mod13q1/",
+      "status": "blocked_missing_files",
+      "required_for": ["phase_1", "phase_2_secondary"]
+    },
+    {
+      "id": "historical_access_assets",
+      "purpose": "2014 road and settlement accessibility; verified road-opening module",
+      "source_url": "https://download.geofabrik.de/asia/indonesia-140101.osm.pbf",
+      "access_class": "unresolved",
+      "licence_or_terms": "Dated Geofabrik/OSM snapshots are an ODbL historical-mapping sensitivity only, not proof of construction timing. The co-primary road-opening module still requires an authoritative dated source and redistribution rights.",
+      "expected_local_path": "data/raw/historical_access/",
+      "status": "blocked_missing_dated_licensed_source",
+      "required_for": ["phase_1", "phase_2", "phase_4"]
+    },
+    {
+      "id": "peat_and_drainage_assets",
+      "purpose": "peat presence and drainage/canal mechanisms",
+      "source_url": "https://services2.arcgis.com/g8WusZB13b9OegfU/arcgis/rest/services/Global_Peatlands/FeatureServer/0",
+      "access_class": "unresolved",
+      "licence_or_terms": "GFW Global Peatlands can provide an open fixed peat stratum/sensitivity. Dadap et al. 2017 canal mapping is only a post-2017 static mediator sensitivity, not a 2014 baseline or construction-time series. Verify each asset's timing, completeness, and redistribution rights.",
+      "expected_local_path": "data/raw/peat_and_drainage/",
+      "status": "blocked_missing_frozen_assets",
+      "required_for": ["phase_1", "phase_2", "phase_3"]
+    }
+  ]
+}

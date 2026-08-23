@@ -1,0 +1,77 @@
+{
+  "validated_at_utc": "2026-08-23T04:25:07.110533+00:00",
+  "study_id": "indonesia-wildfire-accessibility-v1",
+  "config_sha256": "bfaa7debd3884646c3940c2a7cb9ef50fe70236335c7c01e17dc2bd8e3f302ae",
+  "manifest_sha256": "330eb0279c7d546083b0bb78eaa17d01e69929ca7227aba503fa562dda2b9040",
+  "errors": [],
+  "warnings": [
+    "Phase 1 is not ready; matched-risk-set construction and effect estimation are blocked"
+  ],
+  "phase_1_gates": [
+    {
+      "asset_id": "viirs_snpp_active_fire_and_geolocation",
+      "manifest_status": "blocked_missing_account_and_files",
+      "expected_local_path": "data/raw/viirs/",
+      "local_path_exists": true,
+      "payload_file_count": 123,
+      "provenance_ready": false,
+      "gate_ready": false
+    },
+    {
+      "asset_id": "era5_land",
+      "manifest_status": "blocked_missing_account_and_request",
+      "expected_local_path": "data/raw/era5_land/",
+      "local_path_exists": true,
+      "payload_file_count": 13,
+      "provenance_ready": false,
+      "gate_ready": false
+    },
+    {
+      "asset_id": "chirps_v3",
+      "manifest_status": "not_started",
+      "expected_local_path": "data/raw/chirps/",
+      "local_path_exists": true,
+      "payload_file_count": 155,
+      "provenance_ready": false,
+      "gate_ready": false
+    },
+    {
+      "asset_id": "mapbiomas_indonesia_collection_4_1",
+      "manifest_status": "blocked_missing_frozen_export_and_crosswalk",
+      "expected_local_path": "data/raw/mapbiomas_indonesia/",
+      "local_path_exists": false,
+      "payload_file_count": 0,
+      "provenance_ready": false,
+      "gate_ready": false
+    },
+    {
+      "asset_id": "mod13q1_061",
+      "manifest_status": "blocked_missing_files",
+      "expected_local_path": "data/raw/mod13q1/",
+      "local_path_exists": true,
+      "payload_file_count": 565,
+      "provenance_ready": false,
+      "gate_ready": false
+    },
+    {
+      "asset_id": "historical_access_assets",
+      "manifest_status": "blocked_missing_dated_licensed_source",
+      "expected_local_path": "data/raw/historical_access/",
+      "local_path_exists": false,
+      "payload_file_count": 0,
+      "provenance_ready": false,
+      "gate_ready": false
+    },
+    {
+      "asset_id": "peat_and_drainage_assets",
+      "manifest_status": "blocked_missing_frozen_assets",
+      "expected_local_path": "data/raw/peat_and_drainage/",
+      "local_path_exists": true,
+      "payload_file_count": 1,
+      "provenance_ready": false,
+      "gate_ready": false
+    }
+  ],
+  "phase_1_ready": false,
+  "result": "pass"
+}

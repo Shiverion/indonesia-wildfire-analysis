@@ -1,0 +1,60 @@
+{
+  "schema_version": "source-brand-assets/v1",
+  "attribution_note": "Logos are displayed only as source attribution marks. They do not imply endorsement of this research product.",
+  "assets": [
+    {
+      "id": "nasa",
+      "label": "NASA / FIRMS",
+      "path": "/brands/nasa.svg",
+      "logo_source_url": "https://upload.wikimedia.org/wikipedia/commons/e/e5/NASA_logo.svg",
+      "data_source_url": "https://firms.modaps.eosdis.nasa.gov/",
+      "sha256": "E03E455100C083590C507DF7870C3887A9F2298388CF6F421B6D72BC7EAE9008",
+      "license_note": "NASA insignia usage follows NASA brand guidance; the mark is used here for attribution, not endorsement."
+    },
+    {
+      "id": "noaa",
+      "label": "NOAA / CPC",
+      "path": "/brands/noaa.svg",
+      "logo_source_url": "https://upload.wikimedia.org/wikipedia/commons/7/79/NOAA_logo.svg",
+      "data_source_url": "https://www.cpc.ncep.noaa.gov/data/indices/RONI.ascii.txt",
+      "sha256": "EE777DA6A08B1BCC30EB164FF10A997AF78F540C2FE0962455103F01D00A85D0",
+      "license_note": "NOAA emblem displayed as source attribution; consult NOAA emblem policy for reuse outside this explorer."
+    },
+    {
+      "id": "mapbiomas",
+      "label": "MapBiomas Indonesia",
+      "path": "/brands/mapbiomas.svg",
+      "logo_source_url": "https://brasil.mapbiomas.org/wp-content/uploads/sites/4/2024/10/logo_Mapbiomas_intitucional_vertical.svg",
+      "data_source_url": "https://mapbiomas.id/",
+      "sha256": "E54A1782038DB387B9A58BB38E69C6D6E23B30183A0291AA7A1A80BA755C794C",
+      "license_note": "Displayed under MapBiomas public brand-use guidance; no endorsement is implied."
+    },
+    {
+      "id": "gfw",
+      "label": "Global Forest Watch / WRI peat",
+      "path": "/brands/gfw.png",
+      "logo_source_url": "https://commons.wikimedia.org/wiki/File:GFW-logo-new@2x.png",
+      "data_source_url": "https://www.globalforestwatch.org/",
+      "sha256": "C1868A5D1819279DD5AE155A03A0490E46A8F333ECCE411BB5D5F285034E2FE7",
+      "license_note": "Logo attribution mark sourced from the Global Forest Watch/WRI public mark record."
+    },
+    {
+      "id": "gwis",
+      "label": "GWIS / JRC",
+      "path": "/brands/gwis.png",
+      "logo_source_url": "https://gwis.jrc.ec.europa.eu/static/assets/images/gwis.logo.small.png",
+      "data_source_url": "https://gwis.jrc.ec.europa.eu/",
+      "sha256": "8B03E8FB01CED3146E8910C167CC3DD4CE8AF386748889A3AF4B37E096795081",
+      "license_note": "Displayed as a source attribution mark for the Global Wildfire Information System."
+    },
+    {
+      "id": "kemenhut",
+      "label": "SiPongi / Kemenhut",
+      "path": "/brands/kemenhut.png",
+      "logo_source_url": "https://sipongi.gakkum.kehutanan.go.id/assets/img/logo_header_id.png",
+      "data_source_url": "https://sipongi.gakkum.kehutanan.go.id/sebaran-titik-panas",
+      "sha256": "C534A8B7DD2028336280B24DD02C628E942C67B02D5EC177C27B1776A5012B1D",
+      "license_note": "Displayed as the portal's source attribution mark; it does not imply endorsement."
+    }
+  ]
+}

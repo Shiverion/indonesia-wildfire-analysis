@@ -1,0 +1,15 @@
+{
+  "schema_version": "viirs-granule-repair/v1",
+  "retrieved_at_utc": "2026-08-22T05:00:39.983786+00:00",
+  "pair_key": "2015002.0712",
+  "product": "VNP03IMG.002",
+  "directory_url": "https://ladsweb.modaps.eosdis.nasa.gov/archive/allData/5200/VNP03IMG/2015/002/",
+  "url": "https://ladsweb.modaps.eosdis.nasa.gov/archive/allData/5200/VNP03IMG/2015/002/VNP03IMG.A2015002.0712.002.2021033141531.nc",
+  "quarantined_path": "data/raw/viirs/_rejected/VNP03IMG.A2015002.0712.002.2021033141531.nc.corrupt",
+  "quarantined_sha256": "e948d5e7f3ca3ffac5d97bbf0261dd29849b0d38ec245dba20cad00dea1ab0f0",
+  "quarantined_size_bytes": 147849216,
+  "replacement_path": "data/raw/viirs/VNP03IMG/VNP03IMG.A2015002.0712.002.2021033141531.nc",
+  "replacement_sha256": "2daa6d636c276595eddd50b822341203b8fd25e1d9fa0684dfac408290262d89",
+  "replacement_size_bytes": 148411931,
+  "canonical_manifest_updated": false
+}

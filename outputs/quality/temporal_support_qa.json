@@ -1,0 +1,321 @@
+{
+  "schema_version": "phase1-temporal-qa/v1",
+  "study_id": "indonesia-wildfire-accessibility-v1",
+  "study_years": [
+    2015,
+    2016,
+    2017,
+    2018,
+    2019,
+    2020,
+    2021,
+    2022,
+    2023,
+    2024,
+    2025
+  ],
+  "assets": {
+    "era5_land": {
+      "status": "calibration_year_complete_only",
+      "payload_file_count": 12,
+      "observed_years": [
+        2015
+      ],
+      "months_by_year": {
+        "2015": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ]
+      },
+      "complete_years": [
+        2015
+      ],
+      "study_years": [
+        2015,
+        2016,
+        2017,
+        2018,
+        2019,
+        2020,
+        2021,
+        2022,
+        2023,
+        2024,
+        2025
+      ],
+      "missing_months_by_study_year": {
+        "2015": [],
+        "2016": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "2017": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "2018": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "2019": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "2020": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "2021": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "2022": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "2023": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "2024": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "2025": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ]
+      },
+      "malformed_files": [],
+      "manifest_present": true,
+      "variables_declared": [
+        "10m_u_component_of_wind",
+        "10m_v_component_of_wind",
+        "2m_temperature",
+        "2m_dewpoint_temperature",
+        "total_precipitation",
+        "volumetric_soil_water_layer_1",
+        "volumetric_soil_water_layer_2",
+        "volumetric_soil_water_layer_3"
+      ],
+      "temporal_event_lag_validated": false,
+      "note": "Monthly payloads are present for 2015 only; event-level UTC lagging and full 2015-2025 support are not validated."
+    },
+    "chirps": {
+      "status": "support_window_complete_with_extra_dates",
+      "payload_file_count": 154,
+      "covered_years": [
+        2015
+      ],
+      "manifest_temporal": [
+        "2015-07-01",
+        "2015-11-30"
+      ],
+      "expected_date_count": 153,
+      "observed_date_count": 154,
+      "missing_dates": [],
+      "duplicate_dates": [],
+      "extra_dates": [
+        "2015-01-01"
+      ],
+      "malformed_files": [],
+      "study_years": [
+        2015,
+        2016,
+        2017,
+        2018,
+        2019,
+        2020,
+        2021,
+        2022,
+        2023,
+        2024,
+        2025
+      ],
+      "study_years_present": [
+        2015
+      ],
+      "lag_features_validated": false,
+      "note": "The 2015 Jul-Nov support window is complete, but antecedent 1/7/30/90-day extraction has not been run and other study years are absent."
+    },
+    "prefire_vegetation": {
+      "status": "payload_inventory_only_qa_unvalidated",
+      "payload_file_count": 144,
+      "composite_count": 24,
+      "composite_years": [
+        2014,
+        2015
+      ],
+      "study_years": [
+        2015,
+        2016,
+        2017,
+        2018,
+        2019,
+        2020,
+        2021,
+        2022,
+        2023,
+        2024,
+        2025
+      ],
+      "tiles": [
+        "h28v08",
+        "h28v09",
+        "h29v08",
+        "h29v09",
+        "h30v08",
+        "h30v09"
+      ],
+      "malformed_files": [],
+      "manifest_present": true,
+      "qa_mask_validated": false,
+      "prefire_support_validated": false,
+      "note": "HDF payloads are readable at the file level, but QA SDS extraction and event-specific pre-fire support are still required."
+    },
+    "viirs_outcome_and_opportunity": {
+      "status": "paired_swath_screening_only",
+      "pair_index_present": true,
+      "paired_swath_count": 60,
+      "screened_swath_count": 60,
+      "swaths_failed": 0,
+      "observed_years": [
+        2015
+      ],
+      "study_years": [
+        2015,
+        2016,
+        2017,
+        2018,
+        2019,
+        2020,
+        2021,
+        2022,
+        2023,
+        2024,
+        2025
+      ],
+      "acquisition_dates_first": "2015-01-01",
+      "acquisition_dates_last": "2015-07-10",
+      "negative_frame_ready": false,
+      "denominator_ready": false,
+      "temporal_opportunity_validated": false,
+      "note": "Paired geolocation screening is complete for a 2015 subset; no pixel is labelled a negative observation or valid opportunity."
+    }
+  },
+  "denominator_ready": false,
+  "phase_1_unlock": false,
+  "status": "present_inputs_need_temporal_and_opportunity_validation",
+  "acceptance_rule": "No outcome, covariate, or model is unlocked by file presence alone; every event requires pre-cutoff support and VIIRS processed opportunity coverage.",
+  "validated_at_utc": "2026-08-23T04:23:45.582237+00:00"
+}

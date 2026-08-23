@@ -1,0 +1,10 @@
+{
+  "source_url": "https://www.cpc.ncep.noaa.gov/data/indices/RONI.ascii.txt",
+  "retrieved_at_utc": "2026-08-20T21:10:35.476531+00:00",
+  "raw_path": "C:\\Users\\miqba\\projects\\Indonesia Wildfire Analysis\\data\\raw\\enso\\RONI.ascii.txt",
+  "raw_sha256": "3292d9f2597ee6d7fea3b76584d2357786fcd8e472f04a2e6765a3802600264d",
+  "record_count": 918,
+  "first_complete_season_end": "1950-02-28",
+  "last_complete_season_end": "2026-07-31",
+  "note": "CPC can revise recent RONI values; this artifact is a retrospective frozen retrieval, not proof of real-time availability."
+}

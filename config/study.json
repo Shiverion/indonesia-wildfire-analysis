@@ -1,0 +1,53 @@
+{
+  "study_id": "indonesia-wildfire-accessibility-v1",
+  "geography": "Kalimantan, Indonesia",
+  "projection": "EPSG:6933",
+  "analysis_unit": {
+    "primary_cell_km": 1,
+    "matching_supercell_km": 25,
+    "bootstrap_block_km": 50,
+    "baseline_forest_year": 2014,
+    "minimum_baseline_forest_fraction": 0.7
+  },
+  "time_split": {
+    "measurement_calibration": [2015, 2017],
+    "model_development": [2018, 2022],
+    "pipeline_rehearsal": [2023, 2023],
+    "locked_retrospective_test": [2024, 2025],
+    "monitoring_year": 2026
+  },
+  "outcome": {
+    "name": "surveillance_bounded_first_observed_onset",
+    "primary_sensor": "S-NPP VIIRS VNP14IMG.002 paired with VNP03IMG.002",
+    "prior_negative_hours_max": 72,
+    "prior_negative_forest_processed_fraction_min": 0.5,
+    "cell_refractory_days": 7
+  },
+  "exposures": {
+    "accessibility": "2014 equal-weight road and settlement accessibility; dated assets required",
+    "transformation": "fraction of 2014 natural forest converted in t-3 through t-1 using frozen MapBiomas Indonesia 4.1 class crosswalk"
+  },
+  "vegetation": {
+    "baseline": "MapBiomas Indonesia 2014 natural-forest class and fraction",
+    "current_primary": "MOD13Q1.061 EVI; QA-accepted 16-day composite ending before qualifying prior-negative cutoff",
+    "current_sensitivity": "HLSL30.002/HLSS30.002 NDMI; QA-clear observations during prior 30 complete days ending before qualifying prior-negative cutoff",
+    "roles": {
+      "environmental_predictive": "include current EVI; NDMI sensitivity",
+      "total_accessibility": "exclude post-2014 EVI and NDMI as plausible mediators",
+      "transformation": "exclude vegetation measured during or after t-3 through t-1; pre-exposure EVI t-6 through t-4 sensitivity only",
+      "joint_mediator_adjusted": "include current QA-valid EVI and NDMI"
+    }
+  },
+  "enso": {
+    "primary_index": "NOAA CPC ERSSTv6 Relative Oceanic Nino Index (RONI)",
+    "legacy_sensitivity": "NOAA CPC ONI",
+    "timing": "latest complete three-month season ending before the analysis cutoff",
+    "exact_overpass_role": "main effect conditioned out by matched-set intercept; interactions exploratory only",
+    "complete_panel_role": "separate climate panel; do not use exact year-month fixed effects when estimating RONI",
+    "real_time_rule": "historical CPC data vintages are required before any operational forecast claim"
+  },
+  "monitoring": {
+    "s_npp_product_delivery_end": "2026-11-01",
+    "post_end_rule": "truncate S-NPP-only monitoring or use a separately calibrated NOAA-20/NOAA-21 bridge"
+  }
+}

@@ -1,0 +1,162 @@
+{
+  "source_url": "https://opsroom.sipongidata.my.id/api/sebaran/download",
+  "retrieved_at_utc": "2026-08-20T21:12:13.715052+00:00",
+  "query_scope": {
+    "years": [
+      2026,
+      2026
+    ],
+    "excluded_years": [],
+    "months": [
+      7,
+      8,
+      9,
+      10,
+      11
+    ],
+    "province_ids": [
+      "11",
+      "12",
+      "13",
+      "14",
+      "15"
+    ],
+    "confidence": "all",
+    "satellite": "all-nasa",
+    "request_granularity": "partial_snapshot_july_through_closed_day",
+    "time_rule": "Portal-reported dates only; display-time zone is not validated as sensor acquisition UTC."
+  },
+  "coverage_kind": "validated_partial_monitoring_snapshot",
+  "provider_snapshot": {
+    "api_base_url": "https://opsroom.sipongidata.my.id/api",
+    "configuration_url": "https://opsroom.sipongidata.my.id/api/konfigurasi",
+    "configuration_path": "data/raw/sipongi/snapshots/kalimantan_sipongi_through_2026-08-20_20260820T211213Z/_provider_snapshots/konfigurasi_20260820T211215Z.json",
+    "configuration_sha256": "a55e7029c44f85c6aff8a1838187b4418fb0b6e170a004baeb5d76c15c5e2619",
+    "province_catalogue_url": "https://opsroom.sipongidata.my.id/api/getProvinsi/all",
+    "province_catalogue_path": "data/raw/sipongi/snapshots/kalimantan_sipongi_through_2026-08-20_20260820T211213Z/_provider_snapshots/provinsi_20260820T211215Z.json",
+    "province_catalogue_sha256": "630f7387d0b213ef92edf338eb963d86c45e5cddffdfd37626834e28fbd1abdb",
+    "validated_kalimantan_provinces": {
+      "11": "Kalimantan Barat",
+      "12": "Kalimantan Selatan",
+      "13": "Kalimantan Tengah",
+      "14": "Kalimantan Timur",
+      "15": "Kalimantan Utara"
+    }
+  },
+  "file_count": 5,
+  "record_count": 104465,
+  "empty_response_count": 0,
+  "repaired_row_count": 0,
+  "rejected_response_count": 0,
+  "raw_inventory_sha256": "a22acb3985b64c5ad1127dc8e40c0f27179ec2fae00d9bd243d8b7776e7a4d29",
+  "files": [
+    {
+      "province_id": "11",
+      "province": "Kalimantan Barat",
+      "year": 2026,
+      "request_period": "07-08-20",
+      "request_url": "https://opsroom.sipongidata.my.id/api/sebaran/download?startdate=2026-07-01+00%3A00%3A00&enddate=2026-08-20+23%3A59%3A59&provinsi=11&confidence=all&satelit=all-nasa&tipe=txt",
+      "raw_path": "data/raw/sipongi/snapshots/kalimantan_sipongi_through_2026-08-20_20260820T211213Z/sipongi_11_2026_07-08-20_monitoring.txt",
+      "raw_sha256": "9dbef439e7eca706a56c65a3d21e747afe025ec66bbe1226cf30a1502ca233e1",
+      "canonical_records_sha256": "13f27f232adfaf93fe1982934c6892363fd0d60268f02f5214fc7066321f9072",
+      "byte_count": 5617895,
+      "record_count": 52574,
+      "repaired_row_count": 0,
+      "validation_attempts": 1,
+      "rejected_response_count": 0,
+      "reused_local_file": false
+    },
+    {
+      "province_id": "12",
+      "province": "Kalimantan Selatan",
+      "year": 2026,
+      "request_period": "07-08-20",
+      "request_url": "https://opsroom.sipongidata.my.id/api/sebaran/download?startdate=2026-07-01+00%3A00%3A00&enddate=2026-08-20+23%3A59%3A59&provinsi=12&confidence=all&satelit=all-nasa&tipe=txt",
+      "raw_path": "data/raw/sipongi/snapshots/kalimantan_sipongi_through_2026-08-20_20260820T211213Z/sipongi_12_2026_07-08-20_monitoring.txt",
+      "raw_sha256": "2bb932a41ce8bee35d3fd7ac6b22f5625910cb5fc4d45ba12af964a73a60d448",
+      "canonical_records_sha256": "e5d391470a45524289c57f51d5c3fa6242d32d518dba261135bb174eff9438d8",
+      "byte_count": 1175317,
+      "record_count": 10502,
+      "repaired_row_count": 0,
+      "validation_attempts": 1,
+      "rejected_response_count": 0,
+      "reused_local_file": false
+    },
+    {
+      "province_id": "13",
+      "province": "Kalimantan Tengah",
+      "year": 2026,
+      "request_period": "07-08-20",
+      "request_url": "https://opsroom.sipongidata.my.id/api/sebaran/download?startdate=2026-07-01+00%3A00%3A00&enddate=2026-08-20+23%3A59%3A59&provinsi=13&confidence=all&satelit=all-nasa&tipe=txt",
+      "raw_path": "data/raw/sipongi/snapshots/kalimantan_sipongi_through_2026-08-20_20260820T211213Z/sipongi_13_2026_07-08-20_monitoring.txt",
+      "raw_sha256": "db46947b59f8333ae77c65b6a3a0adf7c53e41964a3f5665f0916465c5f54d26",
+      "canonical_records_sha256": "35230e46fb314c475fd32ee02138fe0af64dc690cd4cef84c9676f0818c95874",
+      "byte_count": 3042649,
+      "record_count": 26601,
+      "repaired_row_count": 0,
+      "validation_attempts": 1,
+      "rejected_response_count": 0,
+      "reused_local_file": false
+    },
+    {
+      "province_id": "14",
+      "province": "Kalimantan Timur",
+      "year": 2026,
+      "request_period": "07-08-20",
+      "request_url": "https://opsroom.sipongidata.my.id/api/sebaran/download?startdate=2026-07-01+00%3A00%3A00&enddate=2026-08-20+23%3A59%3A59&provinsi=14&confidence=all&satelit=all-nasa&tipe=txt",
+      "raw_path": "data/raw/sipongi/snapshots/kalimantan_sipongi_through_2026-08-20_20260820T211213Z/sipongi_14_2026_07-08-20_monitoring.txt",
+      "raw_sha256": "36c869782b21cf8408535392ef1e8d4592e9a0ee81c27d57f99698c6e50429ec",
+      "canonical_records_sha256": "2e2554e4eafc148f8e85298c6d80a44e0c0ca15d209176bcd605e08afd17e8e9",
+      "byte_count": 1335816,
+      "record_count": 12568,
+      "repaired_row_count": 0,
+      "validation_attempts": 1,
+      "rejected_response_count": 0,
+      "reused_local_file": false
+    },
+    {
+      "province_id": "15",
+      "province": "Kalimantan Utara",
+      "year": 2026,
+      "request_period": "07-08-20",
+      "request_url": "https://opsroom.sipongidata.my.id/api/sebaran/download?startdate=2026-07-01+00%3A00%3A00&enddate=2026-08-20+23%3A59%3A59&provinsi=15&confidence=all&satelit=all-nasa&tipe=txt",
+      "raw_path": "data/raw/sipongi/snapshots/kalimantan_sipongi_through_2026-08-20_20260820T211213Z/sipongi_15_2026_07-08-20_monitoring.txt",
+      "raw_sha256": "9cdc2d54e337317a58755c3876f3590322d4bbcacf0807a7a172ad0ddbdbbd23",
+      "canonical_records_sha256": "f2a34fc5a8bfb8c7ca468a41af57de1b5636e47d6a4eaabf5ebe5848543798fd",
+      "byte_count": 240204,
+      "record_count": 2220,
+      "repaired_row_count": 0,
+      "validation_attempts": 1,
+      "rejected_response_count": 0,
+      "reused_local_file": false
+    }
+  ],
+  "licence_or_terms_note": "The public portal requests SiPongi/Kemenhut attribution. Reusable redistribution rights were not established by this acquisition and must be checked before public release of records.",
+  "analysis_limit": "Positive portal records only; no swath coverage, valid non-detections, validated UTC, forest-only mask, or individual fire-event linkage. This is not a substitute for the VNP14IMG/VNP03IMG primary outcome.",
+  "snapshot_id": "kalimantan_sipongi_through_2026-08-20_20260820T211213Z",
+  "status": "validated_partial",
+  "season": {
+    "year": 2026,
+    "start_date": "2026-07-01",
+    "end_date": "2026-11-30",
+    "complete": false
+  },
+  "through_date": "2026-08-20",
+  "time_basis": "Portal-reported date; UTC unvalidated. The through date is the last closed Asia/Jakarta portal-reporting day.",
+  "metric": "positive portal records",
+  "comparison_guardrail": {
+    "included_in_annual_archive": false,
+    "eligible_for_year_slider": false,
+    "eligible_for_annual_chart": false,
+    "comparable_to_completed_jul_nov_seasons": false
+  },
+  "validation": {
+    "expected_province_responses": 5,
+    "validated_province_responses": 5,
+    "raw_inventory_sha256": "a22acb3985b64c5ad1127dc8e40c0f27179ec2fae00d9bd243d8b7776e7a4d29",
+    "provider_configuration_sha256": "a55e7029c44f85c6aff8a1838187b4418fb0b6e170a004baeb5d76c15c5e2619",
+    "province_catalogue_sha256": "630f7387d0b213ef92edf338eb963d86c45e5cddffdfd37626834e28fbd1abdb",
+    "raw_records_embedded": false,
+    "has_observation_denominator": false
+  }
+}

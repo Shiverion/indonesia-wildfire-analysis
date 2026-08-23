@@ -1,0 +1,144 @@
+{
+  "schema_version": "peat-fire-vulnerability/v1",
+  "status": "exploratory_association_not_causal",
+  "analysis_retrieved_at_utc": "2026-08-21T14:25:22.456756+00:00",
+  "fire_source": {
+    "product": "NASA FIRMS MODIS Collection 6.1 standard archive",
+    "year": 2024,
+    "file": "data\\raw\\firms\\global\\modis_2024_all_countries.zip",
+    "source_url": "https://firms.modaps.eosdis.nasa.gov/data/country/yearly_summary_files.txt",
+    "sha256": "034f357da2022202fec7c4a2916e4128f29536cc1578aef9b04bbf7fd6901389",
+    "filter": "type=0 presumed vegetation fire; confidence >=30",
+    "metric": "active-fire point detections, not unique fires or observation-adjusted occurrence"
+  },
+  "peat_source": {
+    "product": "Global ensemble peatland extent, 1 km",
+    "release_date": "2026-04-24",
+    "reference_period": "2000-2020",
+    "file": "data\\raw\\peat\\global\\peatland.extent_multi_p_1km_s_2000_2020_go_epsg4326_v20260423.tif",
+    "source_url": "https://zenodo.org/records/19731872",
+    "sha256": "a667cab62b307272860df3c8f2db49bb5dcab985433a5f9f3840dd9abb4dbbb9",
+    "thresholds_percent": [
+      25,
+      50,
+      75
+    ],
+    "license": "CC-BY-4.0",
+    "latest_release_is_not_2026_land_cover": true
+  },
+  "country_geometry": {
+    "file": "data\\raw\\peat\\global\\ne_50m_admin_0_countries.geojson",
+    "source_url": "https://www.naturalearthdata.com/downloads/50m-cultural-vectors/",
+    "sha256": "3e458fc036ad0a66411f2c1e6cac49c5d7bfb81cb1123bc513b22511a2b7fdeb",
+    "boundary_basis": "Natural Earth Admin-0 de facto display boundaries"
+  },
+  "summaries": {
+    "25": {
+      "peat_definition": "peatland extent >= 25% in the latest 1-km ensemble map",
+      "matched_country_count": 196,
+      "unmatched_firm_country_files": 10,
+      "global_rate_test": {
+        "status": "estimated",
+        "peat_count": 270529,
+        "nonpeat_count": 4120000,
+        "peat_rate_per_km2": 0.020985001754580984,
+        "nonpeat_rate_per_km2": 0.03410445136223319,
+        "rate_ratio_peat_over_nonpeat": 0.6153156235147501,
+        "rate_ratio_ci95": [
+          0.6129277042781801,
+          0.6177149793241289
+        ],
+        "poisson_score_statistic": -247.08858006189865,
+        "poisson_two_sided_p": 0.0
+      }
+    },
+    "50": {
+      "peat_definition": "peatland extent >= 50% in the latest 1-km ensemble map",
+      "matched_country_count": 196,
+      "unmatched_firm_country_files": 10,
+      "global_rate_test": {
+        "status": "estimated",
+        "peat_count": 174770,
+        "nonpeat_count": 4215759,
+        "peat_rate_per_km2": 0.019361290927071763,
+        "nonpeat_rate_per_km2": 0.03381531440312129,
+        "rate_ratio_peat_over_nonpeat": 0.5725598377191086,
+        "rate_ratio_ci95": [
+          0.5698284930106517,
+          0.575307429832174
+        ],
+        "poisson_score_statistic": -231.40769236419533,
+        "poisson_two_sided_p": 0.0
+      }
+    },
+    "75": {
+      "peat_definition": "peatland extent >= 75% in the latest 1-km ensemble map",
+      "matched_country_count": 196,
+      "unmatched_firm_country_files": 10,
+      "global_rate_test": {
+        "status": "estimated",
+        "peat_count": 67229,
+        "nonpeat_count": 4323300,
+        "peat_rate_per_km2": 0.02068329289004856,
+        "nonpeat_rate_per_km2": 0.03314232679905689,
+        "rate_ratio_peat_over_nonpeat": 0.624074857973977,
+        "rate_ratio_ci95": [
+          0.6193434060288198,
+          0.6288516639945883
+        ],
+        "poisson_score_statistic": -122.43641825486328,
+        "poisson_two_sided_p": 0.0
+      }
+    }
+  },
+  "models": {
+    "25": {
+      "status": "estimated",
+      "threshold": 25,
+      "matched_countries": 176,
+      "model": "Poisson counts ~ peat indicator + country fixed effects + log(area) offset; country-clustered SE",
+      "rate_ratio": 0.943335266983314,
+      "ci95": [
+        0.3840246683862723,
+        2.3172506851549204
+      ],
+      "z": -0.12721910542875442,
+      "p_two_sided": 0.8987669842981363,
+      "p_two_sided_bonferroni_three_thresholds": 1.0
+    },
+    "50": {
+      "status": "estimated",
+      "threshold": 50,
+      "matched_countries": 162,
+      "model": "Poisson counts ~ peat indicator + country fixed effects + log(area) offset; country-clustered SE",
+      "rate_ratio": 0.8794344474475785,
+      "ci95": [
+        0.381869197112808,
+        2.0253137807524078
+      ],
+      "z": -0.3018618834446371,
+      "p_two_sided": 0.7627573536861135,
+      "p_two_sided_bonferroni_three_thresholds": 1.0
+    },
+    "75": {
+      "status": "estimated",
+      "threshold": 75,
+      "matched_countries": 151,
+      "model": "Poisson counts ~ peat indicator + country fixed effects + log(area) offset; country-clustered SE",
+      "rate_ratio": 0.8490509858292454,
+      "ci95": [
+        0.22695238171492346,
+        3.176382512888213
+      ],
+      "z": -0.24308908636132745,
+      "p_two_sided": 0.8079363855085304,
+      "p_two_sided_bonferroni_three_thresholds": 1.0
+    }
+  },
+  "interpretation_guardrails": [
+    "No satellite observation-opportunity denominator is available; detection rates may differ by orbit, cloud, sensor, land cover, and reporting.",
+    "A static peatland map is used as a baseline exposure, not as a 2026 condition measurement.",
+    "Country fixed effects reduce baseline country differences but do not remove sensor, season, land-management, climate, or spatial-confounding bias.",
+    "Do not interpret a significant rate ratio as causal peatland vulnerability without burned-area pixels, observation denominators, and pre-specified covariates."
+  ]
+}

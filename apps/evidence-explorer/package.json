@@ -1,0 +1,32 @@
+{
+  "name": "kalimantan-fire-evidence-explorer",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "check": "tsc --noEmit",
+    "sync-data": "node scripts/sync-data.mjs",
+    "sync-global-geometry": "node scripts/sync-global-geometry.mjs",
+    "sync-globe-assets": "node scripts/sync-globe-assets.mjs",
+    "check-globe-assets": "node scripts/check-globe-assets.mjs",
+    "copy-cesium-assets": "node scripts/copy-cesium-assets.mjs",
+    "predev": "node scripts/sync-data.mjs && node scripts/sync-global-geometry.mjs && node scripts/check-globe-assets.mjs && node scripts/copy-cesium-assets.mjs",
+    "prebuild": "node scripts/sync-data.mjs && node scripts/sync-global-geometry.mjs && node scripts/check-globe-assets.mjs && node scripts/copy-cesium-assets.mjs",
+    "postinstall": "node scripts/copy-cesium-assets.mjs"
+  },
+  "dependencies": {
+    "cesium": "1.144.0",
+    "next": "16.3.1",
+    "react": "19.2.8",
+    "react-dom": "19.2.8"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "polygon-clipping": "0.15.7",
+    "typescript": "5.8.3"
+  }
+}
