@@ -3,8 +3,8 @@ import Script from "next/script";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Kalimantan Fire Evidence Explorer",
-  description: "Aggregate-only, evidence-bounded interactive globe for Kalimantan wildfire research.",
+  title: "Indonesia Wildfire Evidence Report",
+  description: "An integrated, evidence-bounded report on fire, peat conditions, and subsequent forest loss in Indonesia with global comparison.",
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {

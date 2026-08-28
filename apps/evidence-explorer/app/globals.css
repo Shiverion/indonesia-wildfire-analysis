@@ -54,7 +54,7 @@ a { color: var(--mint-bright); }
 .section-nav-label { color: var(--quiet); font-size: .68rem; font-weight: 800; letter-spacing: .09em; text-transform: uppercase; margin-right: 3px; }
 .section-nav a { color: var(--mint-bright); border: 1px solid rgba(174, 229, 204, .22); border-radius: 999px; padding: 6px 10px; font-size: .72rem; font-weight: 750; text-decoration: none; }
 .section-nav a:hover, .section-nav a:focus-visible { color: #031017; background: var(--mint-bright); outline: none; }
-#global-comparison, #analysis-results, #local-layer, #provenance-heading { scroll-margin-top: 18px; }
+#report-summary, #forest-loss-result, #peat-dryness-result, #global-comparison, #analysis-results, #local-layer, #methods-sources, #provenance-heading { scroll-margin-top: 18px; }
 .reading-section-intro { margin: 28px 0 11px; max-width: 78ch; }
 .reading-section-intro h2 { margin: 4px 0 5px; font-size: 1.3rem; letter-spacing: -0.03em; }
 .reading-section-intro p { margin: 0; color: var(--muted); font-size: .82rem; line-height: 1.5; }
@@ -199,6 +199,8 @@ a { color: var(--mint-bright); }
 .condition-temporal-status strong { color: #ffe3bd; }
 .condition-temporal-status span { color: #b9c6bf; }
 .phase1b-readiness { border-top: 1px solid rgba(255, 184, 105, .18); padding: 13px 20px 16px; color: #cdbfaf; }
+.phase1b-readiness > summary { color: #ffe3bd; cursor: pointer; font-size: .76rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
+.phase1b-readiness[open] > summary { margin-bottom: 13px; }
 .phase1b-readiness-heading { display: flex; justify-content: space-between; gap: 12px; color: #ffe3bd; font-size: .76rem; text-transform: uppercase; letter-spacing: .08em; }
 .phase1b-readiness-heading span { color: #ffca88; }
 .phase1b-workstream-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 7px; margin-top: 10px; }

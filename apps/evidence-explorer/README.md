@@ -1,8 +1,8 @@
-# Kalimantan Fire Evidence Explorer (Next.js)
+# Indonesia Wildfire Evidence Report (Next.js)
 
 Production: https://indonesia-wildfire-analysis.vercel.app
 
-This App Router implementation hosts an interactive, aggregate-only **real WGS84 globe** as a maintainable Next.js application. It uses CesiumJS with a locally served NASA Blue Marble Earth surface and frozen geoBoundaries ADM1 geometry; the browser clicks actual aggregate reporting polygons, not illustrative dots.
+This App Router implementation presents the research as one integrated, summary-first report: primary forest-loss association, peat/climate mechanism result, Indonesia and global spatial context, Kalimantan detail, and finally the full methods and source audit. It hosts two interactive, aggregate-only **real WGS84 globes** using CesiumJS with a locally served NASA Blue Marble Earth surface and frozen boundary geometry; the browser clicks actual aggregate reporting polygons, not illustrative dots.
 
 It uses `output: "export"`, so `npm run build` produces a deployable static site in `out/`; the WebGL globe remains interactive in the browser.
 

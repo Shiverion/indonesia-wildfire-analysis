@@ -22,6 +22,13 @@ const LEGACY_FOUR = [
 
 const number = new Intl.NumberFormat("en-US");
 const compact = new Intl.NumberFormat("en-US", { notation: "compact", maximumFractionDigits: 1 });
+
+function publicReportLanguage(value: string) {
+  return value
+    .replace("the primary matched-overpass inputs have not passed Phase 1", "the required matched-overpass exposure data are missing or unvalidated")
+    .replace("Phase 5 requires harmonized replication", "global generalization requires harmonized replication")
+    .replace("Phase 3 result complete.", "The registered result is complete.");
+}
 const decimal = new Intl.NumberFormat("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
 function formatPValue(value: number | null | undefined) {
@@ -156,13 +163,13 @@ export function EvidenceExplorer({ data, phase2, phase3 }: EvidenceExplorerProps
     <main className="app-shell">
       <header className="app-header">
         <div className="brand-block">
-          <span className="eyebrow">Global + Kalimantan wildfire research · evidence explorer</span>
-          <h1>{data.title}</h1>
+          <span className="eyebrow">Interactive research report · Indonesia and global context</span>
+          <h1>Indonesia Wildfire Evidence Report</h1>
         </div>
         <div className="header-status" aria-label="Research status">
           <span className="status-dot" />
-          <span>Phase 2 complete · Phase 3 {phase3Estimate ? "complete" : "prepared"}</span>
-          <strong>{phase3Estimate ? "Fire-to-forest-loss association estimated" : "Land-change outcome extraction pending"}</strong>
+          <span>{phase3Estimate ? "Analysis complete · publication diagnostics included" : "Analysis package prepared"}</span>
+          <strong>{phase3Estimate ? "Fire, peat conditions, and subsequent forest loss" : "Environmental and land-change evidence"}</strong>
         </div>
       </header>
 
@@ -182,45 +189,47 @@ export function EvidenceExplorer({ data, phase2, phase3 }: EvidenceExplorerProps
         </div>
       </section>
 
-      <section className="hero-grid" aria-labelledby="purpose-heading">
+      <section id="report-summary" className="hero-grid" aria-labelledby="purpose-heading">
         <div>
-          <p className="eyebrow">Interactive aggregate context — not a fire-risk map</p>
-          <h2 id="purpose-heading">A guided view of what the evidence can—and cannot—say.</h2>
-          <p className="hero-copy">Start with Indonesia&apos;s province map and the latest closed-day satellite snapshot. Then read the completed-2024 statistical comparison, explore the Kalimantan reporting layers, and open the methods and provenance sections when you want the technical detail.</p>
+          <p className="eyebrow">One report · evidence first, process details later</p>
+          <h2 id="purpose-heading">What does the available evidence say about wildfire, peat conditions, and forest loss?</h2>
+          <p className="hero-copy">This report combines the main statistical findings with Indonesia&apos;s province context, a global comparison, Kalimantan detail, robustness checks, and source safeguards. Maps are descriptive reporting layers—not fire-risk surfaces or proof that an entire coloured area burned.</p>
           <div className="coverage-callout" aria-label="Geographic coverage">
-            <div><strong>Start with</strong><span>{data.latest_global_fire?.indonesia_provinces.length ?? 0} Indonesia ADM1 source units</span></div>
-            <div><strong>Then compare</strong><span>{data.peat_fire_comparison?.matched_country_count ?? 0} matched country aggregates</span></div>
-            <button type="button" onClick={jumpToGlobalComparison}>Go to Indonesia map ↓</button>
+            <div><strong>Primary association</strong><span>{phase3Estimate ? `+${(phase3Estimate.primary_term.estimate * 100).toFixed(1)} pp subsequent forest loss` : "Awaiting estimate"}</span></div>
+            <div><strong>Peat × dryness</strong><span>Inconclusive after adjustment</span></div>
+            <button type="button" onClick={() => document.getElementById("forest-loss-result")?.scrollIntoView({ behavior: "smooth", block: "start" })}>Read the main finding ↓</button>
           </div>
         </div>
         <div className="guardrail-card">
-          <span className="guardrail-label">Current research answer</span>
+          <span className="guardrail-label">Evidence summary</span>
           <strong>{phase3Estimate ? "Fire-positive cells were followed by more mapped forest loss" : "Environmental result: inconclusive"}</strong>
           <p>{phase3Estimate
-            ? `Phase 3 estimates an adjusted +${(phase3Estimate.primary_term.estimate * 100).toFixed(1)} percentage-point difference for losing at least 10% of pre-index forest within one year. This is a temporal association—not proof of deliberate burning, actor, ownership, or profit. Phase 2's peat × dryness interaction remains inconclusive.`
-            : "Phase 2 did not establish that drier 72-hour root-zone soil strengthens the fire-detection gradient for cells with ≥50% peat. The separate human-access, intent, plantation, and governance hypothesis remains not identifiable."}</p>
+            ? `The adjusted difference was +${(phase3Estimate.primary_term.estimate * 100).toFixed(1)} percentage points for losing at least 10% of pre-index forest within one year. The peat × dryness interaction was inconclusive. Selection and negative-control diagnostics prevent a causal interpretation: this does not prove deliberate burning, actor, ownership, or profit.`
+            : "The analysis did not establish that drier 72-hour root-zone soil strengthens the fire-detection gradient for cells with ≥50% peat. Human access, intent, plantation, and governance claims remain unidentified."}</p>
           <button type="button" className="text-button" onClick={() => setLimitationsOpen(true)}>Read evidence boundaries</button>
         </div>
       </section>
 
       <nav className="section-nav" aria-label="Dashboard reading order">
-        <span className="section-nav-label">Read in order</span>
-        <a href="#global-comparison">1 · Indonesia map</a>
-        <a href="#phase2-result">2 · Phase 2 result</a>
-        <a href="#phase3-result">3 · Phase 3 {phase3Estimate ? "result" : "status"}</a>
-        <a href="#analysis-results">4 · Global comparison</a>
-        <a href="#local-layer">5 · Kalimantan detail</a>
-        <a href="#provenance-heading">6 · Methods and sources</a>
+        <span className="section-nav-label">Report sections</span>
+        <a href="#report-summary">Summary</a>
+        <a href="#forest-loss-result">Main finding</a>
+        <a href="#peat-dryness-result">Peat &amp; climate</a>
+        <a href="#global-comparison">Indonesia &amp; global context</a>
+        <a href="#local-layer">Kalimantan detail</a>
+        <a href="#methods-sources">Methods &amp; sources</a>
       </nav>
+
+      <ForestLossResultPanel result={phase3} />
+
+      <EnvironmentalConditionResultPanel result={phase2} />
+
+      <ConditionalPeatHypothesisPanel readiness={data.phase1b_readiness ?? null} result={phase2} />
 
       {data.peat_fire_comparison && <PeatFireComparisonPanel comparison={data.peat_fire_comparison} latestGlobalFire={data.latest_global_fire} />}
 
-      <Phase2EnvironmentalPanel result={phase2} />
-
-      <Phase3StatusPanel result={phase3} />
-
       <section className="reading-section-intro" aria-labelledby="local-analysis-heading">
-        <span className="eyebrow">Detailed local analysis</span>
+        <span className="eyebrow">Regional reporting context</span>
         <h2 id="local-analysis-heading">Now inspect the Kalimantan reporting layers</h2>
         <p>The controls below change the source, period, and satellite platform. They do not turn aggregate records into a fire-risk estimate. SiPongi has five current units; GWIS has four legacy units and must be read separately.</p>
       </section>
@@ -295,9 +304,9 @@ export function EvidenceExplorer({ data, phase2, phase3 }: EvidenceExplorerProps
           <small>{mode === "gwis" ? "Missing source rows remain unknown, never zero." : isPartialSnapshot ? "Five validated provincial responses; no observation denominator." : "Current five-province source system."}</small>
         </article>
         <article className="metric-card status">
-          <span>Research readiness</span>
-          <strong>Phase 1 gated</strong>
-          <small>Exact-overpass outcome and covariate sources are not yet locally validated.</small>
+          <span>Research status</span>
+          <strong>Analysis complete</strong>
+          <small>Environmental and land-cover models are fitted; actor and intent attribution remain outside the evidence.</small>
         </article>
       </section>
 
@@ -363,13 +372,11 @@ export function EvidenceExplorer({ data, phase2, phase3 }: EvidenceExplorerProps
         </section>
       )}
 
-      <section className="reading-section-intro compact-reading-intro" aria-labelledby="technical-evidence-heading">
+      <section id="methods-sources" className="reading-section-intro compact-reading-intro" aria-labelledby="technical-evidence-heading">
         <span className="eyebrow">Supporting evidence</span>
-        <h2 id="technical-evidence-heading">Trend context, hypothesis checks, and lookup tables</h2>
-        <p>These sections preserve the detailed time series, sensitivity checks, missingness rules, and source ledger used to audit the plain-language view above.</p>
+        <h2 id="technical-evidence-heading">Trend context, lookup tables, methods, and sources</h2>
+        <p>These sections preserve the detailed time series, missingness rules, accessible tables, and source ledger used to audit the report above.</p>
       </section>
-
-      <ConditionalPeatHypothesisPanel audit={data.condition_phase_audit ?? null} readiness={data.phase1b_readiness ?? null} phase2={phase2} />
 
       <section className="table-card" aria-labelledby="province-table-heading">
         <div className="section-heading">
@@ -439,9 +446,9 @@ export function EvidenceExplorer({ data, phase2, phase3 }: EvidenceExplorerProps
               <button type="button" className="close-button" onClick={() => setLimitationsOpen(false)} aria-label="Close evidence boundaries">×</button>
             </div>
             <ul>
-              {data.limitations.map((limitation) => <li key={limitation}>{limitation}</li>)}
+              {data.limitations.map((limitation) => <li key={limitation}>{publicReportLanguage(limitation)}</li>)}
             </ul>
-            <p className="blocked-assets"><strong>Blocked Phase 1 asset groups:</strong> {data.display_status.blocked_assets.join(", ")}.</p>
+            <p className="blocked-assets"><strong>Evidence groups not sufficient for attribution:</strong> {data.display_status.blocked_assets.join(", ")}.</p>
             <button type="button" className="primary-button" onClick={() => setLimitationsOpen(false)}>I understand</button>
           </section>
         </div>
@@ -470,7 +477,7 @@ function PeatFireComparisonPanel({ comparison, latestGlobalFire }: { comparison:
     <section id="global-comparison" className="peat-fire-card" aria-labelledby="peat-fire-heading">
       <div className="section-heading">
         <div>
-          <span className="eyebrow">Start here · Indonesia first, statistics second</span>
+          <span className="eyebrow">Spatial context · Indonesia first, global comparison second</span>
           <h2 id="peat-fire-heading">Where are detections reported, and what can we infer?</h2>
           <p>
             Read the province map first for the latest spatial context. The chart below is the completed-2024 scientific comparison. Peatland is a mapped baseline exposure area; each circle is a country-level aggregate of NASA MODIS active-fire detections. A coloured polygon or point is not a claim that the whole area burned, and these records are not a complete inventory of fires.
@@ -530,18 +537,18 @@ function PeatFireComparisonPanel({ comparison, latestGlobalFire }: { comparison:
   );
 }
 
-function Phase2EnvironmentalPanel({ result }: { result: Phase2EnvironmentalSummary }) {
+function EnvironmentalConditionResultPanel({ result }: { result: Phase2EnvironmentalSummary }) {
   const primary = result.primary;
   const percent = new Intl.NumberFormat("en-US", { style: "percent", maximumFractionDigits: 1 });
   return (
-    <section id="phase2-result" className="phase2-result-card" aria-labelledby="phase2-result-heading">
+    <section id="peat-dryness-result" className="phase2-result-card" aria-labelledby="peat-dryness-result-heading">
       <div className="section-heading">
         <div>
-          <span className="eyebrow">Phase 2 · Kalimantan environmental association</span>
-          <h2 id="phase2-result-heading">Does drier peat show a stronger fire-detection gradient?</h2>
+          <span className="eyebrow">Mechanism result · peat and pre-fire dryness</span>
+          <h2 id="peat-dryness-result-heading">Does drier peat show a stronger fire-detection gradient?</h2>
           <p>The primary model compares cells with ≥50% versus &lt;50% mapped peat extent inside exact daily 1:4 matched sets, while adjusting for rainfall, VPD, wind, vegetation, forest fraction, and soil moisture measured before detection.</p>
         </div>
-        <span className="layer-key phase2-status">Primary · inconclusive</span>
+        <span className="layer-key phase2-status">Inconclusive result</span>
       </div>
 
       <div className="phase2-result-grid">
@@ -555,7 +562,7 @@ function Phase2EnvironmentalPanel({ result }: { result: Phase2EnvironmentalSumma
           </div>
         </article>
 
-        <div className="phase2-kpi-grid" aria-label="Phase 2 analysis support">
+        <div className="phase2-kpi-grid" aria-label="Environmental-condition analysis support">
           <div><span>Matched sets</span><strong>{number.format(result.data_summary.matched_set_count)}</strong></div>
           <div><span>Fire-positive cells</span><strong>{number.format(result.data_summary.case_count)}</strong></div>
           <div><span>Mixed-peat sets</span><strong>{number.format(primary.mixed_peat_matched_set_count)}</strong></div>
@@ -599,7 +606,7 @@ function Phase2EnvironmentalPanel({ result }: { result: Phase2EnvironmentalSumma
   );
 }
 
-function Phase3StatusPanel({ result }: { result: Phase3StatusSummary }) {
+function ForestLossResultPanel({ result }: { result: Phase3StatusSummary }) {
   const estimated = result.phase3_model_run && result.primary_result?.status === "estimated"
     ? result.primary_result.model
     : null;
@@ -607,14 +614,14 @@ function Phase3StatusPanel({ result }: { result: Phase3StatusSummary }) {
   const lastYear = result.eligible_event_years_primary.at(-1);
   const localYears = result.local_full_raster_years.length ? result.local_full_raster_years.join(", ") : "none";
   return (
-    <section id="phase3-result" className="phase2-result-card phase3-status-card" aria-labelledby="phase3-result-heading">
+    <section id="forest-loss-result" className="phase2-result-card phase3-status-card" aria-labelledby="forest-loss-result-heading">
       <div className="section-heading">
         <div>
-          <span className="eyebrow">Phase 3 · Fire followed by land-cover change</span>
-          <h2 id="phase3-result-heading">Are fire-positive cells followed by mapped forest loss?</h2>
+          <span className="eyebrow">Primary finding · fire followed by land-cover change</span>
+          <h2 id="forest-loss-result-heading">Are fire-positive cells followed by mapped forest loss?</h2>
           <p>The registered comparison follows the same exact daily 1:4 sets into MapBiomas annual land cover. The primary outcome is loss of at least 10% of the forest still present before the index event, measured one year later.</p>
         </div>
-        <span className={`layer-key ${estimated ? "phase2-status" : "phase3-waiting"}`}>{estimated ? "Primary · estimated" : "Outcome data · pending"}</span>
+        <span className={`layer-key ${estimated ? "phase2-status" : "phase3-waiting"}`}>{estimated ? "Estimated association" : "Result unavailable"}</span>
       </div>
 
       <div className="phase2-result-grid">
@@ -631,7 +638,9 @@ function Phase3StatusPanel({ result }: { result: Phase3StatusSummary }) {
               <span className="phase2-ci">The annual transition table has not passed the data gate.</span>
             </>
           )}
-          <p>{result.plain_language}</p>
+          <p>{estimated
+            ? "The registered result is complete. Read the estimate and uncertainty as an association, not proof of intent."
+            : "The required annual land-cover follow-up is not yet sufficient for a statistical estimate."}</p>
           <div className="phase2-plain-language">
             {estimated
               ? `Among ${number.format(estimated.matched_set_count)} complete matched sets, the unadjusted ≥10% forest-loss probability was ${(estimated.unadjusted.fire_positive_risk * 100).toFixed(1)}% for fire-positive cells and ${(estimated.unadjusted.fire_negative_risk * 100).toFixed(1)}% for matched fire-negative cells. Adjustment narrows the difference to ${(estimated.primary_term.estimate * 100).toFixed(1)} percentage points.`
@@ -639,7 +648,7 @@ function Phase3StatusPanel({ result }: { result: Phase3StatusSummary }) {
           </div>
         </article>
 
-        <div className="phase2-kpi-grid" aria-label="Phase 3 preparation support">
+        <div className="phase2-kpi-grid" aria-label="Forest-loss analysis support">
           <div><span>{estimated ? "Complete model sets" : "Locked matched sets"}</span><strong>{number.format(estimated?.matched_set_count ?? result.matched_set_count)}</strong></div>
           <div><span>{estimated ? "Model cells" : "Unique 1 km cells"}</span><strong>{number.format(estimated?.unique_cell_count ?? result.unique_cell_count)}</strong></div>
           <div><span>{estimated ? "Sets with outcome contrast" : "Private cells resolved"}</span><strong>{number.format(estimated?.outcome_variation_matched_set_count ?? result.private_cell_count)}</strong></div>
@@ -694,22 +703,22 @@ function Phase3StatusPanel({ result }: { result: Phase3StatusSummary }) {
 
       <div className="phase2-table-wrap phase3-next-step">
         <div>
-          <h3>{estimated ? "What this answers—and what comes next" : "What happens next"}</h3>
+          <h3>{estimated ? "What this answers—and what remains unresolved" : "What evidence is still missing"}</h3>
           <p>{estimated
-            ? "Phase 3 answers the registered Kalimantan temporal-association question: fire-positive cells were more often followed by mapped forest loss. The Indonesia province map above is descriptive context, not the Phase 3 model domain. The oil-palm destination association is small and cannot identify deliberate ignition, actor, ownership, legality, or profit."
-            : "Run or resume the zero-budget Earth Engine extraction, then rerun the Phase 3 gate. The export contains cell-level fractions only—no national raster archive."}</p>
+            ? "The registered Kalimantan analysis finds that fire-positive cells were more often followed by mapped forest loss. The Indonesia province map below is descriptive context, not the fitted model domain. The oil-palm destination association is small and cannot identify deliberate ignition, actor, ownership, legality, or profit."
+            : "The annual land-cover extraction must be completed and validated before fitting this registered comparison. The export contains cell-level fractions only—no national raster archive."}</p>
         </div>
       </div>
 
       <details className="phase2-method">
         <summary>Why this still cannot prove deliberate plantation burning</summary>
-        <ul>{result.claim_boundary.map((item) => <li key={item}>{item}</li>)}</ul>
+        <ul>{result.claim_boundary.map((item) => <li key={item}>{publicReportLanguage(item)}</li>)}</ul>
       </details>
     </section>
   );
 }
 
-function ConditionalPeatHypothesisPanel({ audit, readiness, phase2 }: { audit: ExplorerData["condition_phase_audit"], readiness: ExplorerData["phase1b_readiness"], phase2: Phase2EnvironmentalSummary }) {
+function ConditionalPeatHypothesisPanel({ readiness, result }: { readiness: ExplorerData["phase1b_readiness"], result: Phase2EnvironmentalSummary }) {
   const conditions = [
     ["Dry hydrology", "Low soil moisture or a low water table removes peat’s water protection."],
     ["Drainage pressure", "Canals and ditches can make peat dry, especially near disturbed edges."],
@@ -720,30 +729,25 @@ function ConditionalPeatHypothesisPanel({ audit, readiness, phase2 }: { audit: E
     <section className="condition-card" aria-labelledby="condition-heading">
       <div className="section-heading">
         <div>
-          <span className="eyebrow">Tested hypothesis · condition effect</span>
-          <h2 id="condition-heading">How Phase 2 tested conditional peat vulnerability</h2>
+          <span className="eyebrow">Mechanism check · peat conditions</span>
+          <h2 id="condition-heading">Which peatland conditions were tested?</h2>
           <p>The primary root-zone dryness interaction is complete and inconclusive. VPD, wind, and low EVI also remain inconclusive after the registered secondary-family correction; drainage still requires a separately timed analysis.</p>
         </div>
-        <span className="layer-key">Phase 2 complete</span>
+        <span className="layer-key">Analysis complete · inconclusive</span>
       </div>
       <div className="condition-grid">
         {conditions.map(([title, description]) => <article key={title} className="condition-item"><strong>{title}</strong><p>{description}</p></article>)}
       </div>
       <div className="condition-footer">
         <code>fire ~ peat + condition + peat × condition + observation opportunity</code>
-        <span>Target: interaction term, not a main “peat is dangerous” coefficient. Primary OR {decimal.format(phase2.primary.odds_ratio)}; CI includes 1.</span>
+        <span>Target: interaction term, not a main “peat is dangerous” coefficient. Primary OR {decimal.format(result.primary.odds_ratio)}; CI includes 1.</span>
       </div>
-      {!phase2 && audit?.temporal_support && (
-        <div className="condition-temporal-status" role="status">
-          <strong>Phase 1 temporal QA:</strong> {audit.temporal_support.status.replaceAll("_", " ")} · denominator unlock: {audit.temporal_support.phase_1_unlock ? "yes" : "no"}.
-          <span>ERA5: {audit.temporal_support.assets.era5_land?.replaceAll("_", " ") ?? "unknown"}; CHIRPS: {audit.temporal_support.assets.chirps?.replaceAll("_", " ") ?? "unknown"}; VIIRS: {audit.temporal_support.assets.viirs_outcome_and_opportunity?.replaceAll("_", " ") ?? "unknown"}.</span>
-        </div>
-      )}
       {readiness && (
-        <div className="phase1b-readiness" aria-label="Phase 1B readiness status">
+        <details className="phase1b-readiness" aria-label="Data preparation and validation audit">
+          <summary>Data preparation and validation audit</summary>
           <div className="phase1b-readiness-heading">
-            <strong>Phase 1B · environmental daily-grid track</strong>
-            <span>{readiness.phase_2_unlock ? "Phase 2 unlocked" : readiness.phase_1b_ready ? "Data ready · input lock pending" : "Locked · extraction continues"}</span>
+            <strong>Environmental daily-grid inputs</strong>
+            <span>{readiness.phase_2_unlock ? "Validated for analysis" : readiness.phase_1b_ready ? "Data ready · input lock pending" : "Validation incomplete"}</span>
           </div>
           {readiness.progress && readiness.progress.registered_days > 0 && (
             <p className="phase1b-readiness-note">
@@ -754,12 +758,12 @@ function ConditionalPeatHypothesisPanel({ audit, readiness, phase2 }: { audit: E
             {Object.entries(readiness.workstreams).map(([key, workstream]) => (
               <div className="phase1b-workstream" key={key}>
                 <span>{key.replaceAll("_", " ")}</span>
-                <strong>{workstream.gate_ready ? "ready" : workstream.required_for_environmental_track === false ? `separate track · ${workstream.status.replaceAll("_", " ")}` : workstream.status.replaceAll("_", " ")}</strong>
+                <strong>{workstream.gate_ready ? "validated" : workstream.required_for_environmental_track === false ? `separate evidence track · ${workstream.status.replaceAll("_", " ")}` : workstream.status.replaceAll("_", " ")}</strong>
               </div>
             ))}
           </div>
-          <p className="phase1b-readiness-note">All required environmental gates passed and the Phase 2 result above was fitted from the locked frame. Human-access, intent, plantation, and governance claims remain a separately blocked track.</p>
-        </div>
+          <p className="phase1b-readiness-note">All required environmental gates passed before the result above was fitted from the locked frame. Evidence for human access, intent, plantation development, and governance remains insufficient for attribution.</p>
+        </details>
       )}
     </section>
   );
