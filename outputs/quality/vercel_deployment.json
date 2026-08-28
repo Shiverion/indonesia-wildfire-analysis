@@ -1,24 +1,24 @@
 {
   "schema_version": "vercel-production-deployment/v1",
-  "created_at_utc": "2026-08-28T13:38:49.105Z",
+  "created_at_utc": "2026-08-28T13:51:37.071Z",
   "project": "indonesia-wildfire-analysis",
-  "deployment_id": "dpl_5DhUX2RgBXNPNpYU6g1ouGDzcAMe",
+  "deployment_id": "dpl_A8yfwL3iCJZwRyw7FsSwbQpsS4wq",
   "target": "production",
   "status": "READY",
   "source": "git",
   "git": {
     "repository": "Shiverion/indonesia-wildfire-analysis",
     "production_branch": "main",
-    "commit_sha": "64b6b7987d1e23d13fe646e7f86e76dc036802b9",
+    "commit_sha": "11b5c1d59bcf9953e723a0d1022a58adddbcbe8d",
     "project_root_directory": "apps/evidence-explorer"
   },
   "production_alias": "https://indonesia-wildfire-analysis.vercel.app",
-  "immutable_url": "https://indonesia-wildfire-analysis-f8d5ti5ls-izzulhaq-iqbals-projects.vercel.app",
+  "immutable_url": "https://indonesia-wildfire-analysis-l9hb31clv-izzulhaq-iqbals-projects.vercel.app",
   "framework": "Next.js 16.3.1 static export",
   "http_verification": {
     "status_code": 200,
     "content_type": "text/html; charset=utf-8",
-    "content_length_bytes": 713770
+    "content_length_bytes": 713120
   },
   "data_boundary": {
     "raw_research_archive_uploaded": false,
