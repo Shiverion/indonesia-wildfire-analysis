@@ -16,10 +16,20 @@
   ],
   "assets": {
     "era5_land": {
-      "status": "calibration_year_complete_only",
-      "payload_file_count": 12,
+      "status": "study_window_complete",
+      "payload_file_count": 132,
       "observed_years": [
-        2015
+        2015,
+        2016,
+        2017,
+        2018,
+        2019,
+        2020,
+        2021,
+        2022,
+        2023,
+        2024,
+        2025
       ],
       "months_by_year": {
         "2015": [
@@ -35,26 +45,7 @@
           10,
           11,
           12
-        ]
-      },
-      "complete_years": [
-        2015
-      ],
-      "study_years": [
-        2015,
-        2016,
-        2017,
-        2018,
-        2019,
-        2020,
-        2021,
-        2022,
-        2023,
-        2024,
-        2025
-      ],
-      "missing_months_by_study_year": {
-        "2015": [],
+        ],
         "2016": [
           1,
           2,
@@ -196,6 +187,45 @@
           12
         ]
       },
+      "complete_years": [
+        2015,
+        2016,
+        2017,
+        2018,
+        2019,
+        2020,
+        2021,
+        2022,
+        2023,
+        2024,
+        2025
+      ],
+      "study_years": [
+        2015,
+        2016,
+        2017,
+        2018,
+        2019,
+        2020,
+        2021,
+        2022,
+        2023,
+        2024,
+        2025
+      ],
+      "missing_months_by_study_year": {
+        "2015": [],
+        "2016": [],
+        "2017": [],
+        "2018": [],
+        "2019": [],
+        "2020": [],
+        "2021": [],
+        "2022": [],
+        "2023": [],
+        "2024": [],
+        "2025": []
+      },
       "malformed_files": [],
       "manifest_present": true,
       "variables_declared": [
@@ -209,10 +239,10 @@
         "volumetric_soil_water_layer_3"
       ],
       "temporal_event_lag_validated": false,
-      "note": "Monthly payloads are present for 2015 only; event-level UTC lagging and full 2015-2025 support are not validated."
+      "note": "All registered monthly payloads are present; event-level UTC lagging remains unvalidated."
     },
     "chirps": {
-      "status": "support_window_complete_with_extra_dates",
+      "status": "support_window_and_partial_lags_complete",
       "payload_file_count": 154,
       "covered_years": [
         2015
@@ -245,11 +275,47 @@
       "study_years_present": [
         2015
       ],
-      "lag_features_validated": false,
-      "note": "The 2015 Jul-Nov support window is complete, but antecedent 1/7/30/90-day extraction has not been run and other study years are absent."
+      "lag_features_validated": true,
+      "lag_features_path": "data/derived/chirps/chirps_lag_features_2015.parquet",
+      "lag_quality_path": "outputs/quality/chirps_lag_features_2015.json",
+      "lag_report": {
+        "schema_version": "chirps-lag-features/v1",
+        "source": "CHIRPS v3 FINAL RNL daily COG",
+        "support_window": [
+          "2015-07-01",
+          "2015-11-30"
+        ],
+        "bbox": [
+          109.0,
+          -5.0,
+          120.0,
+          8.0
+        ],
+        "crs": "EPSG:4326",
+        "source_grid_shape": [
+          260,
+          220
+        ],
+        "windows_days": [
+          1,
+          7,
+          30,
+          90
+        ],
+        "input_date_count": 153,
+        "output_cutoff_count": 63,
+        "complete_cutoff_count": 63,
+        "first_complete_cutoff": "2015-09-29",
+        "last_complete_cutoff": "2015-11-30",
+        "row_count": 1787184,
+        "nodata_policy": "Any missing value in a requested pre-cutoff window makes that cell-cutoff missing; no imputation.",
+        "event_linkage": "Not yet applied; this is a source-grid cache and does not unlock Phase 1B.",
+        "output": "data/derived/chirps/chirps_lag_features_2015.parquet"
+      },
+      "note": "The declared 2015 support window and source-grid lag cache are complete; other study years and event linkage are absent."
     },
     "prefire_vegetation": {
-      "status": "payload_inventory_only_qa_unvalidated",
+      "status": "qa_validated_summary_only",
       "payload_file_count": 144,
       "composite_count": 24,
       "composite_years": [
@@ -279,9 +345,58 @@
       ],
       "malformed_files": [],
       "manifest_present": true,
-      "qa_mask_validated": false,
+      "qa_mask_validated": true,
       "prefire_support_validated": false,
-      "note": "HDF payloads are readable at the file level, but QA SDS extraction and event-specific pre-fire support are still required."
+      "qa_report_path": "outputs/quality/mod13q1_2015_prefire_qa.json",
+      "qa_report": {
+        "schema_version": "mod13q1-prefire-qa/v1",
+        "created_at_utc": "2026-08-25T14:32:34.441308+00:00",
+        "status": "qa_validated_tile_composite_summary",
+        "product": "MOD13Q1.061",
+        "bbox_wgs84": [
+          109.0,
+          -5.0,
+          120.0,
+          8.0
+        ],
+        "qa_rule": {
+          "modland_qa": "bits 0-1 == 0 (good quality)",
+          "vi_usefulness": "bits 2-5 <= 1 (highest or lower quality)",
+          "adjacent_cloud": "bit 8 == 0",
+          "mixed_cloud": "bit 10 == 0",
+          "land_water": "bits 11-13 == 001 (land only)",
+          "snow": "bit 14 == 0",
+          "shadow": "bit 15 == 0",
+          "evi_valid_range": "-2000..10000, scaled by 1/10000"
+        },
+        "input": {
+          "hdf_file_count": 144,
+          "sha256_recorded": true
+        },
+        "output": {
+          "path": "data/derived/mod13q1/mod13q1_2015_tile_summary.csv",
+          "sha256": "2d48c464495ca45085bc7f4790bb6a77034f86ef467440a7e62dd4654b992fd9",
+          "row_count": 144
+        },
+        "summary": {
+          "study_year": 2015,
+          "study_composite_count": 23,
+          "study_tile_count": 4,
+          "study_rows": 92,
+          "bbox_pixels": 740012580,
+          "valid_evi_pixels": 326977171,
+          "qa_pass_pixels": 47963168
+        },
+        "qa_mask_validated": true,
+        "prefire_support_validated": false,
+        "prefire_support_status": "tile_composite_summary_only",
+        "limitations": [
+          "Local Earthdata payloads cover 2014-2015 only, not every registered study year 2015-2025.",
+          "This receipt validates SDS bit rules and geographic clipping but does not link a QA-valid composite to each qualifying VIIRS cutoff.",
+          "A complete event-level table remains blocked until the full paired VIIRS opportunity frame and temporal support are available."
+        ]
+      },
+      "note": "MOD13Q1 EVI/VI Quality SDS rules are validated for the local 2015 tile/composite summary; event-specific pre-fire support and 2016-2025 coverage are still required."
     },
     "viirs_outcome_and_opportunity": {
       "status": "paired_swath_screening_only",
@@ -317,5 +432,5 @@
   "phase_1_unlock": false,
   "status": "present_inputs_need_temporal_and_opportunity_validation",
   "acceptance_rule": "No outcome, covariate, or model is unlocked by file presence alone; every event requires pre-cutoff support and VIIRS processed opportunity coverage.",
-  "validated_at_utc": "2026-08-23T04:23:45.582237+00:00"
+  "validated_at_utc": "2026-08-25T14:34:18.310379+00:00"
 }

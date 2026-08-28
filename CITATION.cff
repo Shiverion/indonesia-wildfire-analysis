@@ -1,0 +1,25 @@
+cff-version: 1.2.0
+message: "If you use this software or its derived research outputs, cite the archived release and the underlying datasets listed in DATA_LICENSE.md."
+title: "Indonesia Wildfire Analysis: matched satellite-observation evidence for Kalimantan"
+type: software
+authors:
+  - name: "Indonesia Wildfire Analysis contributors"
+version: 0.2.0
+date-released: 2026-08-28
+repository-code: "https://github.com/Shiverion/indonesia-wildfire-analysis"
+url: "https://github.com/Shiverion/indonesia-wildfire-analysis"
+license: MIT
+keywords:
+  - wildfire
+  - Kalimantan
+  - remote sensing
+  - land-cover change
+  - VIIRS
+  - MapBiomas
+  - peatland
+abstract: >-
+  Reproducible code, quality receipts, statistical results, and a static
+  evidence explorer for a Kalimantan matched satellite-observation study.
+  Phase 3 estimates temporal associations between index-day active-fire
+  detection and later mapped natural-forest loss; it does not identify an
+  ignition actor, intent, ownership, legality, or economic benefit.

@@ -11,6 +11,8 @@ import argparse
 import hashlib
 import json
 import re
+import sys
+import time
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
@@ -18,7 +20,12 @@ from urllib.parse import parse_qs, urlparse
 
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "src"))
+from wildfire_research.paths import logical_relative  # noqa: E402
 DEFAULT_BBOX = (109.0, -5.0, 120.0, 8.0)  # Kalimantan study extent, lon/lat
+MAX_ATTEMPTS = 5
+RETRY_BASE_SECONDS = 5
+EARTHACCESS_BATCH_SIZE = 25
 
 PRODUCTS = {
     "viirs": (
@@ -46,10 +53,21 @@ def _parse_date(value: str) -> str:
 
 
 def _relative(path: Path) -> str:
-    try:
-        return str(path.resolve().relative_to(ROOT.resolve())).replace("\\", "/")
-    except ValueError:
-        return str(path.resolve()).replace("\\", "/")
+    return logical_relative(ROOT, path)
+
+
+def _earthaccess_download_with_retries(earthaccess: Any, granules: list[Any], target: Path) -> list[str]:
+    """Retry a batch while allowing earthaccess to skip completed files."""
+
+    last_error: Exception | None = None
+    for attempt in range(1, MAX_ATTEMPTS + 1):
+        try:
+            return [str(Path(path)) for path in earthaccess.download(granules, str(target))]
+        except Exception as exc:  # provider/network errors are retriable
+            last_error = exc
+            if attempt < MAX_ATTEMPTS:
+                time.sleep(RETRY_BASE_SECONDS * (2 ** (attempt - 1)))
+    raise RuntimeError(f"Earthdata batch failed after {MAX_ATTEMPTS} attempts: {last_error}") from last_error
 
 
 def _download_laads_geolocation(auth: Any, vnp14_granule: Any, target: Path, dry_run: bool) -> dict[str, Any]:
@@ -112,23 +130,58 @@ def _download_laads_geolocation(auth: Any, vnp14_granule: Any, target: Path, dry
         "url": url,
     }
     if not dry_run:
-        if not output.exists() or output.stat().st_size == 0:
-            with session.get(url, stream=True, timeout=120) as download_response:
+        if output.exists() and output.stat().st_size > 0:
+            record["status"] = "existing"
+        else:
+            part = output.with_name(output.name + ".part")
+            last_error: Exception | None = None
+            for attempt in range(1, MAX_ATTEMPTS + 1):
                 try:
-                    download_response.raise_for_status()
+                    with session.get(url, stream=True, timeout=120) as download_response:
+                        try:
+                            download_response.raise_for_status()
+                        except Exception as exc:
+                            return access_error(exc, download_response.status_code, download_response.url, filename)
+                        with part.open("wb") as handle:
+                            for block in download_response.iter_content(chunk_size=1024 * 1024):
+                                if block:
+                                    handle.write(block)
+                    if part.stat().st_size <= 0:
+                        raise OSError("empty LAADS response")
+                    part.replace(output)
+                    record["attempts"] = attempt
+                    break
                 except Exception as exc:
-                    return access_error(exc, download_response.status_code, download_response.url, filename)
-                with output.open("wb") as handle:
-                    for block in download_response.iter_content(chunk_size=1024 * 1024):
-                        if block:
-                            handle.write(block)
+                    last_error = exc
+                    if part.exists():
+                        part.unlink()
+                    if attempt < MAX_ATTEMPTS:
+                        time.sleep(RETRY_BASE_SECONDS * (2 ** (attempt - 1)))
+            else:
+                return access_error(last_error or RuntimeError("LAADS download failed"), 0, url, filename)
         record["path"] = _relative(output)
         record["sha256"] = _sha256(output)
         record["size_bytes"] = output.stat().st_size
     return record
 
 
-def run(product: str, start: str, end: str, bbox: tuple[float, float, float, float], output_root: Path, limit: int | None, dry_run: bool) -> dict[str, Any]:
+def run(
+    product: str,
+    start: str,
+    end: str,
+    bbox: tuple[float, float, float, float],
+    output_root: Path,
+    limit: int | None,
+    dry_run: bool,
+    allow_large_download: bool = False,
+) -> dict[str, Any]:
+    start_day = datetime.strptime(start, "%Y-%m-%d").date()
+    end_day = datetime.strptime(end, "%Y-%m-%d").date()
+    if (end_day - start_day).days > 366 and not allow_large_download:
+        raise SystemExit(
+            "Refusing a multi-year Earthdata archive in zero-budget mode. "
+            "Request at most one year or pass --allow-large-download explicitly."
+        )
     try:
         import earthaccess
     except ImportError as exc:
@@ -160,7 +213,9 @@ def run(product: str, start: str, end: str, bbox: tuple[float, float, float, flo
         print(f"VNP14IMG.002: {len(granules)} granules selected")
         downloaded_vnp14: list[str] = []
         if not dry_run and granules:
-            downloaded_vnp14 = [str(Path(path)) for path in earthaccess.download(granules, str(vnp14_target))]
+            for start_index in range(0, len(granules), EARTHACCESS_BATCH_SIZE):
+                batch = granules[start_index : start_index + EARTHACCESS_BATCH_SIZE]
+                downloaded_vnp14.extend(_earthaccess_download_with_retries(earthaccess, batch, vnp14_target))
         records.append({
             "short_name": "VNP14IMG",
             "version": "002",
@@ -198,8 +253,9 @@ def run(product: str, start: str, end: str, bbox: tuple[float, float, float, flo
             print(f"  {len(granules)} granules selected; destination {target}")
             downloaded: list[str] = []
             if not dry_run and granules:
-                paths = earthaccess.download(granules, str(target))
-                downloaded = [str(Path(path)) for path in paths]
+                for start_index in range(0, len(granules), EARTHACCESS_BATCH_SIZE):
+                    batch = granules[start_index : start_index + EARTHACCESS_BATCH_SIZE]
+                    downloaded.extend(_earthaccess_download_with_retries(earthaccess, batch, target))
             records.append({
                 "short_name": short_name,
                 "version": version,
@@ -241,12 +297,26 @@ def main() -> None:
     parser.add_argument("--end", default="2025-12-31")
     parser.add_argument("--limit", type=int, default=None, help="limit granules per product for a test run")
     parser.add_argument("--dry-run", action="store_true", help="search and write the manifest without downloading")
+    parser.add_argument(
+        "--allow-large-download",
+        action="store_true",
+        help="explicitly override the zero-budget multi-year archive guard",
+    )
     parser.add_argument("--output-root", type=Path, default=ROOT / "data" / "raw")
     args = parser.parse_args()
     start, end = _parse_date(args.start), _parse_date(args.end)
     if start > end:
         parser.error("--start must not be after --end")
-    run(args.product, start, end, DEFAULT_BBOX, args.output_root, args.limit, args.dry_run)
+    run(
+        args.product,
+        start,
+        end,
+        DEFAULT_BBOX,
+        args.output_root,
+        args.limit,
+        args.dry_run,
+        args.allow_large_download,
+    )
 
 
 if __name__ == "__main__":

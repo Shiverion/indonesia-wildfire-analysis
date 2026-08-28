@@ -62,11 +62,21 @@ def check_era5(root: Path, study_years: list[int]) -> dict[str, Any]:
         for year in study_years
     }
     complete_years = sorted(year for year, months in observed.items() if months == set(range(1, 13)))
+    missing_study_months = any(missing_by_year[str(year)] for year in study_years)
+    if not missing_study_months and not malformed and set(study_years).issubset(set(complete_years)):
+        status = "study_window_complete"
+        note = "All registered monthly payloads are present; event-level UTC lagging remains unvalidated."
+    elif complete_years:
+        status = "partial_study_window"
+        note = "Some registered years are complete, but the full study window and event-level UTC lagging remain unvalidated."
+    else:
+        status = "missing_or_incomplete_months"
+        note = "No complete registered year is available; event-level UTC lagging remains unvalidated."
     manifest_path = directory / "download_manifest.json"
     manifest = json.loads(manifest_path.read_text(encoding="utf-8")) if manifest_path.is_file() else {}
     manifest_variables = manifest.get("variables", [])
     return {
-        "status": "calibration_year_complete_only" if complete_years else "missing_or_incomplete_months",
+        "status": status,
         "payload_file_count": len(files),
         "observed_years": sorted(observed),
         "months_by_year": {str(year): sorted(months) for year, months in sorted(observed.items())},
@@ -77,7 +87,7 @@ def check_era5(root: Path, study_years: list[int]) -> dict[str, Any]:
         "manifest_present": manifest_path.is_file(),
         "variables_declared": manifest_variables,
         "temporal_event_lag_validated": False,
-        "note": "Monthly payloads are present for 2015 only; event-level UTC lagging and full 2015-2025 support are not validated.",
+        "note": note,
     }
 
 
@@ -102,8 +112,31 @@ def check_chirps(root: Path, study_years: list[int]) -> dict[str, Any]:
     duplicates = sorted(entry.isoformat() for entry, count in counts.items() if count > 1)
     extra = sorted(entry.isoformat() for entry in observed_set - set(expected))
     covered_years = sorted({entry.year for entry in observed})
+    lag_quality_path = root / "outputs" / "quality" / "chirps_lag_features_2015.json"
+    lag_output_path = root / "data" / "derived" / "chirps" / "chirps_lag_features_2015.parquet"
+    lag_features_validated = False
+    lag_report: dict[str, Any] = {}
+    if lag_quality_path.is_file() and lag_output_path.is_file():
+        try:
+            lag_report = json.loads(lag_quality_path.read_text(encoding="utf-8"))
+            lag_features_validated = (
+                lag_report.get("schema_version") == "chirps-lag-features/v1"
+                and int(lag_report.get("row_count", 0)) > 0
+                and int(lag_report.get("complete_cutoff_count", 0)) > 0
+            )
+        except (OSError, json.JSONDecodeError, TypeError, ValueError):
+            lag_features_validated = False
+    if expected and not missing and lag_features_validated:
+        status = "support_window_and_partial_lags_complete"
+        note = "The declared 2015 support window and source-grid lag cache are complete; other study years and event linkage are absent."
+    elif expected and not missing:
+        status = "support_window_complete_with_extra_dates"
+        note = "The 2015 Jul-Nov support window is complete, but antecedent 1/7/30/90-day extraction has not been run and other study years are absent."
+    else:
+        status = "missing_or_incomplete_support_window"
+        note = "The declared CHIRPS support window is incomplete; no lag feature is valid until every requested day is present."
     return {
-        "status": "support_window_complete_with_extra_dates" if expected and not missing else "missing_or_incomplete_support_window",
+        "status": status,
         "payload_file_count": len(files),
         "covered_years": covered_years,
         "manifest_temporal": temporal,
@@ -115,8 +148,11 @@ def check_chirps(root: Path, study_years: list[int]) -> dict[str, Any]:
         "malformed_files": malformed,
         "study_years": study_years,
         "study_years_present": sorted(set(covered_years) & set(study_years)),
-        "lag_features_validated": False,
-        "note": "The 2015 Jul-Nov support window is complete, but antecedent 1/7/30/90-day extraction has not been run and other study years are absent.",
+        "lag_features_validated": lag_features_validated,
+        "lag_features_path": lag_output_path.relative_to(root).as_posix() if lag_output_path.is_file() else None,
+        "lag_quality_path": lag_quality_path.relative_to(root).as_posix() if lag_quality_path.is_file() else None,
+        "lag_report": lag_report,
+        "note": note,
     }
 
 
@@ -136,8 +172,18 @@ def check_mod13(root: Path, study_years: list[int]) -> dict[str, Any]:
     years = sorted({year for year, _ in composites})
     manifest_path = root / "data" / "raw" / "mod13q1" / "download_manifest.json"
     manifest = json.loads(manifest_path.read_text(encoding="utf-8")) if manifest_path.is_file() else {}
+    qa_report_path = root / "outputs" / "quality" / "mod13q1_2015_prefire_qa.json"
+    qa_report: dict[str, Any] = {}
+    if qa_report_path.is_file():
+        try:
+            qa_report = json.loads(qa_report_path.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError):
+            qa_report = {}
+    qa_validated = qa_report.get("qa_mask_validated") is True and qa_report.get("status") == "qa_validated_tile_composite_summary"
+    prefire_validated = qa_report.get("prefire_support_validated") is True
+    status = "qa_validated_summary_only" if qa_validated else ("payload_inventory_only_qa_unvalidated" if files else "missing_payload")
     return {
-        "status": "payload_inventory_only_qa_unvalidated" if files else "missing_payload",
+        "status": status,
         "payload_file_count": len(files),
         "composite_count": len(composites),
         "composite_years": years,
@@ -145,9 +191,16 @@ def check_mod13(root: Path, study_years: list[int]) -> dict[str, Any]:
         "tiles": sorted(tiles),
         "malformed_files": malformed,
         "manifest_present": manifest_path.is_file(),
-        "qa_mask_validated": False,
-        "prefire_support_validated": False,
-        "note": "HDF payloads are readable at the file level, but QA SDS extraction and event-specific pre-fire support are still required.",
+        "qa_mask_validated": qa_validated,
+        "prefire_support_validated": prefire_validated,
+        "qa_report_path": qa_report_path.relative_to(root).as_posix() if qa_report_path.is_file() else None,
+        "qa_report": qa_report if qa_report else None,
+        "note": (
+            "MOD13Q1 EVI/VI Quality SDS rules are validated for the local 2015 tile/composite summary; "
+            "event-specific pre-fire support and 2016-2025 coverage are still required."
+            if qa_validated else
+            "HDF payloads are readable at the file level, but QA SDS extraction and event-specific pre-fire support are still required."
+        ),
     }
 
 

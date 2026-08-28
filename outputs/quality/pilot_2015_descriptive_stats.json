@@ -1,0 +1,82 @@
+{
+  "schema_version": "pilot-descriptive-stats/v1",
+  "created_at_utc": "2026-08-25T23:18:07.826274+00:00",
+  "status": "exploratory_descriptive_not_phase2",
+  "input": "data\\derived\\pilot\\pilot_event_level_2015.csv",
+  "outcome_definition": "an overpass is positive when at least one valid diagnostic cell has a VIIRS fire pixel; this is not a canonical fire-occurrence denominator",
+  "summary": {
+    "all_events": 50,
+    "complete_weather_events": 43,
+    "positive_events": 28,
+    "negative_events": 22
+  },
+  "metrics": {
+    "era5_vpd_mean_24h_kpa": {
+      "label": "ERA5 regional mean VPD, prior 24 h (kPa)",
+      "n_positive": 28,
+      "n_negative": 15,
+      "positive_median": 0.7964487794772761,
+      "negative_median": 0.7714202270986145,
+      "median_difference_positive_minus_negative": 0.02502855237866164,
+      "status": "descriptive_only",
+      "exploratory_mann_whitney_u": 251.0,
+      "exploratory_p_value": 0.30187287472372426,
+      "p_value_interpretation": "screening statistic only; no multiple-testing or opportunity-denominator correction"
+    },
+    "era5_wind_max_24h_ms": {
+      "label": "ERA5 regional maximum wind, prior 24 h (m/s)",
+      "n_positive": 28,
+      "n_negative": 15,
+      "positive_median": 1.8000262464947596,
+      "negative_median": 1.6364242057448752,
+      "median_difference_positive_minus_negative": 0.16360204074988438,
+      "status": "descriptive_only",
+      "exploratory_mann_whitney_u": 253.5,
+      "exploratory_p_value": 0.27166647159629287,
+      "p_value_interpretation": "screening statistic only; no multiple-testing or opportunity-denominator correction"
+    },
+    "era5_rain_24h_mm": {
+      "label": "ERA5 regional rainfall, prior 24 h (mm)",
+      "n_positive": 28,
+      "n_negative": 15,
+      "positive_median": 7.678046561788042,
+      "negative_median": 9.540729168792955,
+      "median_difference_positive_minus_negative": -1.8626826070049134,
+      "status": "descriptive_only",
+      "exploratory_mann_whitney_u": 162.0,
+      "exploratory_p_value": 0.22594549839274147,
+      "p_value_interpretation": "screening statistic only; no multiple-testing or opportunity-denominator correction"
+    },
+    "era5_soil_water_mean_24h": {
+      "label": "ERA5 layer-1 soil water, prior 24 h",
+      "n_positive": 28,
+      "n_negative": 15,
+      "positive_median": 0.3187705455548743,
+      "negative_median": 0.31296813553713,
+      "median_difference_positive_minus_negative": 0.005802410017744286,
+      "status": "descriptive_only",
+      "exploratory_mann_whitney_u": 256.0,
+      "exploratory_p_value": 0.24609549460893754,
+      "p_value_interpretation": "screening statistic only; no multiple-testing or opportunity-denominator correction"
+    },
+    "prefire_evi_mean_qa": {
+      "label": "MOD13Q1 QA tile-summary EVI (not event-cell linked)",
+      "n_positive": 28,
+      "n_negative": 15,
+      "positive_median": 0.5387730255482633,
+      "negative_median": 0.5387730255482633,
+      "median_difference_positive_minus_negative": 0.0,
+      "status": "descriptive_only",
+      "exploratory_mann_whitney_u": 210.0,
+      "exploratory_p_value": 1.0,
+      "p_value_interpretation": "screening statistic only; no multiple-testing or opportunity-denominator correction"
+    }
+  },
+  "guardrails": [
+    "This table is a 2015 diagnostic subset, not the registered 2015-2025 opportunity frame.",
+    "ERA5 values are regional means and MOD13Q1 values are tile summaries; neither is cell-specific.",
+    "CHIRPS and peat are not spatially linked in this table.",
+    "Exploratory p-values are screening values only and do not establish significance or causality.",
+    "No claim about government mitigation, commercial actors, plantations, or peat vulnerability is made."
+  ]
+}

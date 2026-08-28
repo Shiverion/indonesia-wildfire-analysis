@@ -10,13 +10,29 @@ const publicRoot = fileURLToPath(new URL("../public/geo/", import.meta.url));
 const destinationPath = `${publicRoot}global-countries.geojson`;
 const manifestPath = `${publicRoot}manifest.json`;
 
-const source = JSON.parse(await readFile(sourcePath, "utf8"));
+let sourceText;
+let usingCheckedInGeometry = false;
+try {
+  sourceText = await readFile(sourcePath, "utf8");
+} catch {
+  // Vercel receives the already stripped, checked-in public geometry rather
+  // than the repository-level raw Natural Earth property table.
+  sourceText = await readFile(destinationPath, "utf8");
+  usingCheckedInGeometry = true;
+}
+const source = JSON.parse(sourceText);
 if (source?.type !== "FeatureCollection" || !Array.isArray(source.features) || source.features.length < 200) {
   throw new Error("Frozen Natural Earth country geometry is missing or unexpectedly small.");
 }
 
 const features = source.features.map((feature) => {
   const properties = feature?.properties ?? {};
+  if (usingCheckedInGeometry) {
+    if (!properties.country_id || !properties.country_name || !feature.geometry) {
+      throw new Error("Checked-in country display geometry has invalid public properties.");
+    }
+    return feature;
+  }
   const rawId = String(properties.ISO_A3 ?? "-99") === "-99"
     ? String(properties.ADM0_A3 ?? properties.WB_A3 ?? "")
     : String(properties.ISO_A3 ?? "");

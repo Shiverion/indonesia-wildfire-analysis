@@ -1,6 +1,6 @@
 {
   "schema_version": "evidence-explorer/v2",
-  "generated_at_utc": "2026-08-23T15:42:07.494919+00:00",
+  "generated_at_utc": "2026-08-28T06:55:42.835865+00:00",
   "title": "Global + Kalimantan Fire Evidence Explorer",
   "display_status": {
     "label": "Descriptive evidence only",
@@ -118,8 +118,8 @@
   "ledger": {
     "valid": true,
     "reason": "valid",
-    "entry_count": 38,
-    "latest_entry_sha256": "43bfc21e0629aa8207d6d5b3a73ea0ef908f2f2f3f581664607a2344d31814e8"
+    "entry_count": 61,
+    "latest_entry_sha256": "ca227d19e5a7fb8fab2f1c4f93ad81631e1e4de2606032140fe29008461523d2"
   },
   "quality": {
     "sipongi": {
@@ -30723,8 +30723,8 @@
       "peat_baseline": "ready_for_sensitivity",
       "drainage_sensitivity": "usable_sensitivity",
       "viirs_outcome_and_opportunity": "present_needs_temporal_validation",
-      "era5_land": "present_needs_temporal_validation",
-      "chirps": "present_needs_temporal_validation",
+      "era5_land": "ready_for_lag_derivation",
+      "chirps": "present_needs_lag_derivation",
       "prefire_vegetation": "present_needs_temporal_validation",
       "dated_access": "blocked"
     },
@@ -30732,9 +30732,9 @@
       "status": "present_inputs_need_temporal_and_opportunity_validation",
       "phase_1_unlock": false,
       "assets": {
-        "era5_land": "calibration_year_complete_only",
-        "chirps": "support_window_complete_with_extra_dates",
-        "prefire_vegetation": "payload_inventory_only_qa_unvalidated",
+        "era5_land": "study_window_complete",
+        "chirps": "support_window_and_partial_lags_complete",
+        "prefire_vegetation": "qa_validated_summary_only",
         "viirs_outcome_and_opportunity": "paired_swath_screening_only"
       }
     },
@@ -30744,5 +30744,86 @@
       "peat x low prefire NDMI/EVI",
       "peat x rainfall deficit/high VPD/wind"
     ]
+  },
+  "phase1b_readiness": {
+    "schema_version": "phase1b-readiness/v2",
+    "status": "phase_2_unlocked",
+    "phase_1b_ready": true,
+    "phase_2_unlock": true,
+    "selected_track": "environmental_daily_grid",
+    "human_access_confirmatory_track_ready": false,
+    "progress": {
+      "completed_days": 1683,
+      "registered_days": 1683,
+      "percent": 100.0
+    },
+    "workstreams": {
+      "era5_temporal_support": {
+        "status": "validated_and_joined",
+        "gate_ready": true,
+        "required_for_environmental_track": true,
+        "next_action": "run the ERA5 finalizer after daily extraction completes"
+      },
+      "chirps_lag_features": {
+        "status": "validated_event_linked_earth_engine",
+        "gate_ready": true,
+        "required_for_environmental_track": true,
+        "next_action": "finish the registered Earth Engine daily extraction and receipt; the partial local archive is no longer the primary gate"
+      },
+      "prefire_vegetation": {
+        "status": "validated_prefire_event_linked_earth_engine",
+        "gate_ready": true,
+        "required_for_environmental_track": true,
+        "next_action": "finish the registered Earth Engine MOD13Q1 QA join; the partial local archive remains a sensitivity source"
+      },
+      "environmental_registration": {
+        "status": "validated_registration",
+        "gate_ready": true,
+        "required_for_environmental_track": true,
+        "next_action": "keep the registered file unchanged through locked analysis"
+      },
+      "mapbiomas_2014_baseline": {
+        "status": "validated_collection_4_1_2014_export",
+        "gate_ready": true,
+        "required_for_environmental_track": true,
+        "next_action": "Use the validated raster and crosswalk to build the frozen 2014 forest mask before VIIRS frame construction."
+      },
+      "mapbiomas_2014_forest_mask": {
+        "status": "validated_forest_mask",
+        "gate_ready": true,
+        "required_for_environmental_track": true,
+        "next_action": "use the validated binary mask to compute 1-km forest fractions for paired VIIRS pixels"
+      },
+      "mapbiomas_2014_1km_forest_fraction": {
+        "status": "validated_1km_forest_fraction",
+        "gate_ready": true,
+        "required_for_environmental_track": true,
+        "next_action": "intersect paired VIIRS geolocation with the fixed 1-km grid and retain cells at or above the registered 70% forest threshold"
+      },
+      "viirs_opportunity_denominator": {
+        "status": "validated_complete_daily_frame",
+        "gate_ready": true,
+        "required_for_environmental_track": true,
+        "next_action": "complete all 1,683 registered fire-season days, then finalize and hash the 1:4 frame"
+      },
+      "peat_static_stratum": {
+        "status": "validated_static_peat_stratum",
+        "gate_ready": true,
+        "required_for_environmental_track": true,
+        "next_action": "retain threshold sensitivity at 25%, 50%, and 75% peat extent"
+      },
+      "exact_overpass_sensitivity": {
+        "status": "diagnostic_sensitivity_only",
+        "gate_ready": true,
+        "required_for_environmental_track": false,
+        "next_action": "retain the available VNP14IMG/VNP03IMG pairs for measurement sensitivity; do not treat them as the full denominator"
+      },
+      "human_access_confirmatory_track": {
+        "status": "blocked_missing_dated_access_exposure",
+        "gate_ready": false,
+        "required_for_environmental_track": false,
+        "next_action": "obtain a dated, licensed 2014 access exposure before making any road-opening, profit, intent, or government-performance claim"
+      }
+    }
   }
 }

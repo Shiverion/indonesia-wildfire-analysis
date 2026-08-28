@@ -124,7 +124,9 @@ if (snapshot !== undefined && snapshot !== null) {
 }
 
 await mkdir(fileURLToPath(new URL("../data", import.meta.url)), { recursive: true });
-await copyFile(source, destination);
+if (inputPath !== destination) {
+  await copyFile(inputPath, destination);
+}
 const sha256 = createHash("sha256").update(text).digest("hex");
 await writeFile(receipt, `${JSON.stringify({
   source: inputPath === source ? "../../../outputs/evidence-explorer/evidence-explorer.json" : "checked-in aggregate bundle",

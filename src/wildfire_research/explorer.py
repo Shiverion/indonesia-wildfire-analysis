@@ -234,6 +234,44 @@ def _read_condition_phase_audit(root: Path) -> dict[str, Any] | None:
     }
 
 
+def _read_phase1b_readiness(root: Path) -> dict[str, Any] | None:
+    """Expose Phase 1B gate status without paths, raw rows, or provider payloads."""
+    path = root / "outputs" / "quality" / "phase1b_readiness.json"
+    if not path.is_file():
+        return None
+    readiness = _read_json(path)
+    workstreams = readiness.get("workstreams", {})
+    if not isinstance(workstreams, dict):
+        raise ValueError("Phase 1B readiness workstreams must be an object")
+    compact: dict[str, dict[str, Any]] = {}
+    for key, value in workstreams.items():
+        if not isinstance(value, dict):
+            continue
+        compact[str(key)] = {
+            "status": str(value.get("status", "unknown")),
+            "gate_ready": value.get("gate_ready") is True,
+            "required_for_environmental_track": value.get("required_for_environmental_track") is True,
+            "next_action": str(value.get("next_action", "")),
+        }
+    frame = workstreams.get("viirs_opportunity_denominator", {}).get("frame", {})
+    completed_days = int(frame.get("completed_day_count", 0)) if isinstance(frame, dict) else 0
+    registered_days = int(frame.get("registered_day_count", 0)) if isinstance(frame, dict) else 0
+    return {
+        "schema_version": readiness.get("schema_version"),
+        "status": str(readiness.get("status", "unknown")),
+        "phase_1b_ready": readiness.get("phase_1b_ready") is True,
+        "phase_2_unlock": readiness.get("phase_2_unlock") is True,
+        "selected_track": str(readiness.get("selected_track", "environmental_daily_grid")),
+        "human_access_confirmatory_track_ready": readiness.get("human_access_confirmatory_track_ready") is True,
+        "progress": {
+            "completed_days": completed_days,
+            "registered_days": registered_days,
+            "percent": round(100 * completed_days / registered_days, 2) if registered_days else 0.0,
+        },
+        "workstreams": compact,
+    }
+
+
 def _platform_group(satellite: str) -> str:
     normalized = satellite.upper().replace("_", "-")
     if "MODIS" in normalized:
@@ -317,6 +355,16 @@ def _validate_browser_bundle(bundle: dict[str, Any]) -> None:
             raise ValueError("Condition phase audit has an unsupported schema")
         if condition_audit.get("condition_phase_ready") is not False:
             raise ValueError("Condition phase audit cannot unlock the browser explorer")
+    phase1b = bundle.get("phase1b_readiness")
+    if phase1b is not None:
+        if phase1b.get("schema_version") not in {"phase1b-readiness/v1", "phase1b-readiness/v2"}:
+            raise ValueError("Phase 1B readiness has an unsupported schema")
+        if not isinstance(phase1b.get("phase_1b_ready"), bool) or not isinstance(phase1b.get("phase_2_unlock"), bool):
+            raise ValueError("Phase 1B readiness flags must be booleans")
+        if phase1b.get("phase_2_unlock") and not phase1b.get("phase_1b_ready"):
+            raise ValueError("Phase 2 cannot unlock before Phase 1B is ready")
+        if not isinstance(phase1b.get("workstreams"), dict):
+            raise ValueError("Phase 1B readiness has no workstream status object")
 
 
 def _validate_peat_fire_comparison(value: dict[str, Any]) -> None:
@@ -490,6 +538,7 @@ def build_explorer_bundle(
     peat_fire_comparison: dict[str, Any] | None = None,
     latest_global_fire: dict[str, Any] | None = None,
     condition_phase_audit: dict[str, Any] | None = None,
+    phase1b_readiness: dict[str, Any] | None = None,
     generated_at: datetime | None = None,
 ) -> dict[str, Any]:
     """Create a small, browser-safe aggregate bundle from validated local data."""
@@ -703,6 +752,7 @@ def build_explorer_bundle(
         "peat_fire_comparison": peat_fire_comparison,
         "latest_global_fire": latest_global_fire,
         "condition_phase_audit": condition_phase_audit,
+        "phase1b_readiness": phase1b_readiness,
     }
     _validate_browser_bundle(bundle)
     return bundle
@@ -748,6 +798,7 @@ def build_explorer_from_workspace(root: Path) -> dict[str, Any]:
     peat_fire_comparison = _read_peat_fire_analysis(root)
     latest_global_fire = _read_latest_global_fire_snapshot(root)
     condition_phase_audit = _read_condition_phase_audit(root)
+    phase1b_readiness = _read_phase1b_readiness(root)
     protocol_report = validate_protocol(root)
     ledger_state = verify_phase_ledger(root / "outputs" / "ledger" / "phase_ledger.jsonl")
     provenance = [
@@ -808,6 +859,7 @@ def build_explorer_from_workspace(root: Path) -> dict[str, Any]:
         peat_fire_comparison=peat_fire_comparison,
         latest_global_fire=latest_global_fire,
         condition_phase_audit=condition_phase_audit,
+        phase1b_readiness=phase1b_readiness,
     )
 
 

@@ -1,0 +1,198 @@
+{
+  "created_at_utc": "2026-08-26T16:12:45.894654+00:00",
+  "file_count": 34,
+  "files": [
+    {
+      "path": "config/phase2_registration.json",
+      "sha256": "804670b3c297a56ac997b46281ed967a6798b846284de5075f7b70c9ec58ffbe",
+      "size_bytes": 4167
+    },
+    {
+      "path": "config/study.json",
+      "sha256": "bfaa7debd3884646c3940c2a7cb9ef50fe70236335c7c01e17dc2bd8e3f302ae",
+      "size_bytes": 2579
+    },
+    {
+      "path": "data/derived/mapbiomas/mapbiomas_c41_forest_fraction_1km_kalimantan.tif",
+      "sha256": "53f2e2cabea81536ba3ccb8cea3b8ef3f96fcbf08d79b6328bb9f61fb827d661",
+      "size_bytes": 1381644
+    },
+    {
+      "path": "data/derived/mapbiomas/mapbiomas_c41_natural_forest_mask_2014_kalimantan.tif",
+      "sha256": "a3afa9d9c9b412b825ae770d862ce9a60b9c43dc221feceef1c01779126a55a6",
+      "size_bytes": 28304330
+    },
+    {
+      "path": "data/derived/viirs/opportunity_frame.csv",
+      "sha256": "0112938dce8ee6a377b18812d26020566376c5f83047ef28d89432245da98936",
+      "size_bytes": 39618399
+    },
+    {
+      "path": "data/manifests/assets.json",
+      "sha256": "287058b228ba806504a0002e99d1659776f1de5aacfc1132031c48acbf6e580e",
+      "size_bytes": 6255
+    },
+    {
+      "path": "data/raw/era5_land/download_manifest.json",
+      "sha256": "e3cc79c21a6b37a60fef10f1ea2e0b79e3b1124f75f202031fc727a0a8ff0333",
+      "size_bytes": 31662
+    },
+    {
+      "path": "outputs/quality/daily_risk_set_frame.json",
+      "sha256": "90fe78472edb2692d5c324260c330722d8658d98dd31ede9b99016a2951c475a",
+      "size_bytes": 4351
+    },
+    {
+      "path": "outputs/quality/mapbiomas_2014_forest_fraction_1km.json",
+      "sha256": "2200dea0bdd0175f771814b820e173c741367c4b10653108e49216e39b8f7a9a",
+      "size_bytes": 1571
+    },
+    {
+      "path": "outputs/quality/mapbiomas_2014_forest_mask.json",
+      "sha256": "ce5a923b98add3c53cc464bc959cdb901655f38dfa4bf760bf1890ad47baae05",
+      "size_bytes": 1906
+    },
+    {
+      "path": "outputs/quality/mapbiomas_2014_preflight.json",
+      "sha256": "5e802ec3f7cdfaf5c72cbae5bb6cc6399548733f2e62fee00c956a63dad543f0",
+      "size_bytes": 3688
+    },
+    {
+      "path": "outputs/quality/peat_sensitivity_provenance.json",
+      "sha256": "f29e147db42600b9fcdda49f04cd5aea9339b9ede1ea92603501aaaa43411275",
+      "size_bytes": 1230
+    },
+    {
+      "path": "scripts/build_gee_daily_risk_sets.py",
+      "sha256": "1c6de2f074c407f271d5bda67d02dd4ba1370d622e3e1ac9e8a7a711dd1b31ee",
+      "size_bytes": 24170
+    },
+    {
+      "path": "scripts/finalize_daily_risk_sets.py",
+      "sha256": "e1d3070e25e19474923695a9e431d6548cc84c8e27fb66dc9e47aa9a61d422ba",
+      "size_bytes": 15357
+    },
+    {
+      "path": "scripts/research.py",
+      "sha256": "74c9e2f51ab26ab019ddc255e037d78be983dae2fadc24ba7ac06e90aba108bc",
+      "size_bytes": 24403
+    },
+    {
+      "path": "src/wildfire_research/__init__.py",
+      "sha256": "f90812174b7f9c86c8782ad6424d11e93d1128b9df876ed60421aaa069ac233a",
+      "size_bytes": 98
+    },
+    {
+      "path": "src/wildfire_research/covariates.py",
+      "sha256": "5dce163abecdef7eae23cf5b97589cee7883f07696084c05cfa71b053d3d5345",
+      "size_bytes": 4206
+    },
+    {
+      "path": "src/wildfire_research/daily_risk_set.py",
+      "sha256": "0e018df3681b30e52db3762c026c47fa9a8ffa65422579ae0ec3fb24c540f284",
+      "size_bytes": 6127
+    },
+    {
+      "path": "src/wildfire_research/enso.py",
+      "sha256": "58f7d3ade1dd4e07d324b041f66f05ee9a41f8623cb55126c6f8acf11b05af48",
+      "size_bytes": 4819
+    },
+    {
+      "path": "src/wildfire_research/era5_features.py",
+      "sha256": "a2a96cb11c24db9b6b49b6dfdcc695d327929e8e6e7cbf09c77c95e3c5a0cf9e",
+      "size_bytes": 8169
+    },
+    {
+      "path": "src/wildfire_research/explorer.py",
+      "sha256": "df3e806b5aa6b3d92de7a2a59304fe07078be94c158282299bc9ef1dfc4f712d",
+      "size_bytes": 105188
+    },
+    {
+      "path": "src/wildfire_research/gwis.py",
+      "sha256": "32dc8beef2ba798081a1a70c75f74a7970c2e3feb4e7aa463d665bd57c4bcb63",
+      "size_bytes": 12137
+    },
+    {
+      "path": "src/wildfire_research/insights.py",
+      "sha256": "2140f472ffb320ccd0265709cfeda56caa0c2234db283c51193c079d89e548e5",
+      "size_bytes": 6847
+    },
+    {
+      "path": "src/wildfire_research/ledger.py",
+      "sha256": "e3b53c3f85ace8002191f52bd984545608eeda2f648ad2c0b720cc6f6971646a",
+      "size_bytes": 3346
+    },
+    {
+      "path": "src/wildfire_research/mapbiomas.py",
+      "sha256": "779803850046216d8fea6e8844b94576873dae78b449f2725cf4d30e371dbd48",
+      "size_bytes": 13784
+    },
+    {
+      "path": "src/wildfire_research/paths.py",
+      "sha256": "5ec403ca3a18c6c49ad32f0b47e0071fe245d0403a9e9f7fec841766fbf69832",
+      "size_bytes": 856
+    },
+    {
+      "path": "src/wildfire_research/phase1b.py",
+      "sha256": "d8d66d7e2ac373ce9a9355a7914cfdd96cdf265b8f9eeb8f05e2a8f086e0b1a6",
+      "size_bytes": 30335
+    },
+    {
+      "path": "src/wildfire_research/protocol.py",
+      "sha256": "46826502ce47ce57983a24ad05e4acb07be6f8a741c353b52ad70755dc740708",
+      "size_bytes": 8291
+    },
+    {
+      "path": "src/wildfire_research/quality.py",
+      "sha256": "bdbee034454a92aec65f45ac69b1d66c21791975ffd19a39971698f32d9238d4",
+      "size_bytes": 9822
+    },
+    {
+      "path": "src/wildfire_research/sipongi.py",
+      "sha256": "721e88b7367884c282ee178ce420e23fa330dcf2239ece5c4d593b435fd7c76a",
+      "size_bytes": 49476
+    },
+    {
+      "path": "src/wildfire_research/synthesis.py",
+      "sha256": "d8e96bc367ab8e3dd70501f2b2c654e4904b33907e745544baf6e8528b59e548",
+      "size_bytes": 8958
+    },
+    {
+      "path": "src/wildfire_research/temporal_qa.py",
+      "sha256": "c6c4754e0fd7e3cecef8e01ba9af2836006392b4e4c1772e3e8f1c8535e6fd8c",
+      "size_bytes": 12871
+    },
+    {
+      "path": "src/wildfire_research/viirs.py",
+      "sha256": "7e939b742e3666fedb06c2f8c0680c538639a0fb47c0fbdd6f0d37f34c669e76",
+      "size_bytes": 8185
+    },
+    {
+      "path": "src/wildfire_research/viirs_opportunity.py",
+      "sha256": "7e200b451d04f9473b0ca9bd9d68aa22eb4cecbc06dbffc57c12cb7d11fac512",
+      "size_bytes": 12262
+    }
+  ],
+  "inputs": [
+    "config/phase2_registration.json",
+    "config/study.json",
+    "data/derived/mapbiomas",
+    "data/derived/viirs/opportunity_frame.csv",
+    "data/manifests/assets.json",
+    "data/raw/era5_land/download_manifest.json",
+    "outputs/quality/daily_risk_set_frame.json",
+    "outputs/quality/mapbiomas_2014_forest_fraction_1km.json",
+    "outputs/quality/mapbiomas_2014_forest_mask.json",
+    "outputs/quality/mapbiomas_2014_preflight.json",
+    "outputs/quality/peat_sensitivity_provenance.json",
+    "scripts/build_gee_daily_risk_sets.py",
+    "scripts/finalize_daily_risk_sets.py",
+    "scripts/research.py",
+    "src/wildfire_research"
+  ],
+  "inventory_sha256": "4335b6a20b299f4ab930d86e34276bbf04fe8bcdcadb835b90999c431ec54e2f",
+  "label": "pre-unlock 2024-2025 locked retrospective test archive",
+  "lock_sha256": "989adead69331806f3c0f3f9a578c2ca8296a108903ed276aad771ec483351a6",
+  "purpose": "Byte-level reproducibility lock; does not prove outcome blinding before lock creation.",
+  "schema_version": "1.0"
+}

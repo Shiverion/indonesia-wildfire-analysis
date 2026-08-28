@@ -1,0 +1,93 @@
+{
+  "schema_version": "raw-source-inventory/v1",
+  "generated_at_utc": "2026-08-25T23:16:18.867498+00:00",
+  "policy": {
+    "full_archives_allowed": false,
+    "paid_storage_allowed": false,
+    "max_local_raw_gib": 60.0
+  },
+  "sources": {
+    "chirps": {
+      "path": "data/raw/chirps",
+      "exists": true,
+      "files": 466,
+      "bytes": 11099648735,
+      "gib": 10.337,
+      "by_extension": {
+        ".cog": {
+          "files": 464,
+          "bytes": 11099589922
+        },
+        ".json": {
+          "files": 1,
+          "bytes": 58813
+        },
+        ".part": {
+          "files": 1,
+          "bytes": 0
+        }
+      }
+    },
+    "mod13q1": {
+      "path": "data/raw/mod13q1",
+      "exists": true,
+      "files": 1839,
+      "bytes": 23379918205,
+      "gib": 21.774,
+      "by_extension": {
+        ".hdf": {
+          "files": 323,
+          "bytes": 23107979794
+        },
+        ".jpg": {
+          "files": 1007,
+          "bytes": 18418868
+        },
+        ".json": {
+          "files": 1,
+          "bytes": 595
+        },
+        ".xml": {
+          "files": 501,
+          "bytes": 12346468
+        },
+        "[none]": {
+          "files": 7,
+          "bytes": 241172480
+        }
+      }
+    },
+    "viirs": {
+      "path": "data/raw/viirs",
+      "exists": true,
+      "files": 3883,
+      "bytes": 16100202604,
+      "gib": 14.994,
+      "by_extension": {
+        ".corrupt": {
+          "files": 1,
+          "bytes": 147849216
+        },
+        ".json": {
+          "files": 2,
+          "bytes": 98897
+        },
+        ".nc": {
+          "files": 3876,
+          "bytes": 15952254491
+        },
+        "[none]": {
+          "files": 4,
+          "bytes": 0
+        }
+      }
+    }
+  },
+  "total": {
+    "files": 6188,
+    "bytes": 50579769544,
+    "gib": 47.106,
+    "within_policy": true
+  },
+  "interpretation": "Inventory includes payloads and small manifests/metadata; it does not include ERA5-Land or derived outputs."
+}

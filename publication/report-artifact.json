@@ -1,0 +1,148 @@
+{
+  "surface": "report",
+  "manifest": {
+    "version": 1,
+    "surface": "report",
+    "title": "Kalimantan fire-to-forest-loss publication readiness",
+    "description": "Technical report of the registered Phase 3 association, publication diagnostics, and claim boundary.",
+    "generatedAt": "2026-08-28T00:00:00Z",
+    "cards": [
+      {
+        "id": "primary_effect",
+        "description": "Adjusted within-matched-set difference in the probability of losing at least 10% of pre-index natural forest by one-year follow-up.",
+        "dataset": "summary",
+        "sourceId": "phase3_result",
+        "metrics": [{"label": "Primary adjusted difference", "field": "primary_pp", "format": "number", "unit": "pp"}]
+      },
+      {
+        "id": "retained_sets",
+        "description": "Complete exact 1:4 matched sets retained after frozen forest and observation-support rules.",
+        "dataset": "summary",
+        "sourceId": "robustness_result",
+        "metrics": [{"label": "Retained matched sets", "field": "retained_sets", "format": "number"}]
+      },
+      {
+        "id": "negative_control",
+        "description": "Adjusted pre-exposure difference. A positive value indicates baseline trajectory or residual confounding.",
+        "dataset": "summary",
+        "sourceId": "robustness_result",
+        "metrics": [{"label": "Pre-exposure negative control", "field": "negative_control_pp", "format": "number", "unit": "pp"}]
+      }
+    ],
+    "charts": [
+      {
+        "id": "registered_sensitivities",
+        "title": "Registered results remain positive across definitions",
+        "subtitle": "Adjusted risk differences; exact confidence intervals are shown in the following table.",
+        "type": "bar",
+        "dataset": "registered",
+        "sourceId": "phase3_result",
+        "encodings": {
+          "x": {"field": "analysis", "type": "ordinal", "label": "Outcome definition"},
+          "y": {"field": "estimate_pp", "type": "quantitative", "label": "Adjusted difference (pp)"}
+        },
+        "yAxisTitle": "Adjusted difference (percentage points)",
+        "valueFormat": "number",
+        "layout": "full"
+      },
+      {
+        "id": "year_specific",
+        "title": "Magnitude varies by index-fire year",
+        "subtitle": "Individual annual intervals are wide in lower-support years; leave-one-year-out estimates remain positive.",
+        "type": "line",
+        "dataset": "years",
+        "sourceId": "robustness_result",
+        "encodings": {
+          "x": {"field": "year", "type": "ordinal", "label": "Index-fire year"},
+          "y": {"field": "estimate_pp", "type": "quantitative", "label": "Adjusted difference (pp)"}
+        },
+        "yAxisTitle": "Adjusted difference (percentage points)",
+        "valueFormat": "number",
+        "layout": "full"
+      }
+    ],
+    "tables": [
+      {
+        "id": "diagnostics",
+        "title": "Diagnostics that bound interpretation",
+        "dataset": "diagnostics",
+        "sourceId": "robustness_result",
+        "defaultSort": {"field": "diagnostic", "direction": "asc"},
+        "columns": [
+          {"field": "diagnostic", "label": "Diagnostic", "type": "text"},
+          {"field": "estimate", "label": "Estimate", "type": "text"},
+          {"field": "ci95", "label": "95% CI", "type": "text"},
+          {"field": "interpretation", "label": "Interpretation", "type": "text"}
+        ]
+      },
+      {
+        "id": "registered_exact",
+        "title": "Primary and registered sensitivities",
+        "dataset": "registered",
+        "sourceId": "phase3_result",
+        "defaultSort": {"field": "analysis", "direction": "asc"},
+        "columns": [
+          {"field": "analysis", "label": "Analysis", "type": "text"},
+          {"field": "matched_sets", "label": "Matched sets", "format": "number"},
+          {"field": "estimate_pp", "label": "Adjusted difference (pp)", "format": "number"},
+          {"field": "ci95", "label": "95% CI", "type": "text"},
+          {"field": "p_value", "label": "Two-sided p", "type": "text"}
+        ]
+      }
+    ],
+    "sources": [
+      {"id": "phase3_result", "label": "Registered Phase 3 result", "path": "outputs/analysis/phase3_land_change_results.json", "query": {"engine": "duckdb", "language": "sql", "description": "Read the final registered effect table used in the report.", "sql": "SELECT * FROM read_csv_auto('publication/tables/table1_primary_and_registered_sensitivities.csv');", "tables_used": ["publication/tables/table1_primary_and_registered_sensitivities.csv"]}},
+      {"id": "robustness_result", "label": "Publication robustness audit", "path": "outputs/analysis/phase3_publication_robustness.json", "query": {"engine": "duckdb", "language": "sql", "description": "Read the publication diagnostics and year-specific estimates used in the report.", "sql": "SELECT * FROM read_json_auto('outputs/analysis/phase3_publication_robustness.json'); SELECT * FROM read_csv_auto('publication/tables/table_s2_year_specific.csv');", "tables_used": ["outputs/analysis/phase3_publication_robustness.json", "publication/tables/table_s2_year_specific.csv"]}},
+      {"id": "registration", "label": "Frozen Phase 3 registration", "path": "config/phase3_registration.json"}
+    ],
+    "blocks": [
+      {"id": "title", "type": "markdown", "body": "# Kalimantan fire-to-forest-loss publication readiness"},
+      {"id": "executive_summary", "type": "markdown", "body": "## Executive Summary\n\n- **The registered association is complete.** Fire-positive cells had a +5.89 percentage-point adjusted probability of subsequent ≥10% mapped natural-forest loss.\n- **The direction is robust, the causal interpretation is not.** Threshold, horizon, influence, estimator, and coarser spatial-cluster checks remain positive.\n- **A positive pre-exposure negative control is a material warning.** Fire-positive cells were already on a different land-change trajectory or remain residually confounded.\n- **The valid claim is narrow.** This is a Kalimantan temporal association, not proof of deliberate ignition, an actor, government performance, or an Indonesia-wide/global pattern."},
+      {"id": "metrics", "type": "metric-strip", "cardIds": ["primary_effect", "retained_sets", "negative_control"]},
+      {"id": "finding_primary", "type": "markdown", "sourceId": "phase3_result", "body": "## The primary association is precise within the retained population\n\nAmong 7,138 complete exact 1:4 sets, fire-positive cells had 13.74% unadjusted risk versus 4.40% for controls. Adjustment for registered vegetation, peat, rainfall, fire-weather, and soil-water covariates yielded **+5.89 points** (95% CI +4.52 to +7.25)."},
+      {"id": "registered_chart", "type": "chart", "chartId": "registered_sensitivities", "layout": "full"},
+      {"id": "registered_table", "type": "table", "tableId": "registered_exact", "layout": "full"},
+      {"id": "selection", "type": "markdown", "sourceId": "robustness_result", "body": "## Selection limits transportability\n\nOf 12,178 temporally eligible sets, 5,040 (41.4%) failed complete support. The largest included-versus-excluded standardized difference was 1.02 for immediately pre-index natural-forest fraction. The estimate applies to the retained Kalimantan analysis population; exclusions cannot be assumed missing at random."},
+      {"id": "diagnostics_table", "type": "table", "tableId": "diagnostics", "layout": "full"},
+      {"id": "temporal", "type": "markdown", "sourceId": "robustness_result", "body": "## The pooled estimate masks temporal heterogeneity\n\nYear-specific estimates range from +0.61 points in 2017 to +9.75 in 2023. Individual estimates are imprecise in several low-support years, while every leave-one-year-out estimate remains positive (+4.13 to +6.96 points)."},
+      {"id": "year_chart", "type": "chart", "chartId": "year_specific", "layout": "full"},
+      {"id": "claim_boundary", "type": "markdown", "sourceId": "registration", "body": "## Interpretation and publication decision\n\nThe evidence supports a robust temporal association between index-day active-fire detection and later mapped forest loss within supported Kalimantan cells. It does **not** identify ignition intent, an individual or company, ownership, legality, profit, mitigation performance, or restoration effectiveness. National and global comparison maps are descriptive only. Publication is technically ready after verified author metadata and a permanent repository DOI are supplied."},
+      {"id": "methods", "type": "markdown", "sourceId": "registration", "body": "## Methods and reproducibility\n\nThe primary model removes matched-set effects by within-set demeaning and uses two-way cell/date clustered uncertainty. The frozen covariates are forest, peat extent, 7- and 30-day rainfall, pre-fire EVI, 72-hour vapour-pressure deficit, 24-hour wind, and 72-hour root-zone soil water. The coordinate-free publication bundle and its SHA-256 manifest reproduce the model without cloud credentials or raw raster archives."}
+    ]
+  },
+  "snapshot": {
+    "version": 1,
+    "generatedAt": "2026-08-28T00:00:00Z",
+    "status": "ready",
+    "datasets": {
+      "summary": [{"primary_pp": 5.8878, "retained_sets": 7138, "negative_control_pp": 2.3133}],
+      "registered": [
+        {"order": 1, "analysis": "Primary: ≥10%, 1 year", "matched_sets": 7138, "estimate_pp": 5.8878, "ci95": "4.524 to 7.252", "p_value": "2.63e-17"},
+        {"order": 2, "analysis": "≥5%, 1 year", "matched_sets": 7138, "estimate_pp": 10.7792, "ci95": "9.069 to 12.489", "p_value": "4.56e-35"},
+        {"order": 3, "analysis": "≥20%, 1 year", "matched_sets": 7138, "estimate_pp": 2.7557, "ci95": "1.741 to 3.770", "p_value": "1.02e-7"},
+        {"order": 4, "analysis": "≥10%, 2 years", "matched_sets": 5932, "estimate_pp": 5.9252, "ci95": "4.259 to 7.591", "p_value": "3.13e-12"},
+        {"order": 5, "analysis": "≥10%, 3 years", "matched_sets": 5786, "estimate_pp": 6.0988, "ci95": "4.417 to 7.781", "p_value": "1.19e-12"}
+      ],
+      "years": [
+        {"year": "2015", "estimate_pp": 9.069}, {"year": "2016", "estimate_pp": 3.187},
+        {"year": "2017", "estimate_pp": 0.615}, {"year": "2018", "estimate_pp": 0.798},
+        {"year": "2019", "estimate_pp": 2.917}, {"year": "2020", "estimate_pp": 3.711},
+        {"year": "2021", "estimate_pp": 4.361}, {"year": "2022", "estimate_pp": 2.811},
+        {"year": "2023", "estimate_pp": 9.753}
+      ],
+      "diagnostics": [
+        {"order": 1, "diagnostic": "Pre-exposure negative control", "estimate": "+2.31 pp", "ci95": "+1.13 to +3.50 pp", "interpretation": "Positive baseline trajectory/residual confounding"},
+        {"order": 2, "diagnostic": "Common-support post minus pre", "estimate": "+3.08 pp", "ci95": "+1.53 to +4.63 pp", "interpretation": "Later contrast exceeds prior contrast; not causal without parallel trends"},
+        {"order": 3, "diagnostic": "Top 1% influence exclusion", "estimate": "+5.50 pp", "ci95": "See machine-readable result", "interpretation": "Direction not driven by highest score-norm sets"},
+        {"order": 4, "diagnostic": "100 km block + date clustering", "estimate": "+5.89 pp", "ci95": "+3.27 to +8.50 pp", "interpretation": "Coarser residual dependence widens uncertainty but retains support"},
+        {"order": 5, "diagnostic": "Conditional logistic alternative", "estimate": "OR 3.46", "ci95": "3.09 to 3.89", "interpretation": "Alternative effect scale; model-based uncertainty"}
+      ]
+    }
+  },
+  "sources": [
+    {"id": "phase3_result", "label": "Registered Phase 3 result", "path": "outputs/analysis/phase3_land_change_results.json", "query": {"engine": "duckdb", "language": "sql", "description": "Read the final registered effect table used in the report.", "sql": "SELECT * FROM read_csv_auto('publication/tables/table1_primary_and_registered_sensitivities.csv');", "tables_used": ["publication/tables/table1_primary_and_registered_sensitivities.csv"]}},
+    {"id": "robustness_result", "label": "Publication robustness audit", "path": "outputs/analysis/phase3_publication_robustness.json", "query": {"engine": "duckdb", "language": "sql", "description": "Read the publication diagnostics and year-specific estimates used in the report.", "sql": "SELECT * FROM read_json_auto('outputs/analysis/phase3_publication_robustness.json'); SELECT * FROM read_csv_auto('publication/tables/table_s2_year_specific.csv');", "tables_used": ["outputs/analysis/phase3_publication_robustness.json", "publication/tables/table_s2_year_specific.csv"]}},
+    {"id": "registration", "label": "Frozen Phase 3 registration", "path": "config/phase3_registration.json"}
+  ],
+  "package_info": {}
+}

@@ -19,6 +19,7 @@ import argparse
 import hashlib
 import json
 import re
+import sys
 import zipfile
 from datetime import date, timedelta, datetime, timezone
 from pathlib import Path
@@ -26,6 +27,8 @@ from typing import Any
 
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "src"))
+from wildfire_research.paths import logical_relative  # noqa: E402
 VIIRS_RE = re.compile(
     r"^VNP(?P<kind>14|03)IMG\.A(?P<year>\d{4})(?P<doy>\d{3})\.(?P<hhmm>\d{4})\.002\.[^.]+\.nc$"
 )
@@ -42,7 +45,7 @@ def sha256_file(path: Path) -> str:
 
 
 def rel(path: Path) -> str:
-    return path.resolve().relative_to(ROOT.resolve()).as_posix()
+    return logical_relative(ROOT, path)
 
 
 def load_json(path: Path) -> dict[str, Any]:
@@ -302,7 +305,7 @@ def run(root: Path) -> dict[str, Any]:
         "blocking_gates": [
             "VIIRS swath geolocation/quality screening is complete for the local pairs, but the frozen 2014 forest intersection and processed non-detection frame are not built.",
             "Current VIIRS download_manifest.json records only the latest 50-file batch; 10+10 local files are source-metadata-not-retained in reconciled_manifest.json.",
-            "ERA5-Land 2015 is complete locally; temporal lag and coverage QA remain pending.",
+            "ERA5-Land 2015-2025 monthly payloads are complete and hashed locally; event-cutoff lag and coverage QA remain pending.",
             "MapBiomas frozen 2014 export/crosswalk and dated access source are still absent.",
             "Peat and Dadap 2017 drainage inputs are sensitivity-ready, not a dated 2014 construction baseline.",
         ],

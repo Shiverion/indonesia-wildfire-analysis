@@ -1,0 +1,60 @@
+{
+  "schema_version": "mapbiomas-natural-forest-mask/v1",
+  "created_at_utc": "2026-08-25T11:39:18.802185+00:00",
+  "status": "validated",
+  "source": {
+    "path": "data/raw/mapbiomas_indonesia/mapbiomas_indonesia_c41_landcover_2014.tif",
+    "sha256": "2df0a9ac95abbd741c62f42993b861268f4d49a10da02c79be95babbef1b8db7",
+    "collection": "4.1",
+    "collection_version": "4.1.1",
+    "baseline_year": 2014
+  },
+  "output": {
+    "path": "data/derived/mapbiomas/mapbiomas_c41_natural_forest_mask_2014_kalimantan.tif",
+    "sha256": "a3afa9d9c9b412b825ae770d862ce9a60b9c43dc221feceef1c01779126a55a6",
+    "forest_codes": [
+      3,
+      5,
+      76
+    ],
+    "bbox_wgs84": [
+      109.0,
+      -5.0,
+      120.0,
+      6.0
+    ],
+    "bounds_wgs84_from_window": [
+      108.9997799444945,
+      -4.999933039880846,
+      119.99974043006645,
+      6.000027445691108
+    ],
+    "width": 40817,
+    "height": 40817,
+    "valid_source_pixels": 641808163,
+    "natural_forest_pixels": 410414605,
+    "natural_forest_fraction_of_valid_source": 0.6394661655308364,
+    "class_counts": {
+      "0": 1024219326,
+      "3": 352822402,
+      "21": 23938675,
+      "13": 106915983,
+      "25": 13888920,
+      "35": 55412064,
+      "33": 8811111,
+      "24": 2969747,
+      "5": 6811135,
+      "76": 50781068,
+      "9": 5262298,
+      "30": 1478063,
+      "31": 2789359,
+      "40": 9927338
+    }
+  },
+  "method": "Tiled read of the country-wide MapBiomas raster; no resampling; class codes preserved before binary conversion.",
+  "limitations": [
+    "This is a 30 m class mask, not a fire-occurrence map.",
+    "The 0 class combines MapBiomas nodata and non-natural-forest classes; source class codes remain in the immutable TIFF.",
+    "VIIRS forest_fraction still requires grid/pixel intersection and must not be inferred from this mask alone."
+  ]
+}

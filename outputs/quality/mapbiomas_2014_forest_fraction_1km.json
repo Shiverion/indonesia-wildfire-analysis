@@ -1,0 +1,39 @@
+{
+  "schema_version": "mapbiomas-forest-fraction-1km/v1",
+  "created_at_utc": "2026-08-25T11:50:29.502913+00:00",
+  "status": "validated",
+  "source": {
+    "path": "data/derived/mapbiomas/mapbiomas_c41_natural_forest_mask_2014_kalimantan.tif",
+    "sha256": "a3afa9d9c9b412b825ae770d862ce9a60b9c43dc221feceef1c01779126a55a6"
+  },
+  "output": {
+    "path": "data/derived/mapbiomas/mapbiomas_c41_forest_fraction_1km_kalimantan.tif",
+    "sha256": "53f2e2cabea81536ba3ccb8cea3b8ef3f96fcbf08d79b6328bb9f61fb827d661",
+    "crs": "EPSG:6933",
+    "cell_size_m": 1000,
+    "anchor": [
+      0,
+      0
+    ],
+    "width": 1063,
+    "height": 1403,
+    "bounds_projected": [
+      10516000,
+      -638000,
+      11579000,
+      765000
+    ],
+    "cell_count": 1491389,
+    "cells_at_or_above_70_percent": 329365,
+    "cells_at_or_above_50_percent": 366153,
+    "min_fraction": 0.0,
+    "max_fraction": 1.0,
+    "mean_fraction": 0.2461288422346115
+  },
+  "definition": "Forest fraction is the area-weighted mean of the validated 30 m binary mask within each 1-km EPSG:6933 cell; it is not an observation denominator.",
+  "limitations": [
+    "Cells include zero-valued source pixels where MapBiomas is non-forest or outside the mapped land footprint; coastal cells therefore receive conservative fractions.",
+    "The 70% threshold defines the primary cohort but does not establish fire occurrence or causality.",
+    "VIIRS valid negatives still require paired geolocation, quality, cloud/water, coverage, and prior-negative rules."
+  ]
+}

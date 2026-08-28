@@ -1,0 +1,114 @@
+{
+  "schema_version": "phase3-fire-to-land-change-registration/v1",
+  "registered_at_utc": "2026-08-27T00:00:00Z",
+  "registration_state": "frozen_before_phase3_outcome_extraction",
+  "module": "2A -- fire followed by land-cover change",
+  "phase": "Phase 3",
+  "question": "Among valid 1:4 daily matched opportunities that remain predominantly natural forest immediately before the index fire season, is a fire-positive cell more likely than its matched fire-negative cells to lose natural forest during the following one to three annual land-cover maps?",
+  "estimand": {
+    "primary": "Adjusted within-matched-set risk difference for losing at least 10% of pre-index natural-forest area by the one-year follow-up map, comparing the index-day fire-positive cell with four valid fire-negative cells.",
+    "language": "fire-to-land-cover-change association",
+    "causal_claim_allowed": false
+  },
+  "exposure": {
+    "source": "data/derived/viirs/opportunity_frame.csv",
+    "positive": "outcome_status == positive on the registered VNP14A1 event day",
+    "negative": "outcome_status == negative and valid_opportunity == true on that same matched-set day",
+    "matched_set": "one positive plus four reusable controls within 25 km on the same day",
+    "future_fire_policy": "Retain controls that burn later; the estimand is index-day detection status, not permanent absence of fire. Repeated cells require cell-clustered uncertainty."
+  },
+  "outcome_source": {
+    "provider": "MapBiomas Indonesia Landy",
+    "product": "Collection 4.1 annual land cover and land use",
+    "collection_version": "4.1.1",
+    "available_years": [1990, 2024],
+    "resolution_m": 30,
+    "official_faq_url": "https://landy.mapbiomas.id/en/faq",
+    "official_legend_url": "https://landy.mapbiomas.id/en/legendcode",
+    "official_gee_page_url": "https://landy.mapbiomas.id/en/gee",
+    "gee_asset_candidate": "projects/mapbiomas-public/assets/indonesia/lulc/collection4/mapbiomas_indonesia_collection4_coverage_v2",
+    "gee_asset_status": "authenticated_metadata_confirmed_35_annual_bands_1990_2024",
+    "license": "CC BY-SA for public-interest/non-commercial use, subject to provider terms"
+  },
+  "time_alignment": {
+    "pre_index_map": "classification_(event_year - 1)",
+    "primary_horizon_years": 1,
+    "secondary_horizons_years": [2, 3],
+    "last_available_land_cover_year": 2024,
+    "eligible_event_years_by_horizon": {
+      "1": [2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023],
+      "2": [2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022],
+      "3": [2015, 2016, 2017, 2018, 2019, 2020, 2021]
+    },
+    "excluded_from_primary_for_incomplete_followup": [2024, 2025],
+    "no_2026_outcome_claim": "Collection 4.1 ends in 2024; 2025 and 2026 land-cover outcomes are unavailable in this product as of registration."
+  },
+  "eligibility": {
+    "baseline_cohort_minimum_2014_natural_forest_fraction": 0.7,
+    "pre_index_minimum_natural_forest_fraction": 0.7,
+    "minimum_pre_and_followup_observed_fraction": 0.95,
+    "drop_entire_matched_set_if_any_row_lacks_pre_or_followup_support": true,
+    "not_observed_class_is_missing_not_zero": true,
+    "minimum_complete_matched_sets": 200,
+    "minimum_exposure_and_outcome_variation_sets": 50
+  },
+  "outcomes": {
+    "primary_binary": {
+      "definition": "fraction of the cell that was natural forest in event_year-1 and is non-natural-forest at event_year+1, divided by pre-index natural-forest fraction, is at least 0.10",
+      "threshold": 0.1
+    },
+    "threshold_sensitivities": [0.05, 0.2],
+    "secondary_horizons": [2, 3],
+    "exploratory_destinations": [
+      "nonforest_natural",
+      "rice_paddy",
+      "oil_palm",
+      "pulpwood_plantation",
+      "other_agriculture",
+      "mining",
+      "urban",
+      "other_nonvegetated",
+      "aquaculture",
+      "water"
+    ],
+    "destination_interpretation": "Destination classes are descriptive transitions only. Oil-palm classification is not actor, intent, ownership, legality, or profit attribution."
+  },
+  "model": {
+    "primary_estimator": "within-matched-set linear probability model",
+    "effect_measure": "adjusted risk difference",
+    "matched_set_effect": "removed by within-set demeaning",
+    "covariates": [
+      "forest_fraction",
+      "peat_extent_percent",
+      "log1p(chirps_precip_7d_mm)",
+      "log1p(chirps_precip_30d_mm)",
+      "evi_prefire",
+      "era5_vpd_mean_72h_kpa",
+      "era5_wind_max_24h_ms",
+      "era5_rootzone_soil_water_mean_72h"
+    ],
+    "standardization_reference_years": [2015, 2022],
+    "uncertainty": "two-way cluster-robust covariance by cell and index date; cell-only fallback must be disclosed if two-way covariance is invalid",
+    "alpha_two_sided": 0.05,
+    "primary_is_unadjusted_for_multiple_testing": true,
+    "secondary_family_correction": "Holm within the named horizon and destination families"
+  },
+  "mandatory_reporting": [
+    "matched sets and rows at every exclusion step",
+    "mean, median, SD, p25, and p75 outcome distributions by index-day exposure",
+    "adjusted risk difference with 95% confidence interval and two-sided p-value",
+    "unadjusted matched risks and risk ratio with zero-cell handling disclosed",
+    "5% and 20% loss-threshold sensitivities",
+    "two- and three-year horizon sensitivities",
+    "Holm-adjusted destination-class results",
+    "outlier and influential-set diagnostics",
+    "separate missing/not-observed counts",
+    "explicit non-causal interpretation"
+  ],
+  "hard_claim_boundaries": [
+    "A subsequent oil-palm class does not show that the fire was deliberately set to create a plantation.",
+    "The analysis cannot identify an individual, company, concession holder, or beneficiary.",
+    "The analysis cannot measure government mitigation, enforcement, restoration, or negligence without dated intervention data.",
+    "Kalimantan results do not establish a global pattern; Phase 5 requires harmonized replication."
+  ]
+}

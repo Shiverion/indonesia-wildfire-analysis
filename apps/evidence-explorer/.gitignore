@@ -6,3 +6,5 @@ data/evidence-explorer.json
 data/evidence-explorer.receipt.json
 public/cesium/
 next-preview.*.log
+
+.vercel

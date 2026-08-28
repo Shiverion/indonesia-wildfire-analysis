@@ -151,6 +151,27 @@ def run() -> dict[str, Any]:
             "access", "data/raw/historical_access", "dated road/settlement exposure for original hypothesis", "Obtain authoritative dated construction source; OSM remains sensitivity only",
         ),
     }
+    # Keep this condition-specific audit synchronized with temporal QA.  A
+    # payload directory alone is not enough, but the report should distinguish
+    # a complete ERA5 study window from an unvalidated vegetation inventory.
+    era5_qa = temporal_support["assets"]["era5_land"]
+    if era5_qa.get("status") == "study_window_complete":
+        assets["era5_land"].update({
+            "status": "ready_for_lag_derivation",
+            "next_action": "derive event-cutoff VPD, wind, rainfall, and soil-water lags",
+        })
+    chirps_qa = temporal_support["assets"]["chirps"]
+    if chirps_qa.get("status") in {"support_window_complete_with_extra_dates", "support_window_and_partial_lags_complete"}:
+        assets["chirps"].update({
+            "status": "present_needs_lag_derivation",
+            "next_action": "derive complete 1/7/30/90-day rainfall lags and expand beyond the 2015 support window",
+        })
+    vegetation_qa = temporal_support["assets"]["prefire_vegetation"]
+    if vegetation_qa.get("status") == "payload_inventory_only_qa_unvalidated":
+        assets["prefire_vegetation"].update({
+            "status": "present_needs_qa_and_timing",
+            "next_action": "extract QA SDS and enforce pre-fire composite timing",
+        })
     required = ("peat_baseline", "viirs_outcome_and_opportunity", "era5_land", "chirps", "prefire_vegetation")
     condition_phase_ready = all(assets[key]["status"] in {"ready", "present_needs_temporal_validation"} for key in required)
     condition_phase_ready = condition_phase_ready and assets["viirs_outcome_and_opportunity"]["status"] == "ready"

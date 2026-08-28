@@ -1,0 +1,39 @@
+{
+  "study_id": "indonesia-wildfire-zero-budget-pilot-2015",
+  "purpose": "A reproducible, zero-cost pilot for the environmental-condition hypothesis before expanding the registered 2015-2025 protocol.",
+  "geography": "Kalimantan, Indonesia",
+  "time_window": {
+    "start": "2015-01-01",
+    "end": "2015-12-31",
+    "interpretation": "pilot evidence only; not a ten-year trend or causal estimate"
+  },
+  "download_policy": {
+    "full_archives_allowed": false,
+    "remote_sampling_preferred": true,
+    "maximum_local_raw_gib": 60,
+    "paid_storage_allowed": false,
+    "stop_before_download_if_free_disk_gib_below": 15
+  },
+  "inputs": {
+    "fire": "Existing paired S-NPP VIIRS VNP14IMG/VNP03IMG 2015 diagnostic subset",
+    "rainfall": "Existing CHIRPS 2015 support window; query remaining dates remotely only when needed",
+    "vegetation": "Existing QA-checked MOD13Q1 2014-2015 composites; sample event-linked values remotely for missing support",
+    "weather": "Existing ERA5-Land 2015 monthly files; retain only derived event-level summaries",
+    "land_cover": "Frozen MapBiomas Indonesia Collection 4.1.1 2014 forest mask and fraction",
+    "peat": "Frozen peat/drainage provenance as sensitivity input, not a primary causal exposure"
+  },
+  "outputs": {
+    "required": [
+      "event-level fire and observation-opportunity table",
+      "pre-fire rainfall, VPD/wind/soil-water and vegetation summaries",
+      "descriptive peat-condition comparison",
+      "association model with uncertainty and a missingness report"
+    ],
+    "not_claimed": [
+      "global ranking",
+      "2015-2025 trend",
+      "causal attribution to companies or government",
+      "operational 2026 forecast"
+    ]
+  }
+}

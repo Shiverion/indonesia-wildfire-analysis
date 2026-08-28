@@ -1,0 +1,90 @@
+{
+  "schema_version": "environmental-daily-risk-set-registration/v1",
+  "registered_at_utc": "2026-08-26T00:00:00+00:00",
+  "study_id": "indonesia-wildfire-accessibility-v1",
+  "track_id": "environmental_daily_grid",
+  "inferential_role": "environmental-condition association; not the human-access or land-conversion causal track",
+  "geography": "Kalimantan baseline-natural-forest cells in the frozen MapBiomas Indonesia Collection 4.1 2014 grid",
+  "projection": "EPSG:6933",
+  "grid_m": 1000,
+  "study_years": [2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025],
+  "fire_season": {
+    "start_month_day": "07-01",
+    "end_month_day": "11-30"
+  },
+  "outcome": {
+    "product": "NASA/VIIRS/002/VNP14A1",
+    "product_version": "002",
+    "temporal_support": "daily",
+    "positive_firemask_classes": [7, 8, 9],
+    "valid_land_negative_class": 5,
+    "excluded_firemask_classes": [0, 1, 2, 3, 4, 6],
+    "prior_negative_days_max": 3,
+    "prior_processed_fraction_min": 0.5,
+    "refractory_days": 7,
+    "missing_daily_product_rule": "if the VNP14A1 event-day image is absent, record the calendar day as having no observation opportunity; never code it as a negative or zero fire day. If only a required lookback image is absent, use the registered science-quality MODIS history fallback and retain the VNP14A1 event-day outcome.",
+    "history_gap_fallback": {
+      "amendment_registered_at_utc": "2026-08-26T10:45:00+00:00",
+      "reason": "VNP14A1 source-archive gaps were confirmed before any Phase 2 model was fitted; the fallback prevents a missing lookback image from discarding an otherwise observed VNP14A1 event day.",
+      "role": "lookback_history_only",
+      "products": [
+        "MODIS/061/MOD14A1",
+        "MODIS/061/MYD14A1"
+      ],
+      "fusion_rule": "fire if either donor FireMask is class 7-9; valid non-fire land if neither donor reports fire and either donor is class 5; otherwise unprocessed",
+      "event_outcome_prohibition": "fallback products must never define the primary event-day outcome",
+      "sensitivity_requirement": "report results with all history-fallback dates excluded"
+    },
+    "minimum_calendar_support_fraction_each_year": 0.8
+  },
+  "cohort": {
+    "baseline_land_cover": "MapBiomas Indonesia Collection 4.1, year 2014",
+    "natural_forest_codes": [3, 5, 76],
+    "minimum_forest_fraction": 0.7
+  },
+  "controls": {
+    "per_case": 4,
+    "maximum_distance_km": 25,
+    "reuse_allowed": true,
+    "earth_engine_candidates_per_active_supercell": 12,
+    "random_seed": 20260826
+  },
+  "prefire_covariates": {
+    "chirps": {
+      "collection": "UCSB-CHG/CHIRPS/DAILY",
+      "windows_days": [1, 7, 30, 90],
+      "event_day_excluded": true
+    },
+    "vegetation": {
+      "collection": "MODIS/061/MOD13Q1",
+      "band": "EVI",
+      "scale_factor": 0.0001,
+      "summary_qa_accepted": [0],
+      "composite_must_end_before_event_day": true
+    },
+    "era5_land": {
+      "source": "local validated hourly ERA5-Land archive",
+      "windows_hours": [24, 72],
+      "variables": ["u10", "v10", "t2m", "d2m", "tp", "swvl1", "swvl2", "swvl3"],
+      "event_day_excluded": true,
+      "native_resolution_caveat": "approximately 9 km; sampled to cells without claiming 1-km climate measurement",
+      "coastal_no_data_rule": "use the nearest fully valid ERA5-Land cell within 25 km; otherwise exclude the whole matched set and report it"
+    },
+    "peat": {
+      "source_receipt": "outputs/quality/peat_sensitivity_provenance.json",
+      "primary_threshold_percent": 50,
+      "sensitivity_thresholds_percent": [25, 75]
+    }
+  },
+  "time_split": {
+    "measurement_calibration": [2015, 2017],
+    "model_development": [2018, 2022],
+    "pipeline_rehearsal": [2023, 2023],
+    "locked_retrospective_test": [2024, 2025]
+  },
+  "release_rules": {
+    "do_not_fit_until": "complete frame, covariate, provenance, registration, and immutable-input-lock gates all pass",
+    "coordinates_in_public_artifact": false,
+    "human_access_claim": "blocked pending a dated access exposure; this track cannot answer government intent, arson motive, plantation profit, or road-opening causality"
+  }
+}

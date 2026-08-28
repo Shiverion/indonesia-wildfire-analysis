@@ -1,0 +1,1793 @@
+{
+  "schema_version": "environmental-phase2-results/v1",
+  "created_at_utc": "2026-08-26T16:33:52.391087+00:00",
+  "status": "completed_environmental_association",
+  "phase": "Phase 2 -- environmental matched-risk-set association",
+  "track_id": "environmental_daily_grid",
+  "scope": "Kalimantan baseline-natural-forest cells, July-November 2015-2025",
+  "human_access_confirmatory_track_status": "not_identifiable_missing_dated_exposure",
+  "provenance": {
+    "input_frame": "data/derived/viirs/opportunity_frame.csv",
+    "input_frame_sha256": "0112938dce8ee6a377b18812d26020566376c5f83047ef28d89432245da98936",
+    "input_registration": "config/phase2_registration.json",
+    "input_registration_sha256": "804670b3c297a56ac997b46281ed967a6798b846284de5075f7b70c9ec58ffbe",
+    "model_specification": "config/phase2_model_specification.json",
+    "model_specification_sha256": "e202ea517551e731947eafc22ec24b08238aedd9c182e2a181263fa8a685d133",
+    "immutable_input_lock": {
+      "path": "outputs/locks/locked_test_inputs.json",
+      "valid_at_fit": true,
+      "lock_sha256": null,
+      "inventory_sha256": "4335b6a20b299f4ab930d86e34276bbf04fe8bcdcadb835b90999c431ec54e2f",
+      "file_count": 34
+    }
+  },
+  "data_summary": {
+    "locked_input_row_count": 70455,
+    "row_count": 70450,
+    "case_count": 14090,
+    "control_count": 56360,
+    "matched_set_count": 14090,
+    "unique_cell_count": 18660,
+    "acquisition_date_count": 897,
+    "history_fallback_row_count": 915,
+    "year_counts": [
+      {
+        "year": 2015,
+        "rows": 19140,
+        "cases": 3828,
+        "matched_sets": 3828
+      },
+      {
+        "year": 2016,
+        "rows": 6440,
+        "cases": 1288,
+        "matched_sets": 1288
+      },
+      {
+        "year": 2017,
+        "rows": 1910,
+        "cases": 382,
+        "matched_sets": 382
+      },
+      {
+        "year": 2018,
+        "rows": 10675,
+        "cases": 2135,
+        "matched_sets": 2135
+      },
+      {
+        "year": 2019,
+        "rows": 7230,
+        "cases": 1446,
+        "matched_sets": 1446
+      },
+      {
+        "year": 2020,
+        "rows": 2510,
+        "cases": 502,
+        "matched_sets": 502
+      },
+      {
+        "year": 2021,
+        "rows": 950,
+        "cases": 190,
+        "matched_sets": 190
+      },
+      {
+        "year": 2022,
+        "rows": 1390,
+        "cases": 278,
+        "matched_sets": 278
+      },
+      {
+        "year": 2023,
+        "rows": 10640,
+        "cases": 2128,
+        "matched_sets": 2128
+      },
+      {
+        "year": 2024,
+        "rows": 4305,
+        "cases": 861,
+        "matched_sets": 861
+      },
+      {
+        "year": 2025,
+        "rows": 5260,
+        "cases": 1052,
+        "matched_sets": 1052
+      }
+    ],
+    "distributions": [
+      {
+        "variable": "peat_extent_percent",
+        "outcome": "negative",
+        "n": 56360,
+        "mean": 14.094960965223564,
+        "median": 0.0,
+        "standard_deviation": 30.91716641045712,
+        "p25": 0.0,
+        "p75": 3.0,
+        "p05": 0.0,
+        "p95": 100.0
+      },
+      {
+        "variable": "peat_extent_percent",
+        "outcome": "positive",
+        "n": 14090,
+        "mean": 11.833924769339957,
+        "median": 0.0,
+        "standard_deviation": 27.48111758443279,
+        "p25": 0.0,
+        "p75": 3.0,
+        "p05": 0.0,
+        "p95": 97.0
+      },
+      {
+        "variable": "chirps_precip_7d_mm",
+        "outcome": "negative",
+        "n": 56360,
+        "mean": 26.36841530929996,
+        "median": 19.446725845336914,
+        "standard_deviation": 27.38145601995096,
+        "p25": 2.7523999214172363,
+        "p75": 40.992753982543945,
+        "p05": 0.0,
+        "p95": 81.34967041015625
+      },
+      {
+        "variable": "chirps_precip_7d_mm",
+        "outcome": "positive",
+        "n": 14090,
+        "mean": 26.54964485371057,
+        "median": 19.75558567047119,
+        "standard_deviation": 27.391596973890813,
+        "p25": 3.2420642375946045,
+        "p75": 40.48080062866211,
+        "p05": 0.0,
+        "p95": 81.57305145263672
+      },
+      {
+        "variable": "chirps_precip_30d_mm",
+        "outcome": "negative",
+        "n": 56360,
+        "mean": 150.39615641961956,
+        "median": 134.511962890625,
+        "standard_deviation": 97.9947347807264,
+        "p25": 72.66738700866699,
+        "p75": 209.05422973632807,
+        "p05": 22.92716789245605,
+        "p95": 339.420780944824
+      },
+      {
+        "variable": "chirps_precip_30d_mm",
+        "outcome": "positive",
+        "n": 14090,
+        "mean": 150.66516599027696,
+        "median": 134.21620178222656,
+        "standard_deviation": 98.23696918072471,
+        "p25": 72.58735466003418,
+        "p75": 207.7603302001953,
+        "p05": 23.226917266845703,
+        "p95": 341.2359161376951
+      },
+      {
+        "variable": "evi_prefire",
+        "outcome": "negative",
+        "n": 56360,
+        "mean": 0.541851135661113,
+        "median": 0.5414000153541565,
+        "standard_deviation": 0.07609435083683866,
+        "p25": 0.4880000054836273,
+        "p75": 0.5978000164031982,
+        "p05": 0.421099990606308,
+        "p95": 0.6610999703407288
+      },
+      {
+        "variable": "evi_prefire",
+        "outcome": "positive",
+        "n": 14090,
+        "mean": 0.5489088717385375,
+        "median": 0.5501999855041504,
+        "standard_deviation": 0.07214797645659747,
+        "p25": 0.5011000037193298,
+        "p75": 0.6028000116348267,
+        "p05": 0.4309999942779541,
+        "p95": 0.6588000059127808
+      },
+      {
+        "variable": "era5_vpd_mean_72h_kpa",
+        "outcome": "negative",
+        "n": 56360,
+        "mean": 0.7224901391644596,
+        "median": 0.6781139803221721,
+        "standard_deviation": 0.2920566707992151,
+        "p25": 0.5180487596728883,
+        "p75": 0.8705236804639094,
+        "p05": 0.33320905941033485,
+        "p95": 1.2740791803459635
+      },
+      {
+        "variable": "era5_vpd_mean_72h_kpa",
+        "outcome": "positive",
+        "n": 14090,
+        "mean": 0.7332827700056535,
+        "median": 0.6887794712014123,
+        "standard_deviation": 0.2923828980945439,
+        "p25": 0.5297347526328083,
+        "p75": 0.8794505432763784,
+        "p05": 0.3443363843515135,
+        "p95": 1.2755543399394067
+      },
+      {
+        "variable": "era5_wind_max_24h_ms",
+        "outcome": "negative",
+        "n": 56360,
+        "mean": 1.984087683843296,
+        "median": 1.7691564878871548,
+        "standard_deviation": 0.8607471635625605,
+        "p25": 1.4270774145384109,
+        "p75": 2.284092377250428,
+        "p05": 1.1048784358171333,
+        "p95": 3.5808644748104648
+      },
+      {
+        "variable": "era5_wind_max_24h_ms",
+        "outcome": "positive",
+        "n": 14090,
+        "mean": 1.9972166754304703,
+        "median": 1.7790683298329115,
+        "standard_deviation": 0.8490881511841121,
+        "p25": 1.4227751552926775,
+        "p75": 2.3149637402233028,
+        "p05": 1.1018356057682759,
+        "p95": 3.6623885606591475
+      },
+      {
+        "variable": "era5_rootzone_soil_water_mean_72h",
+        "outcome": "negative",
+        "n": 56360,
+        "mean": 0.34883576069573063,
+        "median": 0.3621268886990017,
+        "standard_deviation": 0.07711851086952531,
+        "p25": 0.30544547557830803,
+        "p75": 0.40323270426856145,
+        "p05": 0.2014228248596191,
+        "p95": 0.45928244537777363
+      },
+      {
+        "variable": "era5_rootzone_soil_water_mean_72h",
+        "outcome": "positive",
+        "n": 14090,
+        "mean": 0.347637772572378,
+        "median": 0.3616404480404324,
+        "standard_deviation": 0.07771858504131925,
+        "p25": 0.3034986517164442,
+        "p75": 0.40291798485649954,
+        "p05": 0.19874871434105765,
+        "p95": 0.4605100218454996
+      }
+    ]
+  },
+  "pre_fit_data_quality": {
+    "rule": "exclude the entire matched set for a negative CHIRPS lag, EVI <= -9000, or non-finite required covariate",
+    "invalid_source_row_count": 1,
+    "excluded_matched_set_count": 1,
+    "excluded_row_count": 5,
+    "excluded_dates": [
+      "2015-08-11"
+    ],
+    "excluded_matched_set_ids": [
+      "2015-08-11:a7e2da558a2f0532154b"
+    ],
+    "imputed_value_count": 0
+  },
+  "standardization": {
+    "forest_fraction_z": {
+      "source": "forest_fraction",
+      "transform": "identity",
+      "direction": 1.0,
+      "mean": 0.9297705421105136,
+      "std": 0.09075936366205498
+    },
+    "log_chirps_precip_7d_z": {
+      "source": "chirps_precip_7d_mm",
+      "transform": "log1p",
+      "direction": 1.0,
+      "mean": 2.325155533455089,
+      "std": 1.5481949234391406
+    },
+    "log_chirps_precip_30d_z": {
+      "source": "chirps_precip_30d_mm",
+      "transform": "log1p",
+      "direction": 1.0,
+      "mean": 4.611919404098148,
+      "std": 0.9197560773780132
+    },
+    "evi_prefire_z": {
+      "source": "evi_prefire",
+      "transform": "identity",
+      "direction": 1.0,
+      "mean": 0.5551916852033524,
+      "std": 0.0740467993993715
+    },
+    "era5_vpd_72h_z": {
+      "source": "era5_vpd_mean_72h_kpa",
+      "transform": "identity",
+      "direction": 1.0,
+      "mean": 0.7393941967177067,
+      "std": 0.2957086169097693
+    },
+    "era5_wind_24h_z": {
+      "source": "era5_wind_max_24h_ms",
+      "transform": "identity",
+      "direction": 1.0,
+      "mean": 2.003087536659462,
+      "std": 0.8536110472773699
+    },
+    "rootzone_dryness_72h_z": {
+      "source": "era5_rootzone_soil_water_mean_72h",
+      "transform": "identity",
+      "direction": -1.0,
+      "mean": 0.3487094199112778,
+      "std": 0.07830267438430814
+    }
+  },
+  "primary_model": {
+    "label": "primary_full_2015_2025",
+    "status": "estimated",
+    "model": "conditional logistic regression; matched-set intercept conditioned out",
+    "peat_threshold_percent": 50,
+    "condition": "rootzone_dryness_72h_z",
+    "condition_label": "drier root-zone soil over the prior 72 h",
+    "row_count": 70450,
+    "case_count": 14090,
+    "control_count": 56360,
+    "matched_set_count": 14090,
+    "acquisition_date_count": 897,
+    "unique_cell_count": 18660,
+    "mixed_peat_matched_set_count": 2572,
+    "history_fallback_row_count": 915,
+    "convergence": {
+      "converged": true,
+      "optimizer_success": false,
+      "message": "Desired error not necessarily achieved due to precision loss.",
+      "iterations": 19,
+      "max_abs_gradient": 6.700810488702302e-07,
+      "information_condition_number": 32.42941994758651
+    },
+    "uncertainty": {
+      "method": "two_way_cell_and_date_cluster_robust",
+      "cell_clusters": 18660,
+      "date_clusters": 897,
+      "cell_date_clusters": 52426,
+      "warning": null
+    },
+    "log_likelihood": -20840.18201521493,
+    "interaction": {
+      "term": "peat_ge_50pct_x_rootzone_dryness_72h_z",
+      "log_odds": -0.14403790424460666,
+      "standard_error": 0.1146098626432307,
+      "odds_ratio": 0.865854927860217,
+      "ci95": [
+        0.6916513809746501,
+        1.0839344454765127
+      ],
+      "z": -1.2567670959783155,
+      "p_two_sided": 0.2088379840776725
+    },
+    "coefficients": [
+      {
+        "term": "forest_fraction_z",
+        "log_odds": -0.5424852748186659,
+        "standard_error": 0.04671462990815489,
+        "odds_ratio": 0.5813017610255369,
+        "ci95": [
+          0.5304413148213398,
+          0.6370388729716573
+        ],
+        "z": -11.612749065661873,
+        "p_two_sided": 3.5501502102711883e-31
+      },
+      {
+        "term": "log_chirps_precip_7d_z",
+        "log_odds": 0.059603072065170216,
+        "standard_error": 0.06310335835737602,
+        "odds_ratio": 1.0614151575938682,
+        "ci95": [
+          0.9379304214223799,
+          1.2011574750518421
+        ],
+        "z": 0.9445309032146518,
+        "p_two_sided": 0.34489841757367523
+      },
+      {
+        "term": "log_chirps_precip_30d_z",
+        "log_odds": 0.0351824261386504,
+        "standard_error": 0.18610836837766284,
+        "odds_ratio": 1.0358086501376051,
+        "ci95": [
+          0.7192185699428555,
+          1.4917573106950417
+        ],
+        "z": 0.18904268757682083,
+        "p_two_sided": 0.8500593600905193
+      },
+      {
+        "term": "evi_prefire_z",
+        "log_odds": 0.06728669051897548,
+        "standard_error": 0.03624019707809561,
+        "odds_ratio": 1.0696020789978509,
+        "ci95": [
+          0.9962629046329843,
+          1.1483400637284427
+        ],
+        "z": 1.8566866613328954,
+        "p_two_sided": 0.06335574631547904
+      },
+      {
+        "term": "era5_vpd_72h_z",
+        "log_odds": 0.45558507031251944,
+        "standard_error": 0.26870102795586487,
+        "odds_ratio": 1.5770958251082108,
+        "ci95": [
+          0.931397675184618,
+          2.6704288703326844
+        ],
+        "z": 1.6955092199623105,
+        "p_two_sided": 0.08997886270709513
+      },
+      {
+        "term": "era5_wind_24h_z",
+        "log_odds": 0.015222879788763416,
+        "standard_error": 0.1322648151033561,
+        "odds_ratio": 1.0153393380160787,
+        "ci95": [
+          0.783474974917816,
+          1.315822463162998
+        ],
+        "z": 0.11509394827995452,
+        "p_two_sided": 0.9083706566016746
+      },
+      {
+        "term": "rootzone_dryness_72h_z",
+        "log_odds": -0.08370061834465296,
+        "standard_error": 0.12126249919943512,
+        "odds_ratio": 0.9197065581546892,
+        "ci95": [
+          0.7251511835910368,
+          1.1664604185349905
+        ],
+        "z": -0.6902432235624159,
+        "p_two_sided": 0.49004124580861896
+      },
+      {
+        "term": "peat_ge_50pct",
+        "log_odds": -0.4912613170523695,
+        "standard_error": 0.1721287473820072,
+        "odds_ratio": 0.6118541651818838,
+        "ci95": [
+          0.43664548427694433,
+          0.857367207336048
+        ],
+        "z": -2.854034114139621,
+        "p_two_sided": 0.004316789556837933
+      },
+      {
+        "term": "peat_ge_50pct_x_rootzone_dryness_72h_z",
+        "log_odds": -0.14403790424460666,
+        "standard_error": 0.1146098626432307,
+        "odds_ratio": 0.865854927860217,
+        "ci95": [
+          0.6916513809746501,
+          1.0839344454765127
+        ],
+        "z": -1.2567670959783155,
+        "p_two_sided": 0.2088379840776725
+      }
+    ]
+  },
+  "primary_interpretation": {
+    "classification": "inconclusive",
+    "plain_language": "The interval includes no interaction, so this analysis does not establish that drier root-zone soil changes the peat-associated detection-odds gradient.",
+    "effect_definition": "Interaction OR 0.866 per one development-period SD increase in dryness, comparing ≥50% versus <50% peat extent."
+  },
+  "mandatory_sensitivities": {
+    "exclude_history_fallback": {
+      "label": "mandatory_exclude_history_fallback",
+      "status": "estimated",
+      "model": "conditional logistic regression; matched-set intercept conditioned out",
+      "peat_threshold_percent": 50,
+      "condition": "rootzone_dryness_72h_z",
+      "condition_label": "drier root-zone soil over the prior 72 h",
+      "row_count": 69535,
+      "case_count": 13907,
+      "control_count": 55628,
+      "matched_set_count": 13907,
+      "acquisition_date_count": 876,
+      "unique_cell_count": 18506,
+      "mixed_peat_matched_set_count": 2537,
+      "history_fallback_row_count": 0,
+      "convergence": {
+        "converged": true,
+        "optimizer_success": true,
+        "message": "Optimization terminated successfully.",
+        "iterations": 20,
+        "max_abs_gradient": 2.523875886062399e-08,
+        "information_condition_number": 32.41888064406513
+      },
+      "uncertainty": {
+        "method": "two_way_cell_and_date_cluster_robust",
+        "cell_clusters": 18506,
+        "date_clusters": 876,
+        "cell_date_clusters": 51786,
+        "warning": null
+      },
+      "log_likelihood": -20591.399022034162,
+      "interaction": {
+        "term": "peat_ge_50pct_x_rootzone_dryness_72h_z",
+        "log_odds": -0.14657084710051585,
+        "standard_error": 0.11454442851538128,
+        "odds_ratio": 0.8636645420385886,
+        "ci95": [
+          0.6899901706061294,
+          1.0810537206920883
+        ],
+        "z": -1.279598222281357,
+        "p_two_sided": 0.20068647540443385
+      },
+      "coefficients": [
+        {
+          "term": "forest_fraction_z",
+          "log_odds": -0.5383367786529019,
+          "standard_error": 0.04646694531373101,
+          "odds_ratio": 0.5837182981841516,
+          "ci95": [
+            0.5329050616209922,
+            0.6393766473123327
+          ],
+          "z": -11.585370525611527,
+          "p_two_sided": 4.888481862612605e-31
+        },
+        {
+          "term": "log_chirps_precip_7d_z",
+          "log_odds": 0.06074316365132149,
+          "standard_error": 0.06273790624719393,
+          "odds_ratio": 1.0626259581650757,
+          "ci95": [
+            0.9396731916810519,
+            1.2016666400221347
+          ],
+          "z": 0.968205145577971,
+          "p_two_sided": 0.3329419256073971
+        },
+        {
+          "term": "log_chirps_precip_30d_z",
+          "log_odds": 0.035664297308453274,
+          "standard_error": 0.18284228847825867,
+          "odds_ratio": 1.0363078967401507,
+          "ci95": [
+            0.7241863080723053,
+            1.4829527220760013
+          ],
+          "z": 0.19505497117366274,
+          "p_two_sided": 0.845349913224584
+        },
+        {
+          "term": "evi_prefire_z",
+          "log_odds": 0.06989395028940959,
+          "standard_error": 0.0363896718785948,
+          "odds_ratio": 1.0723944481027792,
+          "ci95": [
+            0.998571215093814,
+            1.15167534867668
+          ],
+          "z": 1.9207084505349097,
+          "p_two_sided": 0.054768473649058534
+        },
+        {
+          "term": "era5_vpd_72h_z",
+          "log_odds": 0.4586835232153714,
+          "standard_error": 0.2672083207004319,
+          "odds_ratio": 1.5819899604540526,
+          "ci95": [
+            0.9370254974158152,
+            2.6708902179070786
+          ],
+          "z": 1.7165764973673967,
+          "p_two_sided": 0.08605657978104413
+        },
+        {
+          "term": "era5_wind_24h_z",
+          "log_odds": 0.01679028377056278,
+          "standard_error": 0.13204821993110352,
+          "odds_ratio": 1.0169320328093712,
+          "ci95": [
+            0.7850371579950924,
+            1.3173271466473246
+          ],
+          "z": 0.12715267028456084,
+          "p_two_sided": 0.8988195648712258
+        },
+        {
+          "term": "rootzone_dryness_72h_z",
+          "log_odds": -0.08181653522905866,
+          "standard_error": 0.12111702617859724,
+          "odds_ratio": 0.9214409951508686,
+          "ci95": [
+            0.726725896285414,
+            1.1683270293304178
+          ],
+          "z": -0.6755163812263133,
+          "p_two_sided": 0.49934774738710996
+        },
+        {
+          "term": "peat_ge_50pct",
+          "log_odds": -0.4759579246801296,
+          "standard_error": 0.17262787371378796,
+          "odds_ratio": 0.6212896226571303,
+          "ci95": [
+            0.4429454929911505,
+            0.871440846174613
+          ],
+          "z": -2.7571325211897943,
+          "p_two_sided": 0.005831071414976501
+        },
+        {
+          "term": "peat_ge_50pct_x_rootzone_dryness_72h_z",
+          "log_odds": -0.14657084710051585,
+          "standard_error": 0.11454442851538128,
+          "odds_ratio": 0.8636645420385886,
+          "ci95": [
+            0.6899901706061294,
+            1.0810537206920883
+          ],
+          "z": -1.279598222281357,
+          "p_two_sided": 0.20068647540443385
+        }
+      ]
+    },
+    "peat_thresholds": [
+      {
+        "label": "peat_threshold_25pct",
+        "status": "estimated",
+        "model": "conditional logistic regression; matched-set intercept conditioned out",
+        "peat_threshold_percent": 25,
+        "condition": "rootzone_dryness_72h_z",
+        "condition_label": "drier root-zone soil over the prior 72 h",
+        "row_count": 70450,
+        "case_count": 14090,
+        "control_count": 56360,
+        "matched_set_count": 14090,
+        "acquisition_date_count": 897,
+        "unique_cell_count": 18660,
+        "mixed_peat_matched_set_count": 3251,
+        "history_fallback_row_count": 915,
+        "convergence": {
+          "converged": true,
+          "optimizer_success": false,
+          "message": "Desired error not necessarily achieved due to precision loss.",
+          "iterations": 20,
+          "max_abs_gradient": 6.3510789742871054e-06,
+          "information_condition_number": 24.795154276657485
+        },
+        "uncertainty": {
+          "method": "two_way_cell_and_date_cluster_robust",
+          "cell_clusters": 18660,
+          "date_clusters": 897,
+          "cell_date_clusters": 52426,
+          "warning": null
+        },
+        "log_likelihood": -20848.82374807437,
+        "interaction": {
+          "term": "peat_ge_25pct_x_rootzone_dryness_72h_z",
+          "log_odds": -0.2218277693158874,
+          "standard_error": 0.10670565102932372,
+          "odds_ratio": 0.8010533184153966,
+          "ci95": [
+            0.6498778574708459,
+            0.9873954183353685
+          ],
+          "z": -2.0788755532256395,
+          "p_two_sided": 0.03762879023132545
+        },
+        "coefficients": [
+          {
+            "term": "forest_fraction_z",
+            "log_odds": -0.5417331853408943,
+            "standard_error": 0.04672457518728325,
+            "odds_ratio": 0.5817391164079895,
+            "ci95": [
+              0.5308300567725505,
+              0.6375305905184536
+            ],
+            "z": -11.594181074295452,
+            "p_two_sided": 4.410641893909597e-31
+          },
+          {
+            "term": "log_chirps_precip_7d_z",
+            "log_odds": 0.05992979735745695,
+            "standard_error": 0.06295130850071728,
+            "odds_ratio": 1.0617620054303656,
+            "ci95": [
+              0.9385165699753262,
+              1.2011919578629813
+            ],
+            "z": 0.9520024092394219,
+            "p_two_sided": 0.34109576003026854
+          },
+          {
+            "term": "log_chirps_precip_30d_z",
+            "log_odds": 0.030578603456809444,
+            "standard_error": 0.18765520012827783,
+            "odds_ratio": 1.031050931031014,
+            "ci95": [
+              0.7137478082322145,
+              1.4894140621081353
+            ],
+            "z": 0.16295100501295165,
+            "p_two_sided": 0.8705570112807126
+          },
+          {
+            "term": "evi_prefire_z",
+            "log_odds": 0.07093607037453105,
+            "standard_error": 0.0361905771427182,
+            "odds_ratio": 1.073512594416492,
+            "ci95": [
+              1.0000025391780272,
+              1.152426364155126
+            ],
+            "z": 1.960070161213328,
+            "p_two_sided": 0.049987590285151845
+          },
+          {
+            "term": "era5_vpd_72h_z",
+            "log_odds": 0.4468596968337335,
+            "standard_error": 0.26863290617205743,
+            "odds_ratio": 1.5633949346385458,
+            "ci95": [
+              0.9234295212427744,
+              2.646876307748958
+            ],
+            "z": 1.6634585211519959,
+            "p_two_sided": 0.09622068716229333
+          },
+          {
+            "term": "era5_wind_24h_z",
+            "log_odds": 0.005168573822157063,
+            "standard_error": 0.1323819134151675,
+            "odds_ratio": 1.005181953941948,
+            "ci95": [
+              0.7754591476538379,
+              1.3029580779174548
+            ],
+            "z": 0.03904290011240221,
+            "p_two_sided": 0.968856185327808
+          },
+          {
+            "term": "rootzone_dryness_72h_z",
+            "log_odds": -0.06416115975265652,
+            "standard_error": 0.120773657688088,
+            "odds_ratio": 0.9378538430575116,
+            "ci95": [
+              0.7401684164943689,
+              1.188337426100422
+            ],
+            "z": -0.5312512759890089,
+            "p_two_sided": 0.5952446646313139
+          },
+          {
+            "term": "peat_ge_25pct",
+            "log_odds": -0.34275636426898215,
+            "standard_error": 0.14393901657842717,
+            "odds_ratio": 0.7098111258478345,
+            "ci95": [
+              0.5353273571092347,
+              0.9411658636279301
+            ],
+            "z": -2.381260984107298,
+            "p_two_sided": 0.017253483358539774
+          },
+          {
+            "term": "peat_ge_25pct_x_rootzone_dryness_72h_z",
+            "log_odds": -0.2218277693158874,
+            "standard_error": 0.10670565102932372,
+            "odds_ratio": 0.8010533184153966,
+            "ci95": [
+              0.6498778574708459,
+              0.9873954183353685
+            ],
+            "z": -2.0788755532256395,
+            "p_two_sided": 0.03762879023132545
+          }
+        ]
+      },
+      {
+        "label": "peat_threshold_75pct",
+        "status": "estimated",
+        "model": "conditional logistic regression; matched-set intercept conditioned out",
+        "peat_threshold_percent": 75,
+        "condition": "rootzone_dryness_72h_z",
+        "condition_label": "drier root-zone soil over the prior 72 h",
+        "row_count": 70450,
+        "case_count": 14090,
+        "control_count": 56360,
+        "matched_set_count": 14090,
+        "acquisition_date_count": 897,
+        "unique_cell_count": 18660,
+        "mixed_peat_matched_set_count": 2297,
+        "history_fallback_row_count": 915,
+        "convergence": {
+          "converged": true,
+          "optimizer_success": false,
+          "message": "Desired error not necessarily achieved due to precision loss.",
+          "iterations": 20,
+          "max_abs_gradient": 8.523906016577598e-07,
+          "information_condition_number": 44.50068112395672
+        },
+        "uncertainty": {
+          "method": "two_way_cell_and_date_cluster_robust",
+          "cell_clusters": 18660,
+          "date_clusters": 897,
+          "cell_date_clusters": 52426,
+          "warning": null
+        },
+        "log_likelihood": -20815.49384743392,
+        "interaction": {
+          "term": "peat_ge_75pct_x_rootzone_dryness_72h_z",
+          "log_odds": 0.03907496130763917,
+          "standard_error": 0.1053928668684323,
+          "odds_ratio": 1.0398484291266679,
+          "ci95": [
+            0.8457807973348643,
+            1.2784456196740688
+          ],
+          "z": 0.3707552747039189,
+          "p_two_sided": 0.7108198164329667
+        },
+        "coefficients": [
+          {
+            "term": "forest_fraction_z",
+            "log_odds": -0.5349014237443785,
+            "standard_error": 0.04698274588850747,
+            "odds_ratio": 0.585727026076098,
+            "ci95": [
+              0.534198596455674,
+              0.6422258526177488
+            ],
+            "z": -11.385060911802128,
+            "p_two_sided": 4.9633551330399394e-30
+          },
+          {
+            "term": "log_chirps_precip_7d_z",
+            "log_odds": 0.05566700410106427,
+            "standard_error": 0.06433351408267866,
+            "odds_ratio": 1.0572455666752254,
+            "ci95": [
+              0.9319960677097574,
+              1.1993271505975005
+            ],
+            "z": 0.8652877880963168,
+            "p_two_sided": 0.3868808518057415
+          },
+          {
+            "term": "log_chirps_precip_30d_z",
+            "log_odds": 0.03720142113156917,
+            "standard_error": 0.1862984827164807,
+            "odds_ratio": 1.037902055191897,
+            "ci95": [
+              0.7204036457285742,
+              1.4953292956785433
+            ],
+            "z": 0.1996871933100193,
+            "p_two_sided": 0.841725230312002
+          },
+          {
+            "term": "evi_prefire_z",
+            "log_odds": 0.058612087229014155,
+            "standard_error": 0.036426164244134446,
+            "odds_ratio": 1.0603638322775877,
+            "ci95": [
+              0.9872981633030766,
+              1.1388367755498976
+            ],
+            "z": 1.6090655836333967,
+            "p_two_sided": 0.10760200178682781
+          },
+          {
+            "term": "era5_vpd_72h_z",
+            "log_odds": 0.4773630248799449,
+            "standard_error": 0.26702601039864615,
+            "odds_ratio": 1.6118184680645424,
+            "ci95": [
+              0.9550343643832682,
+              2.7202777940578198
+            ],
+            "z": 1.787702344679023,
+            "p_two_sided": 0.07382404326065391
+          },
+          {
+            "term": "era5_wind_24h_z",
+            "log_odds": 0.010843588988921422,
+            "standard_error": 0.13960016894190153,
+            "odds_ratio": 1.0109025937817147,
+            "ci95": [
+              0.768916619804562,
+              1.3290440443000748
+            ],
+            "z": 0.07767604488669552,
+            "p_two_sided": 0.9380857499308161
+          },
+          {
+            "term": "rootzone_dryness_72h_z",
+            "log_odds": -0.12175702484205952,
+            "standard_error": 0.11878195358137426,
+            "odds_ratio": 0.885363463697601,
+            "ci95": [
+              0.7014752554294427,
+              1.1174570404065494
+            ],
+            "z": -1.0250464920889444,
+            "p_two_sided": 0.3053412511098078
+          },
+          {
+            "term": "peat_ge_75pct",
+            "log_odds": -0.7676917852204499,
+            "standard_error": 0.1648794134192913,
+            "odds_ratio": 0.46408303630154046,
+            "ci95": [
+              0.33592900515633706,
+              0.6411267299845843
+            ],
+            "z": -4.656080278913874,
+            "p_two_sided": 3.222863092810158e-06
+          },
+          {
+            "term": "peat_ge_75pct_x_rootzone_dryness_72h_z",
+            "log_odds": 0.03907496130763917,
+            "standard_error": 0.1053928668684323,
+            "odds_ratio": 1.0398484291266679,
+            "ci95": [
+              0.8457807973348643,
+              1.2784456196740688
+            ],
+            "z": 0.3707552747039189,
+            "p_two_sided": 0.7108198164329667
+          }
+        ]
+      }
+    ],
+    "locked_test_period": {
+      "label": "locked_test_2024_2025_association",
+      "status": "estimated",
+      "model": "conditional logistic regression; matched-set intercept conditioned out",
+      "peat_threshold_percent": 50,
+      "condition": "rootzone_dryness_72h_z",
+      "condition_label": "drier root-zone soil over the prior 72 h",
+      "row_count": 9565,
+      "case_count": 1913,
+      "control_count": 7652,
+      "matched_set_count": 1913,
+      "acquisition_date_count": 162,
+      "unique_cell_count": 4607,
+      "mixed_peat_matched_set_count": 395,
+      "history_fallback_row_count": 410,
+      "convergence": {
+        "converged": true,
+        "optimizer_success": true,
+        "message": "Optimization terminated successfully.",
+        "iterations": 19,
+        "max_abs_gradient": 2.9866535827816065e-08,
+        "information_condition_number": 109.19280663057825
+      },
+      "uncertainty": {
+        "method": "two_way_cell_and_date_cluster_robust",
+        "cell_clusters": 4607,
+        "date_clusters": 162,
+        "cell_date_clusters": 7447,
+        "warning": null
+      },
+      "log_likelihood": -2767.541158375507,
+      "interaction": {
+        "term": "peat_ge_50pct_x_rootzone_dryness_72h_z",
+        "log_odds": -0.42419033182201415,
+        "standard_error": 0.19849952939518564,
+        "odds_ratio": 0.6542993360719392,
+        "ci95": [
+          0.4434148862357901,
+          0.9654786848011463
+        ],
+        "z": -2.136984067994986,
+        "p_two_sided": 0.03259928747563772
+      },
+      "coefficients": [
+        {
+          "term": "forest_fraction_z",
+          "log_odds": -0.5736818666109859,
+          "standard_error": 0.06500281185947329,
+          "odds_ratio": 0.563447077940547,
+          "ci95": [
+            0.4960456214011898,
+            0.6400068782846422
+          ],
+          "z": -8.825493085609947,
+          "p_two_sided": 1.089785780530175e-18
+        },
+        {
+          "term": "log_chirps_precip_7d_z",
+          "log_odds": -0.06810418471105621,
+          "standard_error": 0.16409421424593332,
+          "odds_ratio": 0.9341631429899903,
+          "ci95": [
+            0.6772404869960233,
+            1.2885537626253303
+          ],
+          "z": -0.4150309931646113,
+          "p_two_sided": 0.6781192146642363
+        },
+        {
+          "term": "log_chirps_precip_30d_z",
+          "log_odds": -0.02170489876659376,
+          "standard_error": 2.0430298423071243,
+          "odds_ratio": 0.9785289575502287,
+          "ci95": [
+            0.017844795360985113,
+            53.65816202397058
+          ],
+          "z": -0.010623877496612167,
+          "p_two_sided": 0.9915235316218309
+        },
+        {
+          "term": "evi_prefire_z",
+          "log_odds": -0.04371810421053506,
+          "standard_error": 0.060077850560503875,
+          "odds_ratio": 0.9572237567902293,
+          "ci95": [
+            0.8508914696149725,
+            1.0768439375449546
+          ],
+          "z": -0.7276908844551112,
+          "p_two_sided": 0.46680283163665104
+        },
+        {
+          "term": "era5_vpd_72h_z",
+          "log_odds": 1.1688105749017916,
+          "standard_error": 0.4099304115944213,
+          "odds_ratio": 3.218162597842791,
+          "ci95": [
+            1.4410139073877213,
+            7.187002466151568
+          ],
+          "z": 2.8512414347491606,
+          "p_two_sided": 0.004354888883141459
+        },
+        {
+          "term": "era5_wind_24h_z",
+          "log_odds": 0.05730035802765662,
+          "standard_error": 0.18598746298915372,
+          "odds_ratio": 1.0589738339247468,
+          "ci95": [
+            0.7354776922625855,
+            1.5247581167110338
+          ],
+          "z": 0.30808720709846027,
+          "p_two_sided": 0.7580159753591414
+        },
+        {
+          "term": "rootzone_dryness_72h_z",
+          "log_odds": -0.08122328203595829,
+          "standard_error": 0.14673484851531007,
+          "odds_ratio": 0.9219878051458458,
+          "ci95": [
+            0.6915473989369724,
+            1.2292165571649105
+          ],
+          "z": -0.5535377782291682,
+          "p_two_sided": 0.5798952192256244
+        },
+        {
+          "term": "peat_ge_50pct",
+          "log_odds": -0.594295259007211,
+          "standard_error": 0.2202003850116322,
+          "odds_ratio": 0.5519514116197617,
+          "ci95": [
+            0.3584779906801486,
+            0.8498439756678713
+          ],
+          "z": -2.6988838324502344,
+          "p_two_sided": 0.006957245708361328
+        },
+        {
+          "term": "peat_ge_50pct_x_rootzone_dryness_72h_z",
+          "log_odds": -0.42419033182201415,
+          "standard_error": 0.19849952939518564,
+          "odds_ratio": 0.6542993360719392,
+          "ci95": [
+            0.4434148862357901,
+            0.9654786848011463
+          ],
+          "z": -2.136984067994986,
+          "p_two_sided": 0.03259928747563772
+        }
+      ]
+    }
+  },
+  "secondary_condition_models": [
+    {
+      "label": "secondary_era5_vpd_72h_z",
+      "status": "estimated",
+      "model": "conditional logistic regression; matched-set intercept conditioned out",
+      "peat_threshold_percent": 50,
+      "condition": "era5_vpd_72h_z",
+      "condition_label": "higher VPD over the prior 72 h",
+      "row_count": 70450,
+      "case_count": 14090,
+      "control_count": 56360,
+      "matched_set_count": 14090,
+      "acquisition_date_count": 897,
+      "unique_cell_count": 18660,
+      "mixed_peat_matched_set_count": 2572,
+      "history_fallback_row_count": 915,
+      "convergence": {
+        "converged": true,
+        "optimizer_success": false,
+        "message": "Desired error not necessarily achieved due to precision loss.",
+        "iterations": 20,
+        "max_abs_gradient": 4.452327531767608e-06,
+        "information_condition_number": 28.467564688502335
+      },
+      "uncertainty": {
+        "method": "two_way_cell_and_date_cluster_robust",
+        "cell_clusters": 18660,
+        "date_clusters": 897,
+        "cell_date_clusters": 52426,
+        "warning": null
+      },
+      "log_likelihood": -20846.975711767554,
+      "interaction": {
+        "term": "peat_ge_50pct_x_era5_vpd_72h_z",
+        "log_odds": 0.049937448159034434,
+        "standard_error": 0.12075637402392407,
+        "odds_ratio": 1.0512053394902203,
+        "ci95": [
+          0.8296552342331317,
+          1.3319179102077927
+        ],
+        "z": 0.4135388178278763,
+        "p_two_sided": 0.6792118883241942,
+        "p_holm_three_secondary_conditions": 1.0
+      },
+      "coefficients": [
+        {
+          "term": "forest_fraction_z",
+          "log_odds": -0.5428161778232979,
+          "standard_error": 0.046713866809255426,
+          "odds_ratio": 0.5811094383480465,
+          "ci95": [
+            0.5302666123394032,
+            0.6368271572811016
+          ],
+          "z": -11.620022380929289,
+          "p_two_sided": 3.2605083147606003e-31
+        },
+        {
+          "term": "log_chirps_precip_7d_z",
+          "log_odds": 0.05921511757978394,
+          "standard_error": 0.06337179818032362,
+          "odds_ratio": 1.061003456688393,
+          "ci95": [
+            0.9370734542059864,
+            1.2013234715506755
+          ],
+          "z": 0.9344080376461482,
+          "p_two_sided": 0.3500934532184181
+        },
+        {
+          "term": "log_chirps_precip_30d_z",
+          "log_odds": 0.03435444440790938,
+          "standard_error": 0.18569541926436997,
+          "odds_ratio": 1.0349513744520265,
+          "ci95": [
+            0.7192051915455768,
+            1.4893167625476742
+          ],
+          "z": 0.1850042642085845,
+          "p_two_sided": 0.853225690955688
+        },
+        {
+          "term": "evi_prefire_z",
+          "log_odds": 0.0648429559028289,
+          "standard_error": 0.03618926859753864,
+          "odds_ratio": 1.066991446517572,
+          "ci95": [
+            0.9939304838374996,
+            1.1454229098056241
+          ],
+          "z": 1.7917730425543639,
+          "p_two_sided": 0.07316932867445447
+        },
+        {
+          "term": "era5_vpd_72h_z",
+          "log_odds": 0.46573242899630973,
+          "standard_error": 0.26639083273078445,
+          "odds_ratio": 1.5931806533656363,
+          "ci95": [
+            0.9451670419358432,
+            2.6854772560201554
+          ],
+          "z": 1.74830501568716,
+          "p_two_sided": 0.08041122519695128
+        },
+        {
+          "term": "era5_wind_24h_z",
+          "log_odds": 0.015484458025870212,
+          "standard_error": 0.13282682547050123,
+          "odds_ratio": 1.0156049634295812,
+          "ci95": [
+            0.7828171619539487,
+            1.3176173081952425
+          ],
+          "z": 0.11657628623601389,
+          "p_two_sided": 0.907195830414041
+        },
+        {
+          "term": "rootzone_dryness_72h_z",
+          "log_odds": -0.11011623722840491,
+          "standard_error": 0.11183598914745323,
+          "odds_ratio": 0.8957300120711457,
+          "ci95": [
+            0.7194165260762622,
+            1.1152541336531976
+          ],
+          "z": -0.9846225536863553,
+          "p_two_sided": 0.32480950706684586
+        },
+        {
+          "term": "peat_ge_50pct",
+          "log_odds": -0.5636877259461757,
+          "standard_error": 0.1758474288234225,
+          "odds_ratio": 0.5691064806215379,
+          "ci95": [
+            0.4031894668540551,
+            0.8033002171722669
+          ],
+          "z": -3.2055500027367683,
+          "p_two_sided": 0.001348046227826397
+        },
+        {
+          "term": "peat_ge_50pct_x_era5_vpd_72h_z",
+          "log_odds": 0.049937448159034434,
+          "standard_error": 0.12075637402392407,
+          "odds_ratio": 1.0512053394902203,
+          "ci95": [
+            0.8296552342331317,
+            1.3319179102077927
+          ],
+          "z": 0.4135388178278763,
+          "p_two_sided": 0.6792118883241942,
+          "p_holm_three_secondary_conditions": 1.0
+        }
+      ]
+    },
+    {
+      "label": "secondary_era5_wind_24h_z",
+      "status": "estimated",
+      "model": "conditional logistic regression; matched-set intercept conditioned out",
+      "peat_threshold_percent": 50,
+      "condition": "era5_wind_24h_z",
+      "condition_label": "higher maximum wind over the prior 24 h",
+      "row_count": 70450,
+      "case_count": 14090,
+      "control_count": 56360,
+      "matched_set_count": 14090,
+      "acquisition_date_count": 897,
+      "unique_cell_count": 18660,
+      "mixed_peat_matched_set_count": 2572,
+      "history_fallback_row_count": 915,
+      "convergence": {
+        "converged": true,
+        "optimizer_success": false,
+        "message": "Desired error not necessarily achieved due to precision loss.",
+        "iterations": 19,
+        "max_abs_gradient": 8.40407081134642e-07,
+        "information_condition_number": 27.785671136786323
+      },
+      "uncertainty": {
+        "method": "two_way_cell_and_date_cluster_robust",
+        "cell_clusters": 18660,
+        "date_clusters": 897,
+        "cell_date_clusters": 52426,
+        "warning": null
+      },
+      "log_likelihood": -20835.330369107982,
+      "interaction": {
+        "term": "peat_ge_50pct_x_era5_wind_24h_z",
+        "log_odds": -0.1839231303336472,
+        "standard_error": 0.1251833086896535,
+        "odds_ratio": 0.8319997569123335,
+        "ci95": [
+          0.650976057577025,
+          1.0633626036550146
+        ],
+        "z": -1.4692304609843614,
+        "p_two_sided": 0.1417702908549486,
+        "p_holm_three_secondary_conditions": 0.4253108725648458
+      },
+      "coefficients": [
+        {
+          "term": "forest_fraction_z",
+          "log_odds": -0.5444014556487027,
+          "standard_error": 0.046504855093254076,
+          "odds_ratio": 0.5801889482503442,
+          "ci95": [
+            0.5296435893184088,
+            0.6355579911861697
+          ],
+          "z": -11.706335920347223,
+          "p_two_sided": 1.1828151285703515e-31
+        },
+        {
+          "term": "log_chirps_precip_7d_z",
+          "log_odds": 0.05995584741209486,
+          "standard_error": 0.06292412159891611,
+          "odds_ratio": 1.0617896647488814,
+          "ci95": [
+            0.9385910314383054,
+            1.2011592423165476
+          ],
+          "z": 0.9528277215255972,
+          "p_two_sided": 0.34067736616104216
+        },
+        {
+          "term": "log_chirps_precip_30d_z",
+          "log_odds": 0.03628135144412011,
+          "standard_error": 0.18539072613577082,
+          "odds_ratio": 1.0369475521443687,
+          "ci95": [
+            0.7210228343704367,
+            1.4912984369448785
+          ],
+          "z": 0.19570208391950242,
+          "p_two_sided": 0.8448433532204813
+        },
+        {
+          "term": "evi_prefire_z",
+          "log_odds": 0.06445971953827007,
+          "standard_error": 0.03620774447717586,
+          "odds_ratio": 1.0665826149391608,
+          "ci95": [
+            0.9935136680244924,
+            1.1450254899386185
+          ],
+          "z": 1.7802743713821583,
+          "p_two_sided": 0.07503106926055701
+        },
+        {
+          "term": "era5_vpd_72h_z",
+          "log_odds": 0.43726104480781236,
+          "standard_error": 0.26577720454791076,
+          "odds_ratio": 1.5484602418077178,
+          "ci95": [
+            0.9197418224389988,
+            2.6069588899424474
+          ],
+          "z": 1.645216509638579,
+          "p_two_sided": 0.09992517005981305
+        },
+        {
+          "term": "era5_wind_24h_z",
+          "log_odds": 0.11622289578179913,
+          "standard_error": 0.15997639645304973,
+          "odds_ratio": 1.1232462110748416,
+          "ci95": [
+            0.8209189945009009,
+            1.536914189031599
+          ],
+          "z": 0.7265002735319677,
+          "p_two_sided": 0.46753213987355313
+        },
+        {
+          "term": "rootzone_dryness_72h_z",
+          "log_odds": -0.11247121583210043,
+          "standard_error": 0.11145622493671513,
+          "odds_ratio": 0.8936230689347784,
+          "ci95": [
+            0.718258737143982,
+            1.1118029590670082
+          ],
+          "z": -1.0091066326350244,
+          "p_two_sided": 0.312923497408395
+        },
+        {
+          "term": "peat_ge_50pct",
+          "log_odds": -0.5309538232325666,
+          "standard_error": 0.17298391774771155,
+          "odds_ratio": 0.5880438122485128,
+          "ci95": [
+            0.41895058481470754,
+            0.8253849920670281
+          ],
+          "z": -3.0693825769799963,
+          "p_two_sided": 0.00214501709491756
+        },
+        {
+          "term": "peat_ge_50pct_x_era5_wind_24h_z",
+          "log_odds": -0.1839231303336472,
+          "standard_error": 0.1251833086896535,
+          "odds_ratio": 0.8319997569123335,
+          "ci95": [
+            0.650976057577025,
+            1.0633626036550146
+          ],
+          "z": -1.4692304609843614,
+          "p_two_sided": 0.1417702908549486,
+          "p_holm_three_secondary_conditions": 0.4253108725648458
+        }
+      ]
+    },
+    {
+      "label": "secondary_low_evi_prefire_z",
+      "status": "estimated",
+      "model": "conditional logistic regression; matched-set intercept conditioned out",
+      "peat_threshold_percent": 50,
+      "condition": "low_evi_prefire_z",
+      "condition_label": "lower pre-fire EVI",
+      "row_count": 70450,
+      "case_count": 14090,
+      "control_count": 56360,
+      "matched_set_count": 14090,
+      "acquisition_date_count": 897,
+      "unique_cell_count": 18660,
+      "mixed_peat_matched_set_count": 2572,
+      "history_fallback_row_count": 915,
+      "convergence": {
+        "converged": true,
+        "optimizer_success": false,
+        "message": "Desired error not necessarily achieved due to precision loss.",
+        "iterations": 19,
+        "max_abs_gradient": 5.620572391507039e-06,
+        "information_condition_number": 30.904579007672186
+      },
+      "uncertainty": {
+        "method": "two_way_cell_and_date_cluster_robust",
+        "cell_clusters": 18660,
+        "date_clusters": 897,
+        "cell_date_clusters": 52426,
+        "warning": null
+      },
+      "log_likelihood": -20847.011139749382,
+      "interaction": {
+        "term": "peat_ge_50pct_x_low_evi_prefire_z",
+        "log_odds": -0.033527793070812384,
+        "standard_error": 0.07109932758961864,
+        "odds_ratio": 0.9670280341792752,
+        "ci95": [
+          0.841236475228773,
+          1.1116294245733018
+        ],
+        "z": -0.471562730724163,
+        "p_two_sided": 0.637238933959743,
+        "p_holm_three_secondary_conditions": 1.0
+      },
+      "coefficients": [
+        {
+          "term": "forest_fraction_z",
+          "log_odds": -0.5430635417440136,
+          "standard_error": 0.046687686351893055,
+          "odds_ratio": 0.5809657106162723,
+          "ci95": [
+            0.5301626636410387,
+            0.6366369796655433
+          ],
+          "z": -11.631836661402561,
+          "p_two_sided": 2.8392201626083008e-31
+        },
+        {
+          "term": "log_chirps_precip_7d_z",
+          "log_odds": 0.05921469671123709,
+          "standard_error": 0.0633447387508624,
+          "odds_ratio": 1.061003010145504,
+          "ci95": [
+            0.9371227601975113,
+            1.2012592536975175
+          ],
+          "z": 0.9348005513785613,
+          "p_two_sided": 0.34989109538626717
+        },
+        {
+          "term": "log_chirps_precip_30d_z",
+          "log_odds": 0.03449389025417145,
+          "standard_error": 0.18576947248391523,
+          "odds_ratio": 1.0350957041851339,
+          "ci95": [
+            0.7192010931923278,
+            1.4897406677550749
+          ],
+          "z": 0.1856811552132608,
+          "p_two_sided": 0.8526948072796905
+        },
+        {
+          "term": "evi_prefire_z",
+          "log_odds": 0.05979529399267389,
+          "standard_error": 0.0387115622833342,
+          "odds_ratio": 1.0616192044718564,
+          "ci95": [
+            0.9840492148563688,
+            1.1453038306300143
+          ],
+          "z": 1.5446365495410783,
+          "p_two_sided": 0.12243420030142746
+        },
+        {
+          "term": "era5_vpd_72h_z",
+          "log_odds": 0.46864966730133056,
+          "standard_error": 0.26792662932967504,
+          "odds_ratio": 1.59783512679764,
+          "ci95": [
+            0.9450792182320658,
+            2.701442422154201
+          ],
+          "z": 1.7491716611889008,
+          "p_two_sided": 0.08026135106259255
+        },
+        {
+          "term": "era5_wind_24h_z",
+          "log_odds": 0.015550984306117639,
+          "standard_error": 0.13281003946484438,
+          "odds_ratio": 1.0156725300974536,
+          "ci95": [
+            0.7828949988690083,
+            1.3176616147565474
+          ],
+          "z": 0.11709193347716818,
+          "p_two_sided": 0.9067872019173039
+        },
+        {
+          "term": "rootzone_dryness_72h_z",
+          "log_odds": -0.11106521570473003,
+          "standard_error": 0.11184161953947547,
+          "odds_ratio": 0.8948803867709147,
+          "ci95": [
+            0.7187262075180213,
+            1.1142085793597312
+          ],
+          "z": -0.9930580061524288,
+          "p_two_sided": 0.3206816872095276
+        },
+        {
+          "term": "peat_ge_50pct",
+          "log_odds": -0.5431059480542695,
+          "standard_error": 0.18641333844122554,
+          "odds_ratio": 0.5809410745264665,
+          "ci95": [
+            0.4031381017887178,
+            0.8371635689470087
+          ],
+          "z": -2.913450038477295,
+          "p_two_sided": 0.0035745903191821715
+        },
+        {
+          "term": "peat_ge_50pct_x_low_evi_prefire_z",
+          "log_odds": -0.033527793070812384,
+          "standard_error": 0.07109932758961864,
+          "odds_ratio": 0.9670280341792752,
+          "ci95": [
+            0.841236475228773,
+            1.1116294245733018
+          ],
+          "z": -0.471562730724163,
+          "p_two_sided": 0.637238933959743,
+          "p_holm_three_secondary_conditions": 1.0
+        }
+      ]
+    }
+  ],
+  "prediction": {
+    "fit": {
+      "label": "prediction_development_fit_2018_2022",
+      "status": "estimated",
+      "model": "conditional logistic regression; matched-set intercept conditioned out",
+      "peat_threshold_percent": 50,
+      "condition": "rootzone_dryness_72h_z",
+      "condition_label": "drier root-zone soil over the prior 72 h",
+      "row_count": 22755,
+      "case_count": 4551,
+      "control_count": 18204,
+      "matched_set_count": 4551,
+      "acquisition_date_count": 369,
+      "unique_cell_count": 8394,
+      "mixed_peat_matched_set_count": 842,
+      "history_fallback_row_count": 505,
+      "convergence": {
+        "converged": true,
+        "optimizer_success": false,
+        "message": "Desired error not necessarily achieved due to precision loss.",
+        "iterations": 18,
+        "max_abs_gradient": 6.208846440314275e-07,
+        "information_condition_number": 30.89935234380082
+      },
+      "uncertainty": {
+        "method": "two_way_cell_and_date_cluster_robust",
+        "cell_clusters": 8394,
+        "date_clusters": 369,
+        "cell_date_clusters": 17314,
+        "warning": null
+      },
+      "log_likelihood": -6700.903705788483,
+      "interaction": {
+        "term": "peat_ge_50pct_x_rootzone_dryness_72h_z",
+        "log_odds": -0.07191747699244641,
+        "standard_error": 0.12732468822355192,
+        "odds_ratio": 0.9306076891879163,
+        "ci95": [
+          0.725079579074368,
+          1.194393961944484
+        ],
+        "z": -0.5648352883941596,
+        "p_two_sided": 0.5721858022556956
+      },
+      "coefficients": [
+        {
+          "term": "forest_fraction_z",
+          "log_odds": -0.5509283405458743,
+          "standard_error": 0.05217194271924612,
+          "odds_ratio": 0.5764144530139993,
+          "ci95": [
+            0.5203855247904079,
+            0.6384759102921771
+          ],
+          "z": -10.55985864874911,
+          "p_two_sided": 4.573499927384871e-26
+        },
+        {
+          "term": "log_chirps_precip_7d_z",
+          "log_odds": 0.14419073356825,
+          "standard_error": 0.09192547663892492,
+          "odds_ratio": 1.1551044047001178,
+          "ci95": [
+            0.9646564989549042,
+            1.3831516059894267
+          ],
+          "z": 1.5685611741195353,
+          "p_two_sided": 0.11675022525023332
+        },
+        {
+          "term": "log_chirps_precip_30d_z",
+          "log_odds": -0.10321086538595806,
+          "standard_error": 0.24062098526258402,
+          "odds_ratio": 0.9019367661838426,
+          "ci95": [
+            0.5628016643378535,
+            1.445429148030778
+          ],
+          "z": -0.42893542835977694,
+          "p_two_sided": 0.6679702166864303
+        },
+        {
+          "term": "evi_prefire_z",
+          "log_odds": 0.15578074230587344,
+          "standard_error": 0.054798040591506,
+          "odds_ratio": 1.1685699570447299,
+          "ci95": [
+            1.049565829294602,
+            1.3010672664765508
+          ],
+          "z": 2.842815922327345,
+          "p_two_sided": 0.004471688885594988
+        },
+        {
+          "term": "era5_vpd_72h_z",
+          "log_odds": 0.2747184393263703,
+          "standard_error": 0.3980587859746902,
+          "odds_ratio": 1.3161600437839691,
+          "ci95": [
+            0.6032179039078575,
+            2.8717271978021848
+          ],
+          "z": 0.690145398131817,
+          "p_two_sided": 0.4901027563843784
+        },
+        {
+          "term": "era5_wind_24h_z",
+          "log_odds": 0.11801071444077763,
+          "standard_error": 0.14389581860800693,
+          "odds_ratio": 1.1252561677933228,
+          "ci95": [
+            0.8487207271837816,
+            1.4918940973179886
+          ],
+          "z": 0.8201121865969985,
+          "p_two_sided": 0.4121521555951948
+        },
+        {
+          "term": "rootzone_dryness_72h_z",
+          "log_odds": -0.12306353693563338,
+          "standard_error": 0.1347289748325264,
+          "odds_ratio": 0.8842074809422327,
+          "ci95": [
+            0.6790012383722311,
+            1.1514306972818955
+          ],
+          "z": -0.913415522448726,
+          "p_two_sided": 0.3610240448036627
+        },
+        {
+          "term": "peat_ge_50pct",
+          "log_odds": -0.35036027996284996,
+          "standard_error": 0.2068270348995662,
+          "odds_ratio": 0.7044342504492758,
+          "ci95": [
+            0.4696623398286854,
+            1.0565624942102823
+          ],
+          "z": -1.6939771927445681,
+          "p_two_sided": 0.09026961703569661
+        },
+        {
+          "term": "peat_ge_50pct_x_rootzone_dryness_72h_z",
+          "log_odds": -0.07191747699244641,
+          "standard_error": 0.12732468822355192,
+          "odds_ratio": 0.9306076891879163,
+          "ci95": [
+            0.725079579074368,
+            1.194393961944484
+          ],
+          "z": -0.5648352883941596,
+          "p_two_sided": 0.5721858022556956
+        }
+      ]
+    },
+    "evaluations": [
+      {
+        "label": "development_2018_2022",
+        "year_min": 2018,
+        "year_max": 2022,
+        "matched_set_count": 4551,
+        "conditional_log_loss": 1.4724024842426904,
+        "uniform_log_loss": 1.6094379124341003,
+        "log_loss_improvement_vs_uniform": 0.1370354281914099,
+        "top1_recall_tie_fractional": 0.3891452428037794,
+        "uniform_expected_top1_recall": 0.2,
+        "mean_reciprocal_rank": 0.6149056722227454,
+        "top5_recall": 1.0,
+        "top5_interpretation": "structurally non-informative because every sampled matched set contains five cells"
+      },
+      {
+        "label": "rehearsal_2023",
+        "year_min": 2023,
+        "year_max": 2023,
+        "matched_set_count": 2128,
+        "conditional_log_loss": 1.421751312367903,
+        "uniform_log_loss": 1.6094379124341003,
+        "log_loss_improvement_vs_uniform": 0.1876866000661972,
+        "top1_recall_tie_fractional": 0.41400375939849626,
+        "uniform_expected_top1_recall": 0.2,
+        "mean_reciprocal_rank": 0.6380090852130326,
+        "top5_recall": 1.0,
+        "top5_interpretation": "structurally non-informative because every sampled matched set contains five cells"
+      },
+      {
+        "label": "locked_test_2024_2025",
+        "year_min": 2024,
+        "year_max": 2025,
+        "matched_set_count": 1913,
+        "conditional_log_loss": 1.4681927855772985,
+        "uniform_log_loss": 1.6094379124341003,
+        "log_loss_improvement_vs_uniform": 0.1412451268568018,
+        "top1_recall_tie_fractional": 0.36957658128593834,
+        "uniform_expected_top1_recall": 0.2,
+        "mean_reciprocal_rank": 0.6053755009583552,
+        "top5_recall": 1.0,
+        "top5_interpretation": "structurally non-informative because every sampled matched set contains five cells"
+      }
+    ]
+  },
+  "interpretation_guardrails": [
+    "Odds ratios are within matched sets and describe detectable fire association, not absolute fire probability or burned area.",
+    "A non-significant result is inconclusive, not proof of no effect.",
+    "Static peat extent is not peat moisture, drainage state, peat depth, or current land cover.",
+    "No result from this track identifies deliberate burning, plantation expansion, profit, government effort, or human-access causality.",
+    "Global generalization requires a separately harmonized observation-denominator analysis."
+  ],
+  "next_phase": "Phase 3 may prepare the fire-to-land-change association, while Phase 2 can add separately registered drainage and ENSO interaction sensitivities."
+}

@@ -61,15 +61,18 @@ def _provenance_evidence(root: Path, asset: dict) -> dict:
     elif expected.is_file():
         return {"provenance_ready": False, "reason": "provenance_missing_raw_sha256"}
     elif expected.is_dir():
-        entries = record.get("files")
+        # Download manifests use ``records`` while standalone provenance
+        # receipts use ``files``.  Both are accepted when each entry carries
+        # a workspace-relative path and SHA-256 receipt.
+        entries = record.get("files") or record.get("records")
         if not isinstance(entries, list) or not entries:
             return {"provenance_ready": False, "reason": "provenance_missing_file_inventory"}
         seen_paths: set[str] = set()
         for entry in entries:
             if not isinstance(entry, dict):
                 return {"provenance_ready": False, "reason": "provenance_invalid_file_inventory"}
-            raw_path = entry.get("raw_path")
-            raw_sha256 = entry.get("raw_sha256")
+            raw_path = entry.get("raw_path") or entry.get("path")
+            raw_sha256 = entry.get("raw_sha256") or entry.get("sha256")
             if not isinstance(raw_path, str) or not isinstance(raw_sha256, str):
                 return {"provenance_ready": False, "reason": "provenance_file_entry_missing_path_or_hash"}
             try:

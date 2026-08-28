@@ -16,7 +16,11 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
-from download_era5_land import run  # noqa: E402
+from download_era5_land import (  # noqa: E402
+    DEFAULT_REQUEST_RETRIES,
+    DEFAULT_RETRY_DELAY_SECONDS,
+    run,
+)
 
 
 def main() -> int:
@@ -24,11 +28,20 @@ def main() -> int:
     parser.add_argument("--start-year", type=int, default=2015)
     parser.add_argument("--end-year", type=int, default=2025)
     parser.add_argument("--dry-run", action="store_true")
+    parser.add_argument("--request-retries", type=int, default=DEFAULT_REQUEST_RETRIES)
+    parser.add_argument("--retry-delay-seconds", type=float, default=DEFAULT_RETRY_DELAY_SECONDS)
     args = parser.parse_args()
     if args.start_year > args.end_year:
         parser.error("--start-year must not exceed --end-year")
     for year in range(args.start_year, args.end_year + 1):
-        run(year, [f"{month:02d}" for month in range(1, 13)], ROOT / "data" / "raw" / "era5_land", args.dry_run)
+        run(
+            year,
+            [f"{month:02d}" for month in range(1, 13)],
+            ROOT / "data" / "raw" / "era5_land",
+            args.dry_run,
+            request_retries=args.request_retries,
+            retry_delay_seconds=args.retry_delay_seconds,
+        )
     manifest = ROOT / "data" / "raw" / "era5_land" / "download_manifest.json"
     if manifest.is_file():
         payload = json.loads(manifest.read_text(encoding="utf-8"))

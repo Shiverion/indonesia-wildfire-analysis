@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 import sys
+from datetime import date, timedelta
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
@@ -23,10 +24,21 @@ def test_era5_reports_complete_year_but_not_full_study_window(tmp_path: Path) ->
     for month in range(1, 13):
         (root / f"data/raw/era5_land/2015/era5_land_2015_{month:02d}.nc").write_bytes(b"x")
     result = check_era5(root, [2015, 2016])
-    assert result["status"] == "calibration_year_complete_only"
+    assert result["status"] == "partial_study_window"
     assert result["complete_years"] == [2015]
     assert result["missing_months_by_study_year"]["2016"] == list(range(1, 13))
     assert result["temporal_event_lag_validated"] is False
+
+
+def test_era5_reports_complete_registered_window(tmp_path: Path) -> None:
+    root = _root(tmp_path)
+    for year in (2015, 2016):
+        (root / f"data/raw/era5_land/{year}").mkdir(parents=True, exist_ok=True)
+        for month in range(1, 13):
+            (root / f"data/raw/era5_land/{year}/era5_land_{year}_{month:02d}.nc").write_bytes(b"x")
+    result = check_era5(root, [2015, 2016])
+    assert result["status"] == "study_window_complete"
+    assert result["missing_months_by_study_year"] == {"2015": [], "2016": []}
 
 
 def test_chirps_detects_missing_and_extra_dates(tmp_path: Path) -> None:
@@ -38,6 +50,26 @@ def test_chirps_detects_missing_and_extra_dates(tmp_path: Path) -> None:
     assert result["missing_dates"] == ["2015-07-02"]
     assert result["extra_dates"] == ["2015-12-31"]
     assert result["lag_features_validated"] is False
+
+
+def test_chirps_reports_partial_lag_cache_when_quality_receipt_exists(tmp_path: Path) -> None:
+    root = _root(tmp_path)
+    for offset in range(3):
+        day = date(2015, 7, 1) + timedelta(days=offset)
+        name = day.isoformat().replace("-", ".")
+        (root / f"data/raw/chirps/2015/chirps-v3.0.rnl.{name}.cog").write_bytes(b"x")
+    (root / "data/raw/chirps/download_manifest.json").write_text(
+        json.dumps({"temporal": ["2015-07-01", "2015-07-03"]}), encoding="utf-8"
+    )
+    (root / "data/derived/chirps").mkdir(parents=True)
+    (root / "data/derived/chirps/chirps_lag_features_2015.parquet").write_bytes(b"x")
+    (root / "outputs/quality/chirps_lag_features_2015.json").write_text(
+        json.dumps({"schema_version": "chirps-lag-features/v1", "row_count": 4, "complete_cutoff_count": 1}),
+        encoding="utf-8",
+    )
+    result = check_chirps(root, [2015])
+    assert result["lag_features_validated"] is True
+    assert result["status"] == "support_window_and_partial_lags_complete"
 
 
 def test_mod13_inventory_does_not_claim_qa(tmp_path: Path) -> None:

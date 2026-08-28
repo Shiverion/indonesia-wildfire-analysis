@@ -1,0 +1,109 @@
+{
+  "schema_version": "mapbiomas-preflight/v1",
+  "created_at_utc": "2026-08-25T10:50:33.667250+00:00",
+  "status": "validated_collection_4_1_2014_export",
+  "ready": true,
+  "export_directory": "data/raw/mapbiomas_indonesia",
+  "provenance_path": "data/raw/mapbiomas_indonesia/mapbiomas_2014_provenance.json",
+  "crosswalk_path": "data/raw/mapbiomas_indonesia/class_crosswalk.json",
+  "metadata": {
+    "source_url": "https://plataforma.mapbiomas.org",
+    "retrieved_at_utc": "2026-08-25T00:00:00Z",
+    "collection": "4.1",
+    "collection_version": "4.1.1",
+    "baseline_year": 2014,
+    "download_id": "2014_coverage_lclu_4-1-1_2db80c97-09a0-46bf-a7a2-6f168d4b927e",
+    "export_kind": "land_cover_raster",
+    "export_region_bbox_wgs84": [
+      95.00681259529313,
+      -11.012357236492802,
+      141.02462999182703,
+      6.081414810432337
+    ],
+    "legend_source_url": "https://landy.mapbiomas.id/en/legendcode",
+    "raw_filename": "2014_coverage_lclu_4-1-1_2db80c97-09a0-46bf-a7a2-6f168d4b927e.tif",
+    "raw_sha256": "2df0a9ac95abbd741c62f42993b861268f4d49a10da02c79be95babbef1b8db7",
+    "files": [
+      {
+        "path": "data/raw/mapbiomas_indonesia/mapbiomas_indonesia_c41_landcover_2014.tif",
+        "sha256": "2df0a9ac95abbd741c62f42993b861268f4d49a10da02c79be95babbef1b8db7"
+      },
+      {
+        "path": "data/raw/mapbiomas_indonesia/class_crosswalk.json",
+        "sha256": "cf1c4cc55757c132dd1ab4f6966f26ea0e143e8b867aa8359b4aab5f7df67607"
+      }
+    ],
+    "notes": "Downloaded through the MapBiomas Indonesia platform as a country-wide Collection 4.1.1 2014 coverage GeoTIFF; clipped to Kalimantan downstream."
+  },
+  "crosswalk": {
+    "schema_version": "mapbiomas-class-crosswalk/v1",
+    "collection": "4.1",
+    "collection_version": "4.1.1",
+    "baseline_year": 2014,
+    "legend_source_url": "https://landy.mapbiomas.id/en/legendcode",
+    "natural_forest_codes": [
+      3,
+      5,
+      76
+    ],
+    "class_labels": {
+      "3": "Forest Formation",
+      "5": "Mangrove",
+      "76": "Peat Swamp Forest"
+    },
+    "review_note": "Primary baseline natural-forest stratum. Oil palm, plantations, agriculture, settlements, mining, water, and non-forest natural formation are excluded."
+  },
+  "raster_checks": [
+    {
+      "path": "data/raw/mapbiomas_indonesia/mapbiomas_indonesia_c41_landcover_2014.tif",
+      "format": "tif",
+      "readable": true,
+      "errors": [],
+      "width": 170756,
+      "height": 63429,
+      "band_count": 1,
+      "crs": "EPSG:4326",
+      "dtype": "int8",
+      "nodata": 0.0,
+      "bounds_wgs84": [
+        95.00681259529313,
+        -11.012357236492802,
+        141.02462999182703,
+        6.081414810432337
+      ],
+      "sample_unique_values": [
+        3,
+        5,
+        9,
+        13,
+        21,
+        24,
+        25,
+        30,
+        31,
+        33,
+        35,
+        40,
+        76
+      ],
+      "sample_valid_pixel_count": 205243,
+      "validation_method": "prior_rasterio_preflight_sha256_verified"
+    }
+  ],
+  "errors": [],
+  "official_workflow": {
+    "faq_url": "https://landy.mapbiomas.id/en/faq",
+    "gee_url": "https://landy.mapbiomas.id/en/gee",
+    "download_url": "https://landy.mapbiomas.id/en/downloads",
+    "legend_url": "https://landy.mapbiomas.id/en/legendcode",
+    "required_collection": "4.1",
+    "required_baseline_year": 2014,
+    "required_region_bbox_wgs84": [
+      109.0,
+      -5.0,
+      120.0,
+      6.0
+    ]
+  },
+  "next_action": "Use the validated raster and crosswalk to build the frozen 2014 forest mask before VIIRS frame construction."
+}

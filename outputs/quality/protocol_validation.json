@@ -1,8 +1,8 @@
 {
-  "validated_at_utc": "2026-08-23T04:25:07.110533+00:00",
+  "validated_at_utc": "2026-08-25T14:37:20.619796+00:00",
   "study_id": "indonesia-wildfire-accessibility-v1",
   "config_sha256": "bfaa7debd3884646c3940c2a7cb9ef50fe70236335c7c01e17dc2bd8e3f302ae",
-  "manifest_sha256": "330eb0279c7d546083b0bb78eaa17d01e69929ca7227aba503fa562dda2b9040",
+  "manifest_sha256": "287058b228ba806504a0002e99d1659776f1de5aacfc1132031c48acbf6e580e",
   "errors": [],
   "warnings": [
     "Phase 1 is not ready; matched-risk-set construction and effect estimation are blocked"
@@ -19,12 +19,12 @@
     },
     {
       "asset_id": "era5_land",
-      "manifest_status": "blocked_missing_account_and_request",
+      "manifest_status": "ready",
       "expected_local_path": "data/raw/era5_land/",
       "local_path_exists": true,
-      "payload_file_count": 13,
-      "provenance_ready": false,
-      "gate_ready": false
+      "payload_file_count": 133,
+      "provenance_ready": true,
+      "gate_ready": true
     },
     {
       "asset_id": "chirps_v3",
@@ -37,12 +37,12 @@
     },
     {
       "asset_id": "mapbiomas_indonesia_collection_4_1",
-      "manifest_status": "blocked_missing_frozen_export_and_crosswalk",
+      "manifest_status": "ready",
       "expected_local_path": "data/raw/mapbiomas_indonesia/",
-      "local_path_exists": false,
-      "payload_file_count": 0,
-      "provenance_ready": false,
-      "gate_ready": false
+      "local_path_exists": true,
+      "payload_file_count": 4,
+      "provenance_ready": true,
+      "gate_ready": true
     },
     {
       "asset_id": "mod13q1_061",

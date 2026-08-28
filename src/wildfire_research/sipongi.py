@@ -26,6 +26,7 @@ from urllib.request import Request, urlopen
 from zoneinfo import ZoneInfo
 
 from .enso import RoniRecord
+from .paths import logical_relative
 
 
 DEFAULT_SIPONGI_URL = "https://opsroom.sipongidata.my.id/api/sebaran/download"
@@ -339,7 +340,7 @@ def _raw_path(raw_root: Path, province_id: str, year: int, request_period: str) 
 
 
 def _relative(path: Path, root: Path) -> str:
-    return path.resolve().relative_to(root.resolve()).as_posix()
+    return logical_relative(root, path)
 
 
 def _snapshot_provider_contract(root: Path, raw_root: Path, base_url: str) -> dict[str, Any]:

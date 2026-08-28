@@ -199,6 +199,162 @@ export interface ConditionPhaseAudit {
   required_interactions: string[];
 }
 
+export interface Phase1BReadiness {
+  schema_version: "phase1b-readiness/v1" | "phase1b-readiness/v2";
+  status: string;
+  phase_1b_ready: boolean;
+  phase_2_unlock: boolean;
+  selected_track?: string;
+  human_access_confirmatory_track_ready?: boolean;
+  progress?: {
+    completed_days: number;
+    registered_days: number;
+    percent: number;
+  };
+  workstreams: Record<string, {
+    status: string;
+    gate_ready: boolean;
+    required_for_environmental_track?: boolean;
+    next_action: string;
+  }>;
+}
+
+export interface Phase2EnvironmentalSummary {
+  schema_version: "environmental-phase2-results/v1";
+  created_at_utc: string;
+  status: "completed_environmental_association";
+  scope: string;
+  human_access_confirmatory_track_status: string;
+  data_summary: {
+    row_count: number;
+    case_count: number;
+    control_count: number;
+    matched_set_count: number;
+    history_fallback_row_count: number;
+  };
+  pre_fit_excluded_matched_set_count: number;
+  primary: {
+    label: string;
+    odds_ratio: number;
+    ci95: [number, number];
+    p_two_sided: number;
+    classification: string;
+    interpretation: string;
+    mixed_peat_matched_set_count: number;
+  };
+  sensitivities: Array<{
+    label: string;
+    odds_ratio: number;
+    ci95: [number, number];
+    p_two_sided: number;
+  }>;
+  secondary_conditions: Array<{
+    label: string;
+    odds_ratio: number;
+    ci95: [number, number];
+    p_holm: number;
+  }>;
+  locked_test_prediction: {
+    conditional_log_loss: number;
+    uniform_log_loss: number;
+    top1_recall: number;
+    mean_reciprocal_rank: number;
+  };
+  interpretation_guardrails: string[];
+}
+
+export interface Phase3StatusSummary {
+  schema_version: "phase3-dashboard-status/v1";
+  created_at_utc: string;
+  status: string;
+  phase3_ready: boolean;
+  phase3_model_run: boolean;
+  scope: {
+    geography: "Kalimantan";
+    country_context: "Indonesia";
+    indonesia_map_role: "descriptive_context_only";
+    inference_generalization: string;
+  };
+  matched_set_count: number;
+  unique_cell_count: number;
+  private_cell_count: number;
+  mapbiomas_available_years: [number, number];
+  local_full_raster_years: number[];
+  eligible_event_years_primary: number[];
+  blockers: string[];
+  primary_result: null | {
+    status: string;
+    flow?: { included_matched_set_count?: number };
+    model?: {
+      matched_set_count: number;
+      unique_cell_count: number;
+      outcome_variation_matched_set_count: number;
+      unadjusted: {
+        fire_positive_risk: number;
+        fire_negative_risk: number;
+        risk_difference: number;
+        risk_ratio: number | null;
+      };
+      primary_term: {
+        estimate: number;
+        ci95: [number, number];
+        p_two_sided: number;
+      };
+    };
+  };
+  sensitivity_results: Array<{
+    label: string;
+    status: string;
+    matched_set_count?: number;
+    estimate?: number;
+    ci95?: [number, number];
+    p_two_sided?: number;
+    p_holm?: number | null;
+    variation_matched_set_count?: number | null;
+  }>;
+  destination_results: Array<{
+    label: string;
+    status: string;
+    matched_set_count?: number;
+    estimate?: number;
+    ci95?: [number, number];
+    p_two_sided?: number;
+    p_holm?: number | null;
+    variation_matched_set_count?: number | null;
+  }>;
+  publication_robustness?: {
+    status: "complete";
+    attrition: {
+      candidate_matched_set_count: number;
+      included_matched_set_count: number;
+      excluded_share: number;
+      maximum_absolute_standardized_mean_difference: number;
+    };
+    negative_control: {
+      matched_set_count: number;
+      estimate: number;
+      ci95: [number, number];
+      p_two_sided: number;
+    };
+    common_support_post_minus_pre: {
+      matched_set_count: number;
+      estimate: number;
+      ci95: [number, number];
+      p_two_sided: number;
+    };
+    interpretation: string;
+  };
+  earth_engine_export?: {
+    status: string;
+    updated_at_utc?: string | null;
+    algorithm_revision?: string | null;
+    chunk_count: number;
+    state_counts: Record<string, number>;
+  };
+  plain_language: string;
+  claim_boundary: string[];
+}
+
 export interface ProvenanceItem {
   id: string;
   label: string;
@@ -251,6 +407,7 @@ export interface ExplorerData {
   peat_fire_comparison?: PeatFireComparison | null;
   latest_global_fire?: LatestGlobalFireSnapshot | null;
   condition_phase_audit?: ConditionPhaseAudit | null;
+  phase1b_readiness?: Phase1BReadiness | null;
 }
 
 export interface ProvinceAggregate {

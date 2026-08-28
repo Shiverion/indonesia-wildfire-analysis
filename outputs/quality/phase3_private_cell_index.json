@@ -1,0 +1,18 @@
+{
+  "schema_version": "phase3-private-cell-index/v1",
+  "created_at_utc": "2026-08-27T09:40:05.984964+00:00",
+  "status": "complete_private_local_only",
+  "source_daily_parquet_count": 1683,
+  "locked_opportunity_cell_count": 18664,
+  "private_cell_count": 18664,
+  "all_locked_cells_resolved": true,
+  "grid_crs": "EPSG:6933",
+  "grid_cell_size_m": 1000,
+  "output": {
+    "path": "data/derived/phase3/phase3_cell_centres_private.csv",
+    "sha256": "987abd0d71c4c4c5c5e9e2e73640639f83b6217e33ec758312c280622bcbd70a",
+    "tracked_by_git": false,
+    "contains_coordinates": true
+  },
+  "privacy_guardrail": "This file is ignored by Git and must not be bundled into the dashboard or Vercel deployment."
+}

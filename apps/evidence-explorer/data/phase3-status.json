@@ -1,0 +1,446 @@
+{
+  "schema_version": "phase3-dashboard-status/v1",
+  "created_at_utc": "2026-08-28T06:43:32.528097+00:00",
+  "status": "completed_phase3_association",
+  "phase3_ready": true,
+  "phase3_model_run": true,
+  "scope": {
+    "geography": "Kalimantan",
+    "country_context": "Indonesia",
+    "indonesia_map_role": "descriptive_context_only",
+    "inference_generalization": "No Indonesia-wide or global inferential claim."
+  },
+  "matched_set_count": 14091,
+  "unique_cell_count": 18664,
+  "private_cell_count": 18664,
+  "mapbiomas_available_years": [
+    1990,
+    2024
+  ],
+  "local_full_raster_years": [
+    2014
+  ],
+  "eligible_event_years_primary": [
+    2015,
+    2016,
+    2017,
+    2018,
+    2019,
+    2020,
+    2021,
+    2022,
+    2023
+  ],
+  "blockers": [],
+  "primary_result": {
+    "status": "estimated",
+    "flow": {
+      "horizon_years": 1,
+      "threshold_share_of_preforest": 0.1,
+      "destination": "any_natural_forest_loss",
+      "candidate_matched_set_count": 12178,
+      "excluded_matched_set_count": 5040,
+      "included_matched_set_count": 7138,
+      "included_row_count": 35690,
+      "missing_or_support_failures_are_zero": false,
+      "distribution_by_exposure": {
+        "negative": {
+          "n": 28552,
+          "mean": 0.01916074132786105,
+          "median": 0.0,
+          "standard_deviation": 0.0678456539673671,
+          "p25": 0.0,
+          "p75": 0.010653435000144628,
+          "p05": 0.0,
+          "p95": 0.09001048366033115
+        },
+        "positive": {
+          "n": 7138,
+          "mean": 0.059983296780269674,
+          "median": 0.01849830660242728,
+          "standard_deviation": 0.13773084321321757,
+          "p25": 0.0021802314275380444,
+          "p75": 0.05689494631745681,
+          "p05": 0.0,
+          "p95": 0.22437944117772265
+        }
+      }
+    },
+    "model": {
+      "model": "within-matched-set linear probability model",
+      "effect_measure": "adjusted risk difference",
+      "row_count": 35690,
+      "matched_set_count": 7138,
+      "unique_cell_count": 11758,
+      "outcome_variation_matched_set_count": 1732,
+      "unadjusted": {
+        "fire_positive_risk": 0.13743345474922947,
+        "fire_negative_risk": 0.04398991314093584,
+        "risk_difference": 0.09344354160829363,
+        "risk_ratio": 3.124203821656051,
+        "risk_ratio_zero_control_guard": false
+      },
+      "primary_term": {
+        "term": "fire_positive",
+        "estimate": 0.05887780947061065,
+        "standard_error": 0.0069579315858174316,
+        "ci95": [
+          0.045240263562408484,
+          0.07251535537881282
+        ],
+        "z": 8.461970162314202,
+        "p_two_sided": 2.628977922662151e-17
+      },
+      "coefficients": [
+        {
+          "term": "fire_positive",
+          "estimate": 0.05887780947061065,
+          "standard_error": 0.0069579315858174316,
+          "ci95": [
+            0.045240263562408484,
+            0.07251535537881282
+          ],
+          "z": 8.461970162314202,
+          "p_two_sided": 2.628977922662151e-17
+        },
+        {
+          "term": "forest_fraction_z",
+          "estimate": -0.06554310381150855,
+          "standard_error": 0.005990554002744181,
+          "ci95": [
+            -0.07728458965688714,
+            -0.05380161796612995
+          ],
+          "z": -10.94107553015702,
+          "p_two_sided": 7.33248311532489e-28
+        },
+        {
+          "term": "peat_extent_percent_z",
+          "estimate": -0.007938675311197867,
+          "standard_error": 0.00393046569022701,
+          "ci95": [
+            -0.015642388064042806,
+            -0.00023496255835292728
+          ],
+          "z": -2.019779826837607,
+          "p_two_sided": 0.043406230549827944
+        },
+        {
+          "term": "chirps_precip_7d_mm_z",
+          "estimate": -0.007608293216825849,
+          "standard_error": 0.004614296075344515,
+          "ci95": [
+            -0.016652313524501097,
+            0.0014357270908494004
+          ],
+          "z": -1.6488524127177502,
+          "p_two_sided": 0.09917787422919577
+        },
+        {
+          "term": "chirps_precip_30d_mm_z",
+          "estimate": -0.0024130443485654986,
+          "standard_error": 0.0064661560258610275,
+          "ci95": [
+            -0.015086710159253112,
+            0.010260621462122114
+          ],
+          "z": -0.37318065616026946,
+          "p_two_sided": 0.7090139921281323
+        },
+        {
+          "term": "evi_prefire_z",
+          "estimate": -0.01814840704483799,
+          "standard_error": 0.003100328252131631,
+          "ci95": [
+            -0.024225050419015987,
+            -0.012071763670659992
+          ],
+          "z": -5.853705017318747,
+          "p_two_sided": 4.807409827776365e-09
+        },
+        {
+          "term": "era5_vpd_mean_72h_kpa_z",
+          "estimate": 0.006812341048537861,
+          "standard_error": 0.009489528610552914,
+          "ci95": [
+            -0.011787135028145851,
+            0.025411817125221572
+          ],
+          "z": 0.7178798155434335,
+          "p_two_sided": 0.47283139437152355
+        },
+        {
+          "term": "era5_wind_max_24h_ms_z",
+          "estimate": 0.009006676822828153,
+          "standard_error": 0.007958545817554898,
+          "ci95": [
+            -0.006592072979579446,
+            0.024605426625235752
+          ],
+          "z": 1.1316988089659916,
+          "p_two_sided": 0.257761082447881
+        },
+        {
+          "term": "era5_rootzone_soil_water_mean_72h_z",
+          "estimate": -0.0030098592190688426,
+          "standard_error": 0.008133199948826136,
+          "ci95": [
+            -0.01895093111876807,
+            0.012931212680630383
+          ],
+          "z": -0.37007072714390293,
+          "p_two_sided": 0.7113297925312931
+        }
+      ],
+      "standardization": {
+        "forest_fraction_z": {
+          "source": "forest_fraction",
+          "transform": "identity",
+          "mean": 0.9488464368852666,
+          "sd": 0.07421918955249222
+        },
+        "peat_extent_percent_z": {
+          "source": "peat_extent_percent",
+          "transform": "identity",
+          "mean": 13.18378287255563,
+          "sd": 29.524143062687386
+        },
+        "chirps_precip_7d_mm_z": {
+          "source": "chirps_precip_7d_mm",
+          "transform": "log1p",
+          "mean": 2.3732343848235087,
+          "sd": 1.5902426140252353
+        },
+        "chirps_precip_30d_mm_z": {
+          "source": "chirps_precip_30d_mm",
+          "transform": "log1p",
+          "mean": 4.6631918124502825,
+          "sd": 0.9499422885179284
+        },
+        "evi_prefire_z": {
+          "source": "evi_prefire",
+          "transform": "identity",
+          "mean": 0.5440554551368256,
+          "sd": 0.07383570301149148
+        },
+        "era5_vpd_mean_72h_kpa_z": {
+          "source": "era5_vpd_mean_72h_kpa",
+          "transform": "identity",
+          "mean": 0.7258085041687625,
+          "sd": 0.2969681006187809
+        },
+        "era5_wind_max_24h_ms_z": {
+          "source": "era5_wind_max_24h_ms",
+          "transform": "identity",
+          "mean": 1.9031636738596853,
+          "sd": 0.8145104029615223
+        },
+        "era5_rootzone_soil_water_mean_72h_z": {
+          "source": "era5_rootzone_soil_water_mean_72h",
+          "transform": "identity",
+          "mean": 0.3499438311902737,
+          "sd": 0.07604155006527691
+        }
+      },
+      "uncertainty": {
+        "method": "two_way_cell_and_date_cluster_robust",
+        "cell_clusters": 11758,
+        "date_clusters": 632,
+        "cell_date_clusters": 28363,
+        "warning": null
+      },
+      "diagnostics": {
+        "information_condition_number": 19.85332642527219,
+        "residual_rmse": 0.1972170909678294,
+        "matched_set_score_norm_p99": 2.7990828919163486,
+        "matched_set_score_norm_max": 4.9732400956871485
+      }
+    }
+  },
+  "sensitivity_results": [
+    {
+      "label": "\u22655% loss \u00b7 1 year",
+      "status": "estimated",
+      "matched_set_count": 7138,
+      "estimate": 0.10779210961356221,
+      "ci95": [
+        0.09069230173046712,
+        0.1248919174966573
+      ],
+      "p_two_sided": 4.5629100959180154e-35,
+      "p_holm": null
+    },
+    {
+      "label": "\u226510% loss \u00b7 1 year (primary)",
+      "status": "estimated",
+      "matched_set_count": 7138,
+      "estimate": 0.05887780947061065,
+      "ci95": [
+        0.045240263562408484,
+        0.07251535537881282
+      ],
+      "p_two_sided": 2.628977922662151e-17,
+      "p_holm": null
+    },
+    {
+      "label": "\u226520% loss \u00b7 1 year",
+      "status": "estimated",
+      "matched_set_count": 7138,
+      "estimate": 0.027557064005828198,
+      "ci95": [
+        0.017409297856981094,
+        0.0377048301546753
+      ],
+      "p_two_sided": 1.0233081257748611e-07,
+      "p_holm": null
+    },
+    {
+      "label": "\u226510% loss \u00b7 2 years",
+      "status": "estimated",
+      "matched_set_count": 5932,
+      "estimate": 0.059251867554025964,
+      "ci95": [
+        0.042594621453553624,
+        0.0759091136544983
+      ],
+      "p_two_sided": 3.1255451445250605e-12,
+      "p_holm": null
+    },
+    {
+      "label": "\u226510% loss \u00b7 3 years",
+      "status": "estimated",
+      "matched_set_count": 5786,
+      "estimate": 0.06098760732666802,
+      "ci95": [
+        0.0441660635067799,
+        0.07780915114655614
+      ],
+      "p_two_sided": 1.1936085757532225e-12,
+      "p_holm": null
+    }
+  ],
+  "destination_results": [
+    {
+      "label": "Nonforest Natural",
+      "status": "estimated",
+      "matched_set_count": 7138,
+      "estimate": 0.046827563408100646,
+      "ci95": [
+        0.033837416692267475,
+        0.05981771012393382
+      ],
+      "p_two_sided": 1.6002602930970765e-12,
+      "p_holm": 6.401041172388306e-12
+    },
+    {
+      "label": "Rice Paddy",
+      "status": "not_estimated_insufficient_support",
+      "variation_matched_set_count": 1
+    },
+    {
+      "label": "Oil Palm",
+      "status": "estimated",
+      "matched_set_count": 7138,
+      "estimate": 0.0033558816351630795,
+      "ci95": [
+        0.0008676058853843015,
+        0.005844157384941857
+      ],
+      "p_two_sided": 0.008207606899661421,
+      "p_holm": 0.016415213799322842
+    },
+    {
+      "label": "Pulpwood Plantation",
+      "status": "not_estimated_insufficient_support",
+      "variation_matched_set_count": 6
+    },
+    {
+      "label": "Other Agriculture",
+      "status": "estimated",
+      "matched_set_count": 7138,
+      "estimate": 0.003038952612576794,
+      "ci95": [
+        6.873715383813334e-05,
+        0.006009168071315455
+      ],
+      "p_two_sided": 0.04492472402929652,
+      "p_holm": 0.04492472402929652
+    },
+    {
+      "label": "Mining",
+      "status": "not_estimated_insufficient_support",
+      "variation_matched_set_count": 12
+    },
+    {
+      "label": "Urban",
+      "status": "not_estimated_insufficient_support",
+      "variation_matched_set_count": 0
+    },
+    {
+      "label": "Other Nonvegetated",
+      "status": "estimated",
+      "matched_set_count": 7138,
+      "estimate": 0.008617554851438195,
+      "ci95": [
+        0.004678540342250926,
+        0.012556569360625465
+      ],
+      "p_two_sided": 1.8030695628770544e-05,
+      "p_holm": 5.409208688631163e-05
+    },
+    {
+      "label": "Aquaculture",
+      "status": "not_estimated_insufficient_support",
+      "variation_matched_set_count": 5
+    },
+    {
+      "label": "Water",
+      "status": "not_estimated_insufficient_support",
+      "variation_matched_set_count": 6
+    }
+  ],
+  "earth_engine_export": {
+    "status": "complete_phase3_model_run",
+    "updated_at_utc": "2026-08-27T20:11:54.268685+00:00",
+    "algorithm_revision": "phase3-ee-transition-histograms-v3",
+    "chunk_count": 38,
+    "state_counts": {
+      "COMPLETED": 38
+    }
+  },
+  "plain_language": "Phase 3 result complete. Read the effect and uncertainty as an association, not proof of intent.",
+  "claim_boundary": [
+    "A subsequent oil-palm class does not show that the fire was deliberately set to create a plantation.",
+    "The analysis cannot identify an individual, company, concession holder, or beneficiary.",
+    "The analysis cannot measure government mitigation, enforcement, restoration, or negligence without dated intervention data.",
+    "Kalimantan results do not establish a global pattern; Phase 5 requires harmonized replication."
+  ],
+  "publication_robustness": {
+    "status": "complete",
+    "attrition": {
+      "candidate_matched_set_count": 12178,
+      "included_matched_set_count": 7138,
+      "excluded_share": 0.41386106092954505,
+      "maximum_absolute_standardized_mean_difference": 1.0199174310052495
+    },
+    "negative_control": {
+      "matched_set_count": 3915,
+      "estimate": 0.023133451228810893,
+      "ci95": [
+        0.011277518964008089,
+        0.0349893834936137
+      ],
+      "p_two_sided": 0.00013110273909471427
+    },
+    "common_support_post_minus_pre": {
+      "matched_set_count": 3453,
+      "estimate": 0.03082204612800578,
+      "ci95": [
+        0.015299127658810262,
+        0.04634496459720129
+      ],
+      "p_two_sided": 9.952660968768145e-05
+    },
+    "interpretation": "The positive pre-exposure contrast indicates residual baseline trajectory or confounding. The primary result remains a temporal association and must not be presented as causal."
+  }
+}

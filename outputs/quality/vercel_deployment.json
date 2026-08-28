@@ -1,0 +1,22 @@
+{
+  "schema_version": "vercel-production-deployment/v1",
+  "created_at_utc": "2026-08-28T06:56:17Z",
+  "project": "indonesia-wildfire-analysis",
+  "deployment_id": "dpl_52eWRkuz4XoonQTXFkUAUGNxEXaL",
+  "target": "production",
+  "status": "READY",
+  "production_alias": "https://indonesia-wildfire-analysis.vercel.app",
+  "immutable_url": "https://indonesia-wildfire-analysis-5ul8o1xe5-izzulhaq-iqbals-projects.vercel.app",
+  "framework": "Next.js 16.3.1 static export",
+  "http_verification": {
+    "status_code": 200,
+    "content_type": "text/html; charset=utf-8",
+    "content_length_bytes": 713770
+  },
+  "data_boundary": {
+    "raw_research_archive_uploaded": false,
+    "private_coordinates_uploaded": false,
+    "browser_payload": "aggregate and coordinate-free only"
+  },
+  "observability": "Static export has no serverless runtime functions; HTTP readiness and build logs were checked."
+}

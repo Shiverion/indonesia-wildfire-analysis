@@ -16,6 +16,8 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Iterable
 
+from .paths import logical_relative
+
 
 LOCK_SCHEMA_VERSION = "1.0"
 _PLACEHOLDER_FILENAMES = frozenset({".gitkeep", ".DS_Store", "Thumbs.db"})
@@ -36,12 +38,20 @@ def _canonical_json_sha256(value: Any) -> str:
 
 
 def workspace_path(root: Path, relative_path: str | Path) -> Path:
-    """Resolve a manifest path and reject absolute or workspace-escaping paths."""
-    root = root.resolve()
+    """Resolve a manifest path while allowing the approved data junction.
+
+    The repository's ``data/raw`` directory may be a deliberate Windows
+    junction to a larger local disk.  Validate the manifest path lexically so
+    that this approved storage relocation does not look like an escape, while
+    still rejecting absolute paths and explicit ``..`` traversal.
+    """
+    root = root.absolute()
     candidate = Path(relative_path)
     if candidate.is_absolute():
         raise ValueError(f"manifest path must be workspace-relative: {relative_path!s}")
-    resolved = (root / candidate).resolve()
+    if ".." in candidate.parts:
+        raise ValueError(f"manifest path must not contain parent traversal: {relative_path!s}")
+    resolved = root / candidate
     try:
         resolved.relative_to(root)
     except ValueError as exc:
@@ -91,7 +101,7 @@ def fingerprint_paths(root: Path, source_paths: Iterable[str | Path]) -> dict[st
         if not files:
             raise ValueError(f"lock input has no non-placeholder files: {source}")
         for file_path in files:
-            relative = file_path.resolve().relative_to(root).as_posix()
+            relative = logical_relative(root, file_path)
             entries_by_path[relative] = {
                 "path": relative,
                 "size_bytes": file_path.stat().st_size,
@@ -124,7 +134,7 @@ def asset_local_evidence(root: Path, asset: dict[str, Any], *, include_hashes: b
     evidence_files: list[dict[str, Any]] = []
     for file_path in files:
         row: dict[str, Any] = {
-            "path": file_path.resolve().relative_to(root.resolve()).as_posix(),
+            "path": logical_relative(root, file_path),
             "size_bytes": file_path.stat().st_size,
         }
         if include_hashes:

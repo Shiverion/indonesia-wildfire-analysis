@@ -1,0 +1,88 @@
+{
+  "schema_version": "publication-reproduction/v1",
+  "created_at_utc": "2026-08-28T06:44:09.448884+00:00",
+  "python": "3.13.0 (tags/v3.13.0:60403a5, Oct  7 2024, 09:38:07) [MSC v.1941 64 bit (AMD64)]",
+  "manifest": "publication/data/manifest.json",
+  "input_checks": [
+    {
+      "path": "data/derived/viirs/opportunity_frame.csv",
+      "expected_sha256": "0112938dce8ee6a377b18812d26020566376c5f83047ef28d89432245da98936",
+      "actual_sha256": "0112938dce8ee6a377b18812d26020566376c5f83047ef28d89432245da98936",
+      "passed": true
+    },
+    {
+      "path": "data/derived/phase3/mapbiomas_c41_transition_summary_private.csv",
+      "expected_sha256": "ddd1e1498c31c7c8920749e64e916a98c3924affd457fe9768b2a3efb146fe4d",
+      "actual_sha256": "ddd1e1498c31c7c8920749e64e916a98c3924affd457fe9768b2a3efb146fe4d",
+      "passed": true
+    },
+    {
+      "path": "config/phase3_registration.json",
+      "expected_sha256": "794715733692fc82574743c22ecd3e6f04028d978afa6ac93bd248b4519d46a2",
+      "actual_sha256": "794715733692fc82574743c22ecd3e6f04028d978afa6ac93bd248b4519d46a2",
+      "passed": true
+    },
+    {
+      "path": "config/mapbiomas_collection41_legend.json",
+      "expected_sha256": "2d57f731ad732595fa28c8b04afa99e5f1862d59a5623f123779b55666c46a48",
+      "actual_sha256": "2d57f731ad732595fa28c8b04afa99e5f1862d59a5623f123779b55666c46a48",
+      "passed": true
+    },
+    {
+      "path": "DATA_LICENSE.md",
+      "expected_sha256": "f8726963a80456f0bf1e9e86c0961dc0262e7cbda774048e0716a88b4366a709",
+      "actual_sha256": "f8726963a80456f0bf1e9e86c0961dc0262e7cbda774048e0716a88b4366a709",
+      "passed": true
+    },
+    {
+      "path": "publication/data/SOURCE_ATTRIBUTION.md",
+      "expected_sha256": "6a4a0247b3af87dfb8a8dc3247f6dd8d69b63a5f1d2d4c23f627503363c37f1e",
+      "actual_sha256": "6a4a0247b3af87dfb8a8dc3247f6dd8d69b63a5f1d2d4c23f627503363c37f1e",
+      "passed": true
+    }
+  ],
+  "commands": [
+    {
+      "command": [
+        "C:\\Users\\miqba\\AppData\\Local\\Programs\\Python\\Python313\\python.exe",
+        "analysis/phase3_land_change.py",
+        "--run-models"
+      ],
+      "returncode": 0,
+      "stdout_tail": "{\n  \"status\": \"completed_phase3_association\",\n  \"phase3_ready\": true,\n  \"phase3_model_run\": true,\n  \"matched_sets\": 14091,\n  \"unique_cells\": 18664,\n  \"blockers\": []\n}\n",
+      "stderr_tail": ""
+    },
+    {
+      "command": [
+        "C:\\Users\\miqba\\AppData\\Local\\Programs\\Python\\Python313\\python.exe",
+        "analysis/phase3_publication_robustness.py"
+      ],
+      "returncode": 0,
+      "stdout_tail": "{\n  \"status\": \"complete\",\n  \"scope\": \"Kalimantan\",\n  \"excluded_share\": 0.41386106092954505,\n  \"conditional_logit_or\": 3.464500254506193,\n  \"negative_control_estimate\": 0.023133451228810893,\n  \"figures\": 4,\n  \"tables\": 4\n}\n",
+      "stderr_tail": ""
+    },
+    {
+      "command": [
+        "C:\\Users\\miqba\\AppData\\Local\\Programs\\Python\\Python313\\python.exe",
+        "-m",
+        "pytest",
+        "-q"
+      ],
+      "returncode": 0,
+      "stdout_tail": "........................................................................ [ 96%]\n...                                                                      [100%]\n75 passed in 4.93s\n",
+      "stderr_tail": ""
+    },
+    {
+      "command": [
+        "npm.cmd",
+        "run",
+        "build"
+      ],
+      "returncode": 0,
+      "stdout_tail": "\n> kalimantan-fire-evidence-explorer@0.1.0 prebuild\n> node scripts/sync-data.mjs && node scripts/sync-global-geometry.mjs && node scripts/check-globe-assets.mjs && node scripts/copy-cesium-assets.mjs\n\nSynchronized aggregate bundle: C:\\Users\\miqba\\projects\\Indonesia Wildfire Analysis\\apps\\evidence-explorer\\data\\evidence-explorer.json (4bf6cd05d7711a8e493de2172d7be3ebdde3b4c8f44360fa6048ea15c11ae6db)\n{\n  \"destination\": \"C:\\\\Users\\\\miqba\\\\projects\\\\Indonesia Wildfire Analysis\\\\apps\\\\evidence-explorer\\\\public\\\\geo\\\\global-countries.geojson\",\n  \"feature_count\": 242,\n  \"sha256\": \"daf41000ae2924746ac6be56014ae7a07412ba1873d7d054dbc3f267846520cf\"\n}\nVerified frozen globe geometry and texture assets.\nCopied Cesium runtime assets into C:\\Users\\miqba\\projects\\Indonesia Wildfire Analysis\\apps\\evidence-explorer\\public\\cesium\\ for static export.\n\n> kalimantan-fire-evidence-explorer@0.1.0 build\n> next build\n\n\u00e2\u2013\u00b2 Next.js 16.3.1 (Turbopack)\n\u00e2\u0153\u201c Running next.config.mjs took 30ms\n\n  Creating an optimized production build ...\n\u00e2\u0153\u201c Compiled successfully in 638ms\n  Running TypeScript ...\n  Finished TypeScript in 2.4s ...\n  Collecting page data using 4 workers ...\n  Generating static pages using 4 workers (0/3) ...\n\u00e2\u0153\u201c Generating static pages using 4 workers (3/3) in 1142ms\n  Finalizing page optimization ...\n\nRoute (app)\n\u00e2\u201d\u0152 \u00e2\u2014\u2039 /\n\u00e2\u201d\u201d \u00e2\u2014\u2039 /_not-found\n\n\n\u00e2\u2014\u2039  (Static)  prerendered as static content\n\n",
+      "stderr_tail": ""
+    }
+  ],
+  "status": "passed",
+  "dashboard_included": true
+}

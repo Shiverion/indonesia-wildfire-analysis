@@ -1,0 +1,27 @@
+{
+  "schema_version": "peat-sensitivity-provenance/v1",
+  "recorded_at_utc": "2026-08-23T18:59:01.253973+00:00",
+  "primary_phase1_ready": false,
+  "phase2_unlock": false,
+  "assets": {
+    "peat_baseline": {
+      "path": "data/raw/peat/global/peatland.extent_multi_p_1km_s_2000_2020_go_epsg4326_v20260423.tif",
+      "sha256": "a667cab62b307272860df3c8f2db49bb5dcab985433a5f9f3840dd9abb4dbbb9",
+      "source_url": "https://zenodo.org/records/19731872",
+      "license": "CC-BY-4.0",
+      "release_date": "2026-04-24",
+      "reference_period": "2000-2020",
+      "role": "static sensitivity stratum; not 2026 land cover"
+    },
+    "drainage_sensitivity": {
+      "path": "data/raw/peat_and_drainage/dadap_2017_geotiffs.zip",
+      "sha256": "d1771dd46e440a74d7f9f8f557856238a0acc3fed27618f213d5cf6f288f56a9",
+      "member_count": 1664,
+      "source_url": "https://purl.stanford.edu/yj761xk5815",
+      "license": "CC-BY-3.0",
+      "source_reference_year": 2017,
+      "role": "canal/road sensitivity; not a dated 2014 construction series"
+    }
+  },
+  "interpretation": "These files support sensitivity and provenance checks only; they do not establish peat vulnerability or a causal effect."
+}

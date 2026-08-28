@@ -52,7 +52,8 @@
       "access_class": "open_free_account_cc_by",
       "licence_or_terms": "CDS registration, licence acceptance, API credentials, Copernicus attribution",
       "expected_local_path": "data/raw/era5_land/",
-      "status": "blocked_missing_account_and_request",
+      "status": "ready",
+      "provenance_path": "data/raw/era5_land/download_manifest.json",
       "required_for": ["phase_1", "phase_2"]
     },
     {
@@ -68,11 +69,12 @@
     {
       "id": "mapbiomas_indonesia_collection_4_1",
       "purpose": "2014 baseline forest and lagged transformation exposure",
-      "source_url": "https://landy.mapbiomas.id/en/termsofuse",
+      "source_url": "https://plataforma.mapbiomas.org",
       "access_class": "open_public_interest_cc_by_sa",
-      "licence_or_terms": "Record terms and FAQ, collection/version, exported asset ID, access date, class crosswalk, and share-alike obligations",
+      "licence_or_terms": "Record MapBiomas terms/FAQ, collection/version, platform download ID, access date, class crosswalk, and share-alike obligations",
       "expected_local_path": "data/raw/mapbiomas_indonesia/",
-      "status": "blocked_missing_frozen_export_and_crosswalk",
+      "provenance_path": "data/raw/mapbiomas_indonesia/mapbiomas_2014_provenance.json",
+      "status": "ready",
       "required_for": ["phase_1", "phase_2", "phase_3"]
     },
     {

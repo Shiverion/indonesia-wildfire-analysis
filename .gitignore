@@ -11,16 +11,41 @@
 # Downloaded source data are kept locally and are not committed to GitHub.
 # The repository tracks manifests, QA reports, derived summaries, and code.
 data/raw/
+outputs/download_logs/
+*.part
 
 # Large local aggregates/snapshots are reproducible from the acquisition scripts.
 data/derived/sipongi/*.csv
 data/derived/sipongi/snapshots/
+# Large local VIIRS diagnostic rows remain reproducible from the paired
+# granules and receipt, but are not committed to GitHub or bundled for Vercel.
+data/derived/viirs/opportunity_frame_diagnostic.csv
+# Resumable Earth Engine risk-set chunks are local computation artifacts.
+# Only their compact QA receipt and code are versioned.
+data/derived/viirs/daily_risk_sets/
+data/derived/viirs/daily_risk_sets_with_era5/
+data/derived/viirs/opportunity_frame.csv
+
+# Phase 3's cell-centre upload table contains private analysis coordinates.
+# Keep only its coordinate-free hash/count receipt under version control.
+data/derived/phase3/phase3_cell_centres_private.csv
+data/derived/phase3/mapbiomas_c41_transition_summary_private.csv
 
 # Local logs and generated analysis previews.
 outputs/quality/*.log
+outputs/quality/daily_risk_set_extraction_status*.json
+outputs/quality/phase1b_pipeline_supervisor.json
 apps/evidence-explorer/*.log
 
 # Python caches and test/build metadata.
 __pycache__/
 *.py[cod]
 .pytest_cache/
+
+# Locally built publication archives and clean-room environments. The tracked
+# manifest records their contents; upload the ZIP to a research repository.
+publication/release/*.zip
+publication/.venv-check/
+
+.vercel
+.env*.local

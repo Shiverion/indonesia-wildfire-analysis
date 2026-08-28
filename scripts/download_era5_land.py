@@ -11,6 +11,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import time
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
@@ -28,6 +29,8 @@ VARIABLES = [
     "volumetric_soil_water_layer_3",
 ]
 TIMES = [f"{hour:02d}:00" for hour in range(24)]
+DEFAULT_REQUEST_RETRIES = 2
+DEFAULT_RETRY_DELAY_SECONDS = 30.0
 
 
 def _read_project_env() -> dict[str, str]:
@@ -76,7 +79,57 @@ def sha256(path: Path) -> str:
     return digest.hexdigest()
 
 
-def run(year: int, months: list[str], output_root: Path, dry_run: bool) -> dict[str, Any]:
+def _retrieve_with_retries(
+    client: Any,
+    request: dict[str, Any],
+    target: Path,
+    *,
+    request_retries: int = DEFAULT_REQUEST_RETRIES,
+    retry_delay_seconds: float = DEFAULT_RETRY_DELAY_SECONDS,
+) -> None:
+    """Submit a month-level job again when CDS marks a job failed.
+
+    The ECMWF client already retries transient polling errors, but it raises
+    on a terminal job failure (often a 400 response from ``/results``).  This
+    outer retry handles that case.  Results are written to ``.part`` and
+    atomically renamed only after a non-empty response exists, so a failed job
+    can never masquerade as a complete NetCDF file on the next resume.
+    """
+    if request_retries < 0:
+        raise ValueError("request_retries must be non-negative")
+    if retry_delay_seconds < 0:
+        raise ValueError("retry_delay_seconds must be non-negative")
+    partial = target.with_name(target.name + ".part")
+    attempts = request_retries + 1
+    for attempt in range(1, attempts + 1):
+        partial.unlink(missing_ok=True)
+        try:
+            client.retrieve("reanalysis-era5-land", request, str(partial))
+            if not partial.is_file() or partial.stat().st_size <= 0:
+                raise RuntimeError("CDS returned no non-empty payload")
+            partial.replace(target)
+            return
+        except Exception as exc:
+            partial.unlink(missing_ok=True)
+            if attempt >= attempts:
+                raise
+            print(
+                f"CDS month job failed ({type(exc).__name__}: {exc}); "
+                f"resubmitting attempt {attempt + 1}/{attempts} after {retry_delay_seconds:g}s",
+                flush=True,
+            )
+            time.sleep(retry_delay_seconds)
+
+
+def run(
+    year: int,
+    months: list[str],
+    output_root: Path,
+    dry_run: bool,
+    *,
+    request_retries: int = DEFAULT_REQUEST_RETRIES,
+    retry_delay_seconds: float = DEFAULT_RETRY_DELAY_SECONDS,
+) -> dict[str, Any]:
     client = None
     credential_source = "not_used_dry_run"
     if not dry_run:
@@ -125,7 +178,13 @@ def run(year: int, months: list[str], output_root: Path, dry_run: bool) -> dict[
             continue
         assert client is not None
         try:
-            client.retrieve("reanalysis-era5-land", request, str(target))
+            _retrieve_with_retries(
+                client,
+                request,
+                target,
+                request_retries=request_retries,
+                retry_delay_seconds=retry_delay_seconds,
+            )
         except Exception as exc:
             message = str(exc)
             if "licence" in message.lower() or "license" in message.lower():
@@ -141,6 +200,7 @@ def run(year: int, months: list[str], output_root: Path, dry_run: bool) -> dict[
         "schema_version": "era5-land-download/v1",
         "retrieved_at_utc": datetime.now(timezone.utc).isoformat(),
         "dataset": "reanalysis-era5-land",
+        "source_url": "https://cds.climate.copernicus.eu/datasets/reanalysis-era5-land?tab=documentation",
         "variables": VARIABLES,
         "area": [8, 109, -5, 120],
         "credential_source": credential_source,
@@ -158,12 +218,21 @@ def main() -> None:
     parser.add_argument("--year", type=int, required=True)
     parser.add_argument("--month", action="append", dest="months", required=True, help="repeat for each month, e.g. --month 01 --month 02")
     parser.add_argument("--dry-run", action="store_true")
+    parser.add_argument("--request-retries", type=int, default=DEFAULT_REQUEST_RETRIES, help="month-level CDS resubmissions after a terminal job failure")
+    parser.add_argument("--retry-delay-seconds", type=float, default=DEFAULT_RETRY_DELAY_SECONDS, help="delay between month-level CDS resubmissions")
     parser.add_argument("--output-root", type=Path, default=ROOT / "data" / "raw" / "era5_land")
     args = parser.parse_args()
     months = sorted({f"{int(value):02d}" for value in args.months})
     if any(int(value) < 1 or int(value) > 12 for value in months):
         parser.error("months must be between 01 and 12")
-    run(args.year, months, args.output_root, args.dry_run)
+    run(
+        args.year,
+        months,
+        args.output_root,
+        args.dry_run,
+        request_retries=args.request_retries,
+        retry_delay_seconds=args.retry_delay_seconds,
+    )
 
 
 if __name__ == "__main__":

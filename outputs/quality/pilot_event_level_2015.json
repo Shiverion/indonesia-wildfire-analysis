@@ -1,0 +1,33 @@
+{
+  "schema_version": "pilot-event-level/v1",
+  "created_at_utc": "2026-08-25T23:17:57.605295+00:00",
+  "status": "descriptive_pilot_ready_not_phase2",
+  "study_window": "2015 local diagnostic paired swaths",
+  "inputs": {
+    "viirs_diagnostic": "data\\derived\\viirs\\opportunity_frame_diagnostic.csv",
+    "era5_land": "2015 monthly files; regional hourly summaries",
+    "mod13q1": "data\\derived\\mod13q1\\mod13q1_2015_tile_summary.csv",
+    "chirps_lags": "data\\derived\\chirps\\chirps_lag_features_2015.parquet"
+  },
+  "summary": {
+    "event_rows": 50,
+    "positive_events": 28,
+    "negative_events": 22,
+    "weather_complete_events": 43,
+    "vegetation_summary_events": 43,
+    "chirps_spatially_linked_events": 0,
+    "peat_spatially_linked_events": 0
+  },
+  "output": {
+    "path": "data\\derived\\pilot\\pilot_event_level_2015.csv",
+    "row_count": 50
+  },
+  "inferential_status": "not_estimable",
+  "limitations": [
+    "VIIRS rows are aggregated from the diagnostic opportunity frame, not the canonical full-study denominator.",
+    "ERA5 values are regional means, not cell-specific exposures; they are valid pre-cutoff summaries for descriptive use only.",
+    "MOD13Q1 is a tile/composite summary and is not linked to each cell's pre-fire EVI.",
+    "CHIRPS and peat are intentionally not joined without a spatially valid event/cell linker.",
+    "No Phase 2 coefficient or causal conclusion is released from this table."
+  ]
+}

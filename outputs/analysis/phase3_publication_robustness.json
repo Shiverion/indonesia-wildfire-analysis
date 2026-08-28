@@ -1,0 +1,1393 @@
+{
+  "schema_version": "phase3-publication-robustness/v1",
+  "created_at_utc": "2026-08-28T06:43:37.366334+00:00",
+  "scope": {
+    "geography": "Kalimantan",
+    "generalization": "No Indonesia-wide or global inferential claim",
+    "claim_type": "post-registration diagnostics and association sensitivities"
+  },
+  "registered_primary_result_sha256": "3146175a0a845143d63990c985c2b56da6a01a10da6824dbe050ebc3ced94b51",
+  "attrition": {
+    "candidate_matched_set_count": 12178,
+    "included_matched_set_count": 7138,
+    "excluded_matched_set_count": 5040,
+    "excluded_share": 0.41386106092954505,
+    "reason_counts_nonexclusive": {
+      "nonfinite_transition_input": 0,
+      "pre_index_forest_below_70_percent": 5031,
+      "pre_map_observed_below_95_percent": 11,
+      "followup_map_observed_below_95_percent": 11,
+      "transition_fraction_out_of_range": 0,
+      "negative_chirps_sentinel": 1
+    },
+    "case_covariate_comparisons": [
+      {
+        "variable": "forest_fraction",
+        "included_mean": 0.9153385987365971,
+        "included_median": 0.9374237954616547,
+        "excluded_mean": 0.8544155626542984,
+        "excluded_median": 0.8466340005397797,
+        "standardized_mean_difference": 0.6742004607771018
+      },
+      {
+        "variable": "peat_extent_percent",
+        "included_mean": 10.847996637713646,
+        "included_median": 0.0,
+        "excluded_mean": 13.985119047619047,
+        "excluded_median": 0.0,
+        "standardized_mean_difference": -0.11098291633087082
+      },
+      {
+        "variable": "chirps_precip_7d_mm",
+        "included_mean": 25.00056324779302,
+        "included_median": 17.00279426574707,
+        "excluded_mean": 26.03782741426706,
+        "excluded_median": 20.276514053344727,
+        "standardized_mean_difference": -0.03834502185391161
+      },
+      {
+        "variable": "chirps_precip_30d_mm",
+        "included_mean": 141.91719309023054,
+        "included_median": 124.04457473754883,
+        "excluded_mean": 139.81488584005643,
+        "excluded_median": 118.36283111572266,
+        "standardized_mean_difference": 0.0216669359341723
+      },
+      {
+        "variable": "evi_prefire",
+        "included_mean": 0.5508392409792833,
+        "included_median": 0.5516999959945679,
+        "excluded_mean": 0.551066686628416,
+        "excluded_median": 0.5533500015735626,
+        "standardized_mean_difference": -0.003173073508134124
+      },
+      {
+        "variable": "era5_vpd_mean_72h_kpa",
+        "included_mean": 0.7267775653669774,
+        "included_median": 0.6847960336999902,
+        "excluded_mean": 0.7510157641472618,
+        "excluded_median": 0.6946080438089004,
+        "standardized_mean_difference": -0.08040632788786363
+      },
+      {
+        "variable": "era5_wind_max_24h_ms",
+        "included_mean": 1.9512082467105962,
+        "included_median": 1.7361422977867034,
+        "excluded_mean": 2.0618363871147802,
+        "excluded_median": 1.827969626247363,
+        "standardized_mean_difference": -0.1276858767229737
+      },
+      {
+        "variable": "era5_rootzone_soil_water_mean_72h",
+        "included_mean": 0.35043200545439973,
+        "included_median": 0.3633955139584011,
+        "excluded_mean": 0.336212718503185,
+        "excluded_median": 0.34831314510769307,
+        "standardized_mean_difference": 0.17912322920702503
+      },
+      {
+        "variable": "pre_natural_fraction",
+        "included_mean": 0.889433526379294,
+        "included_median": 0.90689335,
+        "excluded_mean": 0.7192227110179403,
+        "excluded_median": 0.71589130525,
+        "standardized_mean_difference": 1.0199174310052495
+      }
+    ],
+    "maximum_absolute_standardized_mean_difference": 1.0199174310052495,
+    "variables_above_abs_smd_0_10": [
+      "forest_fraction",
+      "peat_extent_percent",
+      "era5_wind_max_24h_ms",
+      "era5_rootzone_soil_water_mean_72h",
+      "pre_natural_fraction"
+    ],
+    "year_flow": [
+      {
+        "year": 2015,
+        "excluded_sets": 1360,
+        "included_sets": 2469,
+        "candidate_sets": 3829,
+        "included_share": 0.6448158788195352
+      },
+      {
+        "year": 2016,
+        "excluded_sets": 612,
+        "included_sets": 676,
+        "candidate_sets": 1288,
+        "included_share": 0.5248447204968945
+      },
+      {
+        "year": 2017,
+        "excluded_sets": 194,
+        "included_sets": 188,
+        "candidate_sets": 382,
+        "included_share": 0.49214659685863876
+      },
+      {
+        "year": 2018,
+        "excluded_sets": 846,
+        "included_sets": 1289,
+        "candidate_sets": 2135,
+        "included_share": 0.6037470725995316
+      },
+      {
+        "year": 2019,
+        "excluded_sets": 685,
+        "included_sets": 761,
+        "candidate_sets": 1446,
+        "included_share": 0.5262793914246197
+      },
+      {
+        "year": 2020,
+        "excluded_sets": 208,
+        "included_sets": 294,
+        "candidate_sets": 502,
+        "included_share": 0.5856573705179283
+      },
+      {
+        "year": 2021,
+        "excluded_sets": 81,
+        "included_sets": 109,
+        "candidate_sets": 190,
+        "included_share": 0.5736842105263158
+      },
+      {
+        "year": 2022,
+        "excluded_sets": 132,
+        "included_sets": 146,
+        "candidate_sets": 278,
+        "included_share": 0.5251798561151079
+      },
+      {
+        "year": 2023,
+        "excluded_sets": 922,
+        "included_sets": 1206,
+        "candidate_sets": 2128,
+        "included_share": 0.5667293233082706
+      }
+    ]
+  },
+  "influence": {
+    "diagnostic": "matched-set score-norm influence screening",
+    "matched_set_count": 7138,
+    "score_norm_quantiles": {
+      "p50": 0.339577046537492,
+      "p90": 1.7152913552033653,
+      "p95": 2.1292416643349714,
+      "p99": 2.7990828919163486,
+      "maximum": 4.9732400956871485
+    },
+    "exclusion_sensitivities": [
+      {
+        "excluded_top_score_share": 0.005,
+        "excluded_matched_set_count": 36,
+        "remaining_matched_set_count": 7102,
+        "primary_term": {
+          "term": "fire_positive",
+          "estimate": 0.05626100865784288,
+          "standard_error": 0.006734571960072546,
+          "ci95": [
+            0.04306124761610069,
+            0.06946076969958506
+          ],
+          "z": 8.354058578837552,
+          "p_two_sided": 6.595661124730856e-17
+        }
+      },
+      {
+        "excluded_top_score_share": 0.01,
+        "excluded_matched_set_count": 72,
+        "remaining_matched_set_count": 7066,
+        "primary_term": {
+          "term": "fire_positive",
+          "estimate": 0.055027759824736025,
+          "standard_error": 0.006634785073821655,
+          "ci95": [
+            0.04202358108004558,
+            0.06803193856942646
+          ],
+          "z": 8.293827036214736,
+          "p_two_sided": 1.0966187740698986e-16
+        }
+      }
+    ],
+    "set_identifiers_released": false
+  },
+  "alternative_estimators": {
+    "conditional_logit": {
+      "model": "conditional logistic regression with matched-set conditional likelihood",
+      "effect_measure": "conditional odds ratio",
+      "input_matched_set_count": 7138,
+      "outcome_variation_matched_set_count": 1732,
+      "coefficient": 1.2425683955464575,
+      "standard_error": 0.058680208899184155,
+      "odds_ratio": 3.464500254506193,
+      "ci95": [
+        3.0880974401087364,
+        3.886782151877579
+      ],
+      "p_two_sided": 1.6150507644901605e-99,
+      "converged": true,
+      "convergence_check": "Finite parameter and standard-error vectors; this statsmodels result class does not expose an optimizer convergence flag.",
+      "warning_messages": [
+        "Dropped 5406 groups and 27030 observations for having no within-group variance"
+      ],
+      "uncertainty_limit": "Model-based standard error; used only as an alternative-estimator sensitivity, not a replacement for the registered two-way clustered risk difference."
+    },
+    "continuous_loss_share": {
+      "model": "within-matched-set linear model for continuous loss share",
+      "effect_measure": "adjusted risk difference",
+      "row_count": 35690,
+      "matched_set_count": 7138,
+      "unique_cell_count": 11758,
+      "outcome_variation_matched_set_count": 6738,
+      "unadjusted": {
+        "fire_positive_risk": 0.059983296780269674,
+        "fire_negative_risk": 0.01916074132786105,
+        "risk_difference": 0.04082255545240862,
+        "risk_ratio": 3.130531108055292,
+        "risk_ratio_zero_control_guard": false
+      },
+      "primary_term": {
+        "term": "fire_positive",
+        "estimate": 0.029338893621159545,
+        "standard_error": 0.0029707197262813954,
+        "ci95": [
+          0.02351628295764801,
+          0.03516150428467108
+        ],
+        "z": 9.876022083673496,
+        "p_two_sided": 5.2890975061832856e-23
+      },
+      "coefficients": [
+        {
+          "term": "fire_positive",
+          "estimate": 0.029338893621159545,
+          "standard_error": 0.0029707197262813954,
+          "ci95": [
+            0.02351628295764801,
+            0.03516150428467108
+          ],
+          "z": 9.876022083673496,
+          "p_two_sided": 5.2890975061832856e-23
+        },
+        {
+          "term": "forest_fraction_z",
+          "estimate": -0.022451291495786525,
+          "standard_error": 0.0016910643161831191,
+          "ci95": [
+            -0.025765777555505437,
+            -0.019136805436067612
+          ],
+          "z": -13.276426733704053,
+          "p_two_sided": 3.1717195957328966e-40
+        },
+        {
+          "term": "peat_extent_percent_z",
+          "estimate": -0.003535198015294619,
+          "standard_error": 0.0015873825715634667,
+          "ci95": [
+            -0.006646467855559014,
+            -0.0004239281750302243
+          ],
+          "z": -2.2270611247877588,
+          "p_two_sided": 0.025943188905940502
+        },
+        {
+          "term": "chirps_precip_7d_mm_z",
+          "estimate": -0.0021295405877304417,
+          "standard_error": 0.0014266409393845424,
+          "ci95": [
+            -0.0049257568289241445,
+            0.0006666756534632616
+          ],
+          "z": -1.4926955542500642,
+          "p_two_sided": 0.13551689764018485
+        },
+        {
+          "term": "chirps_precip_30d_mm_z",
+          "estimate": -0.002601643663815948,
+          "standard_error": 0.0022412404919960934,
+          "ci95": [
+            -0.006994475028128291,
+            0.0017911877004963953
+          ],
+          "z": -1.1608052206387152,
+          "p_two_sided": 0.24572111943416286
+        },
+        {
+          "term": "evi_prefire_z",
+          "estimate": -0.008574354438533192,
+          "standard_error": 0.001489746632006939,
+          "ci95": [
+            -0.011494257837266791,
+            -0.005654451039799591
+          ],
+          "z": -5.75557900539241,
+          "p_two_sided": 8.634532718174823e-09
+        },
+        {
+          "term": "era5_vpd_mean_72h_kpa_z",
+          "estimate": 7.259765553766921e-05,
+          "standard_error": 0.0030440768165895943,
+          "ci95": [
+            -0.005893792904977936,
+            0.006038988216053274
+          ],
+          "z": 0.02384882508287139,
+          "p_two_sided": 0.980973194324995
+        },
+        {
+          "term": "era5_wind_max_24h_ms_z",
+          "estimate": 0.006764211763235266,
+          "standard_error": 0.0044945270250073485,
+          "ci95": [
+            -0.0020450612057791376,
+            0.01557348473224967
+          ],
+          "z": 1.5049885617773555,
+          "p_two_sided": 0.13232701748973516
+        },
+        {
+          "term": "era5_rootzone_soil_water_mean_72h_z",
+          "estimate": 0.0022492419098383305,
+          "standard_error": 0.002724214340855249,
+          "ci95": [
+            -0.0030902181982379578,
+            0.007588702017914619
+          ],
+          "z": 0.825647922083912,
+          "p_two_sided": 0.40900384219852315
+        }
+      ],
+      "standardization": {
+        "forest_fraction_z": {
+          "source": "forest_fraction",
+          "transform": "identity",
+          "mean": 0.9488464368852666,
+          "sd": 0.07421918955249222
+        },
+        "peat_extent_percent_z": {
+          "source": "peat_extent_percent",
+          "transform": "identity",
+          "mean": 13.18378287255563,
+          "sd": 29.524143062687386
+        },
+        "chirps_precip_7d_mm_z": {
+          "source": "chirps_precip_7d_mm",
+          "transform": "log1p",
+          "mean": 2.3732343848235087,
+          "sd": 1.5902426140252353
+        },
+        "chirps_precip_30d_mm_z": {
+          "source": "chirps_precip_30d_mm",
+          "transform": "log1p",
+          "mean": 4.6631918124502825,
+          "sd": 0.9499422885179284
+        },
+        "evi_prefire_z": {
+          "source": "evi_prefire",
+          "transform": "identity",
+          "mean": 0.5440554551368256,
+          "sd": 0.07383570301149148
+        },
+        "era5_vpd_mean_72h_kpa_z": {
+          "source": "era5_vpd_mean_72h_kpa",
+          "transform": "identity",
+          "mean": 0.7258085041687625,
+          "sd": 0.2969681006187809
+        },
+        "era5_wind_max_24h_ms_z": {
+          "source": "era5_wind_max_24h_ms",
+          "transform": "identity",
+          "mean": 1.9031636738596853,
+          "sd": 0.8145104029615223
+        },
+        "era5_rootzone_soil_water_mean_72h_z": {
+          "source": "era5_rootzone_soil_water_mean_72h",
+          "transform": "identity",
+          "mean": 0.3499438311902737,
+          "sd": 0.07604155006527691
+        }
+      },
+      "uncertainty": {
+        "method": "two_way_cell_and_date_cluster_robust",
+        "cell_clusters": 11758,
+        "date_clusters": 632,
+        "cell_date_clusters": 28363,
+        "warning": null
+      },
+      "diagnostics": {
+        "information_condition_number": 19.85332642527219,
+        "residual_rmse": 0.06852796748226583,
+        "matched_set_score_norm_p99": 1.8405507128948861,
+        "matched_set_score_norm_max": 3.5775102045175995
+      }
+    }
+  },
+  "temporal": {
+    "year_specific": [
+      {
+        "year": 2015,
+        "matched_set_count": 2469,
+        "outcome_variation_matched_set_count": 877,
+        "primary_term": {
+          "term": "fire_positive",
+          "estimate": 0.090690066705656,
+          "standard_error": 0.013300173145159817,
+          "ci95": [
+            0.06462172734114277,
+            0.11675840607016924
+          ],
+          "z": 6.818713238982142,
+          "p_two_sided": 9.185955138772552e-12
+        }
+      },
+      {
+        "year": 2016,
+        "matched_set_count": 676,
+        "outcome_variation_matched_set_count": 106,
+        "primary_term": {
+          "term": "fire_positive",
+          "estimate": 0.031866573812442914,
+          "standard_error": 0.01157577500446871,
+          "ci95": [
+            0.009178054803684242,
+            0.054555092821201585
+          ],
+          "z": 2.752867414936896,
+          "p_two_sided": 0.005907581579584685
+        }
+      },
+      {
+        "year": 2017,
+        "matched_set_count": 188,
+        "outcome_variation_matched_set_count": 27,
+        "primary_term": {
+          "term": "fire_positive",
+          "estimate": 0.0061477588880729525,
+          "standard_error": 0.022258750871483896,
+          "ci95": [
+            -0.037479392820035484,
+            0.04977491059618139
+          ],
+          "z": 0.2761951433648939,
+          "p_two_sided": 0.7823981872477563
+        }
+      },
+      {
+        "year": 2018,
+        "matched_set_count": 1289,
+        "outcome_variation_matched_set_count": 237,
+        "primary_term": {
+          "term": "fire_positive",
+          "estimate": 0.007975963690791331,
+          "standard_error": 0.014818302930499678,
+          "ci95": [
+            -0.021067910052988033,
+            0.0370198374345707
+          ],
+          "z": 0.5382508191524992,
+          "p_two_sided": 0.5904038997922694
+        }
+      },
+      {
+        "year": 2019,
+        "matched_set_count": 761,
+        "outcome_variation_matched_set_count": 103,
+        "primary_term": {
+          "term": "fire_positive",
+          "estimate": 0.029169620453768422,
+          "standard_error": 0.011888491130628212,
+          "ci95": [
+            0.005868177837737125,
+            0.05247106306979972
+          ],
+          "z": 2.4536015658554846,
+          "p_two_sided": 0.014143359274505402
+        }
+      },
+      {
+        "year": 2020,
+        "matched_set_count": 294,
+        "outcome_variation_matched_set_count": 40,
+        "primary_term": {
+          "term": "fire_positive",
+          "estimate": 0.03711215097588191,
+          "standard_error": 0.017344447150615727,
+          "ci95": [
+            0.0031170345606750804,
+            0.07110726739108873
+          ],
+          "z": 2.139713687822239,
+          "p_two_sided": 0.03237791218351378
+        }
+      },
+      {
+        "year": 2021,
+        "matched_set_count": 109,
+        "outcome_variation_matched_set_count": 17,
+        "primary_term": {
+          "term": "fire_positive",
+          "estimate": 0.043611125440339925,
+          "standard_error": 0.027033591377014738,
+          "ci95": [
+            -0.009374713658608959,
+            0.09659696453928882
+          ],
+          "z": 1.6132198209306443,
+          "p_two_sided": 0.10669675869346776
+        }
+      },
+      {
+        "year": 2022,
+        "matched_set_count": 146,
+        "outcome_variation_matched_set_count": 28,
+        "primary_term": {
+          "term": "fire_positive",
+          "estimate": 0.028106006590123717,
+          "standard_error": 0.030227914273624683,
+          "ci95": [
+            -0.03114070538618066,
+            0.0873527185664281
+          ],
+          "z": 0.9298030401868502,
+          "p_two_sided": 0.352473071958452
+        }
+      },
+      {
+        "year": 2023,
+        "matched_set_count": 1206,
+        "outcome_variation_matched_set_count": 297,
+        "primary_term": {
+          "term": "fire_positive",
+          "estimate": 0.09753366484853367,
+          "standard_error": 0.013780314209930464,
+          "ci95": [
+            0.07052424899706997,
+            0.12454308069999737
+          ],
+          "z": 7.077753334408608,
+          "p_two_sided": 1.4651020130194493e-12
+        }
+      }
+    ],
+    "year_specific_estimate_range": [
+      0.0061477588880729525,
+      0.09753366484853367
+    ],
+    "leave_one_year_out": [
+      {
+        "excluded_year": 2015,
+        "matched_set_count": 4669,
+        "primary_term": {
+          "term": "fire_positive",
+          "estimate": 0.04130458467466113,
+          "standard_error": 0.007524933442121391,
+          "ci95": [
+            0.026555715128103206,
+            0.05605345422121906
+          ],
+          "z": 5.489029902039473,
+          "p_two_sided": 4.0414720946414666e-08
+        }
+      },
+      {
+        "excluded_year": 2016,
+        "matched_set_count": 6462,
+        "primary_term": {
+          "term": "fire_positive",
+          "estimate": 0.061623901192477605,
+          "standard_error": 0.0074867679205852375,
+          "ci95": [
+            0.04694983606813054,
+            0.07629796631682467
+          ],
+          "z": 8.231041999183606,
+          "p_two_sided": 1.8559187885989679e-16
+        }
+      },
+      {
+        "excluded_year": 2017,
+        "matched_set_count": 6950,
+        "primary_term": {
+          "term": "fire_positive",
+          "estimate": 0.06019688120620225,
+          "standard_error": 0.007089647574109497,
+          "ci95": [
+            0.046301171960947636,
+            0.07409259045145686
+          ],
+          "z": 8.490814328491265,
+          "p_two_sided": 2.05194172636558e-17
+        }
+      },
+      {
+        "excluded_year": 2018,
+        "matched_set_count": 5849,
+        "primary_term": {
+          "term": "fire_positive",
+          "estimate": 0.06959154643717921,
+          "standard_error": 0.007314447194882063,
+          "ci95": [
+            0.05525522993521037,
+            0.08392786293914806
+          ],
+          "z": 9.514259189111735,
+          "p_two_sided": 1.8301217994725795e-21
+        }
+      },
+      {
+        "excluded_year": 2019,
+        "matched_set_count": 6377,
+        "primary_term": {
+          "term": "fire_positive",
+          "estimate": 0.06260774553014516,
+          "standard_error": 0.007557770466734997,
+          "ci95": [
+            0.04779451541534456,
+            0.07742097564494575
+          ],
+          "z": 8.283890838668468,
+          "p_two_sided": 1.1921489140363327e-16
+        }
+      },
+      {
+        "excluded_year": 2020,
+        "matched_set_count": 6844,
+        "primary_term": {
+          "term": "fire_positive",
+          "estimate": 0.059782396124852866,
+          "standard_error": 0.0072063439210905125,
+          "ci95": [
+            0.045657962039515464,
+            0.07390683021019027
+          ],
+          "z": 8.29580114125419,
+          "p_two_sided": 1.078558297913465e-16
+        }
+      },
+      {
+        "excluded_year": 2021,
+        "matched_set_count": 7029,
+        "primary_term": {
+          "term": "fire_positive",
+          "estimate": 0.059112508708524754,
+          "standard_error": 0.007051261376738197,
+          "ci95": [
+            0.04529203641011789,
+            0.07293298100693162
+          ],
+          "z": 8.383253087672276,
+          "p_two_sided": 5.148461069528294e-17
+        }
+      },
+      {
+        "excluded_year": 2022,
+        "matched_set_count": 6992,
+        "primary_term": {
+          "term": "fire_positive",
+          "estimate": 0.05938036006403608,
+          "standard_error": 0.007037402836954594,
+          "ci95": [
+            0.04558705050360508,
+            0.07317366962446709
+          ],
+          "z": 8.437823077601832,
+          "p_two_sided": 3.233025036318933e-17
+        }
+      },
+      {
+        "excluded_year": 2023,
+        "matched_set_count": 5932,
+        "primary_term": {
+          "term": "fire_positive",
+          "estimate": 0.05147192500322583,
+          "standard_error": 0.00750103713661018,
+          "ci95": [
+            0.036769892215469877,
+            0.06617395779098179
+          ],
+          "z": 6.861974426444006,
+          "p_two_sided": 6.791522418116994e-12
+        }
+      }
+    ],
+    "leave_one_year_out_estimate_range": [
+      0.04130458467466113,
+      0.06959154643717921
+    ]
+  },
+  "spatial_cluster_sensitivities": [
+    {
+      "block_size_km": 25,
+      "spatial_block_count": 741,
+      "date_cluster_count": 632,
+      "block_date_cluster_count": 11208,
+      "estimate": 0.05887780947061065,
+      "standard_error": 0.00926844618459606,
+      "ci95": [
+        0.04071165494880237,
+        0.07704396399241893
+      ],
+      "p_two_sided": 2.1184267080746933e-10,
+      "coordinates_released": false
+    },
+    {
+      "block_size_km": 50,
+      "spatial_block_count": 249,
+      "date_cluster_count": 632,
+      "block_date_cluster_count": 6232,
+      "estimate": 0.05887780947061065,
+      "standard_error": 0.010978035608396594,
+      "ci95": [
+        0.03736085967815333,
+        0.08039475926306797
+      ],
+      "p_two_sided": 8.174352683406594e-08,
+      "coordinates_released": false
+    },
+    {
+      "block_size_km": 100,
+      "spatial_block_count": 76,
+      "date_cluster_count": 632,
+      "block_date_cluster_count": 3633,
+      "estimate": 0.05887780947061065,
+      "standard_error": 0.013336058772546037,
+      "ci95": [
+        0.03273913427642042,
+        0.08501648466480088
+      ],
+      "p_two_sided": 1.0104115683551973e-05,
+      "coordinates_released": false
+    }
+  ],
+  "negative_control": {
+    "status": "estimated_post_registration_diagnostic",
+    "definition": "At least 10% natural-forest loss in a map interval ending before the index fire year (t-3 to t-1).",
+    "flow": {
+      "horizon_years": 1,
+      "threshold_share_of_preforest": 0.1,
+      "destination": "any_natural_forest_loss",
+      "candidate_matched_set_count": 7061,
+      "excluded_matched_set_count": 3146,
+      "included_matched_set_count": 3915,
+      "included_row_count": 19575,
+      "missing_or_support_failures_are_zero": false,
+      "distribution_by_exposure": {
+        "negative": {
+          "n": 15660,
+          "mean": 0.013581137703837693,
+          "median": 0.0,
+          "standard_deviation": 0.04913423479457293,
+          "p25": 0.0,
+          "p75": 0.0065702393670596555,
+          "p05": 0.0,
+          "p95": 0.07108689874757726
+        },
+        "positive": {
+          "n": 3915,
+          "mean": 0.03046037701082309,
+          "median": 0.008958140644457088,
+          "standard_deviation": 0.06285170551952497,
+          "p25": 0.0,
+          "p75": 0.03470125616434562,
+          "p05": 0.0,
+          "p95": 0.1243280348765456
+        }
+      }
+    },
+    "model": {
+      "model": "within-matched-set linear probability model",
+      "effect_measure": "adjusted risk difference",
+      "row_count": 19575,
+      "matched_set_count": 3915,
+      "unique_cell_count": 7627,
+      "outcome_variation_matched_set_count": 593,
+      "unadjusted": {
+        "fire_positive_risk": 0.07458492975734356,
+        "fire_negative_risk": 0.027458492975734355,
+        "risk_difference": 0.0471264367816092,
+        "risk_ratio": 2.716279069767442,
+        "risk_ratio_zero_control_guard": false
+      },
+      "primary_term": {
+        "term": "fire_positive",
+        "estimate": 0.023133451228810893,
+        "standard_error": 0.006048945033062655,
+        "ci95": [
+          0.011277518964008089,
+          0.0349893834936137
+        ],
+        "z": 3.82437782164771,
+        "p_two_sided": 0.00013110273909471427
+      },
+      "coefficients": [
+        {
+          "term": "fire_positive",
+          "estimate": 0.023133451228810893,
+          "standard_error": 0.006048945033062655,
+          "ci95": [
+            0.011277518964008089,
+            0.0349893834936137
+          ],
+          "z": 3.82437782164771,
+          "p_two_sided": 0.00013110273909471427
+        },
+        {
+          "term": "forest_fraction_z",
+          "estimate": -0.04315183538819553,
+          "standard_error": 0.004570350613713634,
+          "ci95": [
+            -0.052109722591074256,
+            -0.034193948185316805
+          ],
+          "z": -9.441690372444436,
+          "p_two_sided": 3.668133167408929e-21
+        },
+        {
+          "term": "peat_extent_percent_z",
+          "estimate": -0.012423440151065295,
+          "standard_error": 0.003425717570337996,
+          "ci95": [
+            -0.019137846588927768,
+            -0.005709033713202823
+          ],
+          "z": -3.6265220048013314,
+          "p_two_sided": 0.0002872643497642252
+        },
+        {
+          "term": "chirps_precip_7d_mm_z",
+          "estimate": -0.002303138630229217,
+          "standard_error": 0.003487069033055273,
+          "ci95": [
+            -0.009137793935017553,
+            0.004531516674559118
+          ],
+          "z": -0.6604797921684019,
+          "p_two_sided": 0.5089459822185816
+        },
+        {
+          "term": "chirps_precip_30d_mm_z",
+          "estimate": -0.010139518116989446,
+          "standard_error": 0.004660061632764531,
+          "ci95": [
+            -0.019273238917207926,
+            -0.0010057973167709663
+          ],
+          "z": -2.17583347947574,
+          "p_two_sided": 0.02956771429091893
+        },
+        {
+          "term": "evi_prefire_z",
+          "estimate": -0.010523665065972852,
+          "standard_error": 0.003960405539330362,
+          "ci95": [
+            -0.01828605992306036,
+            -0.0027612702088853427
+          ],
+          "z": -2.6572190553375066,
+          "p_two_sided": 0.007878822955625081
+        },
+        {
+          "term": "era5_vpd_mean_72h_kpa_z",
+          "estimate": 0.02329157223133941,
+          "standard_error": 0.011062156227995041,
+          "ci95": [
+            0.0016097460244691303,
+            0.04497339843820969
+          ],
+          "z": 2.1055182869679006,
+          "p_two_sided": 0.03524621719436853
+        },
+        {
+          "term": "era5_wind_max_24h_ms_z",
+          "estimate": 0.0005258037763880724,
+          "standard_error": 0.0045122201353285435,
+          "ci95": [
+            -0.008318147688855873,
+            0.009369755241632017
+          ],
+          "z": 0.11652883959966363,
+          "p_two_sided": 0.9072334310901383
+        },
+        {
+          "term": "era5_rootzone_soil_water_mean_72h_z",
+          "estimate": 0.007578500598061312,
+          "standard_error": 0.006461084849620482,
+          "ci95": [
+            -0.005085225707194834,
+            0.020242226903317458
+          ],
+          "z": 1.172945530734899,
+          "p_two_sided": 0.24081764939670036
+        }
+      ],
+      "standardization": {
+        "forest_fraction_z": {
+          "source": "forest_fraction",
+          "transform": "identity",
+          "mean": 0.9495943953618118,
+          "sd": 0.07373653647809586
+        },
+        "peat_extent_percent_z": {
+          "source": "peat_extent_percent",
+          "transform": "identity",
+          "mean": 12.093328626897282,
+          "sd": 28.068921553688128
+        },
+        "chirps_precip_7d_mm_z": {
+          "source": "chirps_precip_7d_mm",
+          "transform": "log1p",
+          "mean": 2.4849526620379194,
+          "sd": 1.5316148391393032
+        },
+        "chirps_precip_30d_mm_z": {
+          "source": "chirps_precip_30d_mm",
+          "transform": "log1p",
+          "mean": 4.748716773176196,
+          "sd": 0.8988658486132726
+        },
+        "evi_prefire_z": {
+          "source": "evi_prefire",
+          "transform": "identity",
+          "mean": 0.5521147757063811,
+          "sd": 0.07507202893190627
+        },
+        "era5_vpd_mean_72h_kpa_z": {
+          "source": "era5_vpd_mean_72h_kpa",
+          "transform": "identity",
+          "mean": 0.6810840733612489,
+          "sd": 0.2757220694056585
+        },
+        "era5_wind_max_24h_ms_z": {
+          "source": "era5_wind_max_24h_ms",
+          "transform": "identity",
+          "mean": 1.894232553506396,
+          "sd": 0.7574396035142561
+        },
+        "era5_rootzone_soil_water_mean_72h_z": {
+          "source": "era5_rootzone_soil_water_mean_72h",
+          "transform": "identity",
+          "mean": 0.3623745837849149,
+          "sd": 0.07178270744893382
+        }
+      },
+      "uncertainty": {
+        "method": "two_way_cell_and_date_cluster_robust",
+        "cell_clusters": 7627,
+        "date_clusters": 458,
+        "cell_date_clusters": 16137,
+        "warning": null
+      },
+      "diagnostics": {
+        "information_condition_number": 17.68464170195668,
+        "residual_rmse": 0.1567239239521597,
+        "matched_set_score_norm_p99": 2.704076775745503,
+        "matched_set_score_norm_max": 5.756114520951062
+      }
+    },
+    "common_support_post_minus_pre": {
+      "matched_set_count": 3453,
+      "row_count": 17265,
+      "binary_outcome_model": {
+        "model": "within-matched-set post-minus-pre binary-outcome contrast",
+        "effect_measure": "adjusted risk difference",
+        "row_count": 17265,
+        "matched_set_count": 3453,
+        "unique_cell_count": 6961,
+        "outcome_variation_matched_set_count": 619,
+        "unadjusted": {
+          "fire_positive_risk": 0.055024616275702286,
+          "fire_negative_risk": 0.015276571097596293,
+          "risk_difference": 0.03974804517810599,
+          "risk_ratio": 3.6018957345971563,
+          "risk_ratio_zero_control_guard": false
+        },
+        "primary_term": {
+          "term": "fire_positive",
+          "estimate": 0.03082204612800578,
+          "standard_error": 0.007919856361834447,
+          "ci95": [
+            0.015299127658810262,
+            0.04634496459720129
+          ],
+          "z": 3.891743072075941,
+          "p_two_sided": 9.952660968768145e-05
+        },
+        "coefficients": [
+          {
+            "term": "fire_positive",
+            "estimate": 0.03082204612800578,
+            "standard_error": 0.007919856361834447,
+            "ci95": [
+              0.015299127658810262,
+              0.04634496459720129
+            ],
+            "z": 3.891743072075941,
+            "p_two_sided": 9.952660968768145e-05
+          },
+          {
+            "term": "forest_fraction_z",
+            "estimate": -0.016634192981199843,
+            "standard_error": 0.004935773809675549,
+            "ci95": [
+              -0.02630830964816392,
+              -0.006960076314235767
+            ],
+            "z": -3.3701287017229187,
+            "p_two_sided": 0.0007513308338703039
+          },
+          {
+            "term": "peat_extent_percent_z",
+            "estimate": -0.004572219747223895,
+            "standard_error": 0.003789509483055016,
+            "ci95": [
+              -0.011999658334011728,
+              0.0028552188395639362
+            ],
+            "z": -1.2065465907048942,
+            "p_two_sided": 0.22760680602802597
+          },
+          {
+            "term": "chirps_precip_7d_mm_z",
+            "estimate": -0.0037685415135588146,
+            "standard_error": 0.004962465826027315,
+            "ci95": [
+              -0.01349497453257235,
+              0.005957891505454722
+            ],
+            "z": -0.7594090610747253,
+            "p_two_sided": 0.4476078948633838
+          },
+          {
+            "term": "chirps_precip_30d_mm_z",
+            "estimate": -0.0005150871490381793,
+            "standard_error": 0.005638973651366396,
+            "ci95": [
+              -0.011567475505716315,
+              0.010537301207639958
+            ],
+            "z": -0.09134413119901119,
+            "p_two_sided": 0.9272191529094225
+          },
+          {
+            "term": "evi_prefire_z",
+            "estimate": -0.004637078297562828,
+            "standard_error": 0.0034543607853025284,
+            "ci95": [
+              -0.011407625436755784,
+              0.002133468841630128
+            ],
+            "z": -1.3423838984313616,
+            "p_two_sided": 0.17947155274819293
+          },
+          {
+            "term": "era5_vpd_mean_72h_kpa_z",
+            "estimate": -0.0034907810228265684,
+            "standard_error": 0.009896621850160114,
+            "ci95": [
+              -0.02288815984914039,
+              0.015906597803487254
+            ],
+            "z": -0.3527245029343111,
+            "p_two_sided": 0.724294987896428
+          },
+          {
+            "term": "era5_wind_max_24h_ms_z",
+            "estimate": 0.005564758170027111,
+            "standard_error": 0.006239135389598914,
+            "ci95": [
+              -0.00666394719358676,
+              0.01779346353364098
+            ],
+            "z": 0.8919117509942102,
+            "p_two_sided": 0.3724402356179699
+          },
+          {
+            "term": "era5_rootzone_soil_water_mean_72h_z",
+            "estimate": 0.005257308965913536,
+            "standard_error": 0.005150563875003707,
+            "ci95": [
+              -0.004837796229093729,
+              0.015352414160920803
+            ],
+            "z": 1.0207249329394545,
+            "p_two_sided": 0.30738477833002387
+          }
+        ],
+        "standardization": {
+          "forest_fraction_z": {
+            "source": "forest_fraction",
+            "transform": "identity",
+            "mean": 0.9557057959362618,
+            "sd": 0.06802779478273101
+          },
+          "peat_extent_percent_z": {
+            "source": "peat_extent_percent",
+            "transform": "identity",
+            "mean": 11.56542904290429,
+            "sd": 27.301715565797767
+          },
+          "chirps_precip_7d_mm_z": {
+            "source": "chirps_precip_7d_mm",
+            "transform": "log1p",
+            "mean": 2.485829978328086,
+            "sd": 1.5451705832342129
+          },
+          "chirps_precip_30d_mm_z": {
+            "source": "chirps_precip_30d_mm",
+            "transform": "log1p",
+            "mean": 4.748307971130075,
+            "sd": 0.9157339865953673
+          },
+          "evi_prefire_z": {
+            "source": "evi_prefire",
+            "transform": "identity",
+            "mean": 0.5517422523398702,
+            "sd": 0.07524911154854896
+          },
+          "era5_vpd_mean_72h_kpa_z": {
+            "source": "era5_vpd_mean_72h_kpa",
+            "transform": "identity",
+            "mean": 0.676275578693557,
+            "sd": 0.26638166166356425
+          },
+          "era5_wind_max_24h_ms_z": {
+            "source": "era5_wind_max_24h_ms",
+            "transform": "identity",
+            "mean": 1.8756744084563237,
+            "sd": 0.7192778666018642
+          },
+          "era5_rootzone_soil_water_mean_72h_z": {
+            "source": "era5_rootzone_soil_water_mean_72h",
+            "transform": "identity",
+            "mean": 0.36417859025258564,
+            "sd": 0.0698246759830996
+          }
+        },
+        "uncertainty": {
+          "method": "two_way_cell_and_date_cluster_robust",
+          "cell_clusters": 6961,
+          "date_clusters": 432,
+          "cell_date_clusters": 14500,
+          "warning": null
+        },
+        "diagnostics": {
+          "information_condition_number": 17.176958328457644,
+          "residual_rmse": 0.17723703881549463,
+          "matched_set_score_norm_p99": 3.0020723381368124,
+          "matched_set_score_norm_max": 4.891561308605072
+        }
+      },
+      "continuous_loss_share_model": {
+        "model": "within-matched-set post-minus-pre continuous-loss-share contrast",
+        "effect_measure": "adjusted risk difference",
+        "row_count": 17265,
+        "matched_set_count": 3453,
+        "unique_cell_count": 6961,
+        "outcome_variation_matched_set_count": 3286,
+        "unadjusted": {
+          "fire_positive_risk": 0.017062065585127725,
+          "fire_negative_risk": 0.0041788605165192436,
+          "risk_difference": 0.012883205068608482,
+          "risk_ratio": 4.082946898485971,
+          "risk_ratio_zero_control_guard": false
+        },
+        "primary_term": {
+          "term": "fire_positive",
+          "estimate": 0.01146633079096565,
+          "standard_error": 0.001884897177521411,
+          "ci95": [
+            0.007771932323023684,
+            0.015160729258907615
+          ],
+          "z": 6.083265934985146,
+          "p_two_sided": 1.1775878364663295e-09
+        },
+        "coefficients": [
+          {
+            "term": "fire_positive",
+            "estimate": 0.01146633079096565,
+            "standard_error": 0.001884897177521411,
+            "ci95": [
+              0.007771932323023684,
+              0.015160729258907615
+            ],
+            "z": 6.083265934985146,
+            "p_two_sided": 1.1775878364663295e-09
+          },
+          {
+            "term": "forest_fraction_z",
+            "estimate": -0.002698987288043543,
+            "standard_error": 0.0009352286678170478,
+            "ci95": [
+              -0.0045320354769649565,
+              -0.0008659390991221292
+            ],
+            "z": -2.8859116288034135,
+            "p_two_sided": 0.0039028172624695715
+          },
+          {
+            "term": "peat_extent_percent_z",
+            "estimate": -0.0011860222526927915,
+            "standard_error": 0.001419330120761084,
+            "ci95": [
+              -0.003967909289384516,
+              0.001595864783998933
+            ],
+            "z": -0.8356211393983618,
+            "p_two_sided": 0.40336807249206696
+          },
+          {
+            "term": "chirps_precip_7d_mm_z",
+            "estimate": -0.0009833541809733733,
+            "standard_error": 0.001163915632230141,
+            "ci95": [
+              -0.00326462882014445,
+              0.0012979204581977032
+            ],
+            "z": -0.8448672341389558,
+            "p_two_sided": 0.3981849704564676
+          },
+          {
+            "term": "chirps_precip_30d_mm_z",
+            "estimate": -0.0007065831018486304,
+            "standard_error": 0.001802692156336997,
+            "ci95": [
+              -0.004239859728269145,
+              0.0028266935245718837
+            ],
+            "z": -0.3919599357909122,
+            "p_two_sided": 0.695087816570904
+          },
+          {
+            "term": "evi_prefire_z",
+            "estimate": -0.001593241901495486,
+            "standard_error": 0.0009315660311197933,
+            "ci95": [
+              -0.003419111322490281,
+              0.0002326275194993088
+            ],
+            "z": -1.7102833811794556,
+            "p_two_sided": 0.08721348338678213
+          },
+          {
+            "term": "era5_vpd_mean_72h_kpa_z",
+            "estimate": 0.0017684611081766734,
+            "standard_error": 0.0016144878700816857,
+            "ci95": [
+              -0.0013959351171834303,
+              0.004932857333536777
+            ],
+            "z": 1.0953697088397434,
+            "p_two_sided": 0.2733546991382674
+          },
+          {
+            "term": "era5_wind_max_24h_ms_z",
+            "estimate": 0.00026075729641593035,
+            "standard_error": 0.0014826713962330827,
+            "ci95": [
+              -0.0026452786402009114,
+              0.003166793233032772
+            ],
+            "z": 0.17586991768939347,
+            "p_two_sided": 0.8603961391582183
+          },
+          {
+            "term": "era5_rootzone_soil_water_mean_72h_z",
+            "estimate": 0.0037684987446542427,
+            "standard_error": 0.001456611329180646,
+            "ci95": [
+              0.0009135405394601762,
+              0.006623456949848309
+            ],
+            "z": 2.5871683606731586,
+            "p_two_sided": 0.009676829738759688
+          }
+        ],
+        "standardization": {
+          "forest_fraction_z": {
+            "source": "forest_fraction",
+            "transform": "identity",
+            "mean": 0.9557057959362618,
+            "sd": 0.06802779478273101
+          },
+          "peat_extent_percent_z": {
+            "source": "peat_extent_percent",
+            "transform": "identity",
+            "mean": 11.56542904290429,
+            "sd": 27.301715565797767
+          },
+          "chirps_precip_7d_mm_z": {
+            "source": "chirps_precip_7d_mm",
+            "transform": "log1p",
+            "mean": 2.485829978328086,
+            "sd": 1.5451705832342129
+          },
+          "chirps_precip_30d_mm_z": {
+            "source": "chirps_precip_30d_mm",
+            "transform": "log1p",
+            "mean": 4.748307971130075,
+            "sd": 0.9157339865953673
+          },
+          "evi_prefire_z": {
+            "source": "evi_prefire",
+            "transform": "identity",
+            "mean": 0.5517422523398702,
+            "sd": 0.07524911154854896
+          },
+          "era5_vpd_mean_72h_kpa_z": {
+            "source": "era5_vpd_mean_72h_kpa",
+            "transform": "identity",
+            "mean": 0.676275578693557,
+            "sd": 0.26638166166356425
+          },
+          "era5_wind_max_24h_ms_z": {
+            "source": "era5_wind_max_24h_ms",
+            "transform": "identity",
+            "mean": 1.8756744084563237,
+            "sd": 0.7192778666018642
+          },
+          "era5_rootzone_soil_water_mean_72h_z": {
+            "source": "era5_rootzone_soil_water_mean_72h",
+            "transform": "identity",
+            "mean": 0.36417859025258564,
+            "sd": 0.0698246759830996
+          }
+        },
+        "uncertainty": {
+          "method": "two_way_cell_and_date_cluster_robust",
+          "cell_clusters": 6961,
+          "date_clusters": 432,
+          "cell_date_clusters": 14500,
+          "warning": null
+        },
+        "diagnostics": {
+          "information_condition_number": 17.176958328457644,
+          "residual_rmse": 0.04025415579280027,
+          "matched_set_score_norm_p99": 0.7158223349800876,
+          "matched_set_score_norm_max": 3.590996890234795
+        }
+      },
+      "interpretation_rule": "This post-minus-pre contrast asks whether the later association exceeds the pre-existing difference on common support. It is a diagnostic difference-in-differences form, not a causal estimator because parallel trends are not established."
+    },
+    "interpretation_rule": "A positive association suggests pre-existing conversion trajectory or residual confounding; it does not negate temporal ordering of the primary outcome but weakens causal interpretations."
+  },
+  "transition_mass_audit": {
+    "annual_horizon_pair_count": 24,
+    "cell_pair_count": 447936,
+    "maximum_absolute_loss_minus_destination_mass": 1.3300005541339033e-10,
+    "p99_absolute_loss_minus_destination_mass": 5.0000031892594166e-11,
+    "count_above_1e_8": 0,
+    "status": "passed_internal_mass_balance",
+    "external_ground_truth_limit": "This checks internal transition accounting only; it is not independent validation of MapBiomas classification accuracy."
+  },
+  "claim_boundary": [
+    "A subsequent oil-palm class does not show that the fire was deliberately set to create a plantation.",
+    "The analysis cannot identify an individual, company, concession holder, or beneficiary.",
+    "The analysis cannot measure government mitigation, enforcement, restoration, or negligence without dated intervention data.",
+    "Kalimantan results do not establish a global pattern; Phase 5 requires harmonized replication."
+  ]
+}

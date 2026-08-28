@@ -1,0 +1,31 @@
+{
+  "schema_version": "viirs-opportunity-diagnostic/v1",
+  "created_at_utc": "2026-08-25T12:28:10.366933+00:00",
+  "status": "diagnostic_only_incomplete_study_window",
+  "denominator_ready": false,
+  "source": {
+    "pair_index": "outputs/quality/viirs_pair_index.json",
+    "pair_index_sha256": "b424e419506f95562bcf01c8d8bb582f574b19e046da98a01b64e2bef7c66693",
+    "forest_fraction_grid": "data/derived/mapbiomas/mapbiomas_c41_forest_fraction_1km_kalimantan.tif",
+    "forest_fraction_grid_sha256": "53f2e2cabea81536ba3ccb8cea3b8ef3f96fcbf08d79b6328bb9f61fb827d661",
+    "study_window": "2015 rehearsal swaths only"
+  },
+  "summary": {
+    "paired_rows_requested": 60,
+    "candidate_pair_cell_rows": 5057389,
+    "valid_prior_negative_rows": 4477822,
+    "positive_rows": 594,
+    "negative_rows": 4477228,
+    "forest_threshold": 0.7,
+    "maximum_prior_negative_hours": 72.0
+  },
+  "output": {
+    "path": "data/derived/viirs/opportunity_frame_diagnostic.csv",
+    "sha256": "2a4d2f90760aa325ddc9c177c4c26cda1156b5e73386137b833e38ecba25f9a5"
+  },
+  "limitations": [
+    "Only the locally available 2015 rehearsal swaths were processed; this cannot represent the registered 2015-2025 study window.",
+    "This diagnostic does not unlock Phase 1B or replace the canonical opportunity_frame.csv.",
+    "A final frame still requires complete science-quality swaths, event linkage, duplicate/orbit handling, and registered cloud/water/coverage rules across the full study window."
+  ]
+}

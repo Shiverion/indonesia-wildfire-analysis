@@ -1,0 +1,11 @@
+destination,status,variation_matched_sets,matched_sets,adjusted_risk_difference_pp,ci95_low_pp,ci95_high_pp,p_two_sided,p_holm
+nonforest_natural,estimated,,7138.0,4.682756340810065,3.3837416692267475,5.981771012393382,1.6002602930970765e-12,6.401041172388306e-12
+rice_paddy,not_estimated_insufficient_support,1.0,,,,,,
+oil_palm,estimated,,7138.0,0.33558816351630794,0.08676058853843015,0.5844157384941857,0.008207606899661421,0.016415213799322842
+pulpwood_plantation,not_estimated_insufficient_support,6.0,,,,,,
+other_agriculture,estimated,,7138.0,0.3038952612576794,0.006873715383813334,0.6009168071315455,0.04492472402929652,0.04492472402929652
+mining,not_estimated_insufficient_support,12.0,,,,,,
+urban,not_estimated_insufficient_support,0.0,,,,,,
+other_nonvegetated,estimated,,7138.0,0.8617554851438195,0.4678540342250926,1.2556569360625465,1.8030695628770544e-05,5.409208688631163e-05
+aquaculture,not_estimated_insufficient_support,5.0,,,,,,
+water,not_estimated_insufficient_support,6.0,,,,,,

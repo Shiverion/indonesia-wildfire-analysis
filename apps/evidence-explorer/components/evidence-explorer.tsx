@@ -3,7 +3,7 @@
 import { useMemo, useState } from "react";
 import { InteractiveGlobe } from "./interactive-globe";
 import { GlobalFireGlobe } from "./global-fire-globe";
-import type { EvidenceMode, ExplorerData, PeatFireComparison, ProvinceAggregate, SipongiCurrentSnapshot } from "../lib/types";
+import type { EvidenceMode, ExplorerData, PeatFireComparison, Phase2EnvironmentalSummary, Phase3StatusSummary, ProvinceAggregate, SipongiCurrentSnapshot } from "../lib/types";
 
 const CURRENT_FIVE = [
   "Kalimantan Barat",
@@ -23,6 +23,11 @@ const LEGACY_FOUR = [
 const number = new Intl.NumberFormat("en-US");
 const compact = new Intl.NumberFormat("en-US", { notation: "compact", maximumFractionDigits: 1 });
 const decimal = new Intl.NumberFormat("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+function formatPValue(value: number | null | undefined) {
+  if (value === null || value === undefined) return "—";
+  return value < 0.001 ? "<0.001" : value.toFixed(3);
+}
 
 const SOURCE_LOGOS = [
   { label: "NASA FIRMS", role: "fire detections", href: "https://firms.modaps.eosdis.nasa.gov/", logo: "/brands/nasa.svg", className: "source-logo-nasa" },
@@ -65,9 +70,11 @@ function snapshotPeriodLabel(snapshot: SipongiCurrentSnapshot) {
 
 interface EvidenceExplorerProps {
   data: ExplorerData;
+  phase2: Phase2EnvironmentalSummary;
+  phase3: Phase3StatusSummary;
 }
 
-export function EvidenceExplorer({ data }: EvidenceExplorerProps) {
+export function EvidenceExplorer({ data, phase2, phase3 }: EvidenceExplorerProps) {
   const currentSnapshot = data.sipongi_current_snapshot ?? null;
   const [mode, setMode] = useState<EvidenceMode>("sipongi");
   const [year, setYear] = useState(data.scope.sipongi_years[1]);
@@ -121,6 +128,9 @@ export function EvidenceExplorer({ data }: EvidenceExplorerProps) {
   const total = sum(provinceRows.flatMap((row) => row.value === null ? [] : [row.value]));
   const observedRows = sum(provinceRows.map((row) => row.observed));
   const expectedRows = sum(provinceRows.map((row) => row.expected));
+  const phase3Estimate = phase3.phase3_model_run && phase3.primary_result?.status === "estimated"
+    ? phase3.primary_result.model
+    : null;
 
   const jumpToGlobalComparison = () => {
     const target = document.getElementById("global-comparison");
@@ -151,8 +161,8 @@ export function EvidenceExplorer({ data }: EvidenceExplorerProps) {
         </div>
         <div className="header-status" aria-label="Research status">
           <span className="status-dot" />
-          <span>{data.display_status.label}</span>
-          <strong>{data.display_status.primary_association}</strong>
+          <span>Phase 2 complete · Phase 3 {phase3Estimate ? "complete" : "prepared"}</span>
+          <strong>{phase3Estimate ? "Fire-to-forest-loss association estimated" : "Land-change outcome extraction pending"}</strong>
         </div>
       </header>
 
@@ -185,8 +195,10 @@ export function EvidenceExplorer({ data }: EvidenceExplorerProps) {
         </div>
         <div className="guardrail-card">
           <span className="guardrail-label">Current research answer</span>
-          <strong>Not identifiable yet</strong>
-          <p>The data can describe where satellite records were returned, but Phase 1 is still blocked by {data.display_status.blocked_assets.length} required asset groups. It cannot yet estimate a causal wildfire effect or risk.</p>
+          <strong>{phase3Estimate ? "Fire-positive cells were followed by more mapped forest loss" : "Environmental result: inconclusive"}</strong>
+          <p>{phase3Estimate
+            ? `Phase 3 estimates an adjusted +${(phase3Estimate.primary_term.estimate * 100).toFixed(1)} percentage-point difference for losing at least 10% of pre-index forest within one year. This is a temporal association—not proof of deliberate burning, actor, ownership, or profit. Phase 2's peat × dryness interaction remains inconclusive.`
+            : "Phase 2 did not establish that drier 72-hour root-zone soil strengthens the fire-detection gradient for cells with ≥50% peat. The separate human-access, intent, plantation, and governance hypothesis remains not identifiable."}</p>
           <button type="button" className="text-button" onClick={() => setLimitationsOpen(true)}>Read evidence boundaries</button>
         </div>
       </section>
@@ -194,12 +206,18 @@ export function EvidenceExplorer({ data }: EvidenceExplorerProps) {
       <nav className="section-nav" aria-label="Dashboard reading order">
         <span className="section-nav-label">Read in order</span>
         <a href="#global-comparison">1 · Indonesia map</a>
-        <a href="#analysis-results">2 · Statistical result</a>
-        <a href="#local-layer">3 · Kalimantan detail</a>
-        <a href="#provenance-heading">4 · Methods and sources</a>
+        <a href="#phase2-result">2 · Phase 2 result</a>
+        <a href="#phase3-result">3 · Phase 3 {phase3Estimate ? "result" : "status"}</a>
+        <a href="#analysis-results">4 · Global comparison</a>
+        <a href="#local-layer">5 · Kalimantan detail</a>
+        <a href="#provenance-heading">6 · Methods and sources</a>
       </nav>
 
       {data.peat_fire_comparison && <PeatFireComparisonPanel comparison={data.peat_fire_comparison} latestGlobalFire={data.latest_global_fire} />}
+
+      <Phase2EnvironmentalPanel result={phase2} />
+
+      <Phase3StatusPanel result={phase3} />
 
       <section className="reading-section-intro" aria-labelledby="local-analysis-heading">
         <span className="eyebrow">Detailed local analysis</span>
@@ -351,7 +369,7 @@ export function EvidenceExplorer({ data }: EvidenceExplorerProps) {
         <p>These sections preserve the detailed time series, sensitivity checks, missingness rules, and source ledger used to audit the plain-language view above.</p>
       </section>
 
-      <ConditionalPeatHypothesisPanel audit={data.condition_phase_audit ?? null} />
+      <ConditionalPeatHypothesisPanel audit={data.condition_phase_audit ?? null} readiness={data.phase1b_readiness ?? null} phase2={phase2} />
 
       <section className="table-card" aria-labelledby="province-table-heading">
         <div className="section-heading">
@@ -512,7 +530,186 @@ function PeatFireComparisonPanel({ comparison, latestGlobalFire }: { comparison:
   );
 }
 
-function ConditionalPeatHypothesisPanel({ audit }: { audit: ExplorerData["condition_phase_audit"] }) {
+function Phase2EnvironmentalPanel({ result }: { result: Phase2EnvironmentalSummary }) {
+  const primary = result.primary;
+  const percent = new Intl.NumberFormat("en-US", { style: "percent", maximumFractionDigits: 1 });
+  return (
+    <section id="phase2-result" className="phase2-result-card" aria-labelledby="phase2-result-heading">
+      <div className="section-heading">
+        <div>
+          <span className="eyebrow">Phase 2 · Kalimantan environmental association</span>
+          <h2 id="phase2-result-heading">Does drier peat show a stronger fire-detection gradient?</h2>
+          <p>The primary model compares cells with ≥50% versus &lt;50% mapped peat extent inside exact daily 1:4 matched sets, while adjusting for rainfall, VPD, wind, vegetation, forest fraction, and soil moisture measured before detection.</p>
+        </div>
+        <span className="layer-key phase2-status">Primary · inconclusive</span>
+      </div>
+
+      <div className="phase2-result-grid">
+        <article className="phase2-primary-result">
+          <span className="metric-label">Peat ≥50% × one-SD drier soil</span>
+          <strong className="phase2-or">{decimal.format(primary.odds_ratio)}×</strong>
+          <span className="phase2-ci">95% CI {decimal.format(primary.ci95[0])}–{decimal.format(primary.ci95[1])} · p={primary.p_two_sided.toFixed(3)}</span>
+          <p>{primary.interpretation}</p>
+          <div className="phase2-plain-language">
+            Because the interval crosses 1, this is not evidence of a reliable increase or decrease. “Inconclusive” is not the same as proving no effect.
+          </div>
+        </article>
+
+        <div className="phase2-kpi-grid" aria-label="Phase 2 analysis support">
+          <div><span>Matched sets</span><strong>{number.format(result.data_summary.matched_set_count)}</strong></div>
+          <div><span>Fire-positive cells</span><strong>{number.format(result.data_summary.case_count)}</strong></div>
+          <div><span>Mixed-peat sets</span><strong>{number.format(primary.mixed_peat_matched_set_count)}</strong></div>
+          <div><span>Held-out top-1</span><strong>{percent.format(result.locked_test_prediction.top1_recall)}</strong></div>
+          <div><span>Held-out log loss</span><strong>{result.locked_test_prediction.conditional_log_loss.toFixed(3)}</strong></div>
+          <div><span>Uniform log loss</span><strong>{result.locked_test_prediction.uniform_log_loss.toFixed(3)}</strong></div>
+        </div>
+      </div>
+
+      <div className="phase2-table-wrap">
+        <div>
+          <h3>Required robustness checks</h3>
+          <p>A significant sensitivity cannot replace the frozen ≥50% primary result.</p>
+        </div>
+        <div className="table-scroll">
+          <table>
+            <thead><tr><th>Check</th><th>Interaction OR</th><th>95% CI</th><th>p</th></tr></thead>
+            <tbody>
+              {result.sensitivities.map((row) => (
+                <tr key={row.label}>
+                  <td>{row.label}</td>
+                  <td>{decimal.format(row.odds_ratio)}</td>
+                  <td>{decimal.format(row.ci95[0])}–{decimal.format(row.ci95[1])}</td>
+                  <td>{row.p_two_sided.toFixed(3)}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <details className="phase2-method">
+        <summary>What this result does and does not mean</summary>
+        <ul>
+          {result.interpretation_guardrails.map((item) => <li key={item}>{item}</li>)}
+          <li>One matched set was excluded before fitting because a control contained the CHIRPS missing sentinel −9999; no value was imputed or changed to zero.</li>
+          <li>The held-out model beats uniform ranking on conditional log loss, but that predictive signal does not make its coefficients causal.</li>
+        </ul>
+      </details>
+    </section>
+  );
+}
+
+function Phase3StatusPanel({ result }: { result: Phase3StatusSummary }) {
+  const estimated = result.phase3_model_run && result.primary_result?.status === "estimated"
+    ? result.primary_result.model
+    : null;
+  const firstYear = result.eligible_event_years_primary[0];
+  const lastYear = result.eligible_event_years_primary.at(-1);
+  const localYears = result.local_full_raster_years.length ? result.local_full_raster_years.join(", ") : "none";
+  return (
+    <section id="phase3-result" className="phase2-result-card phase3-status-card" aria-labelledby="phase3-result-heading">
+      <div className="section-heading">
+        <div>
+          <span className="eyebrow">Phase 3 · Fire followed by land-cover change</span>
+          <h2 id="phase3-result-heading">Are fire-positive cells followed by mapped forest loss?</h2>
+          <p>The registered comparison follows the same exact daily 1:4 sets into MapBiomas annual land cover. The primary outcome is loss of at least 10% of the forest still present before the index event, measured one year later.</p>
+        </div>
+        <span className={`layer-key ${estimated ? "phase2-status" : "phase3-waiting"}`}>{estimated ? "Primary · estimated" : "Outcome data · pending"}</span>
+      </div>
+
+      <div className="phase2-result-grid">
+        <article className="phase2-primary-result">
+          <span className="metric-label">Current evidence state</span>
+          {estimated ? (
+            <>
+              <strong className="phase2-or">{(estimated.primary_term.estimate * 100).toFixed(1)} pp</strong>
+              <span className="phase2-ci">95% CI {(estimated.primary_term.ci95[0] * 100).toFixed(1)} to {(estimated.primary_term.ci95[1] * 100).toFixed(1)} pp · p{formatPValue(estimated.primary_term.p_two_sided)}</span>
+            </>
+          ) : (
+            <>
+              <strong className="phase3-pending-title">No statistical result yet</strong>
+              <span className="phase2-ci">The annual transition table has not passed the data gate.</span>
+            </>
+          )}
+          <p>{result.plain_language}</p>
+          <div className="phase2-plain-language">
+            {estimated
+              ? `Among ${number.format(estimated.matched_set_count)} complete matched sets, the unadjusted ≥10% forest-loss probability was ${(estimated.unadjusted.fire_positive_risk * 100).toFixed(1)}% for fire-positive cells and ${(estimated.unadjusted.fire_negative_risk * 100).toFixed(1)}% for matched fire-negative cells. Adjustment narrows the difference to ${(estimated.primary_term.estimate * 100).toFixed(1)} percentage points.`
+              : "Only the 2014 national raster is local. It establishes baseline forest, but cannot show what happened after fires. Missing 2025–2026 follow-up is never coded as “no change.”"}
+          </div>
+        </article>
+
+        <div className="phase2-kpi-grid" aria-label="Phase 3 preparation support">
+          <div><span>{estimated ? "Complete model sets" : "Locked matched sets"}</span><strong>{number.format(estimated?.matched_set_count ?? result.matched_set_count)}</strong></div>
+          <div><span>{estimated ? "Model cells" : "Unique 1 km cells"}</span><strong>{number.format(estimated?.unique_cell_count ?? result.unique_cell_count)}</strong></div>
+          <div><span>{estimated ? "Sets with outcome contrast" : "Private cells resolved"}</span><strong>{number.format(estimated?.outcome_variation_matched_set_count ?? result.private_cell_count)}</strong></div>
+          <div><span>Primary event years</span><strong>{firstYear}–{lastYear}</strong></div>
+          <div><span>MapBiomas support</span><strong>{result.mapbiomas_available_years[0]}–{result.mapbiomas_available_years[1]}</strong></div>
+          <div><span>Local annual raster</span><strong>{localYears}</strong></div>
+        </div>
+      </div>
+
+      {estimated && (
+        <>
+          {result.publication_robustness && (
+            <div className="phase2-table-wrap publication-caution">
+              <h3>Publication diagnostics: selection and baseline trajectory</h3>
+              <p>
+                The primary model retained {number.format(result.publication_robustness.attrition.included_matched_set_count)} of {number.format(result.publication_robustness.attrition.candidate_matched_set_count)} temporally eligible matched sets; {(result.publication_robustness.attrition.excluded_share * 100).toFixed(1)}% were excluded by complete forest/observation-support rules. Included and excluded locations differ materially, so the estimate applies to the retained Kalimantan analysis population.
+              </p>
+              <p>
+                A pre-exposure negative-control interval was also positive: {(result.publication_robustness.negative_control.estimate * 100).toFixed(2)} pp (95% CI {(result.publication_robustness.negative_control.ci95[0] * 100).toFixed(2)} to {(result.publication_robustness.negative_control.ci95[1] * 100).toFixed(2)} pp). This signals pre-existing land-change trajectory or residual confounding. It does not erase temporal ordering, but it rules out a causal reading of the main estimate.
+              </p>
+            </div>
+          )}
+          <div className="phase2-table-wrap">
+            <h3>Registered robustness checks</h3>
+            <p>The association remains positive at the 5%, 10%, and 20% loss definitions and at one-, two-, and three-year follow-up.</p>
+            <table>
+              <thead><tr><th>Definition</th><th>Adjusted difference</th><th>95% CI</th><th>p-value</th></tr></thead>
+              <tbody>{result.sensitivity_results.map((row) => <tr key={row.label}>
+                <th scope="row">{row.label}</th>
+                <td>{row.estimate === undefined ? "—" : `${(row.estimate * 100).toFixed(2)} pp`}</td>
+                <td>{row.ci95 ? `${(row.ci95[0] * 100).toFixed(2)} to ${(row.ci95[1] * 100).toFixed(2)} pp` : "—"}</td>
+                <td>{formatPValue(row.p_two_sided)}</td>
+              </tr>)}</tbody>
+            </table>
+          </div>
+
+          <div className="phase2-table-wrap">
+            <h3>Where the mapped forest transitioned</h3>
+            <p>These exploratory outcomes mean at least 10% of pre-index forest was mapped as the destination one year later. Holm p-values adjust the estimable destination family.</p>
+            <table>
+              <thead><tr><th>Destination</th><th>Adjusted difference</th><th>95% CI</th><th>Holm p / support</th></tr></thead>
+              <tbody>{result.destination_results.map((row) => <tr key={row.label}>
+                <th scope="row">{row.label}</th>
+                <td>{row.estimate === undefined ? "Not estimated" : `${(row.estimate * 100).toFixed(3)} pp`}</td>
+                <td>{row.ci95 ? `${(row.ci95[0] * 100).toFixed(3)} to ${(row.ci95[1] * 100).toFixed(3)} pp` : "—"}</td>
+                <td>{row.status === "estimated" ? formatPValue(row.p_holm ?? row.p_two_sided) : `${row.variation_matched_set_count ?? 0} varying sets`}</td>
+              </tr>)}</tbody>
+            </table>
+          </div>
+        </>
+      )}
+
+      <div className="phase2-table-wrap phase3-next-step">
+        <div>
+          <h3>{estimated ? "What this answers—and what comes next" : "What happens next"}</h3>
+          <p>{estimated
+            ? "Phase 3 answers the registered Kalimantan temporal-association question: fire-positive cells were more often followed by mapped forest loss. The Indonesia province map above is descriptive context, not the Phase 3 model domain. The oil-palm destination association is small and cannot identify deliberate ignition, actor, ownership, legality, or profit."
+            : "Run or resume the zero-budget Earth Engine extraction, then rerun the Phase 3 gate. The export contains cell-level fractions only—no national raster archive."}</p>
+        </div>
+      </div>
+
+      <details className="phase2-method">
+        <summary>Why this still cannot prove deliberate plantation burning</summary>
+        <ul>{result.claim_boundary.map((item) => <li key={item}>{item}</li>)}</ul>
+      </details>
+    </section>
+  );
+}
+
+function ConditionalPeatHypothesisPanel({ audit, readiness, phase2 }: { audit: ExplorerData["condition_phase_audit"], readiness: ExplorerData["phase1b_readiness"], phase2: Phase2EnvironmentalSummary }) {
   const conditions = [
     ["Dry hydrology", "Low soil moisture or a low water table removes peat’s water protection."],
     ["Drainage pressure", "Canals and ditches can make peat dry, especially near disturbed edges."],
@@ -523,23 +720,45 @@ function ConditionalPeatHypothesisPanel({ audit }: { audit: ExplorerData["condit
     <section className="condition-card" aria-labelledby="condition-heading">
       <div className="section-heading">
         <div>
-          <span className="eyebrow">Next hypothesis · condition effect</span>
-          <h2 id="condition-heading">Peatland may become vulnerable only under the right conditions</h2>
-          <p>The global test above averages intact, wet, drained, degraded, and dry peat together. A null average does not rule out a strong effect in a dry or disturbed subset.</p>
+          <span className="eyebrow">Tested hypothesis · condition effect</span>
+          <h2 id="condition-heading">How Phase 2 tested conditional peat vulnerability</h2>
+          <p>The primary root-zone dryness interaction is complete and inconclusive. VPD, wind, and low EVI also remain inconclusive after the registered secondary-family correction; drainage still requires a separately timed analysis.</p>
         </div>
-        <span className="layer-key">{audit?.condition_phase_ready ? "Ready for design matrix" : "Blocked · inputs missing"}</span>
+        <span className="layer-key">Phase 2 complete</span>
       </div>
       <div className="condition-grid">
         {conditions.map(([title, description]) => <article key={title} className="condition-item"><strong>{title}</strong><p>{description}</p></article>)}
       </div>
       <div className="condition-footer">
         <code>fire ~ peat + condition + peat × condition + observation opportunity</code>
-        <span>Target: interaction term, not a main “peat is dangerous” coefficient. {audit ? `Audit: ${Object.values(audit.assets).filter((status) => status === "blocked").length} input groups blocked.` : "Audit not loaded."}</span>
+        <span>Target: interaction term, not a main “peat is dangerous” coefficient. Primary OR {decimal.format(phase2.primary.odds_ratio)}; CI includes 1.</span>
       </div>
-      {audit?.temporal_support && (
+      {!phase2 && audit?.temporal_support && (
         <div className="condition-temporal-status" role="status">
           <strong>Phase 1 temporal QA:</strong> {audit.temporal_support.status.replaceAll("_", " ")} · denominator unlock: {audit.temporal_support.phase_1_unlock ? "yes" : "no"}.
           <span>ERA5: {audit.temporal_support.assets.era5_land?.replaceAll("_", " ") ?? "unknown"}; CHIRPS: {audit.temporal_support.assets.chirps?.replaceAll("_", " ") ?? "unknown"}; VIIRS: {audit.temporal_support.assets.viirs_outcome_and_opportunity?.replaceAll("_", " ") ?? "unknown"}.</span>
+        </div>
+      )}
+      {readiness && (
+        <div className="phase1b-readiness" aria-label="Phase 1B readiness status">
+          <div className="phase1b-readiness-heading">
+            <strong>Phase 1B · environmental daily-grid track</strong>
+            <span>{readiness.phase_2_unlock ? "Phase 2 unlocked" : readiness.phase_1b_ready ? "Data ready · input lock pending" : "Locked · extraction continues"}</span>
+          </div>
+          {readiness.progress && readiness.progress.registered_days > 0 && (
+            <p className="phase1b-readiness-note">
+              Daily coverage: {readiness.progress.completed_days.toLocaleString()} / {readiness.progress.registered_days.toLocaleString()} registered July–November days ({readiness.progress.percent.toFixed(1)}%).
+            </p>
+          )}
+          <div className="phase1b-workstream-grid">
+            {Object.entries(readiness.workstreams).map(([key, workstream]) => (
+              <div className="phase1b-workstream" key={key}>
+                <span>{key.replaceAll("_", " ")}</span>
+                <strong>{workstream.gate_ready ? "ready" : workstream.required_for_environmental_track === false ? `separate track · ${workstream.status.replaceAll("_", " ")}` : workstream.status.replaceAll("_", " ")}</strong>
+              </div>
+            ))}
+          </div>
+          <p className="phase1b-readiness-note">All required environmental gates passed and the Phase 2 result above was fitted from the locked frame. Human-access, intent, plantation, and governance claims remain a separately blocked track.</p>
         </div>
       )}
     </section>

@@ -22,6 +22,96 @@ import numpy as np
 
 DEFAULT_BBOX = (109.0, -5.0, 120.0, 8.0)
 PRESPECIFIED_PROCESSED_OR_FIRE_CLASSES = (5, 7, 8, 9)
+CLEAR_LAND_CLASS = 5
+FIRE_CLASSES = (7, 8, 9)
+LAND_WATER_CLEAR_LAND_CLASS = 1
+
+
+def classify_observation_pixels(
+    fire_mask: np.ndarray,
+    latitude: np.ndarray,
+    longitude: np.ndarray,
+    quality_flag: np.ndarray,
+    land_water_mask: np.ndarray,
+    forest_fraction: np.ndarray,
+    cell_id: np.ndarray,
+    prior_negative_hours: np.ndarray,
+    coverage_fraction: np.ndarray,
+    *,
+    pair_key: str,
+    acquisition_utc: str,
+    bbox: Sequence[float] = DEFAULT_BBOX,
+    minimum_forest_fraction: float = 0.70,
+    maximum_prior_negative_hours: float = 72.0,
+) -> list[dict[str, Any]]:
+    """Classify paired pixels into positive/negative opportunity rows.
+
+    The caller must provide the frozen 2014 forest fraction, analysis-grid cell
+    IDs, prior-negative lookback, and coverage fraction.  This function never
+    infers those fields from a fire mask or from missing granules.  VNP14IMG
+    classes follow the NASA VIIRS active-fire guide: class 5 is clear land and
+    classes 7-9 are low/nominal/high-confidence fire; classes 0-4 and 6 are not
+    valid observation opportunities.
+    """
+
+    arrays = {
+        "fire_mask": np.asarray(fire_mask),
+        "latitude": np.asarray(latitude),
+        "longitude": np.asarray(longitude),
+        "quality_flag": np.asarray(quality_flag),
+        "land_water_mask": np.asarray(land_water_mask),
+        "forest_fraction": np.asarray(forest_fraction, dtype=np.float32),
+        "cell_id": np.asarray(cell_id),
+        "prior_negative_hours": np.asarray(prior_negative_hours, dtype=np.float32),
+        "coverage_fraction": np.asarray(coverage_fraction, dtype=np.float32),
+    }
+    shapes = {name: value.shape for name, value in arrays.items()}
+    if len(set(shapes.values())) != 1:
+        raise ValueError(f"observation arrays have incompatible shapes: {shapes}")
+    if not 0 <= minimum_forest_fraction <= 1:
+        raise ValueError("minimum_forest_fraction must be between 0 and 1")
+    if not 0 <= maximum_prior_negative_hours:
+        raise ValueError("maximum_prior_negative_hours must be non-negative")
+    min_lon, min_lat, max_lon, max_lat = map(float, bbox)
+    finite_geo = np.isfinite(arrays["latitude"]) & np.isfinite(arrays["longitude"])
+    in_bbox = (
+        finite_geo
+        & (arrays["longitude"] >= min_lon)
+        & (arrays["longitude"] <= max_lon)
+        & (arrays["latitude"] >= min_lat)
+        & (arrays["latitude"] <= max_lat)
+    )
+    forest_ok = np.isfinite(arrays["forest_fraction"]) & (arrays["forest_fraction"] >= minimum_forest_fraction)
+    quality_ok = arrays["quality_flag"] == 0
+    clear_land = arrays["land_water_mask"] == LAND_WATER_CLEAR_LAND_CLASS
+    processed_class = np.isin(arrays["fire_mask"], PRESPECIFIED_PROCESSED_OR_FIRE_CLASSES)
+    valid_history = (
+        np.isfinite(arrays["prior_negative_hours"])
+        & (arrays["prior_negative_hours"] >= 0)
+        & (arrays["prior_negative_hours"] <= maximum_prior_negative_hours)
+    )
+    valid = in_bbox & forest_ok & quality_ok & clear_land & processed_class & valid_history
+    positive = np.isin(arrays["fire_mask"], FIRE_CLASSES)
+    negative = arrays["fire_mask"] == CLEAR_LAND_CLASS
+    valid &= positive | negative
+
+    rows: list[dict[str, Any]] = []
+    for index in np.flatnonzero(valid):
+        outcome = "positive" if positive.flat[index] else "negative"
+        cell = str(arrays["cell_id"].flat[index])
+        rows.append({
+            "opportunity_id": f"{pair_key}:{cell}:{int(index)}",
+            "pair_key": pair_key,
+            "cell_id": cell,
+            "acquisition_utc": acquisition_utc,
+            "outcome_status": outcome,
+            "valid_opportunity": True,
+            "forest_fraction": float(arrays["forest_fraction"].flat[index]),
+            "quality_pass": True,
+            "coverage_fraction": float(arrays["coverage_fraction"].flat[index]),
+            "negative_lookback_hours": float(arrays["prior_negative_hours"].flat[index]),
+        })
+    return rows
 
 
 def _sha256(path: Path) -> str:
@@ -199,4 +289,3 @@ def build_summary(
         "quality_json": output_json.relative_to(root).as_posix(),
     }
     return payload
-

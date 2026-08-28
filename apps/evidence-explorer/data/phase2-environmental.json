@@ -1,0 +1,107 @@
+{
+  "schema_version": "environmental-phase2-results/v1",
+  "created_at_utc": "2026-08-26T16:33:52.391087+00:00",
+  "status": "completed_environmental_association",
+  "scope": "Kalimantan baseline-natural-forest cells, July-November 2015-2025",
+  "human_access_confirmatory_track_status": "not_identifiable_missing_dated_exposure",
+  "data_summary": {
+    "row_count": 70450,
+    "case_count": 14090,
+    "control_count": 56360,
+    "matched_set_count": 14090,
+    "history_fallback_row_count": 915
+  },
+  "pre_fit_excluded_matched_set_count": 1,
+  "primary": {
+    "label": "Peat ≥50% × drier root-zone soil (72 h)",
+    "odds_ratio": 0.865854927860217,
+    "ci95": [
+      0.6916513809746501,
+      1.0839344454765127
+    ],
+    "p_two_sided": 0.2088379840776725,
+    "classification": "inconclusive",
+    "interpretation": "The interval includes no interaction, so this analysis does not establish that drier root-zone soil changes the peat-associated detection-odds gradient.",
+    "mixed_peat_matched_set_count": 2572
+  },
+  "sensitivities": [
+    {
+      "label": "Exclude fallback-history dates",
+      "odds_ratio": 0.8636645420385886,
+      "ci95": [
+        0.6899901706061294,
+        1.0810537206920883
+      ],
+      "p_two_sided": 0.20068647540443385
+    },
+    {
+      "label": "Peat threshold ≥25%",
+      "odds_ratio": 0.8010533184153966,
+      "ci95": [
+        0.6498778574708459,
+        0.9873954183353685
+      ],
+      "p_two_sided": 0.03762879023132545
+    },
+    {
+      "label": "Peat threshold ≥75%",
+      "odds_ratio": 1.0398484291266679,
+      "ci95": [
+        0.8457807973348643,
+        1.2784456196740688
+      ],
+      "p_two_sided": 0.7108198164329667
+    },
+    {
+      "label": "Locked 2024–2025 association",
+      "odds_ratio": 0.6542993360719392,
+      "ci95": [
+        0.4434148862357901,
+        0.9654786848011463
+      ],
+      "p_two_sided": 0.03259928747563772
+    }
+  ],
+  "secondary_conditions": [
+    {
+      "label": "higher VPD over the prior 72 h",
+      "odds_ratio": 1.0512053394902203,
+      "ci95": [
+        0.8296552342331317,
+        1.3319179102077927
+      ],
+      "p_holm": 1.0
+    },
+    {
+      "label": "higher maximum wind over the prior 24 h",
+      "odds_ratio": 0.8319997569123335,
+      "ci95": [
+        0.650976057577025,
+        1.0633626036550146
+      ],
+      "p_holm": 0.4253108725648458
+    },
+    {
+      "label": "lower pre-fire EVI",
+      "odds_ratio": 0.9670280341792752,
+      "ci95": [
+        0.841236475228773,
+        1.1116294245733018
+      ],
+      "p_holm": 1.0
+    }
+  ],
+  "locked_test_prediction": {
+    "conditional_log_loss": 1.4681927855772985,
+    "uniform_log_loss": 1.6094379124341003,
+    "top1_recall": 0.36957658128593834,
+    "mean_reciprocal_rank": 0.6053755009583552
+  },
+  "interpretation_guardrails": [
+    "Odds ratios are within matched sets and describe detectable fire association, not absolute fire probability or burned area.",
+    "A non-significant result is inconclusive, not proof of no effect.",
+    "Static peat extent is not peat moisture, drainage state, peat depth, or current land cover.",
+    "No result from this track identifies deliberate burning, plantation expansion, profit, government effort, or human-access causality.",
+    "Global generalization requires a separately harmonized observation-denominator analysis."
+  ]
+}

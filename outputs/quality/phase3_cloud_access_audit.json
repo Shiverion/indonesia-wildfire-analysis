@@ -1,0 +1,29 @@
+{
+  "schema_version": "phase3-cloud-access-audit/v1",
+  "checked_at_utc": "2026-08-27T17:56:25.1560029Z",
+  "status": "ready_registered_earth_engine_project",
+  "authenticated_account_present": true,
+  "active_gcloud_project": "susenas-project",
+  "active_project_probe": {
+    "earth_engine_ready": true,
+    "api_enabled": true,
+    "project_registered": true,
+    "probe_result": "EARTH_ENGINE_OK",
+    "mapbiomas_asset_access": true,
+    "mapbiomas_band_count": 35,
+    "mapbiomas_years": [1990, 2024]
+  },
+  "accessible_project_probe": {
+    "project_count_checked": 21,
+    "earth_engine_ready_project_count": 1,
+    "selected_project": "susenas-project",
+    "summary": "The previously registered Susenas Project was identified and selected; no new Earth Engine registration is required."
+  },
+  "security": {
+    "credential_values_recorded": false,
+    "account_email_recorded": false
+  },
+  "required_user_action": null,
+  "scientific_effect": "The cloud access gate is cleared. This is an operational result and does not itself answer the Phase 3 hypothesis.",
+  "cost_guardrail": "No paid object storage and no national raster-stack download are required. The automated runner embeds the private coordinates transiently and returns only aggregate fractions for the 18664 locked analysis cells."
+}

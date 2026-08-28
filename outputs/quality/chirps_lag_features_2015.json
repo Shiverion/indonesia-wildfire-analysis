@@ -1,0 +1,34 @@
+{
+  "schema_version": "chirps-lag-features/v1",
+  "source": "CHIRPS v3 FINAL RNL daily COG",
+  "support_window": [
+    "2015-07-01",
+    "2015-11-30"
+  ],
+  "bbox": [
+    109.0,
+    -5.0,
+    120.0,
+    8.0
+  ],
+  "crs": "EPSG:4326",
+  "source_grid_shape": [
+    260,
+    220
+  ],
+  "windows_days": [
+    1,
+    7,
+    30,
+    90
+  ],
+  "input_date_count": 153,
+  "output_cutoff_count": 63,
+  "complete_cutoff_count": 63,
+  "first_complete_cutoff": "2015-09-29",
+  "last_complete_cutoff": "2015-11-30",
+  "row_count": 1787184,
+  "nodata_policy": "Any missing value in a requested pre-cutoff window makes that cell-cutoff missing; no imputation.",
+  "event_linkage": "Not yet applied; this is a source-grid cache and does not unlock Phase 1B.",
+  "output": "data/derived/chirps/chirps_lag_features_2015.parquet"
+}

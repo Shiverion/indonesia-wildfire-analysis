@@ -1,0 +1,78 @@
+{
+  "schema_version": "publication-reproduction/v1",
+  "created_at_utc": "2026-08-28T06:41:04.019680+00:00",
+  "python": "3.13.0 (tags/v3.13.0:60403a5, Oct  7 2024, 09:38:07) [MSC v.1941 64 bit (AMD64)]",
+  "manifest": "publication/data/manifest.json",
+  "input_checks": [
+    {
+      "path": "data/derived/viirs/opportunity_frame.csv",
+      "expected_sha256": "0112938dce8ee6a377b18812d26020566376c5f83047ef28d89432245da98936",
+      "actual_sha256": "0112938dce8ee6a377b18812d26020566376c5f83047ef28d89432245da98936",
+      "passed": true
+    },
+    {
+      "path": "data/derived/phase3/mapbiomas_c41_transition_summary_private.csv",
+      "expected_sha256": "ddd1e1498c31c7c8920749e64e916a98c3924affd457fe9768b2a3efb146fe4d",
+      "actual_sha256": "ddd1e1498c31c7c8920749e64e916a98c3924affd457fe9768b2a3efb146fe4d",
+      "passed": true
+    },
+    {
+      "path": "config/phase3_registration.json",
+      "expected_sha256": "794715733692fc82574743c22ecd3e6f04028d978afa6ac93bd248b4519d46a2",
+      "actual_sha256": "794715733692fc82574743c22ecd3e6f04028d978afa6ac93bd248b4519d46a2",
+      "passed": true
+    },
+    {
+      "path": "config/mapbiomas_collection41_legend.json",
+      "expected_sha256": "2d57f731ad732595fa28c8b04afa99e5f1862d59a5623f123779b55666c46a48",
+      "actual_sha256": "2d57f731ad732595fa28c8b04afa99e5f1862d59a5623f123779b55666c46a48",
+      "passed": true
+    },
+    {
+      "path": "DATA_LICENSE.md",
+      "expected_sha256": "f8726963a80456f0bf1e9e86c0961dc0262e7cbda774048e0716a88b4366a709",
+      "actual_sha256": "f8726963a80456f0bf1e9e86c0961dc0262e7cbda774048e0716a88b4366a709",
+      "passed": true
+    },
+    {
+      "path": "publication/data/SOURCE_ATTRIBUTION.md",
+      "expected_sha256": "6a4a0247b3af87dfb8a8dc3247f6dd8d69b63a5f1d2d4c23f627503363c37f1e",
+      "actual_sha256": "6a4a0247b3af87dfb8a8dc3247f6dd8d69b63a5f1d2d4c23f627503363c37f1e",
+      "passed": true
+    }
+  ],
+  "commands": [
+    {
+      "command": [
+        "C:\\Users\\miqba\\projects\\Indonesia Wildfire Analysis\\publication\\.venv-check\\Scripts\\python.exe",
+        "analysis/phase3_land_change.py",
+        "--run-models"
+      ],
+      "returncode": 0,
+      "stdout_tail": "{\n  \"status\": \"completed_phase3_association\",\n  \"phase3_ready\": true,\n  \"phase3_model_run\": true,\n  \"matched_sets\": 14091,\n  \"unique_cells\": 18664,\n  \"blockers\": []\n}\n",
+      "stderr_tail": ""
+    },
+    {
+      "command": [
+        "C:\\Users\\miqba\\projects\\Indonesia Wildfire Analysis\\publication\\.venv-check\\Scripts\\python.exe",
+        "analysis/phase3_publication_robustness.py"
+      ],
+      "returncode": 0,
+      "stdout_tail": "{\n  \"status\": \"complete\",\n  \"scope\": \"Kalimantan\",\n  \"excluded_share\": 0.41386106092954505,\n  \"conditional_logit_or\": 3.464500254506193,\n  \"negative_control_estimate\": 0.023133451228810893,\n  \"figures\": 4,\n  \"tables\": 4\n}\n",
+      "stderr_tail": ""
+    },
+    {
+      "command": [
+        "C:\\Users\\miqba\\projects\\Indonesia Wildfire Analysis\\publication\\.venv-check\\Scripts\\python.exe",
+        "-m",
+        "pytest",
+        "-q"
+      ],
+      "returncode": 0,
+      "stdout_tail": "........................................................................ [ 96%]\n...                                                                      [100%]\n============================== warnings summary ===============================\npublication\\.venv-check\\Lib\\site-packages\\matplotlib\\_fontconfig_pattern.py:64\n  C:\\Users\\miqba\\projects\\Indonesia Wildfire Analysis\\publication\\.venv-check\\Lib\\site-packages\\matplotlib\\_fontconfig_pattern.py:64: PyparsingDeprecationWarning: 'oneOf' deprecated - use 'one_of'\n    prop = Group((name + Suppress(\"=\") + comma_separated(value)) | oneOf(_CONSTANTS))\n\npublication\\.venv-check\\Lib\\site-packages\\matplotlib\\_fontconfig_pattern.py:85\npublication\\.venv-check\\Lib\\site-packages\\matplotlib\\_fontconfig_pattern.py:85\npublication\\.venv-check\\Lib\\site-packages\\matplotlib\\_fontconfig_pattern.py:85\npublication\\.venv-check\\Lib\\site-packages\\matplotlib\\_fontconfig_pattern.py:85\npublication\\.venv-check\\Lib\\site-packages\\matplotlib\\_fontconfig_pattern.py:85\npublication\\.venv-check\\Lib\\site-packages\\matplotlib\\_fontconfig_pattern.py:85\n  C:\\Users\\miqba\\projects\\Indonesia Wildfire Analysis\\publication\\.venv-check\\Lib\\site-packages\\matplotlib\\_fontconfig_pattern.py:85: PyparsingDeprecationWarning: 'parseString' deprecated - use 'parse_string'\n    parse = parser.parseString(pattern)\n\npublication\\.venv-check\\Lib\\site-packages\\matplotlib\\_fontconfig_pattern.py:89\npublication\\.venv-check\\Lib\\site-packages\\matplotlib\\_fontconfig_pattern.py:89\npublication\\.venv-check\\Lib\\site-packages\\matplotlib\\_fontconfig_pattern.py:89\npublication\\.venv-check\\Lib\\site-packages\\matplotlib\\_fontconfig_pattern.py:89\npublication\\.venv-check\\Lib\\site-packages\\matplotlib\\_fontconfig_pattern.py:89\npublication\\.venv-check\\Lib\\site-packages\\matplotlib\\_fontconfig_pattern.py:89\n  C:\\Users\\miqba\\projects\\Indonesia Wildfire Analysis\\publication\\.venv-check\\Lib\\site-packages\\matplotlib\\_fontconfig_pattern.py:89: PyparsingDeprecationWarning: 'resetCache' deprecated - use 'reset_cache'\n    parser.resetCache()\n\npublication\\.venv-check\\Lib\\site-packages\\matplotlib\\_mathtext.py:45\n  C:\\Users\\miqba\\projects\\Indonesia Wildfire Analysis\\publication\\.venv-check\\Lib\\site-packages\\matplotlib\\_mathtext.py:45: PyparsingDeprecationWarning: 'enablePackrat' deprecated - use 'enable_packrat'\n    ParserElement.enablePackrat()\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n75 passed, 14 warnings in 3.81s\n",
+      "stderr_tail": ""
+    }
+  ],
+  "status": "passed",
+  "dashboard_included": false
+}

@@ -2,6 +2,34 @@
 
 This is an append-only implementation log. A phase is marked complete only when its stated evidence exists; a blocked phase is not treated as failed evidence about the hypothesis.
 
+## Execution update -- zero-budget scope and raw archive inventory (25 August 2026)
+
+| Item | Status | Decision |
+|---|---|---|
+| Full CHIRPS/MOD13Q1/VIIRS acquisition | **Stopped** | No paid storage or cloud compute will be used. Existing payloads are retained; no new full-archive retry is allowed for the pilot. |
+| Raw inventory | **Complete** | `scripts/inventory_raw_sources.py` writes `outputs/quality/raw_source_inventory.json`; the three source folders total about 47.10 GiB. |
+| Pilot configuration | **Frozen** | `config/zero_budget_pilot_2015.json` limits the next executable analysis to 2015 event-level summaries in Kalimantan. |
+| Scientific claim boundary | **Explicit** | The pilot can estimate environmental associations, but not a 2015–2025 trend, global generalisation, or causal actor attribution. |
+| Raw storage relocation | **Complete** | The repository `data/raw` path is a verified junction to `D:\projects\Indonesia Wildfire Analysis\data\raw` (6,456 files; 58.53 GiB). The temporary C: duplicate was moved to the Recycle Bin after byte verification. |
+
+## Execution update -- local 2015 pilot event table (26 August 2026)
+
+| Item | Status | Evidence / boundary |
+|---|---|---|
+| Junction-aware validation | **Fixed** | Validators now preserve logical `data/raw/...` paths when the physical payload is on D:. ERA5 content QA passes after installing the small `netCDF4` reader dependency. |
+| Pilot event table | **Complete, descriptive only** | `data/derived/pilot/pilot_event_level_2015.csv` contains 50 local diagnostic overpass-events (28 positive, 22 negative); 43 have complete 72-hour ERA5 support. |
+| Pilot statistics | **Complete, exploratory only** | `outputs/quality/pilot_2015_descriptive_stats.json` and `outputs/insights/pilot_2015_environment.md` report medians and screening tests. No Phase 2 coefficient is released. |
+| Missing joins | **Explicit** | CHIRPS and peat are not spatially linked; MOD13Q1 is a tile summary; VIIRS remains a diagnostic subset rather than the canonical 2015–2025 opportunity frame. |
+
+## Execution update -- recovery after laptop restart (26 August 2026)
+
+| Item | Status | Evidence / boundary |
+|---|---|---|
+| Download recovery check | **Complete** | No downloader is active. Existing raw payloads remain intact on D:; the old CHIRPS watchdog log records exhausted retries and was not restarted because the zero-budget policy forbids a new multi-year archive run. |
+| Local checkpoint refresh | **Complete** | Raw inventory rechecked at 6,188 files / 47.11 GiB; the 2015 pilot was regenerated with the same 50 events and 43 complete-weather events. |
+| Gate revalidation | **Complete, still blocked** | Phase 1B remains `phase_1b_ready=false`, Phase 2 remains `phase_2_unlock=false`, and the condition audit remains blocked because spatial event linkage and the canonical VIIRS opportunity denominator are absent. |
+| Regression tests | **Passed** | Python unittest discovery: 28 tests passed after restart. |
+
 | Logged (UTC) | Phase | Status | Evidence / decision | Next gate |
 |---|---|---|---|---|
 | 2026-08-20 | Phase 0 — protocol and provenance | **Implemented** | Frozen study configuration, asset manifest, access/redistribution fields, ENSO ingestion, and protocol validator added. | Freeze exact provider asset IDs, download dates, and account terms before analysis. |
@@ -202,3 +230,205 @@ The machine-verifiable phase ledger is `outputs/ledger/phase_ledger.jsonl`. Its 
 | Indonesia ADM1 view | **Complete, descriptive** | Added a separate switch using 34 frozen geoBoundaries Indonesia ADM1 display units (reference year 2017). The layer loads `/geo/indonesia-adm1.geojson` and does not merge it into the country geometry. |
 | Latest provincial counts | **Complete, aggregate-only** | The 22 August 2026 FIRMS NRT snapshot contains 22,788 matched positive detection records inside the 34 Indonesia ADM1 units. The browser exposes province aggregates only; no coordinates, raw detections, or observation denominator are included. |
 | Interpretation | **Guarded** | The province mode is a display of source-boundary units and positive detection records, not a current legal boundary map, fire-rate surface, burned-area map, or causal result. |
+
+## Execution update -- Phase 1B closure gate (23 August 2026)
+
+| Workstream | Status | Evidence / decision |
+|---|---|---|
+| Phase 1B implementation | **Complete, gate blocked** | Added `src/wildfire_research/phase1b.py`, the `phase1b-audit` command, and tests. The report is written to `outputs/quality/phase1b_readiness.json`; it never unlocks Phase 2 by file presence alone. |
+| ERA5-Land temporal support | **In progress** | The current local audit sees 69 of 132 registered 2015-2025 monthly payloads (complete through 2019 and through September 2020). NetCDF variable, hourly-time, and study-bounding-box checks are now enforced for each available file; the active resumable download remains untouched. |
+| VIIRS observation denominator | **Blocked** | The required `data/derived/viirs/opportunity_frame.csv` does not exist. Swath screening remains a diagnostic, not a valid negative-observation denominator. The new validator requires both positive and valid-negative rows and rejects coordinate-bearing browser-style payloads. |
+| Climate and vegetation lags | **Blocked** | CHIRPS 1/7/30/90-day lag tables and QA/timed MOD13Q1 EVI/NDMI tables have not been built; no values enter a model. |
+| Baseline/exposure provenance | **Blocked** | Frozen MapBiomas 2014, peat/drainage timing, and the dated-access sensitivity remain unresolved in the manifest. |
+| Phase 2 decision | **Locked** | `phase_1b_ready=false` and `phase_2_unlock=false`. `lock-test` now also enforces the Phase 1B gate and refuses to create the 2024-2025 input archive. Ledger sequence 40 records this closeout enforcement; run `python scripts/research.py phase1b-audit` after the ERA5 process finishes. |
+
+## Execution update -- parallel Phase 1B preparation (24 August 2026)
+
+| Workstream | Status | Evidence / decision |
+|---|---|---|
+| Prefire covariate utilities | **Implemented, not yet applied to model rows** | Added pure, tested helpers for VPD, wind speed, complete 1/7/30/90-day daily lag sums, and pre-fire interval checks. Missing support or look-ahead fails closed; no imputation was introduced. |
+| Peat/drainage provenance | **Frozen for sensitivity** | `outputs/quality/peat_sensitivity_provenance.json` records byte hashes, source links, licenses, and the 2000-2020 peat / 2017 drainage limitations. These inputs remain sensitivity-only and do not unlock Phase 1 or Phase 2. |
+| Phase 1B dashboard status | **Visible, locked** | The browser bundle now carries compact Phase 1B workstream statuses and the conditional-peat panel reports the gate, next actions, and the no-model-release rule. No raw paths, coordinates, or provider rows are embedded. |
+| Validation | **Pass with gate blocked** | Python test suite: 41 passed. Phase 1B audit remains `blocked_phase1b_workstreams` with `phase_1b_ready=false` and `phase_2_unlock=false`. Next.js type-check and static build pass. |
+
+## Execution update -- live ERA5 acquisition checkpoint (24 August 2026)
+
+| Workstream | Status | Evidence / decision |
+|---|---|---|
+| ERA5-Land study window | **In progress, resumable** | The registered process remains active (PID 668). The latest read-only inventory contains 76 complete monthly NetCDF files, covering 2015 through April 2021, approximately 6.20 GiB. |
+| Phase 1B audit refresh | **Blocked, current** | `outputs/quality/phase1b_readiness.json` now reflects the 76-file inventory, but the gate remains blocked until all 132 months pass content/timing QA and downstream lag extraction is complete. |
+| Dashboard refresh | **Complete, still gated** | The aggregate bundle and static Next.js export were rebuilt from the refreshed readiness artifact; the browser still states `phase_1b_ready=false` and `phase_2_unlock=false`. |
+
+## Execution update -- research-module roadmap (24 August 2026)
+
+| Module | Existing phase | Status / next action |
+|---|---|---|
+| Environmental conditions | Phase 1B → Phase 2 | Highest priority. Complete ERA5/CHIRPS/vegetation temporal support and the VIIRS opportunity denominator before estimating peat × dryness interactions. |
+| Fire followed by land-cover change | Phase 3 | Next feasible extension. Prepare lagged forest-loss/land-cover change, but do not label it palm expansion or intentional burning without dated plantation evidence. |
+| Governance and actor attribution | Phase 4 | Postponed. Requires dated intervention, permit, ownership, enforcement, budget, and restoration records plus a defensible comparison design. |
+| Global replication | Phase 5; descriptive preparation in Phase 0.5 | Current globe remains descriptive. Standardize outcome, period, sensor, area offset, and observation denominator before inferential cross-country modelling. |
+
+The full mapping and ordering are documented in `ENHANCED_RESEARCH_METHOD.md` and `outputs/insights/preliminary_synthesis.md`.
+
+## Execution update -- registered zero-budget daily environmental track (26 August 2026)
+
+| Workstream | Status | Evidence / decision |
+|---|---|---|
+| Daily observation denominator | **Implemented; full extraction running** | Registered `NASA/VIIRS/002/VNP14A1` daily FireMask for July-November 2015-2025: class 5 negatives, classes 7-9 positives, three-day prior-negative/coverage rule, and seven-day refractory period. Three resumable workers cover 1,683 days. |
+| Matched controls | **Smoke test passed** | A 1 October 2015 test reduced 9,448 Earth Engine candidates to 33 complete baseline-forest cases and exactly 132 controls within 25 km. A 1 October 2025 test also passed. Controls are selected deterministically at 4:1; incomplete sets fail closed. |
+| Environmental covariates | **Implemented** | Earth Engine supplies pre-event CHIRPS 1/7/30/90-day rainfall and SummaryQA=0 MOD13Q1 EVI; local processing supplies MapBiomas forest fraction, frozen peat extent, and exact pre-event ERA5-Land 24/72-hour metrics. |
+| Coastal ERA5 support | **Fail-closed rule frozen** | Use only the nearest fully valid native ERA5-Land cell within 25 km and record distance; otherwise exclude the whole matched set. No ocean/no-data cell is converted to zero. |
+| Phase gate logic | **Corrected** | Removed permanent `gate_ready=false` placeholders. The environmental track can pass on complete receipts and a valid immutable lock, while the human-access/intent/governance track remains independently blocked by missing dated exposure. |
+| Cost/storage | **Zero paid storage** | Full source archives are not required for CHIRPS/MOD13Q1/VNP14A1. Only analysis-ready risk-set chunks are stored locally; existing swaths remain sensitivity evidence. |
+| Verification | **Passed so far** | Two cross-year Earth Engine smoke tests passed; the full Python suite passes 59 tests. No Phase 2 model has been fitted. |
+
+## Execution update -- ERA5-Land study window complete and Phase 1B re-audit (25 August 2026)
+
+| Workstream | Status | Evidence / decision |
+|---|---|---|
+| ERA5-Land acquisition | **Complete** | All 132 monthly NetCDF payloads for 2015–2025 are present (about 10.8 GiB), with no `.part` files remaining. The downloader's manifest contains a SHA-256 receipt for every month. |
+| ERA5 content QA | **Passed** | `scripts/research.py phase1b-audit` checked all 132 files for the eight required variables, hourly timestamp length/bounds, and the registered Kalimantan bounding box; no content errors or missing months were found. |
+| Phase 1B gate | **Still blocked** | ERA5 is now `ready_for_lag_derivation`, but CHIRPS 1/7/30/90-day features, QA/timed pre-fire MOD13Q1 vegetation, the VIIRS valid-negative opportunity frame, and exposure/provenance remain blocked. Phase 2 is not unlocked. |
+| Dashboard/report refresh | **Complete** | Temporal QA, Phase 1B readiness, aggregate bundle, and the static Next.js build were regenerated. The UI now reports the complete ERA5 window while preserving the scientific lock. |
+| Verification | **Passed** | Python test suite: 44 passed. Next.js type-check and production build passed. |
+
+The next executable work is Phase 1B lag/denominator closure—not Phase 2 model fitting. `outputs/quality/phase1b_readiness.json` is the current gate artifact.
+
+## Execution update -- MOD13Q1 QA extraction and Phase 1B re-audit (25 August 2026)
+
+| Workstream | Status | Evidence / decision |
+|---|---|---|
+| MOD13Q1 HDF4 extraction | **QA validated, summary only** | Added `scripts/build_mod13q1_prefire_features.py` using the official `MOD13Q1.061` EVI and VI Quality SDSs. All 144 local HDF payloads were clipped to the registered WGS84 bbox and hashed in `data/derived/mod13q1/mod13q1_2015_tile_summary.csv`. |
+| Frozen QA rule | **Recorded** | Retained MODLAND QA=good, VI usefulness ≤1, no adjacent/mixed cloud, land-only flag, no snow, no shadow, and EVI valid range −2000..10000 scaled by 1/10000. Receipt: `outputs/quality/mod13q1_2015_prefire_qa.json`. |
+| 2015 coverage | **Partial** | The local archive contains 23 2015 composites across four intersecting tiles; 47,963,168 pixels pass the conservative QA rule. This is a tile/composite summary, not an event-level pre-fire table. |
+| Phase 1B gate | **Still blocked, correctly** | `prefire_vegetation=qa_validated_summary_only`; 2016–2025 composites, cutoff linkage, complete CHIRPS years, and the canonical VIIRS opportunity denominator remain absent. `phase_1b_ready=false` and `phase_2_unlock=false`. |
+| Verification | **Passed** | Python test suite: 54 passed. Temporal QA and Phase 1B readiness reports were regenerated after the extraction. |
+
+## Execution update -- resilient acquisition fallback (25 August 2026)
+
+| Workstream | Status | Evidence / decision |
+|---|---|---|
+| CHIRPS retry | **Installed** | Each daily request now retries up to five times with exponential backoff, writes to an exact `.part` file, validates non-empty output, and atomically renames it to the final COG. Existing non-empty COGs remain resumable. |
+| Earthdata retry | **Installed** | MOD13Q1 and VNP14 Earthdata downloads now use bounded batches with five retry attempts; VNP03 LAADS downloads retry with the same backoff and atomic `.part` handling. Existing payloads are skipped. |
+| Automatic watchdog | **Running** | `scripts/download_supervisor.py` is watching the three active PIDs and will restart an incomplete job automatically, up to 20 attempts, using the patched downloaders. Logs are kept under `outputs/download_logs/` (ignored by Git). |
+| Safety | **Preserved** | No raw payloads were deleted. A job is considered complete only when its 2015–2025 manifest is refreshed and contains no recorded transient download errors. |
+
+## Execution update -- CHIRPS source-grid lag cache (25 August 2026)
+
+| Workstream | Status | Evidence / decision |
+|---|---|---|
+| CHIRPS lag derivation | **Partial, validated** | Built 1,787,184 source-grid rows for 63 cutoffs from 29 September through 30 November 2015, with complete 1/7/30/90-day pre-cutoff support and no imputation. |
+| Scope boundary | **Explicit** | The cache covers only the downloaded 2015 July-November support window and is not linked to fire events or the VIIRS denominator. It cannot unlock Phase 1B by itself. |
+| Next dependency | **Blocked externally** | Expand CHIRPS support to the registered study years and construct the valid-negative VIIRS frame after a frozen 2014 forest mask is available. |
+
+## Execution update -- VIIRS opportunity classifier contract (25 August 2026)
+
+| Workstream | Status | Evidence / decision |
+|---|---|---|
+| Pixel classification | **Implemented and tested** | Added a fail-closed classifier for paired VNP14/VNP03 arrays. It retains only clear-land class 5 negatives and fire classes 7–9 after geolocation, nominal quality, land, forest, coverage, and prior-negative checks. |
+| Frame safety | **Strengthened** | The Phase 1B validator now requires both positive and negative rows that are actually marked `valid_opportunity=true`; a mere mixture of labels cannot unlock the denominator. |
+| Current gate | **Blocked** | No frozen MapBiomas 2014 forest mask or event-level prior-negative linker is present, so no `opportunity_frame.csv` was fabricated. |
+
+## Execution update -- MapBiomas export preflight (25 August 2026)
+
+| Workstream | Status | Evidence / decision |
+|---|---|---|
+| Official export route | **Implemented** | Added `scripts/mapbiomas_collection41_export.js` for the registered MapBiomas Landy/GEE workflow. The recipe requires the exact Collection 4.1 asset ID and exports original 2014 class codes over the Kalimantan bounding box. |
+| Local hand-off validator | **Implemented and passed** | Added `src/wildfire_research/mapbiomas.py`, `mapbiomas-preflight`, a crosswalk/provenance schema, and tests. The downloaded Collection 4.1.1 raster, official class crosswalk, provenance receipt, and SHA-256 are validated in `outputs/quality/mapbiomas_2014_preflight.json`. |
+| Scientific safeguard | **Unchanged** | Natural-forest codes must be copied from the official Collection 4.1 legend and reviewed before the VIIRS forest denominator is built. Phase 1B and Phase 2 remain locked. |
+
+## Execution update -- MapBiomas 2014 baseline acquired and validated (25 August 2026)
+
+| Workstream | Status | Evidence / decision |
+|---|---|---|
+| Country-wide baseline export | **Complete** | Downloaded the official MapBiomas Indonesia Collection 4.1.1 2014 coverage GeoTIFF (`210,713,020` bytes) and stored it at `data/raw/mapbiomas_indonesia/mapbiomas_indonesia_c41_landcover_2014.tif`. |
+| Raster integrity | **Passed** | EPSG:4326, one band, 170,756 × 63,429 pixels, nodata 0, country-wide bounds, and non-empty class sample. SHA-256: `2df0a9ac95abbd741c62f42993b861268f4d49a10da02c79be95babbef1b8db7`. |
+| Natural-forest crosswalk | **Frozen for review** | Collection 4.1 legend codes 3 (Forest Formation), 5 (Mangrove), and 76 (Peat Swamp Forest) are recorded in `class_crosswalk.json`; the raster will be clipped to the Kalimantan analysis region downstream. |
+| Phase 1B gate | **Still blocked** | MapBiomas is ready, but the full gate remains closed until a QA/timed MOD13Q1 table, complete CHIRPS support, a valid VIIRS positive/negative opportunity frame, and exposure provenance are present. |
+
+## Execution update -- Kalimantan natural-forest mask built (25 August 2026)
+
+| Workstream | Status | Evidence / decision |
+|---|---|---|
+| Binary forest mask | **Complete and validated** | Read the country-wide raster in tiled windows and wrote `data/derived/mapbiomas/mapbiomas_c41_natural_forest_mask_2014_kalimantan.tif`; no full-raster memory load or resampling was used. |
+| Frozen definition | **Explicit** | Mask value `1` means MapBiomas Collection 4.1.1 class 3 (Forest Formation), 5 (Mangrove), or 76 (Peat Swamp Forest); `0` means all other classes or source nodata. |
+| Coverage and summary | **Recorded** | 40,817 × 40,817 pixels over the registered Kalimantan bbox; 641,808,163 valid source pixels, of which 410,414,605 (63.95%) are natural-forest classes. Receipt: `outputs/quality/mapbiomas_2014_forest_mask.json`. |
+| Phase 1B gate | **Still blocked** | The mask is ready for 1-km forest-fraction extraction, but a valid paired VIIRS positive/negative opportunity frame has not yet been constructed. |
+
+## Execution update -- 1-km fixed forest cohort prepared (25 August 2026)
+
+| Workstream | Status | Evidence / decision |
+|---|---|---|
+| Analysis grid | **Complete and validated** | Aggregated the binary 30 m mask to the origin-anchored EPSG:6933 1-km grid without treating zero-valued pixels as nodata. Output: `data/derived/mapbiomas/mapbiomas_c41_forest_fraction_1km_kalimantan.tif`. |
+| Cohort counts | **Recorded** | 1,491,389 grid cells are represented; 329,365 meet the primary `forest_fraction >= 0.70` threshold and 366,153 meet the `>= 0.50` sensitivity threshold. Receipt: `outputs/quality/mapbiomas_2014_forest_fraction_1km.json`. |
+| Scientific boundary | **Preserved** | The fraction defines fixed baseline landscape eligibility only. It is not a fire rate, a land-use-change measure, or a valid negative observation. |
+| Phase 1B gate | **Still blocked** | Next dependency is intersecting paired VNP14/VNP03 science swaths with this grid and applying quality, coverage, cloud/water, and 72-hour prior-negative rules. |
+
+## Execution update -- VIIRS/forest intersection diagnostic (25 August 2026)
+
+| Workstream | Status | Evidence / decision |
+|---|---|---|
+| Paired swath intersection | **Diagnostic complete** | Streamed all 60 locally paired VNP14/VNP03 granules from the 2015 rehearsal window against the EPSG:6933 1-km forest cohort, with quality=0, land-water=Land, classes 5/7/8/9, and the ≤72-hour prior-negative rule. |
+| Diagnostic counts | **Recorded, not inferential** | 5,057,389 candidate cell-pair rows; 4,477,822 rows had a prior negative within 72 hours; 594 positive and 4,477,228 negative rows. Receipt: `outputs/quality/viirs_opportunity_diagnostic.json`. |
+| Scientific gate | **Still blocked** | The large row-level CSV is local-only and the archive covers only 2015. This is not the canonical `opportunity_frame.csv`; complete 2015–2025 swaths, event linkage, duplicate/orbit handling, and final registered coverage rules are still required. |
+
+## Execution update -- source-gap repair before Phase 1B lock (26 August 2026)
+
+| Workstream | Status | Evidence / decision |
+|---|---|---|
+| Daily extraction | **Complete** | Receipts exist for all 1,683 registered fire-season days and ERA5 attachment initially completed for all days. The pre-repair frame contained 13,911 cases and 55,644 controls. |
+| Duplicate audit | **Repair implemented** | Three matched sets contained exact logical duplicates from repeated projected cell rows. Candidate matching now deduplicates identical cell-day/outcome rows and fails closed on conflicting copies; the finalizer also removes identical legacy logical copies before generating public IDs. |
+| VNP14A1 availability | **Confirmed source gaps** | The official VNP14A1 archive lacks 15 event days in 2022 and 14 in 2024. Those event days remain no-observation. The earlier all-or-nothing history rule expanded the 2024 loss to 42 days and reduced support to 72.55%, below the registered 80% gate. |
+| History-only amendment | **Registered before modeling** | When the VNP14A1 event day exists but a required lookback date is absent, science-quality NASA Terra MOD14A1.061 and Aqua MYD14A1.061 are fused only for prior-fire/processed-land history. Both products cover every confirmed history-gap date. They never define primary cases, and an exclusion sensitivity is mandatory. |
+| Validation state | **Passed; Phase 2 environmental track unlocked** | The 80% threshold was unchanged. The final frame contains 14,091 cases and 56,364 controls in exactly 14,091 1:4 matched sets, with 70,455 rows and no validation errors. Annual support is at least 90.20% in every affected year (2022: 90.20%; 2024: 90.85%). The frame hash is `0112938dce8ee6a377b18812d26020566376c5f83047ef28d89432245da98936`; the 34-file immutable lock hash is `989adead69331806f3c0f3f9a578c2ca8296a108903ed276aad771ec483351a6`. `phase_1b_ready=true` and `phase_2_unlock=true` for the environmental daily-grid track. The human-access/intent/governance track remains separately blocked. |
+
+## Execution update -- resilient ERA5 month retry (24 August 2026)
+
+| Change | Status | Evidence / decision |
+|---|---|---|
+| Terminal CDS job failures | **Fixed** | `scripts/download_era5_land.py` now resubmits a failed month job up to two times by default instead of terminating the entire study-window download after a 400 result error. |
+| Partial payload protection | **Fixed** | Each new response is written to a `.part` path and atomically renamed to `.nc` only after a non-empty payload is returned; failed attempts remove only the exact temporary file. |
+| Regression coverage | **Complete** | Added month-level retry and partial-cleanup tests; full Python suite passes 43 tests. |
+| Live process | **Running** | Replaced the old PID 32144 process with patched PID 16784; 93 completed months remain intact and the 2022-10 request is being retried automatically. |
+
+## Execution update -- Phase 2 environmental matched-risk-set analysis (26 August 2026)
+
+| Workstream | Status | Evidence / decision |
+|---|---|---|
+| Model specification | **Frozen before the first successful fit** | `config/phase2_model_specification.json` fixes conditional logistic regression, the primary peat ≥50% × root-zone dryness interaction, 25%/75% thresholds, fallback exclusion, the 2024-2025 locked test, three Holm-adjusted secondary interactions, and held-out prediction metrics. |
+| Pre-fit covariate QA | **One set excluded fail-closed** | The initial transform stopped before fitting because one 11 August 2015 control contained CHIRPS sentinel `-9999`. The entire five-row set was excluded without zero replacement or imputation; the immutable source frame remains unchanged. Phase 2 uses 70,450 rows, 14,090 cases, 56,360 controls, and 14,090 exact sets. |
+| Primary association | **Complete; inconclusive** | Peat ≥50% × one development-period SD drier 72-hour root-zone soil: interaction OR `0.8659`, 95% CI `0.6917-1.0839`, two-sided p=`0.2088`. The interval includes 1, so neither a stronger nor weaker conditional peat gradient is established. |
+| Mandatory sensitivities | **Complete; mixed, do not override primary** | Excluding fallback-history dates is similar (OR `0.8637`, CI `0.6900-1.0811`). Threshold ≥25% is lower (OR `0.8011`, CI `0.6499-0.9874`), threshold ≥75% is inconclusive (OR `1.0398`, CI `0.8458-1.2784`), and locked 2024-2025 is lower (OR `0.6543`, CI `0.4434-0.9655`). These runs demonstrate threshold/time sensitivity and cannot replace the frozen ≥50% full-period conclusion. |
+| Secondary conditions | **Complete; none survives Holm correction** | Peat interactions with higher 72-hour VPD, higher 24-hour maximum wind, and lower pre-fire EVI have Holm p-values `1.000`, `0.425`, and `1.000`, respectively. Drainage was not silently substituted and remains a separately timed sensitivity. |
+| Held-out prediction | **Better than uniform ranking, not causal** | A 2018-2022 development fit produced locked 2024-2025 conditional log loss `1.468` versus uniform `1.609`, top-1 recall `36.96%` versus uniform expectation `20%`, and MRR `0.605`. Top-5 recall is structurally 100% in five-cell sets and is explicitly non-informative. |
+| Uncertainty and diagnostics | **Passed** | Models converged with two-way cell/date cluster-robust covariance; the primary information condition number is `32.43`. Results and all coefficients are in `outputs/analysis/phase2_environmental_results.json`; the readable report is `outputs/insights/phase2_environmental_association.md`. |
+| Claim boundary | **Unchanged** | This is a within-matched-set detectable-fire association. Human access, deliberate burning, plantation profit, actor attribution, government performance, absolute ignition risk, burned area, and global transportability remain unestimated. |
+
+## Execution update -- Phase 3 fire-to-land-cover registration and extraction (28 August 2026)
+
+| Workstream | Status | Evidence / decision |
+|---|---|---|
+| Pre-outcome registration | **Frozen** | `config/phase3_registration.json` fixes a one-year primary outcome, 10% loss-of-pre-index-forest threshold, 5%/20% and two-/three-year sensitivities, within-set adjusted risk difference, cell/date clustered uncertainty, Holm-corrected destination families, support gates, and non-causal language before annual outcomes are extracted. |
+| Official temporal support | **Verified** | The authenticated MapBiomas Indonesia Collection 4.1 asset exposes 35 annual classification bands for 1990-2024. One-year follow-up therefore admits fire years 2015-2023; two-year follow-up ends at 2022 and three-year follow-up at 2021. Fire years 2024-2025 are excluded for incomplete follow-up, not coded as no change. |
+| Class crosswalk | **Frozen** | `config/mapbiomas_collection41_legend.json` records natural-forest codes 3/5/76 plus distinct destinations for non-forest natural vegetation, rice, oil palm, pulpwood, other agriculture, mining, urban, other non-vegetation, aquaculture, and water. A mapped destination is explicitly not actor or intent evidence. |
+| Locked-cell linkage | **Complete** | All 70,455 opportunity rows, 14,091 exact 1:4 sets, and 18,664 unique cells were audited. Every locked cell resolved to one private EPSG:6933 1-km grid centre. The 1,022,093-byte private upload table hash is `987abd0d71c4c4c5c5e9e2e73640639f83b6217e33ec758312c280622bcbd70a`; the table is Git-ignored and excluded from the dashboard. |
+| Zero-budget extraction | **Complete** | All 38 restart-safe Earth Engine chunks completed and were expanded into 307 registered coordinate-free transition fields for 18,664 unique cells. The 21,710,356-byte result has SHA-256 `ddd1e1498c31c7c8920749e64e916a98c3924affd457fe9768b2a3efb146fe4d`; no duplicate cell IDs or missing values were found. All 38 temporary coordinate-bearing assets were removed. The method used neither paid object storage nor a national raster-stack download. |
+| Cloud access audit | **Passed** | The previously registered `susenas-project` is active, its Earth Engine API is enabled, `ee.Initialize(project='susenas-project')` returned `EARTH_ENGINE_OK`, and the MapBiomas Collection 4 asset metadata was readable. The unregistered `gen-lang-client-0127774774` project is not used. No credential values were recorded. |
+| Phase 3 gate and primary model | **Passed; result estimated** | `phase3_ready=true`, `phase3_model_run=true`, and no blockers remain. Of 12,178 primary candidate sets, 7,138 exact 1:4 sets passed complete-set/support rules (35,690 rows; 11,758 cells). Fire-positive cells had 13.74% unadjusted risk versus 4.40% for controls; the registered adjusted risk difference was **+5.89 points** (95% CI **+4.52 to +7.25**, p=**2.63e-17**) using two-way cell/date cluster-robust uncertainty. |
+| Registered robustness | **Passed direction check** | Results remained positive for ≥5% loss at one year (+10.78 points), ≥20% at one year (+2.76), ≥10% at two years (+5.93), and ≥10% at three years (+6.10); all reported intervals excluded zero. The continuous outcome was strongly right-skewed, so both mean and median/IQR are reported. |
+| Exploratory destinations | **Estimated with support gates and Holm correction** | Non-forest natural vegetation (+4.68 points), oil palm (+0.34), other agriculture (+0.30), and other non-vegetated land (+0.86) passed the registered family correction. Rice, pulpwood, mining, urban, aquaculture, and water lacked adequate within-set support. No destination result identifies deliberate burning, actor, owner, legality, planting timing, or profit. |
+| Reporting and UI | **Updated** | Machine-readable results, readable Phase 3 report, access audit, synthesis, method, README, and the coordinate-free dashboard now report the completed estimate, selection flow, robustness checks, exploratory destinations, and the same non-causal claim boundary. |
+| Verification | **Passed** | The coordinate-free transition table passed row, column, uniqueness, missingness, and hash checks; all temporary assets were deleted. The full Python test suite and static Next.js production build were rerun after final reporting changes. |
+
+## Execution update -- Phase 3 publication validation and release package (28 August 2026)
+
+| Workstream | Status | Evidence / decision |
+|---|---|---|
+| Attrition audit | **Complete; material selection boundary** | Of 12,178 primary-eligible sets, 5,040 (41.4%) were excluded and 7,138 analysed. Pre-index natural forest below 70% affected 5,031 sets. The maximum included-versus-excluded absolute SMD was 1.020, so transportability is explicitly limited to the retained Kalimantan population. |
+| Influence and estimator checks | **Complete; positive direction retained** | Removing the top 0.5% and 1% of matched sets by score norm yielded +5.63 and +5.50 points. Conditional logistic OR was 3.46; adjusted continuous loss-share difference was +2.93 points. These are sensitivities, not replacements for the registered risk difference. |
+| Temporal and spatial checks | **Complete; heterogeneous but pooled direction stable** | Year-specific estimates ranged +0.61 to +9.75 points; all leave-one-year-out estimates were positive (+4.13 to +6.96). Block-plus-date 95% CIs excluded zero at 25, 50, and 100 km. |
+| Negative control | **Positive; causal interpretation rejected** | The fully pre-index outcome was +2.31 points (95% CI +1.13 to +3.50; p=0.000131). The common-support post-minus-pre diagnostic was +3.08 points (95% CI +1.53 to +4.63), but parallel trends are not established. Baseline trajectory/residual confounding must be reported with the primary result. |
+| Map accounting | **Passed internally** | Across 447,936 cell–horizon pairs, no loss-minus-destination mass residual exceeded 1e-8. This is not independent MapBiomas accuracy validation. |
+| Publication package | **Technically complete** | Added manuscript, supplement, references, figures, tables, coordinate-free bundle builder, SHA-256 manifest, reproduction runner, code/data licence separation, citation metadata, and a self-contained HTML technical report. The local release ZIP is ignored by Git and excludes coordinates, credentials, raw rasters, and raw provider archives. |
+| Remaining external metadata | **Human/editorial only** | Verified authors, affiliations, contributor roles, acknowledgements/funding, conflict and ethics wording, target-journal formatting, and a permanent repository/archive DOI remain before journal submission. They do not block reproducibility of the statistical result. |
+| Public dashboard deployment | **Ready** | The coordinate-free Next.js static export is deployed at `https://indonesia-wildfire-analysis.vercel.app`; the production response returned HTTP 200. The deployment excludes raw research archives and private coordinates. Receipt: `outputs/quality/vercel_deployment.json`. |

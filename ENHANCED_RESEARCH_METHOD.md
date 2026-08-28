@@ -1,6 +1,6 @@
 # Enhanced Research Method: Human Accessibility, Land Transformation, and Tropical Fire
 
-**Status:** methodological redesign; no outcome has been analyzed here. This is not registration-ready until the dataset manifest, exact MapBiomas class crosswalk, historical-access and peat asset IDs, final calibrated event-linker values, complete covariate/product/temporal-support table, model formulas, grid and bootstrap definitions, random seeds, validation samples, selection gates, and power code are attached and hashed.  
+**Status:** the zero-budget environmental daily-grid track passed Phase 1B and completed Phase 2. The primary peat ≥50% × root-zone dryness interaction is inconclusive (OR 0.866, 95% CI 0.692–1.084, p=0.209). Phase 3 also completed: its registered model estimates a +5.89-percentage-point adjusted difference in one-year ≥10% natural-forest loss after fire detection (95% CI +4.52 to +7.25; p=2.63e-17) across 7,138 complete exact 1:4 sets. This is a temporal association, not actor or intent evidence. The human-access confirmatory and actor/governance tracks remain separately blocked.
 **Prepared:** 20 August 2026  
 **Primary study area:** Kalimantan  
 **Primary study period:** complete years only; 2015-2025 for measurement development, with confirmatory association estimation beginning after the frozen calibration period
@@ -22,6 +22,47 @@ The defensible primary conclusion is therefore:
 > **Pre-existing accessibility and antecedent land transformation are, or are not, meaningfully associated with the rate of surveillance-bounded first-observed landscape-fire onset per processed S-NPP observation opportunity in baseline forest landscapes, after prespecified adjustment for environmental conditions measured before first observation.**
 
 A causal conclusion should be reserved for a separate analysis of a defined, dated intervention, such as a verified road opening, that passes pre-trend, overlap, spillover, measurement, and placebo tests.
+
+## Research modules and phase alignment
+
+The public context for this study includes four distinct claims: environmental stress, land-use change, governance, and possible economic motive. They must not be collapsed into one fire model. No new top-level phase is required; the claims map onto the existing measurement, association, event/burden, quasi-experimental, and replication phases as follows.
+
+| Research module | Primary question | Existing phase | Current status | Decision rule |
+|---|---|---|---|---|
+| **1. Environmental conditions** | Does peat become more vulnerable under drought, high VPD/wind, low soil moisture, or stressed vegetation? | Phase 2 | **Complete; primary result inconclusive.** The locked VNP14A1.002 frame supplied 14,091 exact 1:4 matched sets; one set with a CHIRPS `-9999` sentinel was excluded fail-closed, so 14,090 sets entered the model. The primary peat ≥50% × root-zone dryness OR is 0.866 (95% CI 0.692–1.084; p=0.209). | Retain the primary conclusion even though the ≥25% and locked-test sensitivities differ. Drainage and ENSO interactions require separate registrations. |
+| **2A. Fire followed by land-cover change** | Are fire-positive cells followed by forest loss or land-cover conversion in the next 1–3 years? | Phase 3, with exposure extension | **Complete for the registered Kalimantan association.** All 38 chunks and the final transition table passed validation. The primary adjusted risk difference is +5.89 points (95% CI +4.52 to +7.25; p=2.63e-17); threshold/horizon checks retain the direction. The Indonesia-wide map remains descriptive context only. | Report an association; never infer intentional burning, actor, ownership, legality, or profit from a later class. |
+| **2B. Industry/actor attribution** | Is a particular company, concession, or economic activity responsible for fire? | Phase 4 | **Blocked.** Remote sensing does not identify actor or intent. | Requires dated permits, concession/ownership records, planting/opening dates, and independent legal or field evidence. |
+| **3. Governance and mitigation** | Do mitigation, enforcement, or restoration interventions change subsequent fire burden? | Phase 4 | **Blocked.** No complete intervention, budget, patrol, response, or restoration panel exists. | Requires a dated intervention and a defensible comparison design with pre-trends, overlap, spillover, and placebo checks. |
+| **4. Global replication** | Are the environmental and land-change patterns consistent across tropical countries? | Phase 5; descriptive preparation in Phase 0.5 | **Descriptive view exists; inferential replication is not ready.** The current country panel has no observation-opportunity denominator and mixes reporting environments. | Harmonize product, grid, period, sensor, area offset, and denominator before fitting a country-year/hierarchical model. |
+
+### Recommended order
+
+1. Treat **Module 1** as complete for the registered peat × dryness/VPD/wind/EVI tests; do not convert its inconclusive primary interval into a null claim.
+2. Prepare **Module 2A** next using lagged forest-loss/land-cover change. This is easier than actor attribution and can test whether fire is followed by conversion without claiming intent.
+3. Upgrade **Module 4** from descriptive global context to standardized replication after the denominator and common outcome definition are stable.
+4. Attempt **Module 2B and Module 3 last**, because they require the hardest-to-obtain dated administrative, company, and intervention records.
+
+The current result is therefore not “the hypotheses are false.” It is: **Module 1's primary test is inconclusive; Module 2A is prepared but awaiting its annual land-cover outcome; Modules 2B and 3 remain evidence-gated; Module 4 is currently descriptive.**
+
+### Registered zero-budget environmental denominator (26 August 2026)
+
+The environmental track is distinct from the human-access estimand described later in this document. It uses `NASA/VIIRS/002/VNP14A1` daily 1-km FireMask for July-November 2015-2025. Positive classes are 7-9, class 5 is valid land negative, and all other classes are excluded. Eligibility requires a class-5 negative within the prior three days, at least 50% processed support over those days, and a seven-day fire-free refractory period. Baseline eligibility is MapBiomas Indonesia Collection 4.1 natural-forest fraction of at least 70% in the fixed EPSG:6933 grid.
+
+An availability amendment was registered on 26 August 2026, before any Phase 2 model was fitted. If the primary VNP14A1 event-day image is absent, that calendar day remains outside the observation denominator and is never coded as zero fire. If only a lookback image is absent, science-quality NASA Terra `MOD14A1.061` and Aqua `MYD14A1.061` FireMask are fused for history only: either donor's class 7-9 establishes prior fire; otherwise either donor's class 5 establishes valid non-fire land; all other states remain unprocessed. These donors cannot create a primary case. The final analysis must report a sensitivity excluding every event day that used fallback history.
+
+Each case receives four reusable controls within 25 km using a fixed seed. Antecedent CHIRPS windows exclude the event day; MOD13Q1 EVI must have SummaryQA=0 and its 16-day composite must end before the event day. ERA5-Land is joined from the validated hourly local archive for prior 24/72-hour rainfall, VPD, wind, and soil-water summaries at its native support. A coastal cell may use only the nearest fully valid ERA5-Land cell within 25 km; otherwise its entire matched set is excluded and counted. Peat extent is a frozen 2000-2020 static stratum with 50% primary and 25%/75% sensitivity thresholds—not peat condition, depth, drainage history, or 2026 land cover.
+
+This track can answer an environmental association question. It cannot identify an arsonist, economic motive, plantation beneficiary, government mitigation effect, road-opening effect, or land-conversion intent. Those claims remain blocked rather than being inferred from proximity or temporal coincidence.
+
+### Registered Phase 3 fire-to-land-cover outcome (27 August 2026)
+
+Phase 3 reuses the locked daily 1:4 sets but changes the outcome: among cells with at least 70% natural forest in `t-1`, it tests whether index-day fire-positive cells have a higher probability than matched fire-negative cells of losing at least 10% of that pre-index forest by `t+1`. Five-/20-percent thresholds and `t+2`/`t+3` are registered sensitivities. With Collection 4.1 ending in 2024, primary one-year follow-up is eligible only for 2015-2023 fires; 2024-2025 events are excluded for incomplete follow-up rather than coded as stable.
+
+Transitions are computed at 30 m within the fixed origin-anchored 1-km grid and exported as cell fractions. The complete class crosswalk separately retains non-forest natural vegetation, rice, oil palm, pulpwood plantation, other agriculture, mining, urban, other non-vegetation, aquaculture, and water. The primary estimator is an adjusted within-matched-set risk difference with two-way cell/date cluster-robust uncertainty. Secondary destination families use Holm correction. A later oil-palm class is a mapped sequence only: it does not identify intent, ownership, legality, the person who ignited a fire, or a beneficiary.
+
+The registration is `config/phase3_registration.json`; executable gate/model code is `analysis/phase3_land_change.py`; and the validated restart-safe cloud runner is `analysis/export_phase3_earthengine.py`. The Code Editor file `analysis/mapbiomas_phase3_export.js` is retained only as a reference fallback because a single full-size export can exceed Earth Engine's computed-value limit. As registered, missing or not-observed annual pixels exclude the entire matched set and are never converted to zero change.
+
+The completed primary analysis retained 7,138 of 12,178 candidate matched sets after complete-set and outcome-support rules. Fire-positive cells had 13.74% unadjusted one-year risk versus 4.40% among matched controls; after the registered covariate adjustment and matched-set absorption, the risk difference was +5.89 points (95% CI +4.52 to +7.25; p=2.63e-17). Positive estimates persisted at 5% and 20% thresholds and at two- and three-year horizons. Because continuous forest-loss share is right-skewed, the result report includes mean plus median and IQR. Exploratory destination estimates use Holm correction and frozen support gates; the small oil-palm estimate (+0.34 points) is a mapped temporal sequence only.
 
 ## What should be retained
 
@@ -583,11 +624,13 @@ If a criterion is not met, label that family underpowered and its eventual non-d
 
 **Deliverable:** adjusted detected-onset IDRs with a neutral decision classification, plus clearly separate full-panel descriptive rates and calibration curves.
 
-### Phase 3 — Fire burden and event characteristics
+### Phase 3 — Fire burden, event characteristics, and land-cover follow-up
 
 - Link events to burned-area patches.
 - Model unconditional burned area and event-conditional characteristics.
 - Add sampled ecological-severity mapping.
+- Execute the separately registered fire-to-land-cover extension only after the compact Collection 4.1 annual transition table passes its cell, band, observed-fraction, and pre-index-forest gates.
+- Report later oil palm, pulpwood, agriculture, mining, and other classes as mapped destinations, not evidence of actor or intent.
 
 **Deliverable:** a clear separation of occurrence, burned area, radiative output, persistence, and ecological severity.
 
@@ -647,3 +690,15 @@ The project should proceed, but as a gated research program:
 > **First establish that the satellite and exposure maps measure comparable phenomena across remote and accessible forest. Then estimate the adjusted association. Attempt causation only for dated interventions that survive design diagnostics.**
 
 The boldest unbiased commitment is not predicting a positive result. It is committing in advance to publish the same complete evidence package if the human association is large, negligible, reversed, measurement-sensitive, or simply unresolved.
+
+## 20. Phase 3 publication-validation decision
+
+The registered Kalimantan fire-to-land-cover association is complete, but publication language must carry the post-registration diagnostics rather than only the primary p-value:
+
+- 7,138 of 12,178 primary-eligible exact 1:4 sets were retained; 41.4% failed complete forest/observation support.
+- The adjusted primary association is +5.89 percentage points (95% CI +4.52 to +7.25), with a positive direction across registered thresholds/horizons, influence screening, alternative estimators, leave-one-year-out checks, and 25/50/100-km cluster sensitivities.
+- A pre-exposure negative control is also positive (+2.31 points, 95% CI +1.13 to +3.50), indicating pre-existing land-change trajectory or residual confounding.
+- A common-support post-minus-pre diagnostic remains positive (+3.08 points, 95% CI +1.53 to +4.63), but is not causal because parallel trends were not established.
+- Internal MapBiomas transition mass balances to numerical tolerance, but independent class-accuracy validation remains a limitation.
+
+Therefore the defensible conclusion is a robust **temporal association in the retained Kalimantan analysis population**. It is not a causal effect and cannot be generalized to all Indonesia, the globe, deliberate ignition, actor or beneficiary attribution, legality, government performance, or restoration effectiveness.

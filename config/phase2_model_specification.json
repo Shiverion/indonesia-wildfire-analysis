@@ -1,0 +1,89 @@
+{
+  "schema_version": "environmental-phase2-model-specification/v1",
+  "frozen_at_utc": "2026-08-26T16:24:13.6025792Z",
+  "frozen_before_first_fit": true,
+  "track_id": "environmental_daily_grid",
+  "inferential_scope": "Within-matched-set association between pre-event environmental conditions and first-observed VNP14A1 fire detection in baseline-natural-forest cells; not a causal human-access, intent, plantation, or government-performance model.",
+  "input_registration": "config/phase2_registration.json",
+  "input_frame": "data/derived/viirs/opportunity_frame.csv",
+  "input_lock": "outputs/locks/locked_test_inputs.json",
+  "design": {
+    "estimator": "conditional logistic regression with one case and four controls per matched set",
+    "uncertainty": "two-way cluster-robust sandwich covariance by recurring cell and acquisition date; cell-only fallback is permitted only if the two-way covariance has an invalid diagonal and must be reported",
+    "alpha_two_sided": 0.05,
+    "standardization_reference_years": [2018, 2019, 2020, 2021, 2022],
+    "full_association_years": [2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025],
+    "prediction_development_years": [2018, 2019, 2020, 2021, 2022],
+    "prediction_rehearsal_years": [2023],
+    "prediction_locked_test_years": [2024, 2025],
+    "outcome_positive_label": "positive",
+    "outcome_negative_label": "negative"
+  },
+  "pre_fit_data_quality_amendment": {
+    "registered_at_utc": "2026-08-26T16:31:00Z",
+    "timing": "after the first model command stopped during transform validation and before any coefficient was fitted",
+    "trigger": "one CHIRPS row contained the provider/export missing sentinel -9999, which is finite numerically but is not precipitation",
+    "rule": "exclude the entire five-row matched set if any member has a negative CHIRPS lag, EVI <= -9000, or a missing/non-finite required model covariate; never replace a sentinel with zero or impute from the other members",
+    "reporting": "publish excluded row and matched-set counts and retain the immutable source frame unchanged"
+  },
+  "transforms": {
+    "forest_fraction": "z score",
+    "chirps_precip_7d_mm": "z score of log(1+x)",
+    "chirps_precip_30d_mm": "z score of log(1+x)",
+    "evi_prefire": "z score",
+    "era5_vpd_mean_72h_kpa": "z score",
+    "era5_wind_max_24h_ms": "z score",
+    "era5_rootzone_soil_water_mean_72h": "negative z score so larger values mean drier conditions"
+  },
+  "common_adjustment_terms": [
+    "forest_fraction_z",
+    "log_chirps_precip_7d_z",
+    "log_chirps_precip_30d_z",
+    "evi_prefire_z",
+    "era5_vpd_72h_z",
+    "era5_wind_24h_z",
+    "rootzone_dryness_72h_z"
+  ],
+  "primary_hypothesis": {
+    "peat_threshold_percent": 50,
+    "condition": "rootzone_dryness_72h_z",
+    "contrast": "ratio of within-set fire-detection odds ratios for a one-standard-deviation increase in dryness, comparing cells at or above versus below 50% peat extent",
+    "direction": "two-sided"
+  },
+  "mandatory_sensitivities": [
+    "repeat the primary model after excluding every matched set on a history-fallback event date",
+    "repeat the primary interaction using peat thresholds of 25% and 75%",
+    "repeat the primary model in the locked 2024-2025 test period only"
+  ],
+  "secondary_condition_family": [
+    {
+      "condition": "era5_vpd_72h_z",
+      "adverse_direction": "higher"
+    },
+    {
+      "condition": "era5_wind_24h_z",
+      "adverse_direction": "higher"
+    },
+    {
+      "condition": "low_evi_prefire_z",
+      "adverse_direction": "lower vegetation greenness"
+    }
+  ],
+  "multiplicity": {
+    "primary": "unadjusted two-sided p value and 95% confidence interval",
+    "secondary_condition_family": "Holm correction across the three secondary peat-condition interactions",
+    "threshold_and_fallback_runs": "robustness checks; they cannot replace or redefine the primary 50% soil-dryness result"
+  },
+  "prediction_metrics": {
+    "primary": "conditional log loss within each five-cell matched set",
+    "secondary": ["top-1 recall", "mean reciprocal rank"],
+    "noninformative_metric": "top-5 recall is always 1 with one case among five sampled cells and will be reported as structurally non-informative"
+  },
+  "interpretation_rules": [
+    "Odds ratios are within matched sets and describe detectable fire association, not absolute fire probability or burned area.",
+    "A non-significant result is inconclusive, not proof of no effect.",
+    "Static peat extent is not peat moisture, drainage state, peat depth, or current land cover.",
+    "No result from this track identifies deliberate burning, plantation expansion, profit, government effort, or human-access causality.",
+    "Global generalization requires a separately harmonized observation-denominator analysis."
+  ]
+}

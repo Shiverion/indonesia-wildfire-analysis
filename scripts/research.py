@@ -36,6 +36,8 @@ from wildfire_research.sipongi import (
     read_sipongi_csv,
 )
 from wildfire_research.temporal_qa import run_temporal_qa
+from wildfire_research.phase1b import build_phase1b_readiness
+from wildfire_research.mapbiomas import write_mapbiomas_preflight
 from wildfire_research.synthesis import build_preliminary_synthesis_markdown
 
 
@@ -98,6 +100,21 @@ def status_command() -> int:
     for row in report["phase_1_gates"]:
         state = "ready" if row["gate_ready"] else "blocked"
         print(f"- {row['asset_id']}: {state} ({row['manifest_status']})")
+    return 0
+
+
+def build_chirps_lags_command(output: Path | None = None, quality: Path | None = None) -> int:
+    """Build the available complete source-grid CHIRPS lag cache."""
+    from build_chirps_lag_features import build
+
+    report = build(ROOT, output_path=output, quality_path=quality)
+    print(json.dumps({
+        "output": report["output"],
+        "row_count": report["row_count"],
+        "complete_cutoff_count": report["complete_cutoff_count"],
+        "study_window": report["support_window"],
+        "phase_1b_unlock": False,
+    }, indent=2))
     return 0
 
 
@@ -288,6 +305,35 @@ def temporal_qa_command() -> int:
     return 0
 
 
+def phase1b_audit_command() -> int:
+    """Run Phase 1B closure checks without network calls or model fitting."""
+    report = build_phase1b_readiness(ROOT)
+    output = ROOT / "outputs" / "quality" / "phase1b_readiness.json"
+    output.parent.mkdir(parents=True, exist_ok=True)
+    output.write_text(json.dumps(report, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+    print(json.dumps({
+        "output": str(output.relative_to(ROOT)),
+        "status": report["status"],
+        "phase_1b_ready": report["phase_1b_ready"],
+        "phase_2_unlock": report["phase_2_unlock"],
+        "workstreams": {key: value["status"] for key, value in report["workstreams"].items()},
+    }, indent=2))
+    return 0
+
+
+def mapbiomas_preflight_command() -> int:
+    """Validate the local, frozen MapBiomas 2014 export hand-off."""
+    report = write_mapbiomas_preflight(ROOT)
+    print(json.dumps({
+        "output": "outputs/quality/mapbiomas_2014_preflight.json",
+        "status": report["status"],
+        "ready": report["ready"],
+        "errors": report["errors"],
+        "next_action": report["next_action"],
+    }, indent=2, ensure_ascii=False))
+    return 0 if report["ready"] else 2
+
+
 def log_phase_command(phase: str, status: str, note: str, evidence: list[str]) -> int:
     entry = append_phase_entry(PHASE_LEDGER, phase=phase, status=status, note=note, evidence=evidence)
     print(json.dumps({"sequence": entry["sequence"], "entry_sha256": entry["entry_sha256"], "ledger": str(PHASE_LEDGER.relative_to(ROOT))}, indent=2))
@@ -301,15 +347,28 @@ def verify_ledger_command() -> int:
 
 
 def lock_test_command() -> int:
-    report = validate_protocol(ROOT)
-    if report["result"] != "pass" or not report["phase_1_ready"]:
-        print("Refusing to create locked-test archive: Phase 1 data/provenance gates are not ready.")
+    phase1b = build_phase1b_readiness(ROOT)
+    if not phase1b["phase_1b_ready"]:
+        print("Refusing to create locked-test archive: the environmental Phase 1B gates are not ready.")
+        print(json.dumps({
+            "phase_1b_ready": phase1b["phase_1b_ready"],
+            "phase_1b_workstreams": {key: value["status"] for key, value in phase1b["workstreams"].items()},
+        }, indent=2))
         return 2
     sources = [
         "config/study.json",
+        "config/phase2_registration.json",
         "data/manifests/assets.json",
-        "data/raw",
-        "data/derived",
+        "data/raw/era5_land/download_manifest.json",
+        "data/derived/mapbiomas",
+        "data/derived/viirs/opportunity_frame.csv",
+        "outputs/quality/daily_risk_set_frame.json",
+        "outputs/quality/mapbiomas_2014_preflight.json",
+        "outputs/quality/mapbiomas_2014_forest_mask.json",
+        "outputs/quality/mapbiomas_2014_forest_fraction_1km.json",
+        "outputs/quality/peat_sensitivity_provenance.json",
+        "scripts/build_gee_daily_risk_sets.py",
+        "scripts/finalize_daily_risk_sets.py",
         "scripts/research.py",
         "src/wildfire_research",
     ]
@@ -337,6 +396,9 @@ def main() -> int:
     subparsers.add_parser("build-enso", help="derive seasonal RONI table from local raw source")
     subparsers.add_parser("validate", help="validate protocol and data manifest gates")
     subparsers.add_parser("status", help="print concise implementation status")
+    chirps_lag_parser = subparsers.add_parser("build-chirps-lags", help="derive complete source-grid CHIRPS 1/7/30/90-day lags")
+    chirps_lag_parser.add_argument("--output", type=Path)
+    chirps_lag_parser.add_argument("--quality", type=Path)
     subparsers.add_parser("report-enso", help="write a descriptive, non-causal ENSO context report")
     gwis_parser = subparsers.add_parser("fetch-gwis", help="download and filter anonymous GWIS aggregate burned-area data")
     gwis_parser.add_argument("--url", default=DEFAULT_GWIS_URL, help="official GWIS ZIP URL; override only for an archived mirror")
@@ -364,6 +426,8 @@ def main() -> int:
     subparsers.add_parser("build-explorer", help="build an offline, aggregate-only Evidence Explorer (auxiliary Phase 0.5)")
     subparsers.add_parser("condition-audit", help="audit local condition-specific peat vulnerability inputs without network calls")
     subparsers.add_parser("temporal-qa", help="audit temporal support and VIIRS opportunity readiness without network calls")
+    subparsers.add_parser("phase1b-audit", help="close Phase 1B temporal and VIIRS denominator gates without network calls")
+    subparsers.add_parser("mapbiomas-preflight", help="validate the frozen MapBiomas Indonesia Collection 4.1 2014 export")
     subparsers.add_parser("report-sipongi", help="write a sensor-stratified, non-causal SiPongi context report")
     log_parser = subparsers.add_parser("log-phase", help="append a hash-linked implementation-phase entry")
     log_parser.add_argument("--phase", required=True)
@@ -382,6 +446,8 @@ def main() -> int:
         return validate_command()
     if args.command == "status":
         return status_command()
+    if args.command == "build-chirps-lags":
+        return build_chirps_lags_command(args.output, args.quality)
     if args.command == "report-enso":
         return report_enso_command()
     if args.command == "fetch-gwis":
@@ -418,6 +484,10 @@ def main() -> int:
         return condition_audit_command()
     if args.command == "temporal-qa":
         return temporal_qa_command()
+    if args.command == "phase1b-audit":
+        return phase1b_audit_command()
+    if args.command == "mapbiomas-preflight":
+        return mapbiomas_preflight_command()
     if args.command == "log-phase":
         return log_phase_command(args.phase, args.status, args.note, args.evidence)
     if args.command == "verify-ledger":
