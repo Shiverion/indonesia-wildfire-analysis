@@ -154,8 +154,10 @@ export function GlobalFireGlobe({
         return;
       }
       try {
-        (window as Window & { CESIUM_BASE_URL?: string }).CESIUM_BASE_URL = "/cesium/";
-        const Cesium = await import("cesium");
+        const runtimeWindow = window as Window & { CESIUM_BASE_URL?: string; Cesium?: CesiumRuntime };
+        runtimeWindow.CESIUM_BASE_URL = "/cesium/";
+        const Cesium = runtimeWindow.Cesium;
+        if (!Cesium) throw new Error("Cesium runtime did not load.");
         if (cancelled || !hostRef.current) return;
         const widget = new Cesium.CesiumWidget(host, {
           ellipsoid: Cesium.Ellipsoid.WGS84,

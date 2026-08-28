@@ -220,8 +220,10 @@ export function InteractiveGlobe({ mode, platform, periodLabel, isPartialSnapsho
       }
       try {
         setLoadingText("Initializing WGS84 globe…");
-        (window as Window & { CESIUM_BASE_URL?: string }).CESIUM_BASE_URL = "/cesium/";
-        const Cesium = await import("cesium");
+        const runtimeWindow = window as Window & { CESIUM_BASE_URL?: string; Cesium?: CesiumRuntime };
+        runtimeWindow.CESIUM_BASE_URL = "/cesium/";
+        const Cesium = runtimeWindow.Cesium;
+        if (!Cesium) throw new Error("Cesium runtime did not load.");
         if (cancelled || !hostRef.current) return;
         const widget = new Cesium.CesiumWidget(host, {
           ellipsoid: Cesium.Ellipsoid.WGS84,

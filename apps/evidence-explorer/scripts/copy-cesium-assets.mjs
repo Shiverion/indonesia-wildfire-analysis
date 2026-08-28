@@ -15,5 +15,6 @@ await mkdir(destination, { recursive: true });
 for (const directory of ["Assets", "ThirdParty", "Widgets", "Workers"]) {
   await cp(`${source}${directory}`, `${destination}${directory}`, { recursive: true, force: true });
 }
+await cp(`${source}Cesium.js`, `${destination}Cesium.js`, { force: true });
 
 console.log(`Copied Cesium runtime assets into ${destination} for static export.`);

@@ -3,8 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
+    "dev": "next dev --webpack",
+    "build": "next build --webpack",
+    "postbuild": "node scripts/check-built-bundle-syntax.mjs",
     "start": "next start",
     "check": "tsc --noEmit",
     "sync-data": "node scripts/sync-data.mjs",
