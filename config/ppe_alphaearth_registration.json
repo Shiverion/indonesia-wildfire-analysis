@@ -1,0 +1,82 @@
+{
+  "schema_version": "ppe-alphaearth-registration/v1",
+  "registered_at": "2026-08-29T11:36:16+07:00",
+  "status": "frozen_before_embedding_extraction",
+  "purpose": "Prediction robustness extension only. This registration does not replace the registered Phase 2 association model or the Phase 3 land-change analysis.",
+  "research_question": "Do prior-calendar-year AlphaEarth embeddings improve out-of-time ranking of fire-positive cells within the existing exact 1:4 daily matched sets beyond the registered explicit environmental covariates?",
+  "claim_boundary": {
+    "allowed": [
+      "out-of-time predictive improvement",
+      "incremental information beyond explicit covariates",
+      "heterogeneity in prediction performance across spatial blocks"
+    ],
+    "prohibited": [
+      "causal attribution to government action, drought, peat drainage, or plantations",
+      "replacement of the registered Phase 2 effect estimates",
+      "use of an embedding value from the event year or a future year",
+      "publication of a nationwide risk surface before locked-test validation"
+    ]
+  },
+  "target": {
+    "name": "viirs_fire_positive_within_exact_daily_matched_set",
+    "source": "NASA VIIRS VNP14A1/VNP14IMG-derived observation-opportunity frame",
+    "unit": "one candidate cell within a five-cell exact daily matched set",
+    "positive_count_per_set": 1,
+    "candidate_count_per_set": 5
+  },
+  "alphaearth_source": {
+    "earth_engine_collection": "GOOGLE/SATELLITE_EMBEDDING/V1/ANNUAL",
+    "bands": "A00-A63",
+    "dimensions": 64,
+    "documented_years_used": [2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024],
+    "live_2025_policy": "excluded_until_coverage_and_metadata_are_separately_validated",
+    "license": "CC-BY-4.0",
+    "attribution": "Google Satellite Embedding dataset, produced by Google",
+    "documentation": "https://developers.google.com/earth-engine/datasets/catalog/GOOGLE_SATELLITE_EMBEDDING_V1_ANNUAL"
+  },
+  "temporal_lock": {
+    "eligible_event_years": [2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025],
+    "embedding_year_formula": "event_year - 1",
+    "minimum_lag_years": 1,
+    "same_year_embedding": "forbidden",
+    "future_embedding": "forbidden",
+    "reason": "An annual embedding can contain post-fire surface information from its calendar year. A one-year lag prevents that direct temporal leakage."
+  },
+  "extraction": {
+    "geometry": "existing exact 1-km analysis cell polygon reconstructed from the private grid index",
+    "reducer": "per-band polygon mean",
+    "effective_scale_m": 100,
+    "post_reduction_transform": "row-wise L2 normalization of the 64-dimensional mean vector",
+    "missingness": "drop the entire matched set if any required embedding dimension is missing or non-finite",
+    "local_output": "data/derived/ppe/alphaearth_prefire_embeddings_private.csv",
+    "public_output_policy": "never publish row-level embeddings or coordinates"
+  },
+  "validation": {
+    "development_years": [2018, 2019, 2020, 2021, 2022],
+    "rehearsal_years": [2023],
+    "locked_test_years": [2024, 2025],
+    "spatial_group": "100-km block derived from the equal-area grid; all rows for a cell remain in one group",
+    "development_folds": 5,
+    "primary_metric": "conditional_log_loss",
+    "secondary_metrics": ["top_1_recall", "mean_reciprocal_rank"],
+    "bootstrap_unit": "matched_set_id",
+    "bootstrap_replicates": 1000,
+    "minimum_required_improvement": "combined model must improve locked-test conditional log loss over the explicit-covariate model; uncertainty interval will also be reported",
+    "locked_test_access": "one final evaluation after model and penalty selection are frozen on development and rehearsal data"
+  },
+  "models": {
+    "baseline": "registered explicit-covariate conditional logistic scoring model",
+    "embedding_only": "L2-regularized conditional logistic scoring model using A00-A63",
+    "combined": "L2-regularized conditional logistic scoring model using explicit covariates plus A00-A63",
+    "penalty_grid": [0.01, 0.1, 1.0, 10.0, 100.0],
+    "selection_rule": "lowest mean spatial-group cross-validated conditional log loss on development years; ties choose the larger penalty",
+    "overfit_guard": "report n, p, p/n, spatial-group count, fold stability, and coefficient norm; do not add nonlinear learners until this linear ablation passes"
+  },
+  "stopping_rules": [
+    "Stop and revise extraction if the feature gate rejects any required feature.",
+    "Stop if a requested embedding year differs from event_year - 1.",
+    "Stop if any event-year split differs from this registration.",
+    "Do not reinterpret a predictive gain as causation.",
+    "Do not update the public dashboard until the locked-test audit and reproducibility checks pass."
+  ]
+}

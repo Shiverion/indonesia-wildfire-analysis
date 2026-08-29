@@ -1,9 +1,11 @@
 "use client";
 
+import Link from "next/link";
 import { useMemo, useState } from "react";
 import { InteractiveGlobe } from "./interactive-globe";
 import { GlobalFireGlobe } from "./global-fire-globe";
-import type { EvidenceMode, ExplorerData, PeatFireComparison, Phase2EnvironmentalSummary, Phase3StatusSummary, ProvinceAggregate, SipongiCurrentSnapshot } from "../lib/types";
+import { AskResearchButton } from "./research-assistant";
+import type { AlphaEarthPredictionSummary, EvidenceMode, ExplorerData, PeatFireComparison, Phase2EnvironmentalSummary, Phase3StatusSummary, ProvinceAggregate, SipongiCurrentSnapshot } from "../lib/types";
 
 const CURRENT_FIVE = [
   "Kalimantan Barat",
@@ -45,6 +47,26 @@ const SOURCE_LOGOS = [
   { label: "SiPongi / Kemenhut", role: "Indonesia hotspot portal", href: "https://sipongi.gakkum.kehutanan.go.id/sebaran-titik-panas", logo: "/brands/kemenhut.png", className: "source-logo-kemenhut" },
 ];
 
+export function SourceStrip() {
+  return (
+    <section className="source-strip" aria-labelledby="source-strip-heading">
+      <div className="source-strip-heading">
+        <span className="eyebrow" id="source-strip-heading">Data taken from</span>
+        <p>Source marks identify the datasets represented in this bundle; they are attribution only, not endorsements.</p>
+      </div>
+      <div className="source-logo-list">
+        {SOURCE_LOGOS.map((source) => (
+          <a key={source.label} className="source-logo-chip" href={source.href} target="_blank" rel="noreferrer" title={`${source.label} — ${source.role}`}>
+            <span className={`source-logo-frame ${source.className}`}><img src={source.logo} alt={`${source.label} logo`} /></span>
+            <span><strong>{source.label}</strong><small>{source.role}</small></span>
+          </a>
+        ))}
+        <span className="source-text-chip"><strong>CHIRPS · ERA5-Land · AlphaEarth</strong><small>rainfall, fire weather, and prior-year satellite embeddings</small></span>
+      </div>
+    </section>
+  );
+}
+
 function sum(values: readonly number[]) {
   return values.reduce((total, value) => total + value, 0);
 }
@@ -77,18 +99,15 @@ function snapshotPeriodLabel(snapshot: SipongiCurrentSnapshot) {
 
 interface EvidenceExplorerProps {
   data: ExplorerData;
-  phase2: Phase2EnvironmentalSummary;
-  phase3: Phase3StatusSummary;
 }
 
-export function EvidenceExplorer({ data, phase2, phase3 }: EvidenceExplorerProps) {
+export function EvidenceExplorer({ data }: EvidenceExplorerProps) {
   const currentSnapshot = data.sipongi_current_snapshot ?? null;
   const [mode, setMode] = useState<EvidenceMode>("sipongi");
   const [year, setYear] = useState(data.scope.sipongi_years[1]);
   const [platform, setPlatform] = useState("All platforms");
   const [sipongiPeriodView, setSipongiPeriodView] = useState<SipongiPeriodView>(currentSnapshot ? "partial_snapshot" : "archive");
   const [selectedProvince, setSelectedProvince] = useState<string | null>(null);
-  const [limitationsOpen, setLimitationsOpen] = useState(false);
 
   const availableYears = useMemo(() => sourceAvailableYears(data, mode), [data, mode]);
   const selectedYearIndex = Math.max(0, availableYears.indexOf(year));
@@ -135,10 +154,6 @@ export function EvidenceExplorer({ data, phase2, phase3 }: EvidenceExplorerProps
   const total = sum(provinceRows.flatMap((row) => row.value === null ? [] : [row.value]));
   const observedRows = sum(provinceRows.map((row) => row.observed));
   const expectedRows = sum(provinceRows.map((row) => row.expected));
-  const phase3Estimate = phase3.phase3_model_run && phase3.primary_result?.status === "estimated"
-    ? phase3.primary_result.model
-    : null;
-
   const jumpToGlobalComparison = () => {
     const target = document.getElementById("global-comparison");
     if (!target) return;
@@ -160,71 +175,13 @@ export function EvidenceExplorer({ data, phase2, phase3 }: EvidenceExplorerProps
   };
 
   return (
-    <main className="app-shell">
-      <header className="app-header">
-        <div className="brand-block">
-          <span className="eyebrow">Interactive research report · Indonesia and global context</span>
-          <h1>Indonesia Wildfire Evidence Report</h1>
-        </div>
-        <div className="header-status" aria-label="Research status">
-          <span className="status-dot" />
-          <span>{phase3Estimate ? "Analysis complete · publication diagnostics included" : "Analysis package prepared"}</span>
-          <strong>{phase3Estimate ? "Fire, peat conditions, and subsequent forest loss" : "Environmental and land-change evidence"}</strong>
-        </div>
-      </header>
-
-      <section className="source-strip" aria-labelledby="source-strip-heading">
-        <div className="source-strip-heading">
-          <span className="eyebrow" id="source-strip-heading">Data taken from</span>
-          <p>Source marks identify the datasets represented in this bundle; they are attribution only, not endorsements.</p>
-        </div>
-        <div className="source-logo-list">
-          {SOURCE_LOGOS.map((source) => (
-            <a key={source.label} className="source-logo-chip" href={source.href} target="_blank" rel="noreferrer" title={`${source.label} — ${source.role}`}>
-              <span className={`source-logo-frame ${source.className}`}><img src={source.logo} alt={`${source.label} logo`} /></span>
-              <span><strong>{source.label}</strong><small>{source.role}</small></span>
-            </a>
-          ))}
-          <span className="source-text-chip"><strong>CHIRPS · GWIS · SiPongi</strong><small>rainfall and portal aggregates</small></span>
-        </div>
-      </section>
-
-      <section id="report-summary" className="hero-grid" aria-labelledby="purpose-heading">
-        <div>
-          <p className="eyebrow">One report · evidence first, process details later</p>
-          <h2 id="purpose-heading">What does the available evidence say about wildfire, peat conditions, and forest loss?</h2>
-          <p className="hero-copy">This report combines the main statistical findings with Indonesia&apos;s province context, a global comparison, Kalimantan detail, robustness checks, and source safeguards. Maps are descriptive reporting layers—not fire-risk surfaces or proof that an entire coloured area burned.</p>
-          <div className="coverage-callout" aria-label="Geographic coverage">
-            <div><strong>Primary association</strong><span>{phase3Estimate ? `+${(phase3Estimate.primary_term.estimate * 100).toFixed(1)} pp subsequent forest loss` : "Awaiting estimate"}</span></div>
-            <div><strong>Peat × dryness</strong><span>Inconclusive after adjustment</span></div>
-            <button type="button" onClick={() => document.getElementById("forest-loss-result")?.scrollIntoView({ behavior: "smooth", block: "start" })}>Read the main finding ↓</button>
-          </div>
-        </div>
-        <div className="guardrail-card">
-          <span className="guardrail-label">Evidence summary</span>
-          <strong>{phase3Estimate ? "Fire-positive cells were followed by more mapped forest loss" : "Environmental result: inconclusive"}</strong>
-          <p>{phase3Estimate
-            ? `The adjusted difference was +${(phase3Estimate.primary_term.estimate * 100).toFixed(1)} percentage points for losing at least 10% of pre-index forest within one year. The peat × dryness interaction was inconclusive. Selection and negative-control diagnostics prevent a causal interpretation: this does not prove deliberate burning, actor, ownership, or profit.`
-            : "The analysis did not establish that drier 72-hour root-zone soil strengthens the fire-detection gradient for cells with ≥50% peat. Human access, intent, plantation, and governance claims remain unidentified."}</p>
-          <button type="button" className="text-button" onClick={() => setLimitationsOpen(true)}>Read evidence boundaries</button>
-        </div>
-      </section>
-
-      <nav className="section-nav" aria-label="Dashboard reading order">
-        <span className="section-nav-label">Report sections</span>
-        <a href="#report-summary">Summary</a>
-        <a href="#forest-loss-result">Main finding</a>
-        <a href="#peat-dryness-result">Peat &amp; climate</a>
+    <>
+      <nav className="section-nav" aria-label="Map and comparison sections">
+        <span className="section-nav-label">On this page</span>
         <a href="#global-comparison">Indonesia &amp; global context</a>
         <a href="#local-layer">Kalimantan detail</a>
-        <a href="#methods-sources">Methods &amp; sources</a>
+        <a href="#province-table">Province table</a>
       </nav>
-
-      <ForestLossResultPanel result={phase3} />
-
-      <EnvironmentalConditionResultPanel result={phase2} />
-
-      <ConditionalPeatHypothesisPanel readiness={data.phase1b_readiness ?? null} result={phase2} />
 
       {data.peat_fire_comparison && <PeatFireComparisonPanel comparison={data.peat_fire_comparison} latestGlobalFire={data.latest_global_fire} />}
 
@@ -312,7 +269,10 @@ export function EvidenceExplorer({ data, phase2, phase3 }: EvidenceExplorerProps
 
       <div id="local-layer" className="map-scope-heading">
         <div><span className="eyebrow">Local reporting layer</span><h2>Kalimantan province evidence</h2><p>These polygons represent reporting units and their aggregates—not areas that are all burned.</p></div>
-        <button type="button" className="text-button" onClick={jumpToGlobalComparison}>Compare other countries ↓</button>
+        <div className="map-scope-actions">
+          <AskResearchButton sectionId="local-layer" />
+          <button type="button" className="text-button" onClick={jumpToGlobalComparison}>Compare other countries ↑</button>
+        </div>
       </div>
       <section className="globe-layout" aria-label="Kalimantan evidence globe and selected-region summary">
         <InteractiveGlobe
@@ -372,13 +332,7 @@ export function EvidenceExplorer({ data, phase2, phase3 }: EvidenceExplorerProps
         </section>
       )}
 
-      <section id="methods-sources" className="reading-section-intro compact-reading-intro" aria-labelledby="technical-evidence-heading">
-        <span className="eyebrow">Supporting evidence</span>
-        <h2 id="technical-evidence-heading">Trend context, lookup tables, methods, and sources</h2>
-        <p>These sections preserve the detailed time series, missingness rules, accessible tables, and source ledger used to audit the report above.</p>
-      </section>
-
-      <section className="table-card" aria-labelledby="province-table-heading">
+      <section id="province-table" className="table-card" aria-labelledby="province-table-heading">
         <div className="section-heading">
           <div>
             <h2 id="province-table-heading">Province aggregate table</h2>
@@ -409,6 +363,75 @@ export function EvidenceExplorer({ data, phase2, phase3 }: EvidenceExplorerProps
           </table>
         </div>
       </section>
+    </>
+  );
+}
+
+export function FindingsReport({
+  phase2,
+  phase3,
+  alphaEarth,
+}: {
+  phase2: Phase2EnvironmentalSummary;
+  phase3: Phase3StatusSummary;
+  alphaEarth: AlphaEarthPredictionSummary;
+}) {
+  return (
+    <>
+      <nav className="section-nav" aria-label="Finding sections">
+        <span className="section-nav-label">On this page</span>
+        <a href="#forest-loss-result">Forest loss</a>
+        <a href="#peat-dryness-result">Peat &amp; climate</a>
+        <a href="#earth-ai-result">Predictive check</a>
+      </nav>
+      <ForestLossResultPanel result={phase3} />
+      <EnvironmentalConditionResultPanel result={phase2} />
+      <AlphaEarthPredictionPanel result={alphaEarth} />
+      <aside className="route-next-card">
+        <div>
+          <span className="eyebrow">Read the geography separately</span>
+          <strong>Maps provide descriptive context; they are not the fitted model surface.</strong>
+        </div>
+        <Link href="/explore">Open maps and comparisons →</Link>
+      </aside>
+    </>
+  );
+}
+
+export function MethodsReport({
+  data,
+  phase2,
+}: {
+  data: Pick<ExplorerData, "phase1b_readiness" | "provenance" | "ledger" | "generated_at_utc" | "limitations"> & {
+    display_status: Pick<ExplorerData["display_status"], "blocked_assets">;
+  };
+  phase2: Pick<Phase2EnvironmentalSummary, "primary">;
+}) {
+  return (
+    <>
+      <nav className="section-nav" aria-label="Method and source sections">
+        <span className="section-nav-label">On this page</span>
+        <a href="#methods-sources">Sources</a>
+        <a href="#validation-audit">Validation</a>
+        <a href="#provenance-heading">Provenance</a>
+        <a href="#claim-boundaries">Claim boundaries</a>
+      </nav>
+
+      <section id="methods-sources" aria-labelledby="methods-source-heading">
+        <div className="reading-section-intro compact-reading-intro">
+          <span className="eyebrow">Source inventory</span>
+          <div className="reading-heading-row">
+            <h2 id="methods-source-heading">Data sources represented in the research bundle</h2>
+            <AskResearchButton sectionId="methods-sources" />
+          </div>
+          <p>Source marks identify the provider for each evidence stream. They are attribution only, not endorsements, and availability does not make two sources directly comparable.</p>
+        </div>
+        <SourceStrip />
+      </section>
+
+      <div id="validation-audit">
+        <ConditionalPeatHypothesisPanel readiness={data.phase1b_readiness ?? null} result={phase2} />
+      </div>
 
       <section className="provenance-card" aria-labelledby="provenance-heading">
         <div className="section-heading">
@@ -428,32 +451,23 @@ export function EvidenceExplorer({ data, phase2, phase3 }: EvidenceExplorerProps
             </article>
           ))}
         </div>
+        <p className="provenance-timestamp">Public aggregate bundle generated {new Date(data.generated_at_utc).toLocaleString("en-GB", { dateStyle: "medium", timeStyle: "short", timeZone: "UTC" })} UTC.</p>
       </section>
 
-      <footer className="app-footer">
-        <span>Generated {new Date(data.generated_at_utc).toLocaleString("en-GB", { dateStyle: "medium", timeStyle: "short", timeZone: "UTC" })} UTC</span>
-        <button type="button" className="text-button" onClick={() => setLimitationsOpen(true)}>Evidence boundaries</button>
-      </footer>
-
-      {limitationsOpen && (
-        <div className="dialog-backdrop" role="presentation" onMouseDown={() => setLimitationsOpen(false)}>
-          <section className="method-dialog" role="dialog" aria-modal="true" aria-labelledby="limitations-title" onMouseDown={(event) => event.stopPropagation()}>
-            <div className="dialog-heading">
-              <div>
-                <span className="eyebrow">Method guardrails</span>
-                <h2 id="limitations-title">What this explorer does not claim</h2>
-              </div>
-              <button type="button" className="close-button" onClick={() => setLimitationsOpen(false)} aria-label="Close evidence boundaries">×</button>
-            </div>
-            <ul>
-              {data.limitations.map((limitation) => <li key={limitation}>{publicReportLanguage(limitation)}</li>)}
-            </ul>
-            <p className="blocked-assets"><strong>Evidence groups not sufficient for attribution:</strong> {data.display_status.blocked_assets.join(", ")}.</p>
-            <button type="button" className="primary-button" onClick={() => setLimitationsOpen(false)}>I understand</button>
-          </section>
+      <section id="claim-boundaries" className="claim-boundary-card" aria-labelledby="claim-boundary-heading">
+        <div className="reading-heading-row">
+          <div>
+            <span className="eyebrow">Accountability boundary</span>
+            <h2 id="claim-boundary-heading">What the completed evidence does not establish</h2>
+          </div>
+          <AskResearchButton sectionId="methods-sources" />
         </div>
-      )}
-    </main>
+        <ul>
+          {data.limitations.map((limitation) => <li key={limitation}>{publicReportLanguage(limitation)}</li>)}
+        </ul>
+        <p className="blocked-assets"><strong>Evidence groups not sufficient for attribution:</strong> {data.display_status.blocked_assets.join(", ")}.</p>
+      </section>
+    </>
   );
 }
 
@@ -483,7 +497,10 @@ function PeatFireComparisonPanel({ comparison, latestGlobalFire }: { comparison:
             Read the province map first for the latest spatial context. The chart below is the completed-2024 scientific comparison. Peatland is a mapped baseline exposure area; each circle is a country-level aggregate of NASA MODIS active-fire detections. A coloured polygon or point is not a claim that the whole area burned, and these records are not a complete inventory of fires.
           </p>
         </div>
-        <span className="layer-key">Exploratory · not causal</span>
+        <div className="section-heading-actions">
+          <AskResearchButton sectionId="global-comparison" />
+          <span className="layer-key">Exploratory · not causal</span>
+        </div>
       </div>
       <GlobalFireGlobe comparison={comparison} latestGlobalFire={latestGlobalFire} />
       <div id="analysis-results" className="peat-fire-grid">
@@ -548,7 +565,10 @@ function EnvironmentalConditionResultPanel({ result }: { result: Phase2Environme
           <h2 id="peat-dryness-result-heading">Does drier peat show a stronger fire-detection gradient?</h2>
           <p>The primary model compares cells with ≥50% versus &lt;50% mapped peat extent inside exact daily 1:4 matched sets, while adjusting for rainfall, VPD, wind, vegetation, forest fraction, and soil moisture measured before detection.</p>
         </div>
-        <span className="layer-key phase2-status">Inconclusive result</span>
+        <div className="section-heading-actions">
+          <AskResearchButton sectionId="peat-dryness-result" />
+          <span className="layer-key phase2-status">Inconclusive result</span>
+        </div>
       </div>
 
       <div className="phase2-result-grid">
@@ -606,6 +626,76 @@ function EnvironmentalConditionResultPanel({ result }: { result: Phase2Environme
   );
 }
 
+function AlphaEarthPredictionPanel({ result }: { result: AlphaEarthPredictionSummary }) {
+  const percent = new Intl.NumberFormat("en-US", { style: "percent", maximumFractionDigits: 1 });
+  const explicit = result.models[0];
+  const combined = result.models[2];
+  return (
+    <section id="earth-ai-result" className="phase2-result-card" aria-labelledby="earth-ai-result-heading">
+      <div className="section-heading">
+        <div>
+          <span className="eyebrow">Predictive robustness · prior-year satellite context</span>
+          <h2 id="earth-ai-result-heading">Does Earth AI add information beyond named weather and land variables?</h2>
+          <p>Each 1-km cell receives a 64-dimensional AlphaEarth summary from the calendar year before its fire opportunity. The model was selected on 2018–2022 spatial folds, rehearsed on 2023, and evaluated once on locked 2024–2025 data.</p>
+        </div>
+        <div className="section-heading-actions">
+          <AskResearchButton sectionId="earth-ai-result" />
+          <span className="layer-key phase2-status">Locked test passed</span>
+        </div>
+      </div>
+
+      <div className="phase2-result-grid">
+        <article className="phase2-primary-result">
+          <span className="metric-label">Conditional log-loss improvement</span>
+          <strong className="phase2-or">{result.combined_improvement.conditional_log_loss.toFixed(3)}</strong>
+          <span className="phase2-ci">95% bootstrap interval {result.combined_improvement.ci95[0].toFixed(3)}–{result.combined_improvement.ci95[1].toFixed(3)}</span>
+          <p>{result.interpretation}</p>
+          <div className="phase2-plain-language">Lower log loss is better. The combined model ranked the true fire-positive cell more accurately, but an embedding dimension is not an identified physical or human mechanism.</div>
+        </article>
+
+        <div className="phase2-kpi-grid" aria-label="Prior-year AlphaEarth locked-test support">
+          <div><span>Locked sets</span><strong>{number.format(result.design.locked_test_matched_sets)}</strong></div>
+          <div><span>Explicit log loss</span><strong>{explicit.conditional_log_loss.toFixed(3)}</strong></div>
+          <div><span>Combined log loss</span><strong>{combined.conditional_log_loss.toFixed(3)}</strong></div>
+          <div><span>Explicit top-1</span><strong>{percent.format(explicit.top1_recall)}</strong></div>
+          <div><span>Combined top-1</span><strong>{percent.format(combined.top1_recall)}</strong></div>
+          <div><span>Embedding years</span><strong>{result.design.embedding_years}</strong></div>
+        </div>
+      </div>
+
+      <div className="phase2-table-wrap">
+        <div>
+          <h3>Out-of-time model comparison</h3>
+          <p>The named-variable model remains visible so the opaque embedding is never presented without a transparent baseline.</p>
+        </div>
+        <div className="table-scroll">
+          <table>
+            <thead><tr><th>Model</th><th>Log loss ↓</th><th>Top-1</th><th>MRR</th></tr></thead>
+            <tbody>{result.models.map((row) => (
+              <tr key={row.label}>
+                <td>{row.label}</td>
+                <td>{row.conditional_log_loss.toFixed(3)}</td>
+                <td>{percent.format(row.top1_recall)}</td>
+                <td>{row.mean_reciprocal_rank.toFixed(3)}</td>
+              </tr>
+            ))}</tbody>
+          </table>
+        </div>
+      </div>
+
+      <details className="phase2-method">
+        <summary>Leakage safeguards and interpretation boundary</summary>
+        <ul>
+          <li>The embedding year is always event year minus one; same-year AlphaEarth and post-fire features failed the automated gate.</li>
+          <li>Spatial folds purge training sets that share a recurring cell with the held-out fold.</li>
+          <li>Source: <a href={result.source.documentation} target="_blank" rel="noreferrer">{result.source.name}</a>, {result.source.license}. {result.source.attribution}.</li>
+          <li>{result.guardrail}</li>
+        </ul>
+      </details>
+    </section>
+  );
+}
+
 function ForestLossResultPanel({ result }: { result: Phase3StatusSummary }) {
   const estimated = result.phase3_model_run && result.primary_result?.status === "estimated"
     ? result.primary_result.model
@@ -621,7 +711,10 @@ function ForestLossResultPanel({ result }: { result: Phase3StatusSummary }) {
           <h2 id="forest-loss-result-heading">Are fire-positive cells followed by mapped forest loss?</h2>
           <p>The registered comparison follows the same exact daily 1:4 sets into MapBiomas annual land cover. The primary outcome is loss of at least 10% of the forest still present before the index event, measured one year later.</p>
         </div>
-        <span className={`layer-key ${estimated ? "phase2-status" : "phase3-waiting"}`}>{estimated ? "Estimated association" : "Result unavailable"}</span>
+        <div className="section-heading-actions">
+          <AskResearchButton sectionId="forest-loss-result" />
+          <span className={`layer-key ${estimated ? "phase2-status" : "phase3-waiting"}`}>{estimated ? "Estimated association" : "Result unavailable"}</span>
+        </div>
       </div>
 
       <div className="phase2-result-grid">
@@ -718,7 +811,7 @@ function ForestLossResultPanel({ result }: { result: Phase3StatusSummary }) {
   );
 }
 
-function ConditionalPeatHypothesisPanel({ readiness, result }: { readiness: ExplorerData["phase1b_readiness"], result: Phase2EnvironmentalSummary }) {
+function ConditionalPeatHypothesisPanel({ readiness, result }: { readiness: ExplorerData["phase1b_readiness"], result: Pick<Phase2EnvironmentalSummary, "primary"> }) {
   const conditions = [
     ["Dry hydrology", "Low soil moisture or a low water table removes peat’s water protection."],
     ["Drainage pressure", "Canals and ditches can make peat dry, especially near disturbed edges."],

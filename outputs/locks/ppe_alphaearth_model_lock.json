@@ -1,0 +1,49 @@
+{
+  "schema_version": "ppe-alphaearth-model-lock/v1",
+  "algorithm_revision": "ppe-alphaearth-ridge-conditional-ablation-v1",
+  "frozen_at_utc": "2026-08-29T04:56:19.167482+00:00",
+  "status": "locked_test_accessed_once",
+  "development_result_sha256": "6ee32adce2e3acb0d5f07f0fd83f155726f560a31c56a795850f7749b6844d33",
+  "selected_penalties": {
+    "explicit": 0.0,
+    "embedding_only": 0.1,
+    "combined": 0.1
+  },
+  "final_training_years": [
+    2018,
+    2019,
+    2020,
+    2021,
+    2022,
+    2023
+  ],
+  "locked_test_years": [
+    2024,
+    2025
+  ],
+  "provenance": {
+    "registration": {
+      "path": "config/ppe_alphaearth_registration.json",
+      "sha256": "1a561f0d3ee6a6f989a0c50a41b97c15450253e1cadc69391c9ae26a636cf2a6"
+    },
+    "feature_gate": {
+      "path": "outputs/quality/ppe_feature_gate.json",
+      "sha256": "da35bd3ba6a405bc45550e65ddf76eaaff965d0415a0191b2e31d218c5382633"
+    },
+    "opportunity_frame": {
+      "path": "data/derived/viirs/opportunity_frame.csv",
+      "sha256": "0112938dce8ee6a377b18812d26020566376c5f83047ef28d89432245da98936"
+    },
+    "alphaearth_embeddings": {
+      "path": "data/derived/ppe/alphaearth_prefire_embeddings_private.csv",
+      "sha256": "d78b99543fa277e5ceab52148ac63c2791483fca5a3771a324eb22a40cb32ce8"
+    },
+    "private_cell_index": {
+      "path": "data/derived/phase3/phase3_cell_centres_private.csv",
+      "sha256": "987abd0d71c4c4c5c5e9e2e73640639f83b6217e33ec758312c280622bcbd70a"
+    }
+  },
+  "locked_test_accessed": true,
+  "locked_test_accessed_at_utc": "2026-08-29T04:56:48.453690+00:00",
+  "locked_test_result_sha256": "d73169dc0eaf5b8071cfa1c04f69251d520847a017a2cf9ee9fab81d47731a3b"
+}

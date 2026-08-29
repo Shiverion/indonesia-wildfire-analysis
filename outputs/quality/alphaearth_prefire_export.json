@@ -1,0 +1,34 @@
+{
+  "schema_version": "alphaearth-prefire-export/v1",
+  "algorithm_revision": "alphaearth-prefire-polygon-mean-v1",
+  "updated_at_utc": "2026-08-29T05:01:56.176052+00:00",
+  "status": "complete",
+  "project": "susenas-project",
+  "collection": "GOOGLE/SATELLITE_EMBEDDING/V1/ANNUAL",
+  "scale_m": 100,
+  "registered_record_count": 20684,
+  "records_by_event_year": {
+    "2018": 4487,
+    "2019": 3300,
+    "2020": 1491,
+    "2021": 726,
+    "2022": 908,
+    "2023": 4619,
+    "2024": 2504,
+    "2025": 2649
+  },
+  "chunk_size": 250,
+  "chunk_count": 83,
+  "completed_chunks": 83,
+  "resumable": true,
+  "chunk_parts_retained_after_completion": false,
+  "registration_sha256": "1a561f0d3ee6a6f989a0c50a41b97c15450253e1cadc69391c9ae26a636cf2a6",
+  "feature_gate_sha256": "da35bd3ba6a405bc45550e65ddf76eaaff965d0415a0191b2e31d218c5382633",
+  "output": {
+    "path": "data/derived/ppe/alphaearth_prefire_embeddings_private.csv",
+    "size_bytes": 19828375,
+    "sha256": "d78b99543fa277e5ceab52148ac63c2791483fca5a3771a324eb22a40cb32ce8"
+  },
+  "row_level_values_recorded_in_receipt": false,
+  "coordinates_recorded_in_receipt": false
+}

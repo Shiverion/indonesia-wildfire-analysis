@@ -1,17 +1,24 @@
-import sourceData from "../data/evidence-explorer.json";
-import phase2Data from "../data/phase2-environmental.json";
-import phase3Data from "../data/phase3-status.json";
-import { EvidenceExplorer } from "../components/evidence-explorer";
-import type { ExplorerData, Phase2EnvironmentalSummary, Phase3StatusSummary } from "../lib/types";
+import type { Metadata } from "next";
+import { ReportIntroduction } from "../components/report-introduction";
+import { ReportShell } from "../components/report-shell";
+import { ResearchAssistantProvider } from "../components/research-assistant";
+
+export const metadata: Metadata = {
+  title: "Introduction · Indonesia Wildfire Evidence Report",
+  description: "Research questions, scope, and reading guide for an evidence-bounded investigation of wildfire, peat conditions, and land-cover change.",
+};
 
 export default function Home() {
-  // The build-time sync script validates the bundle before this generated JSON is imported.
-  // JSON imports cannot preserve tuple precision, so retain the checked app-facing type here.
   return (
-    <EvidenceExplorer
-      data={sourceData as unknown as ExplorerData}
-      phase2={phase2Data as unknown as Phase2EnvironmentalSummary}
-      phase3={phase3Data as unknown as Phase3StatusSummary}
-    />
+    <ResearchAssistantProvider initialSection="report-introduction">
+      <ReportShell
+        activePage="introduction"
+        pageLabel="Introduction · questions before results"
+        pageTitle="Why this research exists, and what it is designed to ask"
+        pageDescription="This opening page contains the research purpose, scope, and reading paths only. Statistical results, maps, and source audits live on their own pages so each kind of evidence can be read in the right context."
+      >
+        <ReportIntroduction />
+      </ReportShell>
+    </ResearchAssistantProvider>
   );
 }

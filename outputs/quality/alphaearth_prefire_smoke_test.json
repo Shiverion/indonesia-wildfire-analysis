@@ -1,0 +1,27 @@
+{
+  "schema_version": "alphaearth-prefire-smoke/v1",
+  "algorithm_revision": "alphaearth-prefire-polygon-mean-v1",
+  "generated_at_utc": "2026-08-29T04:42:28.392879+00:00",
+  "status": "pass",
+  "project": "susenas-project",
+  "collection": "GOOGLE/SATELLITE_EMBEDDING/V1/ANNUAL",
+  "scale_m": 100,
+  "record_count": 8,
+  "records_by_embedding_year": {
+    "2017": 1,
+    "2018": 1,
+    "2019": 1,
+    "2020": 1,
+    "2021": 1,
+    "2022": 1,
+    "2023": 1,
+    "2024": 1
+  },
+  "band_count": 64,
+  "minimum_normalized_l2_norm": 0.9999999999999997,
+  "maximum_normalized_l2_norm": 1.0000000000000002,
+  "all_years_equal_event_year_minus_one": true,
+  "duration_seconds": 2.35,
+  "row_level_values_recorded": false,
+  "coordinates_recorded": false
+}

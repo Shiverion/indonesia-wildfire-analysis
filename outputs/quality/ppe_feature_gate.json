@@ -1,0 +1,61 @@
+{
+  "schema_version": "ppe-feature-gate-audit/v1",
+  "ready": true,
+  "required_rejections": [],
+  "negative_controls_caught": true,
+  "candidates": [
+    {
+      "name": "chirps_antecedent_rainfall",
+      "decision": "pass",
+      "priority_score": 100.0,
+      "reasons": []
+    },
+    {
+      "name": "era5_land_fire_weather",
+      "decision": "pass",
+      "priority_score": 98.46,
+      "reasons": []
+    },
+    {
+      "name": "mod13q1_prefire_vegetation",
+      "decision": "pass",
+      "priority_score": 92.31,
+      "reasons": []
+    },
+    {
+      "name": "forest_fraction_and_peat_extent",
+      "decision": "pass",
+      "priority_score": 90.77,
+      "reasons": []
+    },
+    {
+      "name": "alphaearth_prior_calendar_year",
+      "decision": "pass",
+      "priority_score": 93.85,
+      "reasons": []
+    }
+  ],
+  "negative_controls": [
+    {
+      "name": "alphaearth_same_calendar_year",
+      "decision": "reject",
+      "priority_score": 93.85,
+      "reasons": [
+        "temporal relation 'same_calendar_year' is not allowed",
+        "feature is not available before the prediction cutoff"
+      ]
+    },
+    {
+      "name": "postfire_mapbiomas_transition",
+      "decision": "reject",
+      "priority_score": 90.77,
+      "reasons": [
+        "temporal relation 'post_event' is not allowed",
+        "feature is not available before the prediction cutoff",
+        "causal position 'downstream' is not eligible"
+      ]
+    }
+  ],
+  "generated_at_utc": "2026-08-29T04:38:42.553669+00:00",
+  "manifest": "C:\\Users\\miqba\\projects\\Indonesia Wildfire Analysis\\config\\ppe_feature_manifest.json"
+}

@@ -1,0 +1,50 @@
+{
+  "schema_version": "ppe-alphaearth-dashboard/v1",
+  "status": "locked_test_complete",
+  "title": "Prior-year Earth AI predictive check",
+  "source": {
+    "name": "Google Satellite Embedding / AlphaEarth Foundations",
+    "collection": "GOOGLE/SATELLITE_EMBEDDING/V1/ANNUAL",
+    "documentation": "https://developers.google.com/earth-engine/datasets/catalog/GOOGLE_SATELLITE_EMBEDDING_V1_ANNUAL",
+    "license": "CC-BY-4.0",
+    "attribution": "Google Satellite Embedding dataset, produced by Google"
+  },
+  "design": {
+    "embedding_year_rule": "event year minus one",
+    "embedding_years": "2017-2024",
+    "development_years": "2018-2022",
+    "rehearsal_years": "2023",
+    "locked_test_years": "2024-2025",
+    "locked_test_matched_sets": 1913,
+    "feature_gate_passed": true,
+    "same_year_embedding_rejected": true,
+    "postfire_features_rejected": true
+  },
+  "models": [
+    {
+      "label": "Explicit weather, vegetation, forest and peat",
+      "conditional_log_loss": 1.467054491386786,
+      "top1_recall": 0.3680083638264506,
+      "mean_reciprocal_rank": 0.6053232270430389
+    },
+    {
+      "label": "Prior-year Earth AI embedding only",
+      "conditional_log_loss": 1.2708339613511892,
+      "top1_recall": 0.45844223732357553,
+      "mean_reciprocal_rank": 0.6719114828367312
+    },
+    {
+      "label": "Combined",
+      "conditional_log_loss": 1.2664375457813453,
+      "top1_recall": 0.46680606377417666,
+      "mean_reciprocal_rank": 0.6772434221989894
+    }
+  ],
+  "combined_improvement": {
+    "conditional_log_loss": 0.20061694560544066,
+    "ci95": [0.17124489649441998, 0.23096153048940382],
+    "bootstrap_replicates": 1000
+  },
+  "interpretation": "Prior-year satellite embeddings add reproducible out-of-time ranking information beyond the explicit covariates in these matched Kalimantan cells.",
+  "guardrail": "This is predictive validation, not causal evidence about deliberate burning, plantations, actors, motives, government performance, or the mechanism represented by any embedding dimension."
+}

@@ -210,6 +210,7 @@ export function InteractiveGlobe({ mode, platform, periodLabel, isPartialSnapsho
   useEffect(() => {
     let cancelled = false;
     let resizeObserver: ResizeObserver | null = null;
+    let removeCanvasRecovery: (() => void) | null = null;
     async function startGlobe() {
       const host = hostRef.current;
       if (!host) return;
@@ -289,6 +290,7 @@ export function InteractiveGlobe({ mode, platform, periodLabel, isPartialSnapsho
         widget.screenSpaceEventHandler.setInputAction((movement: any) => {
           if (pointerDown && Cesium.Cartesian2.distance(pointerDown, movement.endPosition) > 5) dragged = true;
           if (pointerDown && dragged) {
+            host.style.cursor = "grabbing";
             setHoveredProvince((previous) => previous === null ? previous : null);
             return;
           }
@@ -303,10 +305,22 @@ export function InteractiveGlobe({ mode, platform, periodLabel, isPartialSnapsho
           pointerDown = null;
           dragged = false;
         }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
-        widget.screenSpaceEventHandler.setInputAction(() => {
+        widget.screenSpaceEventHandler.setInputAction((event: any) => {
           pointerDown = null;
+          const position = event?.position;
+          const province = position ? provinceAt(position) : null;
+          host.style.cursor = province ? "pointer" : "grab";
+          if (position) placeTooltip(position);
+          setHoveredProvince(province);
         }, Cesium.ScreenSpaceEventType.LEFT_UP);
-        scene.canvas.addEventListener("mouseleave", () => setHoveredProvince(null));
+        const recoverFromCanvasExit = () => {
+          pointerDown = null;
+          dragged = false;
+          host.style.cursor = "grab";
+          setHoveredProvince(null);
+        };
+        scene.canvas.addEventListener("mouseleave", recoverFromCanvasExit);
+        removeCanvasRecovery = () => scene.canvas.removeEventListener("mouseleave", recoverFromCanvasExit);
 
         resizeObserver = new ResizeObserver(() => scene.requestRender());
         resizeObserver.observe(host);
@@ -323,6 +337,7 @@ export function InteractiveGlobe({ mode, platform, periodLabel, isPartialSnapsho
     void startGlobe();
     return () => {
       cancelled = true;
+      removeCanvasRecovery?.();
       resizeObserver?.disconnect();
       const runtime = runtimeRef.current;
       runtimeRef.current = null;

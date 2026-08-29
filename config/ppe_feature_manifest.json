@@ -1,0 +1,129 @@
+{
+  "schema_version": "ppe-feature-manifest/v1",
+  "target": {
+    "name": "viirs_fire_positive_within_exact_daily_matched_set",
+    "source_family": "NASA_VIIRS_active_fire",
+    "prediction_cutoff": "start_of_event_day",
+    "allowed_temporal_relations": ["pre_event", "prior_calendar_year", "static_baseline"]
+  },
+  "gate": {
+    "minimum_priority_score": 70.0,
+    "priority_weights": {
+      "provenance_and_license": 5,
+      "spatiotemporal_fit": 3,
+      "signal_alignment": 3,
+      "format_quality": 1,
+      "nonredundancy": 1
+    },
+    "allowed_causal_positions": ["upstream", "baseline_state", "parallel_predictor"]
+  },
+  "candidates": [
+    {
+      "name": "chirps_antecedent_rainfall",
+      "required": true,
+      "source_family": "CHIRPS",
+      "provenance_url": "https://www.chc.ucsb.edu/data/chirps",
+      "license": "public_domain_with_attribution",
+      "temporal_relation": "pre_event",
+      "available_before_prediction_cutoff": true,
+      "minimum_lag_years": 0,
+      "mathematical_component_of_target": false,
+      "shared_data_generation_with_target": false,
+      "causal_position": "upstream",
+      "allowed_tasks": ["prediction", "association_adjustment"],
+      "priority_scores": {"provenance_and_license": 5, "spatiotemporal_fit": 5, "signal_alignment": 5, "format_quality": 5, "nonredundancy": 5}
+    },
+    {
+      "name": "era5_land_fire_weather",
+      "required": true,
+      "source_family": "ERA5_Land",
+      "provenance_url": "https://cds.climate.copernicus.eu/datasets/reanalysis-era5-land-timeseries",
+      "license": "Copernicus_License",
+      "temporal_relation": "pre_event",
+      "available_before_prediction_cutoff": true,
+      "minimum_lag_years": 0,
+      "mathematical_component_of_target": false,
+      "shared_data_generation_with_target": false,
+      "causal_position": "upstream",
+      "allowed_tasks": ["prediction", "association_adjustment"],
+      "priority_scores": {"provenance_and_license": 5, "spatiotemporal_fit": 5, "signal_alignment": 5, "format_quality": 5, "nonredundancy": 4}
+    },
+    {
+      "name": "mod13q1_prefire_vegetation",
+      "required": true,
+      "source_family": "NASA_MODIS_MOD13Q1",
+      "provenance_url": "https://lpdaac.usgs.gov/products/mod13q1v061/",
+      "license": "NASA_open_data",
+      "temporal_relation": "pre_event",
+      "available_before_prediction_cutoff": true,
+      "minimum_lag_years": 0,
+      "mathematical_component_of_target": false,
+      "shared_data_generation_with_target": false,
+      "causal_position": "baseline_state",
+      "allowed_tasks": ["prediction", "association_adjustment"],
+      "priority_scores": {"provenance_and_license": 5, "spatiotemporal_fit": 4, "signal_alignment": 5, "format_quality": 4, "nonredundancy": 4}
+    },
+    {
+      "name": "forest_fraction_and_peat_extent",
+      "required": true,
+      "source_family": "MapBiomas_and_global_peat_extent",
+      "provenance_url": "https://mapbiomas.org/en/project/",
+      "license": "source_specific_open_research_terms",
+      "temporal_relation": "static_baseline",
+      "available_before_prediction_cutoff": true,
+      "minimum_lag_years": 0,
+      "mathematical_component_of_target": false,
+      "shared_data_generation_with_target": false,
+      "causal_position": "baseline_state",
+      "allowed_tasks": ["prediction", "association_adjustment"],
+      "priority_scores": {"provenance_and_license": 4, "spatiotemporal_fit": 5, "signal_alignment": 5, "format_quality": 4, "nonredundancy": 5}
+    },
+    {
+      "name": "alphaearth_prior_calendar_year",
+      "required": true,
+      "source_family": "Google_AlphaEarth_Foundations",
+      "provenance_url": "https://developers.google.com/earth-engine/datasets/catalog/GOOGLE_SATELLITE_EMBEDDING_V1_ANNUAL",
+      "license": "CC-BY-4.0",
+      "temporal_relation": "prior_calendar_year",
+      "available_before_prediction_cutoff": true,
+      "minimum_lag_years": 1,
+      "mathematical_component_of_target": false,
+      "shared_data_generation_with_target": false,
+      "causal_position": "parallel_predictor",
+      "allowed_tasks": ["prediction_ablation_only"],
+      "priority_scores": {"provenance_and_license": 5, "spatiotemporal_fit": 5, "signal_alignment": 4, "format_quality": 5, "nonredundancy": 4}
+    }
+  ],
+  "negative_controls": [
+    {
+      "name": "alphaearth_same_calendar_year",
+      "required": false,
+      "source_family": "Google_AlphaEarth_Foundations",
+      "provenance_url": "https://developers.google.com/earth-engine/datasets/catalog/GOOGLE_SATELLITE_EMBEDDING_V1_ANNUAL",
+      "license": "CC-BY-4.0",
+      "temporal_relation": "same_calendar_year",
+      "available_before_prediction_cutoff": false,
+      "minimum_lag_years": 0,
+      "mathematical_component_of_target": false,
+      "shared_data_generation_with_target": false,
+      "causal_position": "parallel_predictor",
+      "allowed_tasks": [],
+      "priority_scores": {"provenance_and_license": 5, "spatiotemporal_fit": 5, "signal_alignment": 4, "format_quality": 5, "nonredundancy": 4}
+    },
+    {
+      "name": "postfire_mapbiomas_transition",
+      "required": false,
+      "source_family": "MapBiomas",
+      "provenance_url": "https://mapbiomas.org/en/project/",
+      "license": "source_specific_open_research_terms",
+      "temporal_relation": "post_event",
+      "available_before_prediction_cutoff": false,
+      "minimum_lag_years": 0,
+      "mathematical_component_of_target": false,
+      "shared_data_generation_with_target": false,
+      "causal_position": "downstream",
+      "allowed_tasks": [],
+      "priority_scores": {"provenance_and_license": 4, "spatiotemporal_fit": 5, "signal_alignment": 5, "format_quality": 4, "nonredundancy": 5}
+    }
+  ]
+}

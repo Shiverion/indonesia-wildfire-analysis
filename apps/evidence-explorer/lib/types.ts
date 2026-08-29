@@ -263,6 +263,43 @@ export interface Phase2EnvironmentalSummary {
   interpretation_guardrails: string[];
 }
 
+export interface AlphaEarthPredictionSummary {
+  schema_version: "ppe-alphaearth-dashboard/v1";
+  status: "locked_test_complete";
+  title: string;
+  source: {
+    name: string;
+    collection: string;
+    documentation: string;
+    license: string;
+    attribution: string;
+  };
+  design: {
+    embedding_year_rule: string;
+    embedding_years: string;
+    development_years: string;
+    rehearsal_years: string;
+    locked_test_years: string;
+    locked_test_matched_sets: number;
+    feature_gate_passed: boolean;
+    same_year_embedding_rejected: boolean;
+    postfire_features_rejected: boolean;
+  };
+  models: Array<{
+    label: string;
+    conditional_log_loss: number;
+    top1_recall: number;
+    mean_reciprocal_rank: number;
+  }>;
+  combined_improvement: {
+    conditional_log_loss: number;
+    ci95: [number, number];
+    bootstrap_replicates: number;
+  };
+  interpretation: string;
+  guardrail: string;
+}
+
 export interface Phase3StatusSummary {
   schema_version: "phase3-dashboard-status/v1";
   created_at_utc: string;

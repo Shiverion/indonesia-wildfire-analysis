@@ -145,6 +145,7 @@ export function GlobalFireGlobe({
   useEffect(() => {
     let cancelled = false;
     let resizeObserver: ResizeObserver | null = null;
+    let removeCanvasRecovery: (() => void) | null = null;
     async function start() {
       const host = hostRef.current;
       if (!host) return;
@@ -213,7 +214,8 @@ export function GlobalFireGlobe({
         }, Cesium.ScreenSpaceEventType.LEFT_DOWN);
         widget.screenSpaceEventHandler.setInputAction((movement: any) => {
           if (pointerDown && Cesium.Cartesian2.distance(pointerDown, movement.endPosition) > 5) dragged = true;
-          if (dragged) {
+          if (pointerDown && dragged) {
+            host.style.cursor = "grabbing";
             setHovered(null);
             return;
           }
@@ -228,8 +230,25 @@ export function GlobalFireGlobe({
           pointerDown = null;
           dragged = false;
         }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
-        widget.screenSpaceEventHandler.setInputAction(() => { pointerDown = null; }, Cesium.ScreenSpaceEventType.LEFT_UP);
-        scene.canvas.addEventListener("mouseleave", () => setHovered(null));
+        widget.screenSpaceEventHandler.setInputAction((event: any) => {
+          pointerDown = null;
+          const position = event?.position;
+          const country = position ? countryAt(position) : null;
+          host.style.cursor = country ? "pointer" : "grab";
+          if (position) placeTooltip(position);
+          setHovered(country);
+          // Keep `dragged` until LEFT_CLICK (or the next LEFT_DOWN) so a drag
+          // cannot accidentally pin a polygon. Hover is active again because
+          // pointerDown is now null.
+        }, Cesium.ScreenSpaceEventType.LEFT_UP);
+        const recoverFromCanvasExit = () => {
+          pointerDown = null;
+          dragged = false;
+          host.style.cursor = "grab";
+          setHovered(null);
+        };
+        scene.canvas.addEventListener("mouseleave", recoverFromCanvasExit);
+        removeCanvasRecovery = () => scene.canvas.removeEventListener("mouseleave", recoverFromCanvasExit);
         resizeObserver = new ResizeObserver(() => scene.requestRender());
         resizeObserver.observe(host);
         setRuntimeReady(true);
@@ -241,6 +260,7 @@ export function GlobalFireGlobe({
     void start();
     return () => {
       cancelled = true;
+      removeCanvasRecovery?.();
       resizeObserver?.disconnect();
       const runtime = runtimeRef.current;
       runtimeRef.current = null;
@@ -370,9 +390,10 @@ export function GlobalFireGlobe({
         </div>
         <div className="segmented-control" role="group" aria-label="Global map metric">
           {latestGlobalFire && <button type="button" className={metric === "fire_latest" ? "is-selected" : ""} onClick={() => setMetric("fire_latest")}>Latest NRT · {latestGlobalFire.snapshot_date}</button>}
-          <button type="button" className={metric === "fire_2024" ? "is-selected" : ""} onClick={() => setMetric("fire_2024")} disabled={geography === "indonesia_provinces"}>Completed 2024</button>
-          <button type="button" className={metric === "peat_share" ? "is-selected" : ""} onClick={() => setMetric("peat_share")} disabled={geography === "indonesia_provinces"}>Peatland share</button>
+          {geography === "countries" && <button type="button" className={metric === "fire_2024" ? "is-selected" : ""} onClick={() => setMetric("fire_2024")}>Completed 2024</button>}
+          {geography === "countries" && <button type="button" className={metric === "peat_share" ? "is-selected" : ""} onClick={() => setMetric("peat_share")}>Peatland share</button>}
         </div>
+        {geography === "indonesia_provinces" && <span className="metric-coverage-note">Province bundle: latest NRT only</span>}
         <label className="global-country-picker">
           <span className="field-label">{geography === "countries" ? "Jump to a matched country" : "Jump to an Indonesian province"}</span>
           <select value={selected ?? ""} onChange={(event) => selectFromPicker(event.target.value)}>

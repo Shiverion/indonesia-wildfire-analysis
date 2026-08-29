@@ -1,0 +1,191 @@
+{
+  "schema_version": "ppe-alphaearth-locked-test/v1",
+  "algorithm_revision": "ppe-alphaearth-ridge-conditional-ablation-v1",
+  "created_at_utc": "2026-08-29T04:56:48.390639+00:00",
+  "status": "locked_test_complete",
+  "claim_boundary": {
+    "allowed": [
+      "out-of-time predictive improvement",
+      "incremental information beyond explicit covariates",
+      "heterogeneity in prediction performance across spatial blocks"
+    ],
+    "prohibited": [
+      "causal attribution to government action, drought, peat drainage, or plantations",
+      "replacement of the registered Phase 2 effect estimates",
+      "use of an embedding value from the event year or a future year",
+      "publication of a nationwide risk surface before locked-test validation"
+    ]
+  },
+  "data_audit": {
+    "source_row_count": 42960,
+    "retained_row_count": 42960,
+    "retained_matched_set_count": 8592,
+    "embedding_incomplete_matched_set_count": 0,
+    "phase2_quality_exclusion": {
+      "rule": "exclude the entire matched set for a negative CHIRPS lag, EVI <= -9000, or non-finite required covariate",
+      "invalid_source_row_count": 1,
+      "excluded_matched_set_count": 1,
+      "excluded_row_count": 5,
+      "excluded_dates": [
+        "2015-08-11"
+      ],
+      "excluded_matched_set_ids": [
+        "2015-08-11:a7e2da558a2f0532154b"
+      ],
+      "imputed_value_count": 0
+    },
+    "standardization": {
+      "forest_fraction_z": {
+        "source": "forest_fraction",
+        "transform": "identity",
+        "direction": 1.0,
+        "mean": 0.9297705421105136,
+        "std": 0.09075936366205498
+      },
+      "log_chirps_precip_7d_z": {
+        "source": "chirps_precip_7d_mm",
+        "transform": "log1p",
+        "direction": 1.0,
+        "mean": 2.325155533455089,
+        "std": 1.5481949234391406
+      },
+      "log_chirps_precip_30d_z": {
+        "source": "chirps_precip_30d_mm",
+        "transform": "log1p",
+        "direction": 1.0,
+        "mean": 4.611919404098148,
+        "std": 0.9197560773780132
+      },
+      "evi_prefire_z": {
+        "source": "evi_prefire",
+        "transform": "identity",
+        "direction": 1.0,
+        "mean": 0.5551916852033524,
+        "std": 0.0740467993993715
+      },
+      "era5_vpd_72h_z": {
+        "source": "era5_vpd_mean_72h_kpa",
+        "transform": "identity",
+        "direction": 1.0,
+        "mean": 0.7393941967177067,
+        "std": 0.2957086169097693
+      },
+      "era5_wind_24h_z": {
+        "source": "era5_wind_max_24h_ms",
+        "transform": "identity",
+        "direction": 1.0,
+        "mean": 2.003087536659462,
+        "std": 0.8536110472773699
+      },
+      "rootzone_dryness_72h_z": {
+        "source": "era5_rootzone_soil_water_mean_72h",
+        "transform": "identity",
+        "direction": -1.0,
+        "mean": 0.3487094199112778,
+        "std": 0.07830267438430814
+      }
+    }
+  },
+  "models": {
+    "explicit": {
+      "family": "explicit",
+      "penalty": 0.0,
+      "feature_count": 9,
+      "training_matched_set_count": 6679,
+      "evaluation": {
+        "matched_set_count": 1913,
+        "conditional_log_loss": 1.467054491386786,
+        "top1_recall_tie_fractional": 0.3680083638264506,
+        "mean_reciprocal_rank": 0.6053232270430389
+      },
+      "overfit_diagnostics": {
+        "p_over_training_sets": 0.0013475071118430903,
+        "coefficient_l2_norm": 0.8214920459105562,
+        "iterations": 21,
+        "gradient_max_abs": 0.0010065985914362585
+      }
+    },
+    "embedding_only": {
+      "family": "embedding_only",
+      "penalty": 0.1,
+      "feature_count": 64,
+      "training_matched_set_count": 6679,
+      "evaluation": {
+        "matched_set_count": 1913,
+        "conditional_log_loss": 1.2708339613511892,
+        "top1_recall_tie_fractional": 0.45844223732357553,
+        "mean_reciprocal_rank": 0.6719114828367312
+      },
+      "overfit_diagnostics": {
+        "p_over_training_sets": 0.009582272795328643,
+        "coefficient_l2_norm": 36.25812485736329,
+        "iterations": 144,
+        "gradient_max_abs": 0.00020073527252034706
+      }
+    },
+    "combined": {
+      "family": "combined",
+      "penalty": 0.1,
+      "feature_count": 73,
+      "training_matched_set_count": 6679,
+      "evaluation": {
+        "matched_set_count": 1913,
+        "conditional_log_loss": 1.2664375457813453,
+        "top1_recall_tie_fractional": 0.46680606377417666,
+        "mean_reciprocal_rank": 0.6772434221989894
+      },
+      "overfit_diagnostics": {
+        "p_over_training_sets": 0.010929779907171732,
+        "coefficient_l2_norm": 36.371778147322566,
+        "iterations": 602,
+        "gradient_max_abs": 0.013661564414025702
+      }
+    }
+  },
+  "conditional_log_loss_improvement_vs_explicit": {
+    "embedding_only": {
+      "definition": "positive means lower conditional log loss than explicit covariates",
+      "observed_improvement": 0.19622053003559653,
+      "ci95_percentile": [
+        0.1660525001084588,
+        0.2275611174653013
+      ],
+      "replicates": 1000,
+      "seed": 20260829
+    },
+    "combined": {
+      "definition": "positive means lower conditional log loss than explicit covariates",
+      "observed_improvement": 0.20061694560544066,
+      "ci95_percentile": [
+        0.17124489649441998,
+        0.23096153048940382
+      ],
+      "replicates": 1000,
+      "seed": 20260829
+    }
+  },
+  "interpretation": "Predictive ablation only; no causal conclusion is licensed by this result.",
+  "provenance": {
+    "registration": {
+      "path": "config/ppe_alphaearth_registration.json",
+      "sha256": "1a561f0d3ee6a6f989a0c50a41b97c15450253e1cadc69391c9ae26a636cf2a6"
+    },
+    "feature_gate": {
+      "path": "outputs/quality/ppe_feature_gate.json",
+      "sha256": "da35bd3ba6a405bc45550e65ddf76eaaff965d0415a0191b2e31d218c5382633"
+    },
+    "opportunity_frame": {
+      "path": "data/derived/viirs/opportunity_frame.csv",
+      "sha256": "0112938dce8ee6a377b18812d26020566376c5f83047ef28d89432245da98936"
+    },
+    "alphaearth_embeddings": {
+      "path": "data/derived/ppe/alphaearth_prefire_embeddings_private.csv",
+      "sha256": "d78b99543fa277e5ceab52148ac63c2791483fca5a3771a324eb22a40cb32ce8"
+    },
+    "private_cell_index": {
+      "path": "data/derived/phase3/phase3_cell_centres_private.csv",
+      "sha256": "987abd0d71c4c4c5c5e9e2e73640639f83b6217e33ec758312c280622bcbd70a"
+    }
+  },
+  "model_lock_sha256_before_access": "e849caa4598f73e5c2b64a1e429564fb7884998b16c8fd1dba609cd73bbd6bf2"
+}

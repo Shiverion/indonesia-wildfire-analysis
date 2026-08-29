@@ -2,9 +2,13 @@
 
 Production: https://indonesia-wildfire-analysis.vercel.app
 
-This App Router implementation presents the research as one integrated, summary-first report: primary forest-loss association, peat/climate mechanism result, Indonesia and global spatial context, Kalimantan detail, and finally the full methods and source audit. It hosts two interactive, aggregate-only **real WGS84 globes** using CesiumJS with a locally served NASA Blue Marble Earth surface and frozen boundary geometry; the browser clicks actual aggregate reporting polygons, not illustrative dots.
+This App Router implementation presents one research report through a hybrid page structure. The introduction at `/` contains only the research purpose, questions, scope, and reading paths—no result cards, maps, or research data imports. Related evidence is grouped into `/findings` for fitted statistical and predictive results, `/explore` for Indonesia/global maps and Kalimantan detail, and `/methods` for sources, validation, provenance, and claim boundaries. Anchors are reserved for subsections within each page.
 
-It uses `output: "export"`, so `npm run build` produces a deployable static site in `out/`; the WebGL globe remains interactive in the browser.
+The exploration page hosts two interactive, aggregate-only **real WGS84 globes** using CesiumJS with a locally served NASA Blue Marble Earth surface and frozen boundary geometry; the browser clicks actual aggregate reporting polygons, not illustrative dots.
+
+The report also includes a server-side, evidence-bounded Kimi explanation layer. It is deliberately not a general chatbot: every request receives only one compact public evidence pack, answers require fact-ID citations, and the server rejects unknown citations or numbers before they reach the browser. Raw questions are not stored by the application and Kimi reasoning content is never exposed.
+
+The report interface and suggested questions use English consistently. Kimi follows the language of the reader's question, so an Indonesian question can still receive an Indonesian explanation without changing the report UI language.
 
 ## Run locally
 
@@ -16,19 +20,31 @@ npm run sync-globe-assets
 npm run dev
 ```
 
+For the optional research assistant, put `KIMI_API_KEY` in this app's `.env.local` or in the repository-root `.env`. The repository-root fallback is development-only; production reads the server environment. Never use `NEXT_PUBLIC_KIMI_API_KEY`. `KIMI_MODEL` defaults to `kimi-k2.5`.
+
 `npm run sync-globe-assets` downloads and freezes the approved source assets locally: the commit-pinned geoBoundaries IDN ADM1 simplified GeoJSON and NASA Blue Marble texture. It verifies the upstream boundary SHA-256, creates current-five and legacy-four geometry files, and records the source/license/transformation hashes in `public/geo/manifest.json`. The legacy Kalimantan Timur display feature is a topological union of current East and North Kalimantan and is never shown as two GWIS measurements.
 
-`npm run dev` and `npm run build` synchronize `../../outputs/evidence-explorer/evidence-explorer.json` first. The synchronization check refuses a bundle if it contains prohibited raw-location fields, raw SiPongi records, 2024 SiPongi records, a Phase 1-ready flag, or a conclusion other than `NI - Not identifiable`. It also writes an ignored local receipt with the source SHA-256. `npm run build` additionally verifies the frozen globe asset manifest and copies Cesium runtime assets for static hosting.
+`npm run dev` and `npm run build` synchronize `../../outputs/evidence-explorer/evidence-explorer.json` first. The synchronization check refuses a bundle if it contains prohibited raw-location fields, raw SiPongi records, 2024 SiPongi records, a Phase 1-ready flag, or a conclusion other than `NI - Not identifiable`. It also writes an ignored local receipt with the source SHA-256. `npm run build` additionally verifies the frozen globe asset manifest and copies Cesium runtime assets into `public/`.
 
-Generate the aggregate bundle with `python scripts/research.py build-explorer` at the repository root whenever the research snapshot changes. Use `npm run build` to export the app into `out/`, then serve that directory over HTTP; opening it with `file://` is not a supported preview.
+Generate the aggregate bundle with `python scripts/research.py build-explorer` at the repository root whenever the research snapshot changes. Use `npm run build` to create the production Next.js application, then `npm run start` for a local production preview. Opening generated files with `file://` is not supported.
 
-The app does not call a live data API, expose raw SiPongi locations, or convert the blocked primary analysis into a causal/risk result. It has no Cesium Ion token, default Ion imagery, terrain stream, or external tile feed at runtime.
+The globes do not call a live data API, expose raw SiPongi locations, or convert a descriptive layer into a causal/risk result. The Kimi route receives only compact coordinate-free statements from `lib/research-corpus.ts`; it has no retrieval path to local raw data. The app has no Cesium Ion token, default Ion imagery, terrain stream, or external tile feed at runtime.
+
+### Assistant accountability contract
+
+- The API key remains server-only. The browser calls `/api/research-chat`, never Moonshot directly.
+- A deterministic preflight rejects unrelated questions and requests for prompts, secrets, reasoning, raw records, or private coordinates before Kimi is called.
+- Kimi runs in thinking mode but only structured final JSON is processed; `reasoning_content` is discarded on the server.
+- A post-model validator checks status, citation IDs, and every displayed numeric token against the selected evidence pack. Invalid output becomes the bounded fallback: “This research has not conducted enough analysis to answer that question.”
+- Each displayed answer includes a receipt with the model, prompt and corpus versions, cited evidence IDs, validator result, latency, and a statement that this application did not store the raw question. The question and selected evidence pack are still processed by Moonshot's API and remain subject to the provider's applicable data terms.
+- The route applies same-origin and browser fetch-metadata checks, an 8 KiB request-body ceiling, Unicode/control-character normalization, bounded model streaming, approved-host-only credential forwarding, a privacy-preserving per-instance rate limit, and a concurrency cap. Prompt-injection patterns are refused before model invocation; post-model checks also reject markup, unknown citations, unsupported numbers, and unsupported sensitive attribution claims.
+- The complete control inventory and the required cross-instance Vercel Firewall rule are documented in [SECURITY.md](SECURITY.md). The in-code limit is intentionally described as a fallback because serverless instances do not share memory.
 
 ## Deploy to Vercel
 
-Create a Vercel project from the GitHub repository and set **Root Directory** to `apps/evidence-explorer`. Keep the detected Next.js framework, or use the checked-in `vercel.json` (`npm ci`, `npm run build`, output `out`). The app is a static export with a client-side WebGL globe; it does not need a server runtime or API route. The checked-in browser bundle is aggregate-only and is used when the Vercel build cannot read the repository-level `outputs/` directory. Refresh it locally with `python scripts/research.py build-explorer` followed by `npm run build` before pushing a new evidence snapshot.
+Create a Vercel project from the GitHub repository and set **Root Directory** to `apps/evidence-explorer`. Keep the detected Next.js framework or use the checked-in `vercel.json` (`npm ci`, `npm run build`). Add `KIMI_API_KEY` as a server-side Vercel environment variable for Production and Preview; optionally add `KIMI_MODEL=kimi-k2.5`. Do not configure a custom output directory—the assistant requires the Next.js serverless route. The checked-in browser bundle is aggregate-only and is used when the Vercel build cannot read repository-level `outputs/`. Refresh it locally with `python scripts/research.py build-explorer` followed by `npm run build` before pushing a new evidence snapshot.
 
-The current export is about 19 MB, including Cesium runtime assets, a local Earth texture, and frozen country geometry. Raw FIRMS/VIIRS files, credentials, and source archives are not included. Vercel serves static output through its CDN; the globe still loads and interacts in the browser.
+The deployed app includes the compact report bundle, Cesium runtime assets, a local Earth texture, and frozen country geometry. Raw FIRMS/VIIRS files, credentials, private coordinates, and source archives are not included. Static assets are served through Vercel's CDN while only the bounded chat request uses a serverless function.
 
 ## Attribution
 

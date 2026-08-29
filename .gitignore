@@ -30,6 +30,8 @@ data/derived/viirs/opportunity_frame.csv
 # Keep only its coordinate-free hash/count receipt under version control.
 data/derived/phase3/phase3_cell_centres_private.csv
 data/derived/phase3/mapbiomas_c41_transition_summary_private.csv
+data/derived/ppe/alphaearth_prefire_embeddings_private.csv
+data/derived/ppe/alphaearth_chunks_private/
 
 # Local logs and generated analysis previews.
 outputs/quality/*.log

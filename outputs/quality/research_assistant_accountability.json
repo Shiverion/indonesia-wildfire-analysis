@@ -1,0 +1,51 @@
+{
+  "schema_version": "research-assistant-accountability/v1",
+  "created_on": "2026-08-29",
+  "status": "passed_local_production_validation",
+  "model_default": "kimi-k2.5",
+  "model_role": "interactive_explanation_only",
+  "prompt_version": "research-explainer/2026-08-29-v2",
+  "section_count": 7,
+  "input_controls": {
+    "same_origin_required_when_origin_present": true,
+    "maximum_question_characters": 600,
+    "maximum_history_messages": 4,
+    "restricted_system_and_private_data_requests_rejected": true,
+    "research_scope_preflight": true,
+    "best_effort_rate_limit_per_instance": "10 requests per 10 minutes per forwarded IP",
+    "maximum_concurrent_upstream_requests_per_instance": 2
+  },
+  "model_controls": {
+    "thinking_enabled": true,
+    "reasoning_content_exposed": false,
+    "web_or_tool_access": false,
+    "raw_research_data_retrieval": false,
+    "structured_output_required": true
+  },
+  "output_controls": {
+    "citation_id_whitelist": true,
+    "answered_response_requires_citation": true,
+    "numeric_token_grounding": true,
+    "invalid_output_fails_closed": true,
+    "bounded_fallback": "This research has not conducted enough analysis to answer that question."
+  },
+  "privacy_disclosure": {
+    "raw_question_stored_by_application": false,
+    "question_sent_to_moonshot_api": true,
+    "private_coordinates_sent": false,
+    "api_key_sent_to_browser": false
+  },
+  "verification": {
+    "typescript_check": "passed",
+    "nextjs_production_build": "passed",
+    "generated_javascript_syntax": "passed_19_chunks",
+    "static_browser_files_scanned": 22,
+    "api_key_value_static_hits": 0,
+    "api_key_name_static_hits": 0,
+    "production_root_http_status": 200,
+    "unrelated_question_preflight": "refused_without_model_call",
+    "grounded_research_answer": "passed_with_environment.primary_and_environment.interpretation",
+    "unsupported_actor_attribution": "bounded_refusal"
+  },
+  "deployment_note": "Vercel must use the Next.js framework output and define KIMI_API_KEY as a server-side environment variable. Durable shared rate limiting remains recommended before high-traffic public use."
+}
