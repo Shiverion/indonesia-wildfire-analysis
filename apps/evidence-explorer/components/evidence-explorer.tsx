@@ -535,9 +535,9 @@ function PeatFireComparisonPanel({ comparison, latestGlobalFire }: { comparison:
           <thead><tr><th>Definition</th><th>Adjusted RR</th><th>95% CI</th><th>p-value</th></tr></thead>
           <tbody>{comparison.threshold_sensitivity.map((row) => <tr key={row.threshold_percent}>
             <th scope="row">≥{row.threshold_percent}% peat extent</th>
-            <td>{row.fixed_effect_rate_ratio?.toFixed(2) ?? "Unknown"}</td>
-            <td>{row.fixed_effect_ci95 ? `${row.fixed_effect_ci95[0].toFixed(2)}–${row.fixed_effect_ci95[1].toFixed(2)}` : "Unknown"}</td>
-            <td>{row.fixed_effect_p_two_sided === null || row.fixed_effect_p_two_sided === undefined ? "Unknown" : row.fixed_effect_p_two_sided.toFixed(3)}</td>
+            <td data-label="Adjusted RR">{row.fixed_effect_rate_ratio?.toFixed(2) ?? "Unknown"}</td>
+            <td data-label="95% CI">{row.fixed_effect_ci95 ? `${row.fixed_effect_ci95[0].toFixed(2)}–${row.fixed_effect_ci95[1].toFixed(2)}` : "Unknown"}</td>
+            <td data-label="p-value">{row.fixed_effect_p_two_sided === null || row.fixed_effect_p_two_sided === undefined ? "Unknown" : row.fixed_effect_p_two_sided.toFixed(3)}</td>
           </tr>)}</tbody>
         </table>
       </div>
@@ -603,10 +603,10 @@ function EnvironmentalConditionResultPanel({ result }: { result: Phase2Environme
             <tbody>
               {result.sensitivities.map((row) => (
                 <tr key={row.label}>
-                  <td>{row.label}</td>
-                  <td>{decimal.format(row.odds_ratio)}</td>
-                  <td>{decimal.format(row.ci95[0])}–{decimal.format(row.ci95[1])}</td>
-                  <td>{row.p_two_sided.toFixed(3)}</td>
+                  <th scope="row">{row.label}</th>
+                  <td data-label="Interaction OR">{decimal.format(row.odds_ratio)}</td>
+                  <td data-label="95% CI">{decimal.format(row.ci95[0])}–{decimal.format(row.ci95[1])}</td>
+                  <td data-label="p">{row.p_two_sided.toFixed(3)}</td>
                 </tr>
               ))}
             </tbody>
@@ -673,10 +673,10 @@ function AlphaEarthPredictionPanel({ result }: { result: AlphaEarthPredictionSum
             <thead><tr><th>Model</th><th>Log loss ↓</th><th>Top-1</th><th>MRR</th></tr></thead>
             <tbody>{result.models.map((row) => (
               <tr key={row.label}>
-                <td>{row.label}</td>
-                <td>{row.conditional_log_loss.toFixed(3)}</td>
-                <td>{percent.format(row.top1_recall)}</td>
-                <td>{row.mean_reciprocal_rank.toFixed(3)}</td>
+                <th scope="row">{row.label}</th>
+                <td data-label="Log loss ↓">{row.conditional_log_loss.toFixed(3)}</td>
+                <td data-label="Top-1">{percent.format(row.top1_recall)}</td>
+                <td data-label="MRR">{row.mean_reciprocal_rank.toFixed(3)}</td>
               </tr>
             ))}</tbody>
           </table>
@@ -771,9 +771,9 @@ function ForestLossResultPanel({ result }: { result: Phase3StatusSummary }) {
               <thead><tr><th>Definition</th><th>Adjusted difference</th><th>95% CI</th><th>p-value</th></tr></thead>
               <tbody>{result.sensitivity_results.map((row) => <tr key={row.label}>
                 <th scope="row">{row.label}</th>
-                <td>{row.estimate === undefined ? "—" : `${(row.estimate * 100).toFixed(2)} pp`}</td>
-                <td>{row.ci95 ? `${(row.ci95[0] * 100).toFixed(2)} to ${(row.ci95[1] * 100).toFixed(2)} pp` : "—"}</td>
-                <td>{formatPValue(row.p_two_sided)}</td>
+                <td data-label="Adjusted difference">{row.estimate === undefined ? "—" : `${(row.estimate * 100).toFixed(2)} pp`}</td>
+                <td data-label="95% CI">{row.ci95 ? `${(row.ci95[0] * 100).toFixed(2)} to ${(row.ci95[1] * 100).toFixed(2)} pp` : "—"}</td>
+                <td data-label="p-value">{formatPValue(row.p_two_sided)}</td>
               </tr>)}</tbody>
             </table>
           </div>
@@ -785,9 +785,9 @@ function ForestLossResultPanel({ result }: { result: Phase3StatusSummary }) {
               <thead><tr><th>Destination</th><th>Adjusted difference</th><th>95% CI</th><th>Holm p / support</th></tr></thead>
               <tbody>{result.destination_results.map((row) => <tr key={row.label}>
                 <th scope="row">{row.label}</th>
-                <td>{row.estimate === undefined ? "Not estimated" : `${(row.estimate * 100).toFixed(3)} pp`}</td>
-                <td>{row.ci95 ? `${(row.ci95[0] * 100).toFixed(3)} to ${(row.ci95[1] * 100).toFixed(3)} pp` : "—"}</td>
-                <td>{row.status === "estimated" ? formatPValue(row.p_holm ?? row.p_two_sided) : `${row.variation_matched_set_count ?? 0} varying sets`}</td>
+                <td data-label="Adjusted difference">{row.estimate === undefined ? "Not estimated" : `${(row.estimate * 100).toFixed(3)} pp`}</td>
+                <td data-label="95% CI">{row.ci95 ? `${(row.ci95[0] * 100).toFixed(3)} to ${(row.ci95[1] * 100).toFixed(3)} pp` : "—"}</td>
+                <td data-label="Holm p / support">{row.status === "estimated" ? formatPValue(row.p_holm ?? row.p_two_sided) : `${row.variation_matched_set_count ?? 0} varying sets`}</td>
               </tr>)}</tbody>
             </table>
           </div>

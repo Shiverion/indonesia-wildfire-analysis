@@ -12,10 +12,11 @@
     "commit_sha": "3a5b0930d60e2604039d2fb127845696a5175ab4",
     "project_root_directory": "apps/evidence-explorer"
   },
-  "production_alias": "https://indonesia-wildfire-analysis.vercel.app",
+  "production_alias": "https://fire-research.shiverion.com",
   "immutable_url": "https://indonesia-wildfire-analysis-q9y109azm-izzulhaq-iqbals-projects.vercel.app",
   "framework": "Next.js 16.3.1 static export",
   "http_verification": {
+    "verified_url": "https://fire-research.shiverion.com/",
     "status_code": 200,
     "content_type": "text/html; charset=utf-8",
     "content_length_bytes": 713530

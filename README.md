@@ -26,7 +26,7 @@ An auxiliary, offline visual companion is available at [outputs/evidence-explore
 
 The maintainable Next.js App Router version is in [apps/evidence-explorer](apps/evidence-explorer). It uses CesiumJS for a real WGS84 WebGL globe: a local NASA Blue Marble Earth surface plus frozen geoBoundaries ADM1 polygons are the actual clickable/hoverable geometry. The SiPongi current-five and GWIS legacy-four systems remain separate; legacy Kalimantan Timur is one documented topological union of current East and North Kalimantan, not two GWIS values. Run `npm install`, `npm run sync-globe-assets`, then `npm run dev` in that folder for local development; `npm run build` creates the production Next.js application. The build-time synchronizer accepts only the canonical aggregate bundle and refuses raw SiPongi records, sensitive location fields, and quarantined responses. The globe does not use Cesium Ion, live tile services, raw hotspot points, or a risk layer. An optional server-side Kimi K2.5 explainer is restricted to compact public evidence packs and validates citations and numeric claims before display; it has no retrieval access to the raw research archive.
 
-The coordinate-free production dashboard is live at [indonesia-wildfire-analysis.vercel.app](https://indonesia-wildfire-analysis.vercel.app). Vercel receives only the app directory and aggregate browser assets; the raw research archive, private coordinates, and local analysis inputs are not uploaded.
+The coordinate-free production dashboard is live at [fire-research.shiverion.com](https://fire-research.shiverion.com). Vercel receives only the app directory and aggregate browser assets; the raw research archive, private coordinates, and local analysis inputs are not uploaded.
 
 ## Run the pipeline
 

@@ -1,6 +1,6 @@
 # Indonesia Wildfire Evidence Report (Next.js)
 
-Production: https://indonesia-wildfire-analysis.vercel.app
+Production: https://fire-research.shiverion.com
 
 This App Router implementation presents one research report through a hybrid page structure. The introduction at `/` contains only the research purpose, questions, scope, and reading paths—no result cards, maps, or research data imports. Related evidence is grouped into `/findings` for fitted statistical and predictive results, `/explore` for Indonesia/global maps and Kalimantan detail, and `/methods` for sources, validation, provenance, and claim boundaries. Anchors are reserved for subsections within each page.
 
