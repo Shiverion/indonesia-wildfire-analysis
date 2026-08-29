@@ -44,7 +44,7 @@
   "commands": [
     {
       "command": [
-        "C:\\Users\\miqba\\projects\\Indonesia Wildfire Analysis\\publication\\.venv-check\\Scripts\\python.exe",
+        "python",
         "analysis/phase3_land_change.py",
         "--run-models"
       ],
@@ -54,7 +54,7 @@
     },
     {
       "command": [
-        "C:\\Users\\miqba\\projects\\Indonesia Wildfire Analysis\\publication\\.venv-check\\Scripts\\python.exe",
+        "python",
         "analysis/phase3_publication_robustness.py"
       ],
       "returncode": 0,
@@ -63,13 +63,13 @@
     },
     {
       "command": [
-        "C:\\Users\\miqba\\projects\\Indonesia Wildfire Analysis\\publication\\.venv-check\\Scripts\\python.exe",
+        "python",
         "-m",
         "pytest",
         "-q"
       ],
       "returncode": 0,
-      "stdout_tail": "........................................................................ [ 96%]\n...                                                                      [100%]\n============================== warnings summary ===============================\npublication\\.venv-check\\Lib\\site-packages\\matplotlib\\_fontconfig_pattern.py:64\n  C:\\Users\\miqba\\projects\\Indonesia Wildfire Analysis\\publication\\.venv-check\\Lib\\site-packages\\matplotlib\\_fontconfig_pattern.py:64: PyparsingDeprecationWarning: 'oneOf' deprecated - use 'one_of'\n    prop = Group((name + Suppress(\"=\") + comma_separated(value)) | oneOf(_CONSTANTS))\n\npublication\\.venv-check\\Lib\\site-packages\\matplotlib\\_fontconfig_pattern.py:85\npublication\\.venv-check\\Lib\\site-packages\\matplotlib\\_fontconfig_pattern.py:85\npublication\\.venv-check\\Lib\\site-packages\\matplotlib\\_fontconfig_pattern.py:85\npublication\\.venv-check\\Lib\\site-packages\\matplotlib\\_fontconfig_pattern.py:85\npublication\\.venv-check\\Lib\\site-packages\\matplotlib\\_fontconfig_pattern.py:85\npublication\\.venv-check\\Lib\\site-packages\\matplotlib\\_fontconfig_pattern.py:85\n  C:\\Users\\miqba\\projects\\Indonesia Wildfire Analysis\\publication\\.venv-check\\Lib\\site-packages\\matplotlib\\_fontconfig_pattern.py:85: PyparsingDeprecationWarning: 'parseString' deprecated - use 'parse_string'\n    parse = parser.parseString(pattern)\n\npublication\\.venv-check\\Lib\\site-packages\\matplotlib\\_fontconfig_pattern.py:89\npublication\\.venv-check\\Lib\\site-packages\\matplotlib\\_fontconfig_pattern.py:89\npublication\\.venv-check\\Lib\\site-packages\\matplotlib\\_fontconfig_pattern.py:89\npublication\\.venv-check\\Lib\\site-packages\\matplotlib\\_fontconfig_pattern.py:89\npublication\\.venv-check\\Lib\\site-packages\\matplotlib\\_fontconfig_pattern.py:89\npublication\\.venv-check\\Lib\\site-packages\\matplotlib\\_fontconfig_pattern.py:89\n  C:\\Users\\miqba\\projects\\Indonesia Wildfire Analysis\\publication\\.venv-check\\Lib\\site-packages\\matplotlib\\_fontconfig_pattern.py:89: PyparsingDeprecationWarning: 'resetCache' deprecated - use 'reset_cache'\n    parser.resetCache()\n\npublication\\.venv-check\\Lib\\site-packages\\matplotlib\\_mathtext.py:45\n  C:\\Users\\miqba\\projects\\Indonesia Wildfire Analysis\\publication\\.venv-check\\Lib\\site-packages\\matplotlib\\_mathtext.py:45: PyparsingDeprecationWarning: 'enablePackrat' deprecated - use 'enable_packrat'\n    ParserElement.enablePackrat()\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n75 passed, 14 warnings in 3.81s\n",
+      "stdout_tail": "........................................................................ [ 96%]\n...                                                                      [100%]\n============================== warnings summary ===============================\npublication\\.venv-check\\Lib\\site-packages\\matplotlib\\_fontconfig_pattern.py:64\n  <REPO_ROOT>\\publication\\.venv-check\\Lib\\site-packages\\matplotlib\\_fontconfig_pattern.py:64: PyparsingDeprecationWarning: 'oneOf' deprecated - use 'one_of'\n    prop = Group((name + Suppress(\"=\") + comma_separated(value)) | oneOf(_CONSTANTS))\n\npublication\\.venv-check\\Lib\\site-packages\\matplotlib\\_fontconfig_pattern.py:85\npublication\\.venv-check\\Lib\\site-packages\\matplotlib\\_fontconfig_pattern.py:85\npublication\\.venv-check\\Lib\\site-packages\\matplotlib\\_fontconfig_pattern.py:85\npublication\\.venv-check\\Lib\\site-packages\\matplotlib\\_fontconfig_pattern.py:85\npublication\\.venv-check\\Lib\\site-packages\\matplotlib\\_fontconfig_pattern.py:85\npublication\\.venv-check\\Lib\\site-packages\\matplotlib\\_fontconfig_pattern.py:85\n  <REPO_ROOT>\\publication\\.venv-check\\Lib\\site-packages\\matplotlib\\_fontconfig_pattern.py:85: PyparsingDeprecationWarning: 'parseString' deprecated - use 'parse_string'\n    parse = parser.parseString(pattern)\n\npublication\\.venv-check\\Lib\\site-packages\\matplotlib\\_fontconfig_pattern.py:89\npublication\\.venv-check\\Lib\\site-packages\\matplotlib\\_fontconfig_pattern.py:89\npublication\\.venv-check\\Lib\\site-packages\\matplotlib\\_fontconfig_pattern.py:89\npublication\\.venv-check\\Lib\\site-packages\\matplotlib\\_fontconfig_pattern.py:89\npublication\\.venv-check\\Lib\\site-packages\\matplotlib\\_fontconfig_pattern.py:89\npublication\\.venv-check\\Lib\\site-packages\\matplotlib\\_fontconfig_pattern.py:89\n  <REPO_ROOT>\\publication\\.venv-check\\Lib\\site-packages\\matplotlib\\_fontconfig_pattern.py:89: PyparsingDeprecationWarning: 'resetCache' deprecated - use 'reset_cache'\n    parser.resetCache()\n\npublication\\.venv-check\\Lib\\site-packages\\matplotlib\\_mathtext.py:45\n  <REPO_ROOT>\\publication\\.venv-check\\Lib\\site-packages\\matplotlib\\_mathtext.py:45: PyparsingDeprecationWarning: 'enablePackrat' deprecated - use 'enable_packrat'\n    ParserElement.enablePackrat()\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n75 passed, 14 warnings in 3.81s\n",
       "stderr_tail": ""
     }
   ],

@@ -15,12 +15,14 @@ from pathlib import Path
 from urllib.request import Request, urlopen
 
 from .enso import RoniRecord
+from .paths import logical_relative
 
 
 DEFAULT_GWIS_URL = (
     "https://effis-gwis-cms.s3.eu-west-1.amazonaws.com/apps/country.profile/"
     "GLOBFIRE_burned_area_full_dataset_2002_2024.zip"
 )
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
 
 # The GWIS download uses the older four-province GADM level-1 series.
 # Kalimantan Utara is not separate in this historical coding and is folded into
@@ -46,6 +48,14 @@ class GwisMonthlyRecord:
 
 def sha256_bytes(payload: bytes) -> str:
     return hashlib.sha256(payload).hexdigest()
+
+
+def _public_artifact_path(path: Path) -> str:
+    """Return stable provenance without publishing a workstation path."""
+    try:
+        return logical_relative(PROJECT_ROOT, path)
+    except ValueError:
+        return path.name
 
 
 def fetch_gwis(url: str = DEFAULT_GWIS_URL, timeout_seconds: int = 60) -> tuple[bytes, str]:
@@ -121,7 +131,7 @@ def write_gwis_artifacts(
     metadata = {
         "source_url": source_url,
         "retrieved_at_utc": retrieved_at.isoformat(),
-        "raw_path": str(raw_path),
+        "raw_path": _public_artifact_path(raw_path),
         "raw_sha256": sha256_bytes(payload),
         "record_count": len(rows),
         "years_present": [min(row.year for row in rows), max(row.year for row in rows)],

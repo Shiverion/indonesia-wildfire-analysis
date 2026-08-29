@@ -1,6 +1,6 @@
 {
   "schema_version": "publication-reproduction/v1",
-  "created_at_utc": "2026-08-28T06:44:09.448884+00:00",
+  "created_at_utc": "2026-08-29T21:40:08.898430+00:00",
   "python": "3.13.0 (tags/v3.13.0:60403a5, Oct  7 2024, 09:38:07) [MSC v.1941 64 bit (AMD64)]",
   "manifest": "publication/data/manifest.json",
   "input_checks": [
@@ -30,8 +30,8 @@
     },
     {
       "path": "DATA_LICENSE.md",
-      "expected_sha256": "f8726963a80456f0bf1e9e86c0961dc0262e7cbda774048e0716a88b4366a709",
-      "actual_sha256": "f8726963a80456f0bf1e9e86c0961dc0262e7cbda774048e0716a88b4366a709",
+      "expected_sha256": "74e75aeba5d81452b963dc3f511608d0b6444b0b74227db3a161485d7eed6523",
+      "actual_sha256": "74e75aeba5d81452b963dc3f511608d0b6444b0b74227db3a161485d7eed6523",
       "passed": true
     },
     {
@@ -44,7 +44,7 @@
   "commands": [
     {
       "command": [
-        "C:\\Users\\miqba\\AppData\\Local\\Programs\\Python\\Python313\\python.exe",
+        "python",
         "analysis/phase3_land_change.py",
         "--run-models"
       ],
@@ -54,7 +54,7 @@
     },
     {
       "command": [
-        "C:\\Users\\miqba\\AppData\\Local\\Programs\\Python\\Python313\\python.exe",
+        "python",
         "analysis/phase3_publication_robustness.py"
       ],
       "returncode": 0,
@@ -63,13 +63,13 @@
     },
     {
       "command": [
-        "C:\\Users\\miqba\\AppData\\Local\\Programs\\Python\\Python313\\python.exe",
+        "python",
         "-m",
         "pytest",
         "-q"
       ],
       "returncode": 0,
-      "stdout_tail": "........................................................................ [ 96%]\n...                                                                      [100%]\n75 passed in 4.93s\n",
+      "stdout_tail": "........................................................................ [ 80%]\n..................                                                       [100%]\n90 passed in 5.93s\n",
       "stderr_tail": ""
     },
     {
@@ -79,7 +79,7 @@
         "build"
       ],
       "returncode": 0,
-      "stdout_tail": "\n> kalimantan-fire-evidence-explorer@0.1.0 prebuild\n> node scripts/sync-data.mjs && node scripts/sync-global-geometry.mjs && node scripts/check-globe-assets.mjs && node scripts/copy-cesium-assets.mjs\n\nSynchronized aggregate bundle: C:\\Users\\miqba\\projects\\Indonesia Wildfire Analysis\\apps\\evidence-explorer\\data\\evidence-explorer.json (4bf6cd05d7711a8e493de2172d7be3ebdde3b4c8f44360fa6048ea15c11ae6db)\n{\n  \"destination\": \"C:\\\\Users\\\\miqba\\\\projects\\\\Indonesia Wildfire Analysis\\\\apps\\\\evidence-explorer\\\\public\\\\geo\\\\global-countries.geojson\",\n  \"feature_count\": 242,\n  \"sha256\": \"daf41000ae2924746ac6be56014ae7a07412ba1873d7d054dbc3f267846520cf\"\n}\nVerified frozen globe geometry and texture assets.\nCopied Cesium runtime assets into C:\\Users\\miqba\\projects\\Indonesia Wildfire Analysis\\apps\\evidence-explorer\\public\\cesium\\ for static export.\n\n> kalimantan-fire-evidence-explorer@0.1.0 build\n> next build\n\n\u00e2\u2013\u00b2 Next.js 16.3.1 (Turbopack)\n\u00e2\u0153\u201c Running next.config.mjs took 30ms\n\n  Creating an optimized production build ...\n\u00e2\u0153\u201c Compiled successfully in 638ms\n  Running TypeScript ...\n  Finished TypeScript in 2.4s ...\n  Collecting page data using 4 workers ...\n  Generating static pages using 4 workers (0/3) ...\n\u00e2\u0153\u201c Generating static pages using 4 workers (3/3) in 1142ms\n  Finalizing page optimization ...\n\nRoute (app)\n\u00e2\u201d\u0152 \u00e2\u2014\u2039 /\n\u00e2\u201d\u201d \u00e2\u2014\u2039 /_not-found\n\n\n\u00e2\u2014\u2039  (Static)  prerendered as static content\n\n",
+      "stdout_tail": "\n> kalimantan-fire-evidence-explorer@0.1.0 prebuild\n> node scripts/sync-data.mjs && node scripts/sync-global-geometry.mjs && node scripts/check-globe-assets.mjs && node scripts/copy-cesium-assets.mjs\n\nSynchronized aggregate bundle: <REPO_ROOT>\\apps\\evidence-explorer\\data\\evidence-explorer.json (8afb74a95f27aeadf35e960d6d247b96609be0b7b69d70f52a8e91ca75ad5379)\n{\n  \"destination\": \"<REPO_ROOT>\\\\apps\\\\evidence-explorer\\\\public\\\\geo\\\\global-countries.geojson\",\n  \"feature_count\": 242,\n  \"sha256\": \"daf41000ae2924746ac6be56014ae7a07412ba1873d7d054dbc3f267846520cf\"\n}\nVerified frozen globe geometry and texture assets.\nCopied Cesium runtime assets into <REPO_ROOT>\\apps\\evidence-explorer\\public\\cesium\\ for local and CDN serving.\n\n> kalimantan-fire-evidence-explorer@0.1.0 build\n> next build --webpack\n\nâ–² Next.js 16.3.1 (webpack)\nâœ“ Running next.config.mjs took 31ms\n\n  Creating an optimized production build ...\nâœ“ Compiled successfully in 2.9s\n  Running TypeScript ...\n  Finished TypeScript in 2.8s ...\n  Collecting page data using 8 workers ...\n  Generating static pages using 8 workers (0/6) ...\n  Generating static pages using 8 workers (1/6) \n  Generating static pages using 8 workers (2/6) \n  Generating static pages using 8 workers (4/6) \nâœ“ Generating static pages using 8 workers (6/6) in 1720ms\n  Finalizing page optimization ...\n  Collecting build traces ...\n\nRoute (app)\nâ”Œ â—‹ /\nâ”œ â—‹ /_not-found\nâ”œ Æ’ /api/research-chat\nâ”œ â—‹ /explore\nâ”œ â—‹ /findings\nâ”” â—‹ /methods\n\n\nâ—‹  (Static)   prerendered as static content\nÆ’  (Dynamic)  server-rendered on demand\n\n\n> kalimantan-fire-evidence-explorer@0.1.0 postbuild\n> node scripts/check-built-bundle-syntax.mjs\n\nValidated JavaScript syntax in 25 generated chunk(s).\n",
       "stderr_tail": ""
     }
   ],

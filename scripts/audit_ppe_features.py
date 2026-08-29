@@ -8,6 +8,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 from wildfire_research.feature_gate import audit_manifest
+from wildfire_research.paths import logical_relative
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
@@ -24,7 +25,7 @@ def main() -> int:
     manifest = json.loads(args.manifest.read_text(encoding="utf-8"))
     result = audit_manifest(manifest)
     result["generated_at_utc"] = datetime.now(timezone.utc).isoformat()
-    result["manifest"] = str(args.manifest.resolve())
+    result["manifest"] = logical_relative(PROJECT_ROOT, args.manifest)
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(result, indent=2) + "\n", encoding="utf-8")
 

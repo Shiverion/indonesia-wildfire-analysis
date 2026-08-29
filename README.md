@@ -28,6 +28,8 @@ The maintainable Next.js App Router version is in [apps/evidence-explorer](apps/
 
 The coordinate-free production dashboard is live at [fire-research.shiverion.com](https://fire-research.shiverion.com). Vercel receives only the app directory and aggregate browser assets; the raw research archive, private coordinates, and local analysis inputs are not uploaded.
 
+Security concerns should be reported privately according to [SECURITY.md](SECURITY.md). Code is MIT-licensed; datasets, maps, imagery, and source marks retain the separate terms documented in [DATA_LICENSE.md](DATA_LICENSE.md).
+
 ## Run the pipeline
 
 ```powershell

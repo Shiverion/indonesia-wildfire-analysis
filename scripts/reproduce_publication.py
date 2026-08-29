@@ -26,13 +26,32 @@ def sha256_file(path: Path) -> str:
     return digest.hexdigest()
 
 
+def sanitize_public_text(value: str) -> str:
+    """Remove workstation-specific prefixes from a tracked receipt field."""
+    replacements = (
+        (str(ROOT), "<REPO_ROOT>"),
+        (ROOT.as_posix(), "<REPO_ROOT>"),
+        (str(Path.home()), "<USER_HOME>"),
+        (Path.home().as_posix(), "<USER_HOME>"),
+        (sys.executable, "python"),
+    )
+    sanitized = value
+    for source, replacement in replacements:
+        sanitized = sanitized.replace(source, replacement)
+    return sanitized
+
+
+def public_command(command: list[str]) -> list[str]:
+    return ["python" if item == sys.executable else sanitize_public_text(item) for item in command]
+
+
 def run(command: list[str], cwd: Path = ROOT) -> dict:
     completed = subprocess.run(command, cwd=cwd, text=True, capture_output=True)
     result = {
-        "command": command,
+        "command": public_command(command),
         "returncode": completed.returncode,
-        "stdout_tail": completed.stdout[-4000:],
-        "stderr_tail": completed.stderr[-4000:],
+        "stdout_tail": sanitize_public_text(completed.stdout[-4000:]),
+        "stderr_tail": sanitize_public_text(completed.stderr[-4000:]),
     }
     if completed.returncode:
         raise RuntimeError(json.dumps(result, indent=2))

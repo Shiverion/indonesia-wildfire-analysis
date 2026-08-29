@@ -205,30 +205,31 @@ def verify_immutable_lock(root: Path, lock_path: Path) -> dict[str, Any]:
     """Verify an immutable lock against its current local input inventory."""
     root = root.resolve()
     lock_path = lock_path.resolve()
+    public_lock_path = logical_relative(root, lock_path)
     if not lock_path.exists():
-        return {"valid": False, "reason": "lock_missing", "lock_path": str(lock_path)}
+        return {"valid": False, "reason": "lock_missing", "lock_path": public_lock_path}
     try:
         lock = json.loads(lock_path.read_text(encoding="utf-8"))
     except json.JSONDecodeError as exc:
-        return {"valid": False, "reason": "lock_invalid_json", "detail": str(exc), "lock_path": str(lock_path)}
+        return {"valid": False, "reason": "lock_invalid_json", "detail": str(exc), "lock_path": public_lock_path}
     if lock.get("schema_version") != LOCK_SCHEMA_VERSION:
-        return {"valid": False, "reason": "unsupported_lock_schema", "lock_path": str(lock_path)}
+        return {"valid": False, "reason": "unsupported_lock_schema", "lock_path": public_lock_path}
 
     recorded_lock_hash = lock.get("lock_sha256")
     computed_lock_hash = _canonical_json_sha256({key: value for key, value in lock.items() if key != "lock_sha256"})
     if recorded_lock_hash != computed_lock_hash:
-        return {"valid": False, "reason": "lock_file_tampered", "lock_path": str(lock_path)}
+        return {"valid": False, "reason": "lock_file_tampered", "lock_path": public_lock_path}
     try:
         current = fingerprint_paths(root, lock["inputs"])
     except (FileNotFoundError, ValueError) as exc:
-        return {"valid": False, "reason": "locked_input_unavailable", "detail": str(exc), "lock_path": str(lock_path)}
+        return {"valid": False, "reason": "locked_input_unavailable", "detail": str(exc), "lock_path": public_lock_path}
 
     same_files = current["files"] == lock.get("files")
     same_inventory_hash = current["inventory_sha256"] == lock.get("inventory_sha256")
     return {
         "valid": same_files and same_inventory_hash,
         "reason": "valid" if same_files and same_inventory_hash else "locked_input_changed",
-        "lock_path": str(lock_path),
+        "lock_path": public_lock_path,
         "recorded_inventory_sha256": lock.get("inventory_sha256"),
         "current_inventory_sha256": current["inventory_sha256"],
         "recorded_file_count": lock.get("file_count"),

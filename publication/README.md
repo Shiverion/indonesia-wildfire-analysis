@@ -11,9 +11,11 @@ The statistical analysis and publication diagnostics are complete. The remaining
 ```powershell
 python scripts\build_publication_bundle.py
 python scripts\reproduce_publication.py --include-dashboard
+python scripts\sanitize_public_receipts.py
 ```
 
 The first command creates ignored local file `publication/release/phase3-analysis-data-v1.zip` and a tracked hash manifest. The second verifies every input, reruns Phase 3 and publication diagnostics, executes all tests, and builds the Next.js dashboard.
+The final command removes workstation-specific path prefixes from tracked quality receipts before a public commit; the test suite rejects their reintroduction.
 
 ## Claim boundary
 

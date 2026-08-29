@@ -12,8 +12,11 @@ from pathlib import Path
 from typing import Iterable
 from urllib.request import Request, urlopen
 
+from .paths import logical_relative
+
 
 DEFAULT_RONI_URL = "https://www.cpc.ncep.noaa.gov/data/indices/RONI.ascii.txt"
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
 
 _SEASON_END_MONTH = {
     "DJF": 2,
@@ -41,6 +44,14 @@ class RoniRecord:
 
 def sha256_bytes(payload: bytes) -> str:
     return hashlib.sha256(payload).hexdigest()
+
+
+def _public_artifact_path(path: Path) -> str:
+    """Return stable provenance without publishing a workstation path."""
+    try:
+        return logical_relative(PROJECT_ROOT, path)
+    except ValueError:
+        return path.name
 
 
 def parse_roni_text(text: str) -> list[RoniRecord]:
@@ -116,7 +127,7 @@ def write_roni_artifacts(
     metadata = {
         "source_url": source_url,
         "retrieved_at_utc": retrieved_at.isoformat(),
-        "raw_path": str(raw_path),
+        "raw_path": _public_artifact_path(raw_path),
         "raw_sha256": sha256_bytes(payload),
         "record_count": len(records),
         "first_complete_season_end": records[0].end_date.isoformat(),

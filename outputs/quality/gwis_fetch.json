@@ -1,7 +1,7 @@
 {
   "source_url": "https://effis-gwis-cms.s3.eu-west-1.amazonaws.com/apps/country.profile/GLOBFIRE_burned_area_full_dataset_2002_2024.zip",
   "retrieved_at_utc": "2026-08-20T13:25:34.975064+00:00",
-  "raw_path": "C:\\Users\\miqba\\projects\\Indonesia Wildfire Analysis\\data\\raw\\gwis\\GLOBFIRE_burned_area_full_dataset_2002_2024.zip",
+  "raw_path": "data/raw/gwis/GLOBFIRE_burned_area_full_dataset_2002_2024.zip",
   "raw_sha256": "58f57cdf5097e253b94b90ba06eb20bbb2c46665ba2575e8fc714815952129b7",
   "record_count": 476,
   "years_present": [

@@ -23,7 +23,7 @@
   "immutable_input_lock": {
     "valid": true,
     "reason": "valid",
-    "lock_path": "C:\\Users\\miqba\\projects\\Indonesia Wildfire Analysis\\outputs\\locks\\locked_test_inputs.json",
+    "lock_path": "outputs/locks/locked_test_inputs.json",
     "recorded_inventory_sha256": "4335b6a20b299f4ab930d86e34276bbf04fe8bcdcadb835b90999c431ec54e2f",
     "current_inventory_sha256": "4335b6a20b299f4ab930d86e34276bbf04fe8bcdcadb835b90999c431ec54e2f",
     "recorded_file_count": 34,
