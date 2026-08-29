@@ -6,6 +6,6 @@ matplotlib==3.9.2
 pyarrow==24.0.0
 rasterio==1.5.0
 pyproj==3.7.1
-geopandas==1.0.1
+geopandas==1.1.2
 earthengine-api==1.7.41
 pytest==9.0.3
