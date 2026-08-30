@@ -24,6 +24,7 @@ from scipy.stats import norm
 
 ROOT = Path(__file__).resolve().parents[1]
 REGISTRATION_PATH = ROOT / "config" / "phase3_registration.json"
+REPORTING_AMENDMENT_PATH = ROOT / "config" / "phase3_reporting_amendment_2026-08-30.json"
 LEGEND_PATH = ROOT / "config" / "mapbiomas_collection41_legend.json"
 PHASE1B_PATH = ROOT / "outputs" / "quality" / "phase1b_readiness.json"
 OPPORTUNITY_PATH = ROOT / "data" / "derived" / "viirs" / "opportunity_frame.csv"
@@ -577,6 +578,19 @@ def run_models(
         {"horizon": horizon, **estimate(horizon=horizon, threshold=0.10)}
         for horizon in (2, 3)
     ]
+    secondary_sensitivities = [
+        *threshold_sensitivities,
+        *horizon_sensitivities,
+    ]
+    estimated_sensitivities = [
+        item for item in secondary_sensitivities if item["status"] == "estimated"
+    ]
+    if estimated_sensitivities:
+        adjusted = holm_adjust(
+            [item["model"]["primary_term"]["p_two_sided"] for item in estimated_sensitivities]
+        )
+        for item, p_holm in zip(estimated_sensitivities, adjusted, strict=True):
+            item["model"]["primary_term"]["p_holm_secondary_family"] = p_holm
     destination_models = [
         {"destination": destination, **estimate(horizon=1, threshold=0.10, destination=destination)}
         for destination in DESTINATIONS
@@ -642,8 +656,8 @@ def render_markdown(result: dict[str, Any]) -> str:
                     "",
                     "## Registered robustness checks",
                     "",
-                    "| Analysis | Adjusted risk difference | 95% CI | p-value |",
-                    "|---|---:|---:|---:|",
+                    "| Analysis | Adjusted risk difference | 95% CI | Raw p | Holm p (4 secondary checks) |",
+                    "|---|---:|---:|---:|---:|",
                 ]
             )
             sensitivity_rows = [
@@ -657,12 +671,13 @@ def render_markdown(result: dict[str, Any]) -> str:
                 lines.append(
                     f"| {label} | {sensitivity_term['estimate'] * 100:.2f} pp | "
                     f"{sensitivity_term['ci95'][0] * 100:.2f} to {sensitivity_term['ci95'][1] * 100:.2f} pp | "
-                    f"{sensitivity_term['p_two_sided']:.3g} |"
+                    f"{sensitivity_term['p_two_sided']:.3g} | "
+                    f"{sensitivity_term['p_holm_secondary_family']:.3g} |"
                 )
             lines.extend(
                 [
                     "",
-                    "All four registered threshold/horizon checks remain positive. They support robustness of the temporal association but do not make it causal.",
+                    "All four registered threshold/horizon checks remain positive after a conservative Holm correction across the four secondary checks. The single registered primary test remains unadjusted, as frozen before outcome extraction. This reporting amendment was added after the multiplicity audit; it changes no estimate or model and does not make the association causal.",
                     "",
                     "## Exploratory destination classes",
                     "",
@@ -847,6 +862,12 @@ def build_result(*, prepare_private_cells: bool, run_model_flag: bool) -> dict[s
             "sha256": sha256_file(REGISTRATION_PATH),
             "state": registration["registration_state"],
         },
+        "reporting_amendment": {
+            "path": str(REPORTING_AMENDMENT_PATH.relative_to(ROOT)).replace("\\", "/"),
+            "sha256": sha256_file(REPORTING_AMENDMENT_PATH),
+            "status": "post_registration_reporting_clarification",
+            "changes_primary_estimand_or_model": False,
+        },
         "legend": {
             "path": str(LEGEND_PATH.relative_to(ROOT)).replace("\\", "/"),
             "sha256": sha256_file(LEGEND_PATH),
@@ -897,7 +918,7 @@ def browser_summary(result: dict[str, Any]) -> dict[str, Any]:
                     "estimate": term["estimate"],
                     "ci95": term["ci95"],
                     "p_two_sided": term["p_two_sided"],
-                    "p_holm": term.get("p_holm_destination_family"),
+                    "p_holm": term.get("p_holm_secondary_family", term.get("p_holm_destination_family")),
                 }
             )
         else:

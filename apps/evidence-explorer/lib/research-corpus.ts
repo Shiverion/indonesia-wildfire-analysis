@@ -16,6 +16,7 @@ import { RESEARCH_SECTIONS, type ResearchSectionId } from "./research-sections";
 const explorer = explorerSource as unknown as ExplorerData;
 const environmental = environmentalSource as unknown as Phase2EnvironmentalSummary;
 const forestLoss = forestLossSource as unknown as Phase3StatusSummary;
+const selectionSensitivity = forestLoss.publication_robustness?.attrition.selection_threshold_sensitivity;
 const alphaEarth = alphaEarthSource as unknown as AlphaEarthPredictionSummary;
 
 export interface ResearchFact {
@@ -98,6 +99,11 @@ const packs: Record<ResearchSectionId, ResearchEvidencePack> = {
         statement: "The fitted inferential analyses are restricted to matched baseline-natural-forest cells in Kalimantan. The Indonesia province map and world map are descriptive context and are not the fitted model domain.",
         sourceLabel: "Analysis scope and map guardrails",
       },
+      {
+        id: "summary.boundary",
+        statement: "The report cannot establish deliberate ignition, identify a person, company, owner, or beneficiary, measure legality or profit, evaluate government performance, or generalize the fitted Kalimantan associations to all of Indonesia or the world.",
+        sourceLabel: "Registered claim boundaries",
+      },
     ],
     limitations: commonClaimBoundaries,
   },
@@ -132,6 +138,28 @@ const packs: Record<ResearchSectionId, ResearchEvidencePack> = {
           ? `The pre-exposure negative-control difference was ${percentagePoint(forestLoss.publication_robustness.negative_control.estimate, 2)}, with 95% confidence interval ${percentagePoint(forestLoss.publication_robustness.negative_control.ci95[0], 2)} to ${percentagePoint(forestLoss.publication_robustness.negative_control.ci95[1], 2)}. This indicates pre-existing land-change trajectory or residual confounding and blocks a causal interpretation.`
           : "The pre-exposure negative-control diagnostic is unavailable.",
         sourceLabel: "Publication robustness diagnostics",
+      },
+      {
+        id: "forest.selection-sensitivity",
+        statement: selectionSensitivity
+          ? `A post-registration eligibility check varied the minimum pre-index natural-forest threshold from 50% to 80%. Across those four thresholds, matched-set counts ranged from ${Math.min(...selectionSensitivity.results.map((row) => row.matched_set_count)).toLocaleString("en-US")} to ${Math.max(...selectionSensitivity.results.map((row) => row.matched_set_count)).toLocaleString("en-US")}, and every adjusted risk-difference confidence interval remained above zero. This does not prove missing-at-random selection or eliminate transportability limits.`
+          : "The post-registration selection-threshold diagnostic is unavailable.",
+        sourceLabel: "Post-registration selection sensitivity",
+      },
+      {
+        id: "forest.multiplicity",
+        statement: "The registered primary forest-loss test retains its raw p-value. Four unique secondary threshold and follow-up checks are reported with raw p-values and a Holm correction across the four-test secondary family. This reporting clarification changed no estimate, eligibility rule, or fitted model.",
+        sourceLabel: "Phase 3 reporting amendment",
+      },
+      {
+        id: "forest.uncertainty",
+        statement: "The 95% confidence interval is an uncertainty range from the registered clustered model. Under repeated samples and the model assumptions, the interval procedure is designed to cover the target adjusted risk difference 95% of the time. It is not a 95% probability that this one realised interval contains the truth, and it does not address unmeasured confounding.",
+        sourceLabel: "Registered uncertainty interpretation",
+      },
+      {
+        id: "forest.boundary",
+        statement: "Temporal ordering and a positive association do not establish how a fire started or why. The design does not observe ignition source, intent, ownership, planting decisions, legality, or profit, and its positive pre-exposure negative control shows residual baseline differences between the groups.",
+        sourceLabel: "Forest-loss claim boundary",
       },
     ],
     limitations: [
@@ -181,7 +209,7 @@ const packs: Record<ResearchSectionId, ResearchEvidencePack> = {
       },
       {
         id: "alphaearth.design",
-        statement: `The embeddings cover ${alphaEarth.design.embedding_years}; every cell uses the calendar year before its fire opportunity. Same-year embeddings and post-fire features were rejected by the automated feature gate.`,
+        statement: `The embeddings cover ${alphaEarth.design.embedding_years}; every cell uses the calendar year before its fire opportunity. Same-year embeddings and post-fire features were rejected because they could contain information from the index-fire period or later, violating the prior-only prediction rule and creating temporal leakage.`,
         sourceLabel: "AlphaEarth leakage gate",
         sourceUrl: alphaEarth.source.documentation,
       },
@@ -227,6 +255,11 @@ const packs: Record<ResearchSectionId, ResearchEvidencePack> = {
         statement: "A coloured polygon represents an aggregate attached to a legal or reporting geometry. It does not mean the entire polygon burned. A FIRMS detection is a satellite thermal detection record, not a unique fire, burned-area polygon, ignition, or risk probability.",
         sourceLabel: "Map interpretation guardrail",
       },
+      {
+        id: "global.map-colors",
+        statement: "For Latest NRT, brighter or more saturated fire colors represent a higher aggregate count of positive FIRMS detection records, shown on a logarithmic display scale. For Completed 2024, the color represents MODIS detections per 1,000 square kilometres. For Peatland share, the color represents mapped peat area as a percentage of country area. The scale is capped at the 95th percentile for display, and hatched units mean no matched aggregate or unknown—not zero.",
+        sourceLabel: "Global globe legend and metric contract",
+      },
     ],
     limitations: [
       ...commonClaimBoundaries,
@@ -253,6 +286,11 @@ const packs: Record<ResearchSectionId, ResearchEvidencePack> = {
         id: "local.missingness",
         statement: "Missing, rejected, or incomplete source rows are rendered as unknown and are never replaced with zero. The map polygons are aggregate reporting units, not fire footprints.",
         sourceLabel: "Missingness and geometry safeguards",
+      },
+      {
+        id: "local.archive-gap",
+        statement: "SiPongi 2024 is absent because six provider responses failed geography validation and were quarantined. The trend must show a gap rather than connect 2023 to 2025 or render 2024 as zero. This local archive gap does not remove the separate NASA FIRMS MODIS completed-2024 country comparison.",
+        sourceLabel: "SiPongi 2024 quarantine audit",
       },
     ],
     limitations: commonClaimBoundaries,
@@ -286,8 +324,21 @@ const packs: Record<ResearchSectionId, ResearchEvidencePack> = {
   },
 };
 
+for (const section of Object.values(RESEARCH_SECTIONS)) {
+  const factIds = new Set(packs[section.id].facts.map((fact) => fact.id));
+  for (const suggestion of section.suggestions) {
+    if (!suggestion.expectedFactIds.length) {
+      throw new Error(`Suggested question has no evidence contract: ${section.id} / ${suggestion.question}`);
+    }
+    const missing = suggestion.expectedFactIds.filter((factId) => !factIds.has(factId));
+    if (missing.length) {
+      throw new Error(`Suggested question references unavailable facts: ${section.id} / ${missing.join(", ")}`);
+    }
+  }
+}
+
 const corpusMaterial = JSON.stringify(packs);
-export const RESEARCH_CORPUS_VERSION = `research-corpus/2026-08-29/${createHash("sha256").update(corpusMaterial).digest("hex").slice(0, 12)}`;
+export const RESEARCH_CORPUS_VERSION = `research-corpus/2026-08-30/${createHash("sha256").update(corpusMaterial).digest("hex").slice(0, 12)}`;
 
 export function getResearchEvidencePack(sectionId: ResearchSectionId): ResearchEvidencePack {
   return packs[sectionId];

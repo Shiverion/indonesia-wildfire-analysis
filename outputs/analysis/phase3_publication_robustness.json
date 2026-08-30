@@ -1,12 +1,12 @@
 {
   "schema_version": "phase3-publication-robustness/v1",
-  "created_at_utc": "2026-08-28T06:43:37.366334+00:00",
+  "created_at_utc": "2026-08-29T22:12:55.873194+00:00",
   "scope": {
     "geography": "Kalimantan",
     "generalization": "No Indonesia-wide or global inferential claim",
     "claim_type": "post-registration diagnostics and association sensitivities"
   },
-  "registered_primary_result_sha256": "3146175a0a845143d63990c985c2b56da6a01a10da6824dbe050ebc3ced94b51",
+  "registered_primary_result_sha256": "a5b047340fd942d902a51e8438e33e25d439bccefdc5a44e0cedbc5ac2e53dc5",
   "attrition": {
     "candidate_matched_set_count": 12178,
     "included_matched_set_count": 7138,
@@ -167,6 +167,63 @@
         "included_share": 0.5667293233082706
       }
     ]
+  },
+  "selection_threshold_sensitivity": {
+    "status": "post_registration_selection_sensitivity",
+    "dominant_exclusion_rule": "minimum immediately pre-index natural-forest fraction",
+    "registered_threshold": 0.7,
+    "results": [
+      {
+        "pre_index_minimum_natural_forest_fraction": 0.5,
+        "registered_primary_threshold": false,
+        "matched_set_count": 10774,
+        "excluded_matched_set_count": 1404,
+        "estimate": 0.05499917393453412,
+        "ci95": [
+          0.03939435226703239,
+          0.07060399560203585
+        ],
+        "p_two_sided": 4.91473423059255e-12
+      },
+      {
+        "pre_index_minimum_natural_forest_fraction": 0.6,
+        "registered_primary_threshold": false,
+        "matched_set_count": 9805,
+        "excluded_matched_set_count": 2373,
+        "estimate": 0.05079585160460453,
+        "ci95": [
+          0.035161996669024545,
+          0.06642970654018451
+        ],
+        "p_two_sided": 1.9123118314091297e-10
+      },
+      {
+        "pre_index_minimum_natural_forest_fraction": 0.7,
+        "registered_primary_threshold": true,
+        "matched_set_count": 7138,
+        "excluded_matched_set_count": 5040,
+        "estimate": 0.05887780947061065,
+        "ci95": [
+          0.045240263562408484,
+          0.07251535537881282
+        ],
+        "p_two_sided": 2.628977922662151e-17
+      },
+      {
+        "pre_index_minimum_natural_forest_fraction": 0.8,
+        "registered_primary_threshold": false,
+        "matched_set_count": 3861,
+        "excluded_matched_set_count": 8317,
+        "estimate": 0.0423000913148966,
+        "ci95": [
+          0.029470491002445132,
+          0.05512969162734807
+        ],
+        "p_two_sided": 1.0315246969346375e-10
+      }
+    ],
+    "direction_consistent_and_ci_excludes_zero": true,
+    "interpretation_rule": "Direction stability across these thresholds reduces concern that the sign is unique to the registered 70% cutoff. It cannot recover lower-forest cells excluded from every threshold, prove missing-at-random selection, or remove transportability and residual-confounding limits."
   },
   "influence": {
     "diagnostic": "matched-set score-norm influence screening",

@@ -1,6 +1,6 @@
 {
   "schema_version": "phase3-analysis-data-bundle/v1",
-  "created_at_utc": "2026-08-29T21:38:50.156682+00:00",
+  "created_at_utc": "2026-08-30T16:56:27.483881+00:00",
   "scope": "Coordinate-free inputs sufficient to reproduce the registered Kalimantan Phase 3 models and publication diagnostics.",
   "contains_coordinates": false,
   "contains_credentials": false,
@@ -374,6 +374,12 @@
       "source_path": "config/phase3_registration.json",
       "bytes": 5968,
       "sha256": "794715733692fc82574743c22ecd3e6f04028d978afa6ac93bd248b4519d46a2"
+    },
+    {
+      "archive_path": "config/phase3_reporting_amendment_2026-08-30.json",
+      "source_path": "config/phase3_reporting_amendment_2026-08-30.json",
+      "bytes": 1466,
+      "sha256": "5b513a4a803754adc8d5a90ef66276d10e61c5198f28587b12d94442b5bfd393"
     },
     {
       "archive_path": "config/mapbiomas_collection41_legend.json",

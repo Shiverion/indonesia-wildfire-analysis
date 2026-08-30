@@ -9,6 +9,7 @@ import pandas as pd
 from analysis.phase3_publication_robustness import (
     _standardized_mean_difference,
     attrition_audit,
+    eligibility_threshold_sensitivity,
     transition_mass_audit,
 )
 
@@ -88,3 +89,48 @@ def test_transition_mass_audit_detects_internal_imbalance() -> None:
     failed = transition_mass_audit(pd.DataFrame(row), registration)
     assert failed["status"] == "failed_internal_mass_balance"
     assert failed["count_above_1e_8"] == 1
+
+
+def test_selection_threshold_sensitivity_is_explicitly_post_registration(monkeypatch) -> None:
+    registration = {
+        "eligibility": {"pre_index_minimum_natural_forest_fraction": 0.70}
+    }
+
+    def fake_build(_opportunities, _transitions, amended, **_kwargs):
+        threshold = amended["eligibility"]["pre_index_minimum_natural_forest_fraction"]
+        return pd.DataFrame({"threshold": [threshold]}), {
+            "excluded_matched_set_count": int(1000 * threshold)
+        }
+
+    def fake_fit(frame, **_kwargs):
+        threshold = float(frame.iloc[0]["threshold"])
+        estimate = 0.08 - threshold * 0.04
+        return {
+            "matched_set_count": int(20_000 * (1 - threshold / 2)),
+            "primary_term": {
+                "estimate": estimate,
+                "ci95": [estimate - 0.01, estimate + 0.01],
+                "p_two_sided": 0.001,
+            },
+        }
+
+    monkeypatch.setattr(
+        "analysis.phase3_publication_robustness.phase3.build_horizon_frame",
+        fake_build,
+    )
+    monkeypatch.setattr(
+        "analysis.phase3_publication_robustness.phase3.fit_within_set_lpm",
+        fake_fit,
+    )
+    result = eligibility_threshold_sensitivity(
+        pd.DataFrame(), pd.DataFrame(), registration
+    )
+    assert result["status"] == "post_registration_selection_sensitivity"
+    assert [row["pre_index_minimum_natural_forest_fraction"] for row in result["results"]] == [
+        0.50,
+        0.60,
+        0.70,
+        0.80,
+    ]
+    assert sum(row["registered_primary_threshold"] for row in result["results"]) == 1
+    assert registration["eligibility"]["pre_index_minimum_natural_forest_fraction"] == 0.70

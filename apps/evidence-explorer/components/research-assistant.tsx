@@ -1,6 +1,7 @@
 "use client";
 
 import { createContext, useCallback, useContext, useEffect, useRef, useState, type FormEvent, type ReactNode } from "react";
+import { ASSISTANT_PRIVACY_NOTICE_VERSION, MOONSHOT_PRIVACY_URL } from "../lib/assistant-privacy";
 import { RESEARCH_SECTIONS, type ResearchSectionId } from "../lib/research-sections";
 
 interface Citation {
@@ -22,8 +23,10 @@ interface AuditReceipt {
   validator: string;
   token_usage: { prompt_tokens?: number; completion_tokens?: number; total_tokens?: number } | null;
   latency_ms: number;
+  privacy_notice_version: string;
   raw_question_stored_by_app: false;
   reasoning_exposed: false;
+  external_processor_called: boolean;
 }
 
 interface AssistantResponse {
@@ -70,6 +73,7 @@ export function ResearchAssistantProvider({ children, initialSection = "report-s
   const [messages, setMessages] = useState<ConversationItem[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [privacyNoticeAccepted, setPrivacyNoticeAccepted] = useState(false);
   const inputRef = useRef<HTMLTextAreaElement>(null);
 
   const openForSection = useCallback((sectionId: ResearchSectionId) => {
@@ -98,6 +102,13 @@ export function ResearchAssistantProvider({ children, initialSection = "report-s
   const ask = async (value: string) => {
     const normalized = value.trim();
     if (!normalized || loading) return;
+    const isCuratedSuggestion = section.suggestions.some(
+      (suggestion) => suggestion.question.toLowerCase() === normalized.toLowerCase(),
+    );
+    if (!isCuratedSuggestion && !privacyNoticeAccepted) {
+      setError("Review and accept the assistant privacy notice before sending a question.");
+      return;
+    }
     const userMessage: ConversationItem = { id: crypto.randomUUID(), role: "user", content: normalized };
     const priorMessages = messages.slice(-4).map((message) => ({ role: message.role, content: message.content }));
     setMessages((current) => [...current, userMessage]);
@@ -108,7 +119,13 @@ export function ResearchAssistantProvider({ children, initialSection = "report-s
       const response = await fetch("/api/research-chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ question: normalized, sectionId: currentSection, history: priorMessages }),
+        body: JSON.stringify({
+          question: normalized,
+          sectionId: currentSection,
+          history: priorMessages,
+          privacyNoticeAccepted,
+          privacyNoticeVersion: ASSISTANT_PRIVACY_NOTICE_VERSION,
+        }),
       });
       const payload = await response.json().catch(() => null) as AssistantResponse | { error?: string } | null;
       if (!response.ok || !payload || !("answer" in payload)) {
@@ -185,16 +202,33 @@ export function ResearchAssistantProvider({ children, initialSection = "report-s
           <small>Changing section clears the conversation so evidence cannot bleed across topics.</small>
         </div>
 
+        <div className="assistant-privacy-notice">
+          <strong>Before a free-form question is sent</strong>
+          <p>The curated suggestions below are answered locally from checked report facts and are not sent to Moonshot. Free-form questions, up to four recent chat messages, and this section&apos;s public evidence pack are processed by Moonshot&apos;s Kimi API. Moonshot may retain or use submitted content under its policy. Do not enter names, contact details, confidential information, or allegations about people or organizations.</p>
+          <label>
+            <input
+              type="checkbox"
+              checked={privacyNoticeAccepted}
+              onChange={(event) => {
+                setPrivacyNoticeAccepted(event.target.checked);
+                if (event.target.checked) setError(null);
+              }}
+            />
+            <span>I understand and want to use the optional AI explanation.</span>
+          </label>
+          <span className="assistant-privacy-links"><a href="/privacy">Read this site&apos;s privacy notice</a> · <a href={MOONSHOT_PRIVACY_URL} target="_blank" rel="noreferrer">Moonshot policy</a></span>
+        </div>
+
         <div className="assistant-conversation" aria-live="polite" aria-busy={loading}>
           {!messages.length && !loading && (
             <div className="assistant-empty-state">
               <AskIcon />
               <h2>Ask for an explanation, not a new conclusion.</h2>
-              <p>Kimi can restate and connect validated evidence in this section. It cannot browse, inspect raw coordinates, or fill research gaps. Answers follow the language of your question.</p>
+              <p>Curated suggestions return checked report facts locally. Free-form questions use Kimi to restate and connect validated evidence; it cannot browse, inspect raw coordinates, or fill research gaps.</p>
               <div className="assistant-suggestions" aria-label={`Suggested questions for ${section.shortTitle}`}>
                 <span className="assistant-suggestions-label">Suggested questions for <strong>{section.shortTitle}</strong></span>
                 {section.suggestions.map((suggestion) => (
-                  <button type="button" key={suggestion} onClick={() => void ask(suggestion)}>{suggestion}</button>
+                  <button type="button" key={suggestion.question} disabled={loading} onClick={() => void ask(suggestion.question)}>{suggestion.question}</button>
                 ))}
               </div>
             </div>
@@ -232,7 +266,9 @@ export function ResearchAssistantProvider({ children, initialSection = "report-s
                   <div><dt>Evidence</dt><dd>{message.response.audit.citation_ids.length || "bounded refusal"}</dd></div>
                   <div><dt>Latency</dt><dd>{(message.response.audit.latency_ms / 1000).toFixed(1)} s</dd></div>
                   <div><dt>Request</dt><dd>{message.response.audit.request_id.slice(0, 8)}</dd></div>
-                  <div><dt>Stored by this app</dt><dd>No</dd></div>
+                  <div><dt>Privacy notice</dt><dd>{message.response.audit.privacy_notice_version}</dd></div>
+                  <div><dt>Raw question retained by this app</dt><dd>No</dd></div>
+                  <div><dt>External processor</dt><dd>{message.response.audit.external_processor_called ? "Moonshot Kimi" : "None — curated locally"}</dd></div>
                 </dl>
               </details>
             </article>
@@ -262,14 +298,14 @@ export function ResearchAssistantProvider({ children, initialSection = "report-s
             rows={3}
             maxLength={600}
             placeholder="Ask what the evidence means…"
-            disabled={loading}
+            disabled={loading || !privacyNoticeAccepted}
           />
           <div className="assistant-composer-footer">
             <span>{question.length}/600</span>
-            <button type="submit" disabled={loading || !question.trim()}>Ask with evidence</button>
+            <button type="submit" disabled={loading || !privacyNoticeAccepted || !question.trim()}>Ask with evidence</button>
           </div>
         </form>
-        <p className="assistant-disclosure">Your question and the selected evidence pack are processed by Moonshot&apos;s Kimi API. This app does not add the question to the research dataset. Statistical outputs remain the source of record.</p>
+        <p className="assistant-disclosure">Curated suggestion answers stay within this app. Free-form questions use Moonshot as a separate processor. This application does not retain raw questions or add them to the research dataset. The chatbot is optional; statistical outputs remain the source of record.</p>
       </aside>
     </ResearchAssistantContext.Provider>
   );

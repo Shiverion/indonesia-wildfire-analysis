@@ -108,6 +108,7 @@ export function EvidenceExplorer({ data }: EvidenceExplorerProps) {
   const [platform, setPlatform] = useState("All platforms");
   const [sipongiPeriodView, setSipongiPeriodView] = useState<SipongiPeriodView>(currentSnapshot ? "partial_snapshot" : "archive");
   const [selectedProvince, setSelectedProvince] = useState<string | null>(null);
+  const sipongiExcludedYears = data.quality.sipongi.excluded_years ?? [];
 
   const availableYears = useMemo(() => sourceAvailableYears(data, mode), [data, mode]);
   const selectedYearIndex = Math.max(0, availableYears.indexOf(year));
@@ -243,6 +244,13 @@ export function EvidenceExplorer({ data }: EvidenceExplorerProps) {
           <strong>{modeLabel(mode)}</strong>
         </div>
       </section>
+
+      {mode === "sipongi" && sipongiExcludedYears.length > 0 && (
+        <aside className="source-gap-notice" role="note" aria-label="SiPongi archive gap">
+          <strong>{sipongiExcludedYears.join(", ")} unavailable — quarantined, not zero</strong>
+          <p>SiPongi responses for this year failed geography validation, so the archive leaves a visible gap and the trend line does not bridge it. The separate completed-2024 world comparison uses NASA FIRMS MODIS country aggregates, not SiPongi.</p>
+        </aside>
+      )}
 
       <section className="metric-grid" aria-label="Current context metrics">
         <article className="metric-card">
@@ -760,20 +768,33 @@ function ForestLossResultPanel({ result }: { result: Phase3StatusSummary }) {
                 The primary model retained {number.format(result.publication_robustness.attrition.included_matched_set_count)} of {number.format(result.publication_robustness.attrition.candidate_matched_set_count)} temporally eligible matched sets; {(result.publication_robustness.attrition.excluded_share * 100).toFixed(1)}% were excluded by complete forest/observation-support rules. Included and excluded locations differ materially, so the estimate applies to the retained Kalimantan analysis population.
               </p>
               <p>
+                A post-registration cutoff check retained a positive association from 50% through 80% minimum pre-index forest support. This reduces concern that the direction exists only at the registered 70% cutoff, but it cannot recover all excluded locations or remove selection bias.
+              </p>
+              <div className="selection-sensitivity-grid" aria-label="Pre-index forest eligibility sensitivity">
+                {result.publication_robustness.attrition.selection_threshold_sensitivity.results.map((row) => (
+                  <div key={row.pre_index_minimum_natural_forest_fraction}>
+                    <span>{(row.pre_index_minimum_natural_forest_fraction * 100).toFixed(0)}% forest{row.registered_primary_threshold ? " · registered" : ""}</span>
+                    <strong>{(row.estimate * 100).toFixed(2)} pp</strong>
+                    <small>{number.format(row.matched_set_count)} sets · 95% CI {(row.ci95[0] * 100).toFixed(2)} to {(row.ci95[1] * 100).toFixed(2)}</small>
+                  </div>
+                ))}
+              </div>
+              <p>
                 A pre-exposure negative-control interval was also positive: {(result.publication_robustness.negative_control.estimate * 100).toFixed(2)} pp (95% CI {(result.publication_robustness.negative_control.ci95[0] * 100).toFixed(2)} to {(result.publication_robustness.negative_control.ci95[1] * 100).toFixed(2)} pp). This signals pre-existing land-change trajectory or residual confounding. It does not erase temporal ordering, but it rules out a causal reading of the main estimate.
               </p>
             </div>
           )}
           <div className="phase2-table-wrap">
             <h3>Registered robustness checks</h3>
-            <p>The association remains positive at the 5%, 10%, and 20% loss definitions and at one-, two-, and three-year follow-up.</p>
+            <p>The single registered primary test keeps its raw p-value. The four unique secondary threshold and follow-up checks now also show a conservative Holm correction across that four-test family.</p>
             <table>
-              <thead><tr><th>Definition</th><th>Adjusted difference</th><th>95% CI</th><th>p-value</th></tr></thead>
+              <thead><tr><th>Definition</th><th>Adjusted difference</th><th>95% CI</th><th>Raw p</th><th>Holm p / role</th></tr></thead>
               <tbody>{result.sensitivity_results.map((row) => <tr key={row.label}>
                 <th scope="row">{row.label}</th>
                 <td data-label="Adjusted difference">{row.estimate === undefined ? "—" : `${(row.estimate * 100).toFixed(2)} pp`}</td>
                 <td data-label="95% CI">{row.ci95 ? `${(row.ci95[0] * 100).toFixed(2)} to ${(row.ci95[1] * 100).toFixed(2)} pp` : "—"}</td>
-                <td data-label="p-value">{formatPValue(row.p_two_sided)}</td>
+                <td data-label="Raw p">{formatPValue(row.p_two_sided)}</td>
+                <td data-label="Holm p / role">{row.label.includes("primary") ? "Primary · not adjusted" : formatPValue(row.p_holm ?? undefined)}</td>
               </tr>)}</tbody>
             </table>
           </div>
@@ -888,10 +909,14 @@ function AnnualContextChart({ data, mode, platform, selectedYear, onSelectYear }
     x: pad.left + ((entryYear - minYear) / Math.max(1, maxYear - minYear)) * (width - pad.left - pad.right),
     y: height - pad.bottom - (value / max) * (height - pad.top - pad.bottom),
   });
-  const polyline = rows.map((row) => {
-    const point = position(row.year, row.value);
-    return `${point.x},${point.y}`;
-  }).join(" ");
+  const excludedYears = mode === "sipongi" ? data.quality.sipongi.excluded_years ?? [] : [];
+  const rowSegments = rows.reduce<Array<typeof rows>>((segments, row) => {
+    const current = segments.at(-1);
+    const previous = current?.at(-1);
+    if (!current || (previous && row.year !== previous.year + 1)) segments.push([row]);
+    else current.push(row);
+    return segments;
+  }, []);
   const title = mode === "gwis"
     ? "GWIS aggregate context, 2002–2024"
     : `SiPongi completed-season context, ${minYear}–${maxYear}`;
@@ -908,7 +933,23 @@ function AnnualContextChart({ data, mode, platform, selectedYear, onSelectYear }
           const y = height - pad.bottom - fraction * (height - pad.top - pad.bottom);
           return <line key={fraction} x1={pad.left} x2={width - pad.right} y1={y} y2={y} className="chart-gridline" />;
         })}
-        <polyline points={polyline} className={mode === "gwis" ? "chart-line gwis-line" : "chart-line sipongi-line"} />
+        {rowSegments.map((segment) => (
+          <polyline
+            key={`${segment[0]?.year}-${segment.at(-1)?.year}`}
+            points={segment.map((row) => {
+              const point = position(row.year, row.value);
+              return `${point.x},${point.y}`;
+            }).join(" ")}
+            className={mode === "gwis" ? "chart-line gwis-line" : "chart-line sipongi-line"}
+          />
+        ))}
+        {excludedYears.filter((gapYear) => gapYear >= minYear && gapYear <= maxYear).map((gapYear) => {
+          const x = position(gapYear, 0).x;
+          return <g key={`gap-${gapYear}`} className="chart-gap-marker">
+            <line x1={x} x2={x} y1={pad.top} y2={height - pad.bottom} />
+            <text x={x} y={pad.top + 10} textAnchor="middle">{gapYear} missing</text>
+          </g>;
+        })}
         {rows.map((row) => {
           const point = position(row.year, row.value);
           return <g key={row.year} className="chart-point-group" onClick={() => onSelectYear(row.year)}>
@@ -920,7 +961,7 @@ function AnnualContextChart({ data, mode, platform, selectedYear, onSelectYear }
         <text x={width - pad.right} y={height - 8} textAnchor="end">{maxYear}</text>
         <text x={pad.left} y={pad.top - 4}>{compact.format(max)}</text>
       </svg>
-      <div className="chart-note"><span className="chart-swatch" /> Select a point to change the explorer year. RONI is shown in the accessible hover label only; the line metric is source-specific.</div>
+      <div className="chart-note"><span className="chart-swatch" /> Select a point to change the explorer year. {excludedYears.length ? `${excludedYears.join(", ")} is an explicit source gap, not a zero.` : ""} RONI is shown in the accessible hover label only; the line metric is source-specific.</div>
     </article>
   );
 }

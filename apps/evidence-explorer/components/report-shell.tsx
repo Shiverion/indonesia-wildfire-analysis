@@ -17,7 +17,7 @@ export function ReportShell({
   pageDescription,
   children,
 }: {
-  activePage: ReportPage;
+  activePage: ReportPage | "privacy";
   pageLabel: string;
   pageTitle: string;
   pageDescription: string;
@@ -65,6 +65,7 @@ export function ReportShell({
       <footer className="app-footer report-footer">
         <span>Indonesia Wildfire Evidence Report</span>
         <span>Associations and descriptive maps are not proof of cause, intent, ownership, or liability.</span>
+        <Link href="/privacy">Privacy &amp; AI processing</Link>
       </footer>
     </main>
   );

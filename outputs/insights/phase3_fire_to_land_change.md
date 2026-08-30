@@ -1,7 +1,7 @@
 # Phase 3 — Fire followed by land-cover change
 
 **Status:** completed phase3 association
-**Updated:** 2026-08-28T06:43:32.528097+00:00
+**Updated:** 2026-08-29T22:12:45.528830+00:00
 **Inferential geography:** Kalimantan. The Indonesia-wide map is descriptive context only.
 **Registered claim:** association only; not actor, intent, profit, legality, or government-performance attribution.
 
@@ -25,14 +25,14 @@ The primary Phase 3 model was estimated.
 
 ## Registered robustness checks
 
-| Analysis | Adjusted risk difference | 95% CI | p-value |
-|---|---:|---:|---:|
-| 5% loss threshold, one year | 10.78 pp | 9.07 to 12.49 pp | 4.56e-35 |
-| 20% loss threshold, one year | 2.76 pp | 1.74 to 3.77 pp | 1.02e-07 |
-| 10% loss threshold, two years | 5.93 pp | 4.26 to 7.59 pp | 3.13e-12 |
-| 10% loss threshold, three years | 6.10 pp | 4.42 to 7.78 pp | 1.19e-12 |
+| Analysis | Adjusted risk difference | 95% CI | Raw p | Holm p (4 secondary checks) |
+|---|---:|---:|---:|---:|
+| 5% loss threshold, one year | 10.78 pp | 9.07 to 12.49 pp | 4.56e-35 | 1.83e-34 |
+| 20% loss threshold, one year | 2.76 pp | 1.74 to 3.77 pp | 1.02e-07 | 1.02e-07 |
+| 10% loss threshold, two years | 5.93 pp | 4.26 to 7.59 pp | 3.13e-12 | 6.25e-12 |
+| 10% loss threshold, three years | 6.10 pp | 4.42 to 7.78 pp | 1.19e-12 | 3.58e-12 |
 
-All four registered threshold/horizon checks remain positive. They support robustness of the temporal association but do not make it causal.
+All four registered threshold/horizon checks remain positive after a conservative Holm correction across the four secondary checks. The single registered primary test remains unadjusted, as frozen before outcome extraction. This reporting amendment was added after the multiplicity audit; it changes no estimate or model and does not make the association causal.
 
 ## Exploratory destination classes
 

@@ -4,7 +4,7 @@ This directory contains the technical manuscript, supplement, final figures and 
 
 ## Current readiness
 
-The statistical analysis and publication diagnostics are complete. The remaining human/editorial fields before journal submission are verified author names, affiliations, contribution roles, acknowledgements/funding, conflict-of-interest statement, ethics statement if required by the target journal, target-journal formatting, and a permanent repository DOI.
+The statistical analysis and publication diagnostics are complete. A dated reporting amendment adds Holm correction across the four unique secondary threshold/follow-up checks and a post-registration 50%–80% forest-eligibility sensitivity; neither changes the frozen primary analysis. The remaining human/editorial fields before journal submission are verified author names, affiliations, contribution roles, acknowledgements/funding, conflict-of-interest statement, ethics statement if required by the target journal, target-journal formatting, and a permanent repository DOI.
 
 ## Build and reproduce
 

@@ -1,0 +1,55 @@
+{
+  "schema_version": "assistant-suggestion-audit/1.0",
+  "generated_at_utc": "2026-08-30T16:54:31Z",
+  "endpoint": "/api/research-chat",
+  "total_suggestions": 24,
+  "sections": 8,
+  "result": "passed",
+  "requirements": {
+    "nonempty_answer": true,
+    "known_fact_id_citations": true,
+    "numeric_grounding_validator": "passed",
+    "external_processor_called": false,
+    "privacy_acknowledgement_required": false,
+    "answer_source": "current contracted research facts"
+  },
+  "cases": [
+    {"section_id": "report-introduction", "question": "What questions does this report investigate?", "fact_ids": ["introduction.questions"]},
+    {"section_id": "report-introduction", "question": "How is this report organized?", "fact_ids": ["introduction.structure"]},
+    {"section_id": "report-introduction", "question": "Which claims are outside the research scope?", "fact_ids": ["introduction.boundary"]},
+    {"section_id": "report-summary", "question": "Explain the report summary in plain language.", "fact_ids": ["summary.forest-loss", "summary.peat-dryness", "summary.scope"]},
+    {"section_id": "report-summary", "question": "What are the main findings of this research?", "fact_ids": ["summary.forest-loss", "summary.peat-dryness", "summary.scope"]},
+    {"section_id": "report-summary", "question": "What cannot be concluded from this report?", "fact_ids": ["summary.boundary"]},
+    {"section_id": "forest-loss-result", "question": "Explain the forest-loss finding in plain language.", "fact_ids": ["forest.primary", "forest.unadjusted", "forest.negative-control"]},
+    {"section_id": "forest-loss-result", "question": "Why does this result not prove deliberate burning?", "fact_ids": ["forest.negative-control", "forest.boundary"]},
+    {"section_id": "forest-loss-result", "question": "What does the confidence interval mean for this estimate?", "fact_ids": ["forest.primary", "forest.uncertainty"]},
+    {"section_id": "peat-dryness-result", "question": "Explain the peat and climate finding in plain language.", "fact_ids": ["environment.primary", "environment.interpretation"]},
+    {"section_id": "peat-dryness-result", "question": "What does the inconclusive peat × dryness result mean?", "fact_ids": ["environment.primary", "environment.interpretation"]},
+    {"section_id": "peat-dryness-result", "question": "Which environmental variables were adjusted for?", "fact_ids": ["environment.adjustment"]},
+    {"section_id": "earth-ai-result", "question": "Explain the Earth AI robustness check in plain language.", "fact_ids": ["alphaearth.primary", "alphaearth.design", "alphaearth.boundary"]},
+    {"section_id": "earth-ai-result", "question": "What does AlphaEarth add to the model?", "fact_ids": ["alphaearth.primary", "alphaearth.boundary"]},
+    {"section_id": "earth-ai-result", "question": "Why were same-year embeddings not used?", "fact_ids": ["alphaearth.design"]},
+    {"section_id": "global-comparison", "question": "Explain how to read the Indonesia and global map.", "fact_ids": ["global.map-meaning", "global.map-colors", "global.province-availability"]},
+    {"section_id": "global-comparison", "question": "What exactly do the map colors represent?", "fact_ids": ["global.map-colors", "global.map-meaning"]},
+    {"section_id": "global-comparison", "question": "Does this comparison show that countries with more peat have more fire detections?", "fact_ids": ["global.peat-test", "global.map-meaning"]},
+    {"section_id": "local-layer", "question": "Explain the Kalimantan detail section in plain language.", "fact_ids": ["local.sipongi", "local.gwis", "local.missingness", "local.archive-gap"]},
+    {"section_id": "local-layer", "question": "How do SiPongi and GWIS differ in this section?", "fact_ids": ["local.sipongi", "local.gwis", "local.archive-gap"]},
+    {"section_id": "local-layer", "question": "Why is a hotspot record not the same as a unique fire?", "fact_ids": ["local.sipongi"]},
+    {"section_id": "methods-sources", "question": "Explain the methods and safeguards in plain language.", "fact_ids": ["methods.sources", "methods.provenance", "methods.missingness", "methods.assistant"]},
+    {"section_id": "methods-sources", "question": "Where do the research data come from?", "fact_ids": ["methods.sources"]},
+    {"section_id": "methods-sources", "question": "How are missing data handled?", "fact_ids": ["methods.missingness"]}
+  ],
+  "free_form_controls": {
+    "processor": "Moonshot Kimi",
+    "privacy_notice_version": "moonshot-disclosure/2026-08-30-v1",
+    "missing_acknowledgement_http_status": 428,
+    "stale_acknowledgement_http_status": 428,
+    "upstream_transient_retry_attempts": 3,
+    "bounded_failure": true
+  },
+  "notes": [
+    "The 24 cases were exercised through the live local Next.js API route in three fresh-instance batches to avoid consuming the public per-instance rate-limit budget.",
+    "Every case returned HTTP 200, status=answered, a nonempty answer, one or more contracted citations, validator=passed, model=curated_evidence_answer, and external_processor_called=false.",
+    "The audit records contract and validator outcomes, not raw visitor questions or model reasoning."
+  ]
+}

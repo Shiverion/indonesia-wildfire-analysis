@@ -1,6 +1,6 @@
 # Phase 3 publication robustness audit
 
-**Generated:** 2026-08-28T06:43:37.366334+00:00
+**Generated:** 2026-08-29T22:12:55.873194+00:00
 **Scope:** Kalimantan baseline-natural-forest cells only; all analyses are associations.
 
 ## Technical summary
@@ -12,6 +12,21 @@ The frozen primary estimate remains **5.89 percentage points** (95% CI 4.52 to 7
 Of 12,178 temporally eligible sets, 5,040 (41.4%) failed complete forest/observation support and 7,138 were analyzed. The maximum absolute included-versus-excluded standardized mean difference across audited case-row variables is 1.020. Variables above |0.10|: forest_fraction, peat_extent_percent, era5_wind_max_24h_ms, era5_rootzone_soil_water_mean_72h, pre_natural_fraction.
 
 The exclusion percentage is not hidden or treated as missing-at-random proof. Table S1 contains mean, median, and standardized differences, and the machine-readable receipt records non-exclusive exclusion reasons by year.
+
+### Post-registration selection-threshold sensitivity
+
+| Minimum pre-index forest | Matched sets | Adjusted difference | 95% CI |
+|---:|---:|---:|---:|
+| 50% | 10,774 | 5.50 pp | 3.94 to 7.06 pp |
+| 60% | 9,805 | 5.08 pp | 3.52 to 6.64 pp |
+| 70% (registered) | 7,138 | 5.89 pp | 4.52 to 7.25 pp |
+| 80% | 3,861 | 4.23 pp | 2.95 to 5.51 pp |
+
+The estimated direction remains positive and every interval excludes zero from the 50% through 80% thresholds. This post-registration check reduces concern that the sign exists only at the 70% cutoff. It does not recover all excluded locations, establish missing-at-random selection, or remove analysis-population and residual-confounding limits.
+
+## Multiplicity clarification
+
+The single frozen primary test retains its raw p-value. The table contains four unique secondary threshold/horizon checks; their raw p-values are retained and Holm-adjusted p-values are reported across that four-test family. This is a post-result reporting clarification documented in `config/phase3_reporting_amendment_2026-08-30.json`; no estimate, eligibility rule, or fitted model was changed.
 
 ## Influence and alternative estimators retain the direction
 

@@ -366,6 +366,21 @@ export interface Phase3StatusSummary {
       included_matched_set_count: number;
       excluded_share: number;
       maximum_absolute_standardized_mean_difference: number;
+      selection_threshold_sensitivity: {
+        status: "post_registration_selection_sensitivity";
+        registered_threshold: number;
+        direction_consistent_and_ci_excludes_zero: boolean;
+        interpretation_rule: string;
+        results: Array<{
+          pre_index_minimum_natural_forest_fraction: number;
+          registered_primary_threshold: boolean;
+          matched_set_count: number;
+          excluded_matched_set_count: number;
+          estimate: number;
+          ci95: [number, number];
+          p_two_sided: number;
+        }>;
+      };
     };
     negative_control: {
       matched_set_count: number;

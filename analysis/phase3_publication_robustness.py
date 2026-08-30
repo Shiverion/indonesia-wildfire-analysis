@@ -10,6 +10,7 @@ adjusted risk difference.
 
 from __future__ import annotations
 
+import copy
 import json
 import math
 import sys
@@ -182,6 +183,49 @@ def attrition_audit(candidate: pd.DataFrame, set_flags: pd.DataFrame) -> dict[st
             and abs(item["standardized_mean_difference"]) > 0.10
         ],
         "year_flow": years.to_dict("records"),
+    }
+
+
+def eligibility_threshold_sensitivity(
+    opportunities: pd.DataFrame,
+    transitions: pd.DataFrame,
+    registration: dict[str, Any],
+) -> dict[str, Any]:
+    """Probe the dominant support rule without replacing the frozen primary."""
+
+    rows: list[dict[str, Any]] = []
+    for threshold in (0.50, 0.60, 0.70, 0.80):
+        amended = copy.deepcopy(registration)
+        amended["eligibility"]["pre_index_minimum_natural_forest_fraction"] = threshold
+        frame, flow = phase3.build_horizon_frame(
+            opportunities,
+            transitions,
+            amended,
+            horizon=1,
+            threshold=0.10,
+        )
+        model = phase3.fit_within_set_lpm(frame, outcome_column="land_change_outcome")
+        term = model["primary_term"]
+        rows.append(
+            {
+                "pre_index_minimum_natural_forest_fraction": threshold,
+                "registered_primary_threshold": threshold == 0.70,
+                "matched_set_count": model["matched_set_count"],
+                "excluded_matched_set_count": flow["excluded_matched_set_count"],
+                "estimate": term["estimate"],
+                "ci95": term["ci95"],
+                "p_two_sided": term["p_two_sided"],
+            }
+        )
+    return {
+        "status": "post_registration_selection_sensitivity",
+        "dominant_exclusion_rule": "minimum immediately pre-index natural-forest fraction",
+        "registered_threshold": 0.70,
+        "results": rows,
+        "direction_consistent_and_ci_excludes_zero": all(
+            item["ci95"][0] > 0 for item in rows
+        ),
+        "interpretation_rule": "Direction stability across these thresholds reduces concern that the sign is unique to the registered 70% cutoff. It cannot recover lower-forest cells excluded from every threshold, prove missing-at-random selection, or remove transportability and residual-confounding limits.",
     }
 
 
@@ -476,7 +520,7 @@ def _effect_rows(registered_result: dict[str, Any]) -> list[dict[str, Any]]:
         ("≥10%, 3 years", models["horizon_sensitivities"][1]),
     ]
     rows = []
-    for label, item in sources:
+    for index, (label, item) in enumerate(sources):
         term = item["model"]["primary_term"]
         rows.append(
             {
@@ -486,6 +530,10 @@ def _effect_rows(registered_result: dict[str, Any]) -> list[dict[str, Any]]:
                 "ci95_low_pp": term["ci95"][0] * 100,
                 "ci95_high_pp": term["ci95"][1] * 100,
                 "p_two_sided": term["p_two_sided"],
+                "p_holm_secondary_family": term.get("p_holm_secondary_family"),
+                "multiplicity_role": "single_registered_primary_unadjusted"
+                if index == 0
+                else "secondary_holm_family_of_four",
             }
         )
     return rows
@@ -537,6 +585,26 @@ def write_tables(registered_result: dict[str, Any], robustness: dict[str, Any]) 
             }
         )
     pd.DataFrame(year_rows).to_csv(TABLE_ROOT / "table_s2_year_specific.csv", index=False)
+    threshold_rows = []
+    for item in robustness["selection_threshold_sensitivity"]["results"]:
+        threshold_rows.append(
+            {
+                "pre_index_minimum_natural_forest_percent": item[
+                    "pre_index_minimum_natural_forest_fraction"
+                ]
+                * 100,
+                "registered_primary_threshold": item["registered_primary_threshold"],
+                "matched_sets": item["matched_set_count"],
+                "excluded_matched_sets": item["excluded_matched_set_count"],
+                "adjusted_risk_difference_pp": item["estimate"] * 100,
+                "ci95_low_pp": item["ci95"][0] * 100,
+                "ci95_high_pp": item["ci95"][1] * 100,
+                "p_two_sided": item["p_two_sided"],
+            }
+        )
+    pd.DataFrame(threshold_rows).to_csv(
+        TABLE_ROOT / "table_s3_selection_threshold_sensitivity.csv", index=False
+    )
 
 
 def _save_figure(fig: plt.Figure, stem: str) -> None:
@@ -648,6 +716,9 @@ def update_browser_summary(robustness: dict[str, Any]) -> None:
             "maximum_absolute_standardized_mean_difference": robustness["attrition"][
                 "maximum_absolute_standardized_mean_difference"
             ],
+            "selection_threshold_sensitivity": robustness[
+                "selection_threshold_sensitivity"
+            ],
         },
         "negative_control": {
             "matched_set_count": negative["model"]["matched_set_count"],
@@ -684,6 +755,7 @@ def render_report(registered_result: dict[str, Any], robustness: dict[str, Any])
     post_minus_pre = placebo["common_support_post_minus_pre"]["binary_outcome_model"]["primary_term"]
     influence = robustness["influence"]["exclusion_sensitivities"]
     spatial = robustness["spatial_cluster_sensitivities"]
+    selection = robustness["selection_threshold_sensitivity"]
     lines = [
         "# Phase 3 publication robustness audit",
         "",
@@ -700,6 +772,24 @@ def render_report(registered_result: dict[str, Any], robustness: dict[str, Any])
         "",
         "The exclusion percentage is not hidden or treated as missing-at-random proof. Table S1 contains mean, median, and standardized differences, and the machine-readable receipt records non-exclusive exclusion reasons by year.",
         "",
+        "### Post-registration selection-threshold sensitivity",
+        "",
+        "| Minimum pre-index forest | Matched sets | Adjusted difference | 95% CI |",
+        "|---:|---:|---:|---:|",
+    ]
+    for item in selection["results"]:
+        registered = " (registered)" if item["registered_primary_threshold"] else ""
+        lines.append(
+            f"| {item['pre_index_minimum_natural_forest_fraction'] * 100:.0f}%{registered} | {item['matched_set_count']:,} | {item['estimate'] * 100:.2f} pp | {item['ci95'][0] * 100:.2f} to {item['ci95'][1] * 100:.2f} pp |"
+        )
+    lines.extend([
+        "",
+        "The estimated direction remains positive and every interval excludes zero from the 50% through 80% thresholds. This post-registration check reduces concern that the sign exists only at the 70% cutoff. It does not recover all excluded locations, establish missing-at-random selection, or remove analysis-population and residual-confounding limits.",
+        "",
+        "## Multiplicity clarification",
+        "",
+        "The single frozen primary test retains its raw p-value. The table contains four unique secondary threshold/horizon checks; their raw p-values are retained and Holm-adjusted p-values are reported across that four-test family. This is a post-result reporting clarification documented in `config/phase3_reporting_amendment_2026-08-30.json`; no estimate, eligibility rule, or fitted model was changed.",
+        "",
         "## Influence and alternative estimators retain the direction",
         "",
         f"After excluding the top 0.5% and 1% of matched sets by model score norm, adjusted estimates were {influence[0]['primary_term']['estimate'] * 100:.2f} and {influence[1]['primary_term']['estimate'] * 100:.2f} points. Conditional logistic regression produced an odds ratio of {conditional['odds_ratio']:.2f} (model-based 95% CI {conditional['ci95'][0]:.2f}–{conditional['ci95'][1]:.2f}); it is a scale sensitivity, not a replacement for the registered risk difference. The adjusted continuous loss-share difference was {continuous['primary_term']['estimate'] * 100:.2f} points.",
@@ -708,7 +798,7 @@ def render_report(registered_result: dict[str, Any], robustness: dict[str, Any])
         "",
         "| Spatial cluster | Estimate | 95% CI | p-value |",
         "|---|---:|---:|---:|",
-    ]
+    ])
     for item in spatial:
         lines.append(
             f"| {item['block_size_km']} km block + date | {item['estimate'] * 100:.2f} pp | {item['ci95'][0] * 100:.2f} to {item['ci95'][1] * 100:.2f} pp | {item['p_two_sided']:.3g} |"
@@ -762,6 +852,9 @@ def main() -> int:
         },
         "registered_primary_result_sha256": phase3.sha256_file(phase3.RESULT_PATH),
         "attrition": attrition_audit(candidate, set_flags),
+        "selection_threshold_sensitivity": eligibility_threshold_sensitivity(
+            opportunities, transitions, registration
+        ),
         "influence": influence_audit(primary_frame),
         "alternative_estimators": {
             "conditional_logit": conditional_logit_sensitivity(primary_frame),

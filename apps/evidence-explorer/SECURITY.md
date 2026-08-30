@@ -13,6 +13,9 @@ The research assistant is a public, evidence-bounded explanation endpoint. It is
 - Answers are rendered as React text, not HTML. Rejected output becomes a bounded “insufficient evidence” response.
 - The endpoint emits `no-store`, anti-sniffing, clickjacking, referrer, browser-permission, and opener-isolation headers. Raw questions and hidden reasoning are not logged.
 - A privacy-preserving per-instance fallback allows 10 requests per IP-derived hash per 10 minutes, exposes standard rate-limit headers, and caps concurrent model calls at two.
+- All 24 displayed suggestions have fixed fact-ID contracts and are answered locally from the current research corpus; they do not invoke Moonshot. The same deterministic citation and numeric validator checks their response before display.
+- The browser requires a just-in-time privacy acknowledgement before the first free-form question. The API independently requires the exact current notice version and returns HTTP 428 when it is missing or stale, so direct calls cannot bypass the acknowledgement contract.
+- The application does not retain raw questions. Free-form questions, up to four recent messages, and the selected public evidence pack are processed by Moonshot and remain subject to Moonshot's privacy and model-use terms. Visitors are warned not to submit personal, confidential, or allegation-bearing content.
 
 ## Required Vercel edge rule
 

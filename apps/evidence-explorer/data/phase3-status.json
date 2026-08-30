@@ -1,6 +1,6 @@
 {
   "schema_version": "phase3-dashboard-status/v1",
-  "created_at_utc": "2026-08-28T06:43:32.528097+00:00",
+  "created_at_utc": "2026-08-29T22:12:45.528830+00:00",
   "status": "completed_phase3_association",
   "phase3_ready": true,
   "phase3_model_run": true,
@@ -268,7 +268,7 @@
         0.1248919174966573
       ],
       "p_two_sided": 4.5629100959180154e-35,
-      "p_holm": null
+      "p_holm": 1.8251640383672061e-34
     },
     {
       "label": "\u226510% loss \u00b7 1 year (primary)",
@@ -292,7 +292,7 @@
         0.0377048301546753
       ],
       "p_two_sided": 1.0233081257748611e-07,
-      "p_holm": null
+      "p_holm": 1.0233081257748611e-07
     },
     {
       "label": "\u226510% loss \u00b7 2 years",
@@ -304,7 +304,7 @@
         0.0759091136544983
       ],
       "p_two_sided": 3.1255451445250605e-12,
-      "p_holm": null
+      "p_holm": 6.251090289050121e-12
     },
     {
       "label": "\u226510% loss \u00b7 3 years",
@@ -316,7 +316,7 @@
         0.07780915114655614
       ],
       "p_two_sided": 1.1936085757532225e-12,
-      "p_holm": null
+      "p_holm": 3.5808257272596674e-12
     }
   ],
   "destination_results": [
@@ -421,7 +421,64 @@
       "candidate_matched_set_count": 12178,
       "included_matched_set_count": 7138,
       "excluded_share": 0.41386106092954505,
-      "maximum_absolute_standardized_mean_difference": 1.0199174310052495
+      "maximum_absolute_standardized_mean_difference": 1.0199174310052495,
+      "selection_threshold_sensitivity": {
+        "status": "post_registration_selection_sensitivity",
+        "dominant_exclusion_rule": "minimum immediately pre-index natural-forest fraction",
+        "registered_threshold": 0.7,
+        "results": [
+          {
+            "pre_index_minimum_natural_forest_fraction": 0.5,
+            "registered_primary_threshold": false,
+            "matched_set_count": 10774,
+            "excluded_matched_set_count": 1404,
+            "estimate": 0.05499917393453412,
+            "ci95": [
+              0.03939435226703239,
+              0.07060399560203585
+            ],
+            "p_two_sided": 4.91473423059255e-12
+          },
+          {
+            "pre_index_minimum_natural_forest_fraction": 0.6,
+            "registered_primary_threshold": false,
+            "matched_set_count": 9805,
+            "excluded_matched_set_count": 2373,
+            "estimate": 0.05079585160460453,
+            "ci95": [
+              0.035161996669024545,
+              0.06642970654018451
+            ],
+            "p_two_sided": 1.9123118314091297e-10
+          },
+          {
+            "pre_index_minimum_natural_forest_fraction": 0.7,
+            "registered_primary_threshold": true,
+            "matched_set_count": 7138,
+            "excluded_matched_set_count": 5040,
+            "estimate": 0.05887780947061065,
+            "ci95": [
+              0.045240263562408484,
+              0.07251535537881282
+            ],
+            "p_two_sided": 2.628977922662151e-17
+          },
+          {
+            "pre_index_minimum_natural_forest_fraction": 0.8,
+            "registered_primary_threshold": false,
+            "matched_set_count": 3861,
+            "excluded_matched_set_count": 8317,
+            "estimate": 0.0423000913148966,
+            "ci95": [
+              0.029470491002445132,
+              0.05512969162734807
+            ],
+            "p_two_sided": 1.0315246969346375e-10
+          }
+        ],
+        "direction_consistent_and_ci_excludes_zero": true,
+        "interpretation_rule": "Direction stability across these thresholds reduces concern that the sign is unique to the registered 70% cutoff. It cannot recover lower-forest cells excluded from every threshold, prove missing-at-random selection, or remove transportability and residual-confounding limits."
+      }
     },
     "negative_control": {
       "matched_set_count": 3915,

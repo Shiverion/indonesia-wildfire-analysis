@@ -1,0 +1,31 @@
+{
+  "schema_version": "phase3-reporting-amendment/v1",
+  "dated": "2026-08-30",
+  "status": "post_registration_reporting_clarification",
+  "trigger": "Publication audit identified that raw p-values for four registered secondary threshold and follow-up checks could be read as unadjusted confirmatory evidence.",
+  "frozen_primary_preserved": {
+    "estimand_changed": false,
+    "eligibility_changed": false,
+    "model_changed": false,
+    "covariates_changed": false,
+    "primary_p_value_changed": false
+  },
+  "reporting_change": {
+    "secondary_family": [
+      "5 percent loss threshold at one year",
+      "20 percent loss threshold at one year",
+      "10 percent loss threshold at two years",
+      "10 percent loss threshold at three years"
+    ],
+    "correction": "Holm step-down correction across the four secondary checks",
+    "raw_p_values_retained": true,
+    "adjusted_p_values_added": true,
+    "rationale": "This is more conservative than leaving the related secondary checks unadjusted and does not promote them to primary tests."
+  },
+  "selection_diagnostic": {
+    "status": "post_registration_sensitivity",
+    "pre_index_forest_thresholds": [0.5, 0.6, 0.7, 0.8],
+    "registered_threshold": 0.7,
+    "interpretation": "The threshold analysis assesses whether the direction depends on the 70 percent support boundary. It cannot recover excluded low-forest cells, prove missing-at-random selection, or remove transportability limits."
+  }
+}

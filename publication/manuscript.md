@@ -28,7 +28,7 @@ Active-fire status came from NASA VIIRS VNP14A1/VNP14IMG science products, whose
 
 The exposure was index-day fire-positive status. The primary binary outcome equalled one when at least 10% of natural forest present in year *t*−1 transitioned to a non-natural-forest class by year *t*+1. Cells required at least 70% natural forest at the fixed 2014 baseline and immediately before the index year, and at least 95% observed pixels in both maps. If any member failed support, the entire matched set was removed. Missing or not-observed pixels were never set to zero.
 
-Pre-registered sensitivities used 5% and 20% loss thresholds and two- and three-year follow-up. Exploratory destinations were non-forest natural vegetation, rice paddy, oil palm, pulpwood plantation, other agriculture, mining, urban, other non-vegetated land, aquaculture, and water. Destination analyses required at least 200 complete sets and 50 outcome-varying sets and used Holm correction within the destination family.
+Pre-registered sensitivities used 5% and 20% loss thresholds and two- and three-year follow-up. Exploratory destinations were non-forest natural vegetation, rice paddy, oil palm, pulpwood plantation, other agriculture, mining, urban, other non-vegetated land, aquaculture, and water. Destination analyses required at least 200 complete sets and 50 outcome-varying sets and used Holm correction within the destination family. A post-result reporting audit added a conservative Holm correction across the four unique secondary threshold/follow-up checks while retaining their raw p-values. The single registered primary p-value remains unadjusted. This clarification is versioned in `config/phase3_reporting_amendment_2026-08-30.json` and changed no estimate, eligibility rule, or fitted model.
 
 ### 2.4 Statistical analysis
 
@@ -46,6 +46,8 @@ The registered configuration, analysis code, tests, machine-readable outputs, fi
 
 The locked frame contained 14,091 exact 1:4 sets. Of 12,178 sets in primary-eligible event years, 5,040 were excluded and 7,138 were analysed (35,690 observations; 11,758 unique cells). Pre-index forest below 70% affected 5,031 excluded sets; pre-map and follow-up observation support each affected 11, and one set contained a negative CHIRPS sentinel. Reasons were non-exclusive. Selection was material: the largest included-versus-excluded standardized mean difference was 1.02 for immediately pre-index natural-forest fraction (Table S1).
 
+Because the 70% immediately pre-index forest rule dominated attrition, a post-registration sensitivity varied that cutoff. At 50%, 60%, 70%, and 80%, the model retained 10,774, 9,805, 7,138, and 3,861 matched sets and estimated +5.50 (95% CI +3.94 to +7.06), +5.08 (+3.52 to +6.64), +5.89 (+4.52 to +7.25), and +4.23 (+2.95 to +5.51) percentage points, respectively (Table S3). Direction stability reduces concern that the sign is unique to the registered cutoff, but it does not recover every excluded location, establish missing-at-random selection, or eliminate transportability limits.
+
 The unadjusted outcome probability was 13.74% among positive cells and 4.40% among negative controls (risk ratio 3.12). The adjusted within-set risk difference was +5.89 percentage points (95% CI +4.52 to +7.25; p=2.63×10^-17; Figure 2). The adjusted continuous loss-share difference was +2.93 points.
 
 ![Selection flow](figures/figure1_selection_flow.png)
@@ -54,7 +56,7 @@ The unadjusted outcome probability was 13.74% among positive cells and 4.40% amo
 
 ### 3.2 Robustness and heterogeneity
 
-Registered estimates remained positive at the 5% threshold (+10.78 points), 20% threshold (+2.76), two-year follow-up (+5.93), and three-year follow-up (+6.10); all 95% intervals excluded zero. Conditional logistic regression yielded an odds ratio of 3.46 (model-based 95% CI 3.09–3.89). Removing the most influential 0.5% and 1% of matched sets yielded +5.63 and +5.50 points. With spatial block and date clustering, 95% confidence intervals were +4.07 to +7.70 points at 25 km, +3.74 to +8.04 at 50 km, and +3.27 to +8.50 at 100 km.
+Registered estimates remained positive at the 5% threshold (+10.78 points), 20% threshold (+2.76), two-year follow-up (+5.93), and three-year follow-up (+6.10); all 95% intervals excluded zero. Holm-adjusted p-values across those four secondary checks were 1.83×10^-34, 1.02×10^-7, 6.25×10^-12, and 3.58×10^-12, respectively. Conditional logistic regression yielded an odds ratio of 3.46 (model-based 95% CI 3.09–3.89). Removing the most influential 0.5% and 1% of matched sets yielded +5.63 and +5.50 points. With spatial block and date clustering, 95% confidence intervals were +4.07 to +7.70 points at 25 km, +3.74 to +8.04 at 50 km, and +3.27 to +8.50 at 100 km.
 
 Year-specific estimates ranged from +0.61 points in 2017 to +9.75 in 2023 and were individually imprecise in 2017, 2018, 2021, and 2022. Every leave-one-year-out estimate remained positive, ranging from +4.13 to +6.96 points (Figure 4). These patterns show temporal heterogeneity and do not justify describing one constant annual effect.
 
@@ -82,7 +84,7 @@ The result cannot assess whether government mitigation or restoration was adequa
 
 ### Limitations
 
-First, 41.4% of temporally eligible matched sets failed complete support; observed differences between included and excluded cases limit transportability. Second, active-fire detection is not burned area and may miss cloud-obscured, short-lived, or low-intensity fires. Third, annual 30-m classifications contain class and temporal errors; internal transition mass balanced to numerical tolerance, but this is not independent accuracy validation. Fourth, controls could burn later by design, so the exposure contrast concerns index-day status. Fifth, residual spatial and land-use confounding remains despite measured covariates and cluster-robust uncertainty. Sixth, the analysis does not observe ignition source, intent, ownership, legality, profit, intervention timing, or restoration quality.
+First, 41.4% of temporally eligible matched sets failed complete support; observed differences between included and excluded cases limit transportability. The 50%–80% cutoff sensitivity retained the direction but cannot show what the effect would be in locations excluded under every audited definition. Second, active-fire detection is not burned area and may miss cloud-obscured, short-lived, or low-intensity fires. Third, annual 30-m classifications contain class and temporal errors; internal transition mass balanced to numerical tolerance, but this is not independent accuracy validation. Fourth, controls could burn later by design, so the exposure contrast concerns index-day status. Fifth, residual spatial and land-use confounding remains despite measured covariates and cluster-robust uncertainty. Sixth, the analysis does not observe ignition source, intent, ownership, legality, profit, intervention timing, or restoration quality.
 
 ## 5. Conclusion
 

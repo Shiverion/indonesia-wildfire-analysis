@@ -43,6 +43,7 @@ class ExplorerTests(unittest.TestCase):
         for prohibited in ("\"latitude\"", "\"longitude\"", "\"district\"", "\"village\"", "\"reported_time\"", "\"source_file\""):
             self.assertNotIn(prohibited, serialized)
         self.assertEqual(bundle["quality"]["sipongi"]["record_count"], 2)
+        self.assertEqual(bundle["quality"]["sipongi"]["excluded_years"], [2024])
         self.assertEqual(sum(row["record_count"] for row in bundle["sipongi_annual"]), 2)
         self.assertEqual(sum(row["record_count"] for row in bundle["sipongi_monthly"]), 2)
         self.assertEqual(bundle["roni_annual"][0]["mean_aug_nov_c"], 0.7)

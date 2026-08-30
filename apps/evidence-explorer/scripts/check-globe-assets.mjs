@@ -33,9 +33,21 @@ for (const [kind, path, expectedFeatureCount, boundarySet] of required) {
   const derived = kind === "indonesia" ? manifest.derived.indonesia_adm1 : kind === "current" ? manifest.derived.current_five : manifest.derived.legacy_four;
   if (sha256(text) !== derived.sha256) throw new Error(`${kind} globe geometry hash does not match its manifest.`);
   if (kind === "legacy") {
+    const provinceNames = collection.features.map((feature) => feature.properties.province).sort();
+    const expectedLegacyNames = ["Kalimantan Barat", "Kalimantan Selatan", "Kalimantan Tengah", "Kalimantan Timur"].sort();
+    if (JSON.stringify(provinceNames) !== JSON.stringify(expectedLegacyNames) || provinceNames.includes("Kalimantan Utara")) {
+      throw new Error("Legacy GWIS geometry must expose four values and must not display Kalimantan Utara as a separate unit.");
+    }
     const legacyKaltim = collection.features.find((feature) => feature.properties.province === "Kalimantan Timur");
     if (legacyKaltim?.properties?.operation !== "topological union" || legacyKaltim.geometry?.type !== "MultiPolygon") {
       throw new Error("Legacy Kalimantan Timur is not the required explicit topological display union.");
+    }
+  }
+  if (kind === "current") {
+    const provinceNames = collection.features.map((feature) => feature.properties.province).sort();
+    const expectedCurrentNames = ["Kalimantan Barat", "Kalimantan Selatan", "Kalimantan Tengah", "Kalimantan Timur", "Kalimantan Utara"].sort();
+    if (JSON.stringify(provinceNames) !== JSON.stringify(expectedCurrentNames)) {
+      throw new Error("Current SiPongi geometry must expose the exact current five-province system.");
     }
   }
 }

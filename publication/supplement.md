@@ -18,9 +18,20 @@ Exclusion reasons are non-exclusive: 5,031 sets had <70% immediately pre-index n
 
 `tables/table_s1_included_vs_excluded.csv` contains included and excluded means, medians, and standardized mean differences. Absolute SMDs above 0.10 occurred for baseline forest fraction (0.674), peat extent (0.111), 24-hour wind (0.128), 72-hour root-zone soil water (0.179), and immediately pre-index natural-forest fraction (1.020). These differences make the analysis-population boundary substantive.
 
+Because the 70% immediately pre-index natural-forest rule accounted for nearly all exclusions, Table S3 reports a post-registration threshold sensitivity:
+
+| Minimum pre-index forest | Matched sets | Adjusted risk difference | 95% CI |
+|---:|---:|---:|---:|
+| 50% | 10,774 | +5.50 pp | +3.94 to +7.06 pp |
+| 60% | 9,805 | +5.08 pp | +3.52 to +6.64 pp |
+| 70% (registered) | 7,138 | +5.89 pp | +4.52 to +7.25 pp |
+| 80% | 3,861 | +4.23 pp | +2.95 to +5.51 pp |
+
+The direction is stable across these thresholds, but this check does not establish missing-at-random selection or restore locations outside every audited cutoff.
+
 ## S4. Registered analyses
 
-`tables/table1_primary_and_registered_sensitivities.csv` is the canonical table for the primary, threshold, and horizon results. `tables/table2_exploratory_destinations.csv` records both estimated and support-gated destination classes. Failure to pass support was not recoded as a null finding.
+`tables/table1_primary_and_registered_sensitivities.csv` is the canonical table for the primary, threshold, and horizon results. The single registered primary keeps its raw p-value. The four unique secondary threshold/follow-up checks include both raw and Holm-adjusted p-values across that four-test family, as documented in the post-result reporting amendment. `tables/table2_exploratory_destinations.csv` records both estimated and support-gated destination classes. Failure to pass support was not recoded as a null finding.
 
 ## S5. Publication diagnostics
 

@@ -4,7 +4,8 @@ import { isIP } from "node:net";
 import { resolve } from "node:path";
 import { NextRequest, NextResponse } from "next/server";
 import { getResearchEvidencePack, RESEARCH_CORPUS_VERSION, type ResearchFact } from "../../../lib/research-corpus";
-import { isResearchSectionId, RESEARCH_SECTIONS, type ResearchSectionId } from "../../../lib/research-sections";
+import { ASSISTANT_PRIVACY_NOTICE_VERSION } from "../../../lib/assistant-privacy";
+import { getSuggestionContract, isResearchSectionId, RESEARCH_SECTIONS, type ResearchSectionId } from "../../../lib/research-sections";
 
 export const runtime = "nodejs";
 export const maxDuration = 90;
@@ -25,7 +26,7 @@ const RATE_WINDOW_MS = 10 * 60 * 1000;
 const RATE_LIMIT = 10;
 const MAX_CONCURRENT_REQUESTS = 2;
 const SUGGESTED_QUESTIONS = new Set(
-  Object.values(RESEARCH_SECTIONS).flatMap((section) => section.suggestions.map((question) => question.toLowerCase())),
+  Object.values(RESEARCH_SECTIONS).flatMap((section) => section.suggestions.map((suggestion) => suggestion.question.toLowerCase())),
 );
 
 interface HistoryMessage {
@@ -43,6 +44,12 @@ interface UsageSummary {
   prompt_tokens?: number;
   completion_tokens?: number;
   total_tokens?: number;
+}
+
+interface AuditOptions {
+  externalProcessorCalled?: boolean;
+  privacyNoticeVersion?: string;
+  promptVersion?: string;
 }
 
 const rateBuckets = new Map<string, number[]>();
@@ -236,6 +243,10 @@ Required JSON fields: status, answer, citation_ids.`;
 
 function makeMessages(question: string, sectionId: ResearchSectionId, history: HistoryMessage[]) {
   const pack = getResearchEvidencePack(sectionId);
+  const suggestion = getSuggestionContract(sectionId, question);
+  const evidenceFacts = suggestion
+    ? pack.facts.filter((fact) => suggestion.expectedFactIds.includes(fact.id))
+    : pack.facts;
   return [
     { role: "system", content: systemPrompt() },
     {
@@ -243,7 +254,7 @@ function makeMessages(question: string, sectionId: ResearchSectionId, history: H
       content: JSON.stringify({
         corpus_version: RESEARCH_CORPUS_VERSION,
         section_id: sectionId,
-        evidence_pack: { title: pack.title, facts: pack.facts, limitations: pack.limitations },
+        evidence_pack: { title: pack.title, facts: evidenceFacts, limitations: pack.limitations },
         untrusted_conversation_history: history,
         latest_untrusted_user_question: question,
       }),
@@ -320,48 +331,60 @@ async function callKimi(apiKey: string, question: string, sectionId: ResearchSec
   const timeout = setTimeout(() => controller.abort(), 82_000);
   const requestedModel = process.env.KIMI_MODEL?.trim() || DEFAULT_MODEL;
   try {
-    const response = await fetch(resolveKimiEndpoint(), {
-      method: "POST",
-      cache: "no-store",
-      redirect: "error",
-      headers: {
-        Authorization: `Bearer ${apiKey}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        model: requestedModel,
-        messages: makeMessages(question, sectionId, history),
-        thinking: { type: "enabled" },
-        temperature: 1,
-        top_p: 0.95,
-        max_tokens: 2048,
-        stream: true,
-        stream_options: { include_usage: true },
-        response_format: {
-          type: "json_schema",
-          json_schema: {
-            name: "research_answer",
-            strict: true,
-            schema: {
-              type: "object",
-              properties: {
-                status: { type: "string", enum: ["answered", "insufficient_evidence", "out_of_scope"] },
-                answer: { type: "string" },
-                citation_ids: { type: "array", items: { type: "string" }, maxItems: 6 },
+    for (let attempt = 0; attempt < 3; attempt += 1) {
+      const response = await fetch(resolveKimiEndpoint(), {
+        method: "POST",
+        cache: "no-store",
+        redirect: "error",
+        headers: {
+          Authorization: `Bearer ${apiKey}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          model: requestedModel,
+          messages: makeMessages(question, sectionId, history),
+          thinking: { type: "enabled" },
+          temperature: 1,
+          top_p: 0.95,
+          max_tokens: 4096,
+          stream: true,
+          stream_options: { include_usage: true },
+          response_format: {
+            type: "json_schema",
+            json_schema: {
+              name: "research_answer",
+              strict: true,
+              schema: {
+                type: "object",
+                properties: {
+                  status: { type: "string", enum: ["answered", "insufficient_evidence", "out_of_scope"] },
+                  answer: { type: "string" },
+                  citation_ids: { type: "array", items: { type: "string" }, maxItems: 6 },
+                },
+                required: ["status", "answer", "citation_ids"],
+                additionalProperties: false,
               },
-              required: ["status", "answer", "citation_ids"],
-              additionalProperties: false,
             },
           },
-        },
-      }),
-      signal: controller.signal,
-    });
-    if (!response.ok) throw new Error(`Upstream status ${response.status}`);
-    if (!response.headers.get("content-type")?.toLowerCase().includes("text/event-stream")) {
-      throw new Error("Unexpected upstream content type");
+        }),
+        signal: controller.signal,
+      });
+      if (response.ok) {
+        if (!response.headers.get("content-type")?.toLowerCase().includes("text/event-stream")) {
+          throw new Error("Unexpected upstream content type");
+        }
+        return await readStreamingCompletion(response);
+      }
+      const transient = [429, 500, 502, 503, 504].includes(response.status);
+      const retryAfterHeader = Number(response.headers.get("retry-after"));
+      const retryAfterMs = Number.isFinite(retryAfterHeader) && retryAfterHeader > 0
+        ? Math.min(20_000, retryAfterHeader * 1000)
+        : Math.min(20_000, 4_000 * 2 ** attempt);
+      await response.body?.cancel("transient upstream response").catch(() => undefined);
+      if (!transient || attempt === 2) throw new Error(`Upstream status ${response.status}`);
+      await new Promise((resolveDelay) => setTimeout(resolveDelay, retryAfterMs));
     }
-    return readStreamingCompletion(response);
+    throw new Error("Upstream retry budget exhausted");
   } finally {
     clearTimeout(timeout);
   }
@@ -430,6 +453,9 @@ function auditReceipt({
   validator,
   usage,
   startedAt,
+  externalProcessorCalled = true,
+  privacyNoticeVersion = ASSISTANT_PRIVACY_NOTICE_VERSION,
+  promptVersion = PROMPT_VERSION,
 }: {
   requestId: string;
   sectionId: ResearchSectionId;
@@ -438,20 +464,64 @@ function auditReceipt({
   validator: "passed" | "refused_preflight" | "rejected_output" | "upstream_error";
   usage?: UsageSummary;
   startedAt: number;
-}) {
+} & AuditOptions) {
   return {
     request_id: requestId,
     created_at_utc: new Date().toISOString(),
     model,
-    prompt_version: PROMPT_VERSION,
+    prompt_version: promptVersion,
     corpus_version: RESEARCH_CORPUS_VERSION,
     section_ids: [sectionId],
     citation_ids: citationIds,
     validator,
     token_usage: usage ?? null,
     latency_ms: Date.now() - startedAt,
+    privacy_notice_version: privacyNoticeVersion,
     raw_question_stored_by_app: false,
     reasoning_exposed: false,
+    external_processor_called: externalProcessorCalled,
+  };
+}
+
+function curatedSuggestionResponse(
+  requestId: string,
+  sectionId: ResearchSectionId,
+  question: string,
+  startedAt: number,
+) {
+  const suggestion = getSuggestionContract(sectionId, question);
+  if (!suggestion) return null;
+  const pack = getResearchEvidencePack(sectionId);
+  const factMap = new Map(pack.facts.map((fact) => [fact.id, fact]));
+  const facts = suggestion.expectedFactIds.map((factId) => factMap.get(factId)!);
+  const answer: ModelAnswer = {
+    status: "answered",
+    answer: facts.map((fact) => fact.statement).join(" "),
+    citation_ids: suggestion.expectedFactIds,
+  };
+  const validation = validateModelAnswer(answer, pack.facts);
+  return {
+    status: answer.status,
+    answer: answer.answer,
+    citations: validation.facts.map((fact) => ({
+      id: fact.id,
+      label: fact.sourceLabel,
+      sectionId,
+      href: `#${sectionId}`,
+      sourceUrl: fact.sourceUrl ?? null,
+    })),
+    limitations: pack.limitations.slice(0, 2),
+    audit: auditReceipt({
+      requestId,
+      sectionId,
+      model: "curated_evidence_answer",
+      citationIds: validation.citationIds,
+      validator: "passed",
+      startedAt,
+      externalProcessorCalled: false,
+      privacyNoticeVersion: "not-required-curated-suggestion",
+      promptVersion: "curated-suggestion/2026-08-30-v1",
+    }),
   };
 }
 
@@ -499,6 +569,20 @@ export async function POST(request: NextRequest) {
     );
   }
   const sectionId = sectionValue;
+  const curated = curatedSuggestionResponse(requestId, sectionId, question, startedAt);
+  if (curated) return secureJson(curated, 200, rateHeaders);
+
+  const privacyAccepted = "privacyNoticeAccepted" in body && body.privacyNoticeAccepted === true;
+  const privacyVersion = "privacyNoticeVersion" in body && typeof body.privacyNoticeVersion === "string"
+    ? body.privacyNoticeVersion
+    : "";
+  if (!privacyAccepted || privacyVersion !== ASSISTANT_PRIVACY_NOTICE_VERSION) {
+    return secureJson(
+      { error: "Accept the current assistant privacy notice before sending a free-form question." },
+      428,
+      rateHeaders,
+    );
+  }
   const history = normalizeHistory("history" in body ? body.history : null);
   const preflight = preflightScope(question);
   if (preflight !== "allowed") {

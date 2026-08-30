@@ -11,6 +11,7 @@ from analysis.phase3_land_change import (
     eligible_event_years,
     expected_transition_columns,
     fit_within_set_lpm,
+    holm_adjust,
     inspect_transition_summary,
     private_cell_id,
 )
@@ -27,6 +28,11 @@ def test_followup_years_stop_at_last_available_map() -> None:
     assert eligible_event_years(2024, 1) == list(range(2015, 2024))
     assert eligible_event_years(2024, 2) == list(range(2015, 2023))
     assert eligible_event_years(2024, 3) == list(range(2015, 2022))
+
+
+def test_holm_adjustment_preserves_order_and_caps_at_one() -> None:
+    adjusted = holm_adjust([0.04, 0.001, 0.20, 0.03])
+    assert adjusted == [0.09, 0.004, 0.20, 0.09]
 
 
 def test_missing_transition_summary_fails_closed(tmp_path: Path) -> None:

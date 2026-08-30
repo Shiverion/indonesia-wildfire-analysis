@@ -29,6 +29,9 @@ FILES = {
     / "phase3"
     / "mapbiomas_c41_transition_summary_private.csv",
     "config/phase3_registration.json": ROOT / "config" / "phase3_registration.json",
+    "config/phase3_reporting_amendment_2026-08-30.json": ROOT
+    / "config"
+    / "phase3_reporting_amendment_2026-08-30.json",
     "config/mapbiomas_collection41_legend.json": ROOT
     / "config"
     / "mapbiomas_collection41_legend.json",

@@ -15,7 +15,10 @@ export interface ResearchSectionMeta {
   id: ResearchSectionId;
   title: string;
   shortTitle: string;
-  suggestions: string[];
+  suggestions: Array<{
+    question: string;
+    expectedFactIds: string[];
+  }>;
 }
 
 export const RESEARCH_SECTIONS: Record<ResearchSectionId, ResearchSectionMeta> = {
@@ -24,9 +27,9 @@ export const RESEARCH_SECTIONS: Record<ResearchSectionId, ResearchSectionMeta> =
     title: "Research purpose, questions, and scope",
     shortTitle: "Report introduction",
     suggestions: [
-      "What questions does this report investigate?",
-      "How is this report organized?",
-      "Which claims are outside the research scope?",
+      { question: "What questions does this report investigate?", expectedFactIds: ["introduction.questions"] },
+      { question: "How is this report organized?", expectedFactIds: ["introduction.structure"] },
+      { question: "Which claims are outside the research scope?", expectedFactIds: ["introduction.boundary"] },
     ],
   },
   "report-summary": {
@@ -34,9 +37,9 @@ export const RESEARCH_SECTIONS: Record<ResearchSectionId, ResearchSectionMeta> =
     title: "Research summary and claim boundaries",
     shortTitle: "Report summary",
     suggestions: [
-      "Explain the report summary in plain language.",
-      "What are the main findings of this research?",
-      "What cannot be concluded from this report?",
+      { question: "Explain the report summary in plain language.", expectedFactIds: ["summary.forest-loss", "summary.peat-dryness", "summary.scope"] },
+      { question: "What are the main findings of this research?", expectedFactIds: ["summary.forest-loss", "summary.peat-dryness", "summary.scope"] },
+      { question: "What cannot be concluded from this report?", expectedFactIds: ["summary.boundary"] },
     ],
   },
   "forest-loss-result": {
@@ -44,9 +47,9 @@ export const RESEARCH_SECTIONS: Record<ResearchSectionId, ResearchSectionMeta> =
     title: "Fire-positive cells and subsequent forest loss",
     shortTitle: "Forest-loss finding",
     suggestions: [
-      "Explain the forest-loss finding in plain language.",
-      "Why does this result not prove deliberate burning?",
-      "What does the confidence interval mean here?",
+      { question: "Explain the forest-loss finding in plain language.", expectedFactIds: ["forest.primary", "forest.unadjusted", "forest.negative-control"] },
+      { question: "Why does this result not prove deliberate burning?", expectedFactIds: ["forest.negative-control", "forest.boundary"] },
+      { question: "What does the confidence interval mean for this estimate?", expectedFactIds: ["forest.primary", "forest.uncertainty"] },
     ],
   },
   "peat-dryness-result": {
@@ -54,9 +57,9 @@ export const RESEARCH_SECTIONS: Record<ResearchSectionId, ResearchSectionMeta> =
     title: "Peat, dryness, and pre-fire environmental conditions",
     shortTitle: "Peat and climate",
     suggestions: [
-      "Explain the peat and climate finding in plain language.",
-      "What does the inconclusive peat × dryness result mean?",
-      "Which environmental variables were adjusted for?",
+      { question: "Explain the peat and climate finding in plain language.", expectedFactIds: ["environment.primary", "environment.interpretation"] },
+      { question: "What does the inconclusive peat × dryness result mean?", expectedFactIds: ["environment.primary", "environment.interpretation"] },
+      { question: "Which environmental variables were adjusted for?", expectedFactIds: ["environment.adjustment"] },
     ],
   },
   "earth-ai-result": {
@@ -64,9 +67,9 @@ export const RESEARCH_SECTIONS: Record<ResearchSectionId, ResearchSectionMeta> =
     title: "Prior-year AlphaEarth predictive robustness check",
     shortTitle: "Earth AI check",
     suggestions: [
-      "Explain the Earth AI robustness check in plain language.",
-      "What does AlphaEarth add to the model?",
-      "Why were same-year embeddings not used?",
+      { question: "Explain the Earth AI robustness check in plain language.", expectedFactIds: ["alphaearth.primary", "alphaearth.design", "alphaearth.boundary"] },
+      { question: "What does AlphaEarth add to the model?", expectedFactIds: ["alphaearth.primary", "alphaearth.boundary"] },
+      { question: "Why were same-year embeddings not used?", expectedFactIds: ["alphaearth.design"] },
     ],
   },
   "global-comparison": {
@@ -74,9 +77,9 @@ export const RESEARCH_SECTIONS: Record<ResearchSectionId, ResearchSectionMeta> =
     title: "Indonesia province context and global peat comparison",
     shortTitle: "Indonesia and global map",
     suggestions: [
-      "Explain how to read the Indonesia and global map.",
-      "What exactly do the map colors represent?",
-      "Do countries with more peat experience more fire detections?",
+      { question: "Explain how to read the Indonesia and global map.", expectedFactIds: ["global.map-meaning", "global.map-colors", "global.province-availability"] },
+      { question: "What exactly do the map colors represent?", expectedFactIds: ["global.map-colors", "global.map-meaning"] },
+      { question: "Does this comparison show that countries with more peat have more fire detections?", expectedFactIds: ["global.peat-test", "global.map-meaning"] },
     ],
   },
   "local-layer": {
@@ -84,9 +87,9 @@ export const RESEARCH_SECTIONS: Record<ResearchSectionId, ResearchSectionMeta> =
     title: "Kalimantan reporting layers",
     shortTitle: "Kalimantan detail",
     suggestions: [
-      "Explain the Kalimantan detail section in plain language.",
-      "How do SiPongi and GWIS differ in this section?",
-      "Why is a hotspot count not a fire count?",
+      { question: "Explain the Kalimantan detail section in plain language.", expectedFactIds: ["local.sipongi", "local.gwis", "local.missingness", "local.archive-gap"] },
+      { question: "How do SiPongi and GWIS differ in this section?", expectedFactIds: ["local.sipongi", "local.gwis", "local.archive-gap"] },
+      { question: "Why is a hotspot record not the same as a unique fire?", expectedFactIds: ["local.sipongi"] },
     ],
   },
   "methods-sources": {
@@ -94,13 +97,19 @@ export const RESEARCH_SECTIONS: Record<ResearchSectionId, ResearchSectionMeta> =
     title: "Methods, provenance, and data safeguards",
     shortTitle: "Methods and sources",
     suggestions: [
-      "Explain the methods and safeguards in plain language.",
-      "Where do the research data come from?",
-      "How are missing data handled?",
+      { question: "Explain the methods and safeguards in plain language.", expectedFactIds: ["methods.sources", "methods.provenance", "methods.missingness", "methods.assistant"] },
+      { question: "Where do the research data come from?", expectedFactIds: ["methods.sources"] },
+      { question: "How are missing data handled?", expectedFactIds: ["methods.missingness"] },
     ],
   },
 };
 
 export function isResearchSectionId(value: unknown): value is ResearchSectionId {
   return typeof value === "string" && (RESEARCH_SECTION_IDS as readonly string[]).includes(value);
+}
+
+export function getSuggestionContract(sectionId: ResearchSectionId, question: string) {
+  return RESEARCH_SECTIONS[sectionId].suggestions.find(
+    (suggestion) => suggestion.question.toLowerCase() === question.trim().toLowerCase(),
+  ) ?? null;
 }

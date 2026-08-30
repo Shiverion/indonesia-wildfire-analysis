@@ -1,6 +1,6 @@
 {
   "schema_version": "phase3-land-change-results/v1",
-  "created_at_utc": "2026-08-28T06:43:32.528097+00:00",
+  "created_at_utc": "2026-08-29T22:12:45.528830+00:00",
   "status": "completed_phase3_association",
   "phase3_ready": true,
   "phase3_model_run": true,
@@ -14,6 +14,12 @@
     "path": "config/phase3_registration.json",
     "sha256": "794715733692fc82574743c22ecd3e6f04028d978afa6ac93bd248b4519d46a2",
     "state": "frozen_before_phase3_outcome_extraction"
+  },
+  "reporting_amendment": {
+    "path": "config/phase3_reporting_amendment_2026-08-30.json",
+    "sha256": "5b513a4a803754adc8d5a90ef66276d10e61c5198f28587b12d94442b5bfd393",
+    "status": "post_registration_reporting_clarification",
+    "changes_primary_estimand_or_model": false
   },
   "legend": {
     "path": "config/mapbiomas_collection41_legend.json",
@@ -1659,7 +1665,8 @@
               0.1248919174966573
             ],
             "z": 12.355257806811176,
-            "p_two_sided": 4.5629100959180154e-35
+            "p_two_sided": 4.5629100959180154e-35,
+            "p_holm_secondary_family": 1.8251640383672061e-34
           },
           "coefficients": [
             {
@@ -1671,7 +1678,8 @@
                 0.1248919174966573
               ],
               "z": 12.355257806811176,
-              "p_two_sided": 4.5629100959180154e-35
+              "p_two_sided": 4.5629100959180154e-35,
+              "p_holm_secondary_family": 1.8251640383672061e-34
             },
             {
               "term": "forest_fraction_z",
@@ -1885,7 +1893,8 @@
               0.0377048301546753
             ],
             "z": 5.322535488025569,
-            "p_two_sided": 1.0233081257748611e-07
+            "p_two_sided": 1.0233081257748611e-07,
+            "p_holm_secondary_family": 1.0233081257748611e-07
           },
           "coefficients": [
             {
@@ -1897,7 +1906,8 @@
                 0.0377048301546753
               ],
               "z": 5.322535488025569,
-              "p_two_sided": 1.0233081257748611e-07
+              "p_two_sided": 1.0233081257748611e-07,
+              "p_holm_secondary_family": 1.0233081257748611e-07
             },
             {
               "term": "forest_fraction_z",
@@ -2113,7 +2123,8 @@
               0.0759091136544983
             ],
             "z": 6.971960413228075,
-            "p_two_sided": 3.1255451445250605e-12
+            "p_two_sided": 3.1255451445250605e-12,
+            "p_holm_secondary_family": 6.251090289050121e-12
           },
           "coefficients": [
             {
@@ -2125,7 +2136,8 @@
                 0.0759091136544983
               ],
               "z": 6.971960413228075,
-              "p_two_sided": 3.1255451445250605e-12
+              "p_two_sided": 3.1255451445250605e-12,
+              "p_holm_secondary_family": 6.251090289050121e-12
             },
             {
               "term": "forest_fraction_z",
@@ -2339,7 +2351,8 @@
               0.07780915114655614
             ],
             "z": 7.106108193169655,
-            "p_two_sided": 1.1936085757532225e-12
+            "p_two_sided": 1.1936085757532225e-12,
+            "p_holm_secondary_family": 3.5808257272596674e-12
           },
           "coefficients": [
             {
@@ -2351,7 +2364,8 @@
                 0.07780915114655614
               ],
               "z": 7.106108193169655,
-              "p_two_sided": 1.1936085757532225e-12
+              "p_two_sided": 1.1936085757532225e-12,
+              "p_holm_secondary_family": 3.5808257272596674e-12
             },
             {
               "term": "forest_fraction_z",
