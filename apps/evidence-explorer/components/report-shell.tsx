@@ -65,6 +65,9 @@ export function ReportShell({
       <footer className="app-footer report-footer">
         <span>Indonesia Wildfire Evidence Report</span>
         <span>Associations and descriptive maps are not proof of cause, intent, ownership, or liability.</span>
+        <a href="https://github.com/Shiverion/indonesia-wildfire-analysis" target="_blank" rel="noreferrer">Public source repository</a>
+        <a href="https://shiverion.com/projects/indonesia-wildfire-analysis" target="_blank" rel="noreferrer">Portfolio case study</a>
+        <a href="/llms.txt">LLMs.txt</a>
         <Link href="/privacy">Privacy &amp; AI processing</Link>
       </footer>
     </main>

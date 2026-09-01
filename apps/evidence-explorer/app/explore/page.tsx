@@ -1,14 +1,15 @@
-import type { Metadata } from "next";
 import sourceData from "../../data/evidence-explorer.json";
 import { EvidenceExplorer } from "../../components/evidence-explorer";
 import { ReportShell } from "../../components/report-shell";
 import { ResearchAssistantProvider } from "../../components/research-assistant";
 import type { ExplorerData } from "../../lib/types";
+import { createPageMetadata } from "../site-metadata";
 
-export const metadata: Metadata = {
+export const metadata = createPageMetadata({
   title: "Maps & comparisons · Indonesia Wildfire Evidence Report",
   description: "Interactive Indonesia province, global, and Kalimantan wildfire evidence maps with explicit aggregate-data safeguards.",
-};
+  path: "/explore/",
+});
 
 export default function ExplorePage() {
   return (

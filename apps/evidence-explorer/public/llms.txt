@@ -1,0 +1,36 @@
+# Indonesia Wildfire Evidence Report
+
+> A public, coordinate-free, evidence-bounded research report on Kalimantan fire detection, peat conditions, and subsequent forest loss.
+
+Canonical report: https://fire-research.shiverion.com/
+Portfolio case study: https://shiverion.com/projects/indonesia-wildfire-analysis
+Public source repository: https://github.com/Shiverion/indonesia-wildfire-analysis
+
+## Main Result
+
+The registered Phase 3 analysis found a +5.89 percentage-point association between fire detection and losing at least 10% of pre-index natural forest within one year (95% CI: +4.52 to +7.25) across 7,138 complete exact matched sets.
+
+This result is explicitly non-causal. Of the temporally eligible sets, 41.4% lacked complete support and a pre-exposure negative control was positive (+2.31 percentage points). The study does not attribute deliberate burning, actors, ownership, legality, profit, plantation conversion, or government performance.
+
+The primary peat-by-dryness interaction was inconclusive (odds ratio 0.866, p=0.209).
+
+A separate prior-year AlphaEarth extension improved locked 2024–2025 predictive log loss by 0.2006 and top-1 recall from 36.8% to 46.7% across 1,913 sets. This is predictive information only.
+
+## Report Pages
+
+- Introduction and scope: https://fire-research.shiverion.com/
+- Registered findings and robustness checks: https://fire-research.shiverion.com/findings/
+- Methods, sources, provenance, and limitations: https://fire-research.shiverion.com/methods/
+- Aggregate maps and geographic comparisons: https://fire-research.shiverion.com/explore/
+- Privacy and optional AI processing: https://fire-research.shiverion.com/privacy/
+
+## Access and Claim Boundaries
+
+- The report publishes aggregate, coordinate-free evidence.
+- The source repository is public.
+- Raw hotspot coordinates and private research inputs remain withheld.
+- Associations and descriptive maps are not proof of cause, intent, ownership, legality, or liability.
+
+## Citation Guidance
+
+Prefer the findings page for numerical results, the methods page for data provenance and limitations, and the public repository for reproducibility documentation. Preserve the report's distinction between association, prediction, and causal claims.

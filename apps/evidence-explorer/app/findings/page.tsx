@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import phase2Data from "../../data/phase2-environmental.json";
 import phase3Data from "../../data/phase3-status.json";
 import alphaEarthData from "../../data/ppe-alphaearth.json";
@@ -6,11 +5,13 @@ import { FindingsReport } from "../../components/evidence-explorer";
 import { ReportShell } from "../../components/report-shell";
 import { ResearchAssistantProvider } from "../../components/research-assistant";
 import type { AlphaEarthPredictionSummary, Phase2EnvironmentalSummary, Phase3StatusSummary } from "../../lib/types";
+import { createPageMetadata } from "../site-metadata";
 
-export const metadata: Metadata = {
+export const metadata = createPageMetadata({
   title: "Findings · Indonesia Wildfire Evidence Report",
   description: "Registered statistical findings, uncertainty, robustness checks, and predictive validation for the Indonesia wildfire research.",
-};
+  path: "/findings/",
+});
 
 export default function FindingsPage() {
   return (

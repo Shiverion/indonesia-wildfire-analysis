@@ -1,12 +1,13 @@
-import type { Metadata } from "next";
 import { ReportIntroduction } from "../components/report-introduction";
 import { ReportShell } from "../components/report-shell";
 import { ResearchAssistantProvider } from "../components/research-assistant";
+import { createPageMetadata } from "./site-metadata";
 
-export const metadata: Metadata = {
+export const metadata = createPageMetadata({
   title: "Introduction · Indonesia Wildfire Evidence Report",
   description: "Research questions, scope, and reading guide for an evidence-bounded investigation of wildfire, peat conditions, and land-cover change.",
-};
+  path: "/",
+});
 
 export default function Home() {
   return (

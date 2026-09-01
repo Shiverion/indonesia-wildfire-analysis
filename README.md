@@ -28,6 +28,14 @@ The maintainable Next.js App Router version is in [apps/evidence-explorer](apps/
 
 The coordinate-free production dashboard is live at [fire-research.shiverion.com](https://fire-research.shiverion.com). Vercel receives only the app directory and aggregate browser assets; the raw research archive, private coordinates, and local analysis inputs are not uploaded.
 
+Machine-readable discovery endpoints are published with the report:
+
+- [LLMs.txt](https://fire-research.shiverion.com/llms.txt)
+- [Sitemap](https://fire-research.shiverion.com/sitemap.xml)
+- [Robots policy](https://fire-research.shiverion.com/robots.txt)
+
+Each report page publishes a canonical URL, social metadata, and the root report publishes Schema.org `Report` structured data linking the live report, public repository, and portfolio case study.
+
 Security concerns should be reported privately according to [SECURITY.md](SECURITY.md). Code is MIT-licensed; datasets, maps, imagery, and source marks retain the separate terms documented in [DATA_LICENSE.md](DATA_LICENSE.md).
 
 ## Run the pipeline

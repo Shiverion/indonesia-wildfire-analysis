@@ -1,11 +1,12 @@
-import type { Metadata } from "next";
 import { ReportShell } from "../../components/report-shell";
 import { MOONSHOT_MODEL_USE_URL, MOONSHOT_PRIVACY_URL } from "../../lib/assistant-privacy";
+import { createPageMetadata } from "../site-metadata";
 
-export const metadata: Metadata = {
+export const metadata = createPageMetadata({
   title: "Privacy & AI processing · Indonesia Wildfire Evidence Report",
   description: "Privacy information for the optional evidence-bounded Kimi explanation feature.",
-};
+  path: "/privacy/",
+});
 
 export default function PrivacyPage() {
   return (

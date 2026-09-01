@@ -1,15 +1,16 @@
-import type { Metadata } from "next";
 import sourceData from "../../data/evidence-explorer.json";
 import phase2Data from "../../data/phase2-environmental.json";
 import { MethodsReport } from "../../components/evidence-explorer";
 import { ReportShell } from "../../components/report-shell";
 import { ResearchAssistantProvider } from "../../components/research-assistant";
 import type { ExplorerData, Phase2EnvironmentalSummary } from "../../lib/types";
+import { createPageMetadata } from "../site-metadata";
 
-export const metadata: Metadata = {
+export const metadata = createPageMetadata({
   title: "Methods & sources · Indonesia Wildfire Evidence Report",
   description: "Data inventory, validation gates, provenance, missingness rules, and claim boundaries for the Indonesia wildfire research.",
-};
+  path: "/methods/",
+});
 
 const explorer = sourceData as unknown as ExplorerData;
 const environmental = phase2Data as unknown as Phase2EnvironmentalSummary;
