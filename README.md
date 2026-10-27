@@ -38,6 +38,82 @@ Each report page publishes a canonical URL, social metadata, and the root report
 
 Security concerns should be reported privately according to [SECURITY.md](SECURITY.md). Code is MIT-licensed; datasets, maps, imagery, and source marks retain the separate terms documented in [DATA_LICENSE.md](DATA_LICENSE.md).
 
+## System Design
+
+The system is a gated research pipeline plus a read-only evidence website. Its design goal is that no claim can be published unless the data, protocol, and quality gates behind it are frozen and reproducible.
+
+### Requirements
+
+**Functional**
+- Acquire and derive satellite, climate, and land-cover features (VIIRS, MOD13Q1, CHIRPS, ERA5-Land, MapBiomas, AlphaEarth embeddings) for Kalimantan.
+- Build matched case/control daily risk sets and fit the preregistered models (Phase 2 environmental, Phase 3 land change, predictive ablation).
+- Publish a manuscript, supplement, a coordinate-free release bundle, and an interactive evidence explorer.
+
+**Non-functional**
+- **Zero budget**: no paid storage, VM, or Earth Engine tier. Local raw archives are capped at 60 GiB.
+- **Reproducibility**: frozen registrations, hashed inputs, a phase ledger, and a clean-room reproduction check.
+- **Privacy and claim safety**: no raw hotspot coordinates, private cell coordinates, or 1-km prediction surface leave the private workspace. Claims stay inside their registered boundaries.
+
+### Pipeline Architecture
+
+```text
+ Providers (NASA Earthdata, Copernicus CDS, Earth Engine, NOAA, GWIS, SiPongi)
+        │  scripts/download_* (resumable, supervisor, size hard-stop)
+        ▼
+ Raw archive (local, capped) ──► inventory + QA gates (outputs/quality/*.json)
+        │
+        ▼  Earth Engine server-side computation (only derived chunks come back)
+ Derived Parquet risk sets ──► finalize (joins ERA5-Land, refuses certification
+        │                       until every day and covariate gate passes)
+        ▼
+ Frozen registration (config/*_registration.json) + locks (outputs/locks)
+        │
+        ▼  analysis/phase2_*, phase3_*, ppe_alphaearth_*
+ Results JSON + insights Markdown + phase ledger (JSONL)
+        │
+        ├─► publication/ (manuscript, supplement, coordinate-free manifest)
+        └─► apps/evidence-explorer (Next.js + CesiumJS, aggregate data only)
+                └─► optional /api explanation layer (Kimi), fact-ID contracts
+```
+
+### Key Design Choices
+
+- **Gates before analysis.** Each phase has machine-checked readiness files. A failed gate blocks the next phase instead of producing a provisional result.
+- **Compute where the data lives.** Earth Engine reduces global rasters and swaths to risk-set rows, so only small derived tables are stored locally. This is what makes the zero-budget rule workable.
+- **Preregistration and locked test.** Models and thresholds are frozen before outcomes are examined. The 2024–2025 predictive test set was opened once.
+- **Separation of evidence types.** Inferential results, descriptive context (GWIS, SiPongi, RONI), and unidentified questions are kept in separate artefacts and UI routes.
+- **Constrained AI explanations.** The explorer's optional explainer sees only compact public evidence packs. It validates citations and numbers before display; the 24 suggested questions are answered locally from tested fact contracts.
+
+### Data Boundaries
+
+| Layer | Contains | Released |
+| --- | --- | --- |
+| Raw provider archives | Global tiles, swaths, hotspot points | No |
+| Private derived tables | Cell-level rows with coordinates | No (temporary cloud assets deleted) |
+| Coordinate-free bundle | Aggregates, model outputs, manifests | Yes (`publication/`) |
+| Explorer data | ADM1 aggregates, frozen geometry | Yes (synced at build time, sensitive fields refused) |
+
+### Reliability
+
+- Downloads and Earth Engine exports are resumable and chunked (38 Phase 3 chunks) and audited per chunk.
+- `scripts/reproduce_publication.py` and the clean-room reproduction audit rebuild the published numbers from the bundle.
+- The explorer build runs a bundle-syntax check and refuses data that does not match the canonical aggregate schema.
+
+### Trade-offs
+
+| Decision | Benefit | Cost |
+| --- | --- | --- |
+| Zero-budget, Earth Engine-side reduction | No spend; small local footprint | Bound by free-tier quotas; long, resumable runs |
+| Strict preregistration and gates | Credible, auditable claims | Slower iteration; some questions stay "not identifiable" |
+| Coordinate-free release | Protects sensitive locations | Third parties cannot rerun from raw coordinates |
+| Local CesiumJS assets (no Ion or live tiles) | Offline, deterministic, no keys | Larger static bundle |
+
+### What to Revisit as It Grows
+
+- Containerize the analysis environment (pinned GDAL/rasterio) for one-command clean-room runs.
+- Move the phase ledger and gates into a workflow engine (for example Snakemake or Prefect) as phases multiply.
+- Add a validated dated exposure dataset before attempting the blocked human-access track.
+
 ## Run the pipeline
 
 ```powershell
