@@ -56,24 +56,45 @@ The system is a gated research pipeline plus a read-only evidence website. Its d
 
 ### Pipeline Architecture
 
-```text
- Providers (NASA Earthdata, Copernicus CDS, Earth Engine, NOAA, GWIS, SiPongi)
-        │  scripts/download_* (resumable, supervisor, size hard-stop)
-        ▼
- Raw archive (local, capped) ──► inventory + QA gates (outputs/quality/*.json)
-        │
-        ▼  Earth Engine server-side computation (only derived chunks come back)
- Derived Parquet risk sets ──► finalize (joins ERA5-Land, refuses certification
-        │                       until every day and covariate gate passes)
-        ▼
- Frozen registration (config/*_registration.json) + locks (outputs/locks)
-        │
-        ▼  analysis/phase2_*, phase3_*, ppe_alphaearth_*
- Results JSON + insights Markdown + phase ledger (JSONL)
-        │
-        ├─► publication/ (manuscript, supplement, coordinate-free manifest)
-        └─► apps/evidence-explorer (Next.js + CesiumJS, aggregate data only)
-                └─► optional /api explanation layer (Kimi), fact-ID contracts
+```mermaid
+flowchart TD
+    subgraph External["External services"]
+        Providers(["NASA Earthdata, Copernicus CDS<br/>NOAA, GWIS, SiPongi"])
+        EarthEngine(["Earth Engine<br/>server-side computation"])
+        Kimi(["Kimi K2.5"])
+    end
+
+    subgraph Private["Private research pipeline"]
+        Downloads["Resumable download scripts<br/>with size hard-stop"]
+        Raw[("Raw archive<br/>local and capped")]
+        Quality["Inventory and QA gates<br/>outputs/quality"]
+        Derived[("Derived Parquet<br/>risk sets")]
+        Finalize["Finalize joins and<br/>covariate gates"]
+        Frozen[("Frozen registrations<br/>and input locks")]
+        Analysis["Phase 2, Phase 3,<br/>and predictive analyses"]
+        Results[("Results JSON, insights,<br/>and phase ledger")]
+    end
+
+    subgraph Public["Coordinate-free outputs"]
+        Publication["Publication bundle<br/>and manuscripts"]
+        Explorer["Next.js evidence explorer<br/>aggregate data only"]
+        Api["Optional explanation API<br/>fact-ID contracts"]
+    end
+
+    Providers --> Downloads
+    Downloads --> Raw
+    Raw --> Quality
+    Raw --> EarthEngine
+    EarthEngine --> Derived
+    Derived --> Finalize
+    Quality --> Finalize
+    Finalize --> Frozen
+    Frozen --> Analysis
+    Analysis --> Results
+    Results --> Publication
+    Results --> Explorer
+    Explorer -.-> Api
+    Api -.-> Kimi
 ```
 
 ### Key Design Choices
